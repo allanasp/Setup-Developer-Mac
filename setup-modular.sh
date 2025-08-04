@@ -67,7 +67,7 @@ optional_descriptions=(
     "Development Apps (VS Code, Cursor, Zed, Extensions)"
     "Mobile Development (Android Studio, iOS tools)"
     "Productivity Tools (Raycast, Rectangle, Browsers)"
-    "Database Tools (PostgreSQL, Sequel Ace)"
+    "Database Tools (PostgreSQL, Sequel Ace, Supabase CLI)"
     "DevOps Tools (Kubernetes, AWS CLI, Utilities)"
     "Developer Fonts (Fira Code, JetBrains Mono)"
 )

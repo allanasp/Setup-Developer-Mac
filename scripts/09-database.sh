@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Database Tools Setup
-# Installs: PostgreSQL, Sequel Ace
+# Installs: PostgreSQL, Sequel Ace, Supabase CLI
 
 set -e  # Exit on any error
 
@@ -34,16 +34,27 @@ print_success "PostgreSQL installed and started"
 # Database GUI
 install_cask_app "Sequel Ace" "sequel-ace" "/Applications/Sequel Ace.app"
 
+# Supabase CLI
+print_status "Installing Supabase CLI..."
+brew install supabase/tap/supabase
+print_success "Supabase CLI installed"
+
 print_success "Database tools setup completed!"
 echo ""
 echo "Installed database tools:"
 echo "• PostgreSQL 15 (running and auto-start enabled)"
 echo "• Sequel Ace (database GUI)"
+echo "• Supabase CLI (backend-as-a-service)"
 echo ""
 echo "PostgreSQL usage:"
 echo "• Create database: createdb your_project_name"
 echo "• Connect: psql your_project_name"
 echo "• Default connection: postgresql://localhost:5432"
+echo ""
+echo "Supabase CLI usage:"
+echo "• Initialize project: supabase init"
+echo "• Start local dev: supabase start"
+echo "• Login: supabase login"
 echo ""
 echo "Next steps:"
 echo "• Test PostgreSQL: createdb testdb && psql testdb"
