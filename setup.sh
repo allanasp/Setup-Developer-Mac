@@ -55,6 +55,12 @@ if [[ "$OSTYPE" != "darwin"* ]]; then
     exit 1
 fi
 
+# Enable hidden files in Finder
+print_status "Enabling hidden files in Finder..."
+defaults write com.apple.finder AppleShowAllFiles -bool true
+killall Finder 2>/dev/null || print_warning "Finder restart failed - may need manual restart"
+print_success "Hidden files enabled in Finder"
+
 # Install Xcode Command Line Tools (required for most tools)
 print_status "Installing Xcode Command Line Tools..."
 if ! xcode-select -p &> /dev/null; then
@@ -99,6 +105,35 @@ if [[ -d "/Applications/iTerm.app" ]]; then
     print_success "iTerm2 already installed"
 else
     brew install --cask iterm2
+fi
+
+# Configure iTerm2 with black background
+print_status "Configuring iTerm2 with black background..."
+if [[ -d "/Applications/iTerm.app" ]]; then
+    # Create iTerm2 preferences directory if it doesn't exist
+    mkdir -p ~/Library/Preferences
+    
+    # Set black background color for iTerm2
+    defaults write com.googlecode.iterm2 "New Bookmarks" -array-add '{
+        "Name" = "Default";
+        "Guid" = "Default";
+        "Background Color" = {
+            "Red Component" = 0;
+            "Green Component" = 0;
+            "Blue Component" = 0;
+            "Alpha Component" = 1;
+        };
+        "Foreground Color" = {
+            "Red Component" = 1;
+            "Green Component" = 1;
+            "Blue Component" = 1;
+            "Alpha Component" = 1;
+        };
+    }' 2>/dev/null || print_warning "iTerm2 configuration may need manual setup"
+    
+    print_success "iTerm2 configured with black background"
+else
+    print_warning "iTerm2 not found - skipping configuration"
 fi
 
 # Alternative modern terminal (optional)
@@ -282,27 +317,34 @@ else
     print_warning "Pyenv not available - Python versions will be installed after restart"
 fi
 
-# Java Development Kit (essential for React Native Android & many tools)
-print_status "Installing Java Development Kit (JDK)..."
+# Java Development Kit (React Native requires JDK 17 minimum)
+print_status "Installing Java Development Kit (JDK 17 for React Native)..."
 if ! command -v java &> /dev/null; then
-    # Install JDK via Homebrew (OpenJDK)
-    brew install openjdk@21
+    # Install JDK 17 (React Native requirement)
+    brew install openjdk@17
     
     # Add JDK to PATH and set JAVA_HOME
     if ! grep -q 'JAVA_HOME' ~/.zshrc 2>/dev/null; then
-        echo 'export JAVA_HOME="$(brew --prefix)/opt/openjdk@21"' >> ~/.zshrc
+        echo 'export JAVA_HOME="$(brew --prefix)/opt/openjdk@17"' >> ~/.zshrc
         echo 'export PATH="$JAVA_HOME/bin:$PATH"' >> ~/.zshrc
         print_success "Java environment variables added to .zshrc"
     fi
     
     # Set for current session
-    export JAVA_HOME="$(brew --prefix)/opt/openjdk@21"
+    export JAVA_HOME="$(brew --prefix)/opt/openjdk@17"
     export PATH="$JAVA_HOME/bin:$PATH"
     
-    print_success "OpenJDK 21 installed"
+    print_success "OpenJDK 17 installed (React Native compatible)"
 else
     java_version=$(java --version 2>/dev/null | head -n1 | cut -d' ' -f2 || echo "unknown")
     print_success "Java already installed ($java_version)"
+    
+    # Verify Java version is 17+
+    java_major=$(java --version 2>/dev/null | head -n1 | cut -d' ' -f2 | cut -d'.' -f1 || echo "0")
+    if [[ "$java_major" -lt 17 ]]; then
+        print_warning "Java version may be too old for React Native (requires JDK 17+)"
+        print_warning "Consider upgrading: brew install openjdk@17"
+    fi
 fi
 
 # Go and Ruby (standalone installations)
@@ -362,9 +404,18 @@ print_status "Installing frontend development tools..."
 volta install @vue/cli
 volta install nuxt
 
-# React Native CLI and Expo CLI
-volta install @react-native-community/cli
-volta install @expo/cli
+# React Native Development Tools
+print_status "Installing React Native development tools..."
+volta install @react-native-community/cli  # React Native CLI
+volta install @expo/cli                     # Expo CLI
+volta install eas-cli                       # EAS CLI for Expo Application Services
+volta install create-expo-app               # Create Expo apps
+
+# Watchman (recommended by React Native docs for better performance)
+print_status "Installing Watchman (React Native file watching)..."
+brew install watchman
+
+print_success "React Native development tools installed"
 
 # Database tools
 print_status "Installing database tools..."
@@ -397,19 +448,125 @@ brew install watchman  # For React Native file watching
 install_cask_app "Postman" "postman" "/Applications/Postman.app"
 install_cask_app "Figma" "figma" "/Applications/Figma.app"
 
-# Mobile Development (React Native) - Global tools only
+# Mobile Development (React Native) - Android Setup
 print_status "Installing/Updating mobile development tools..."
 install_cask_app "Android Studio" "android-studio" "/Applications/Android Studio.app"
+
+# Configure Android environment variables for React Native
+print_status "Configuring Android environment for React Native..."
+if [[ -d "/Applications/Android Studio.app" ]] || [[ -d "$HOME/Library/Android" ]]; then
+    # Add Android environment variables to shell
+    if ! grep -q 'ANDROID_HOME' ~/.zshrc 2>/dev/null; then
+        echo '' >> ~/.zshrc
+        echo '# Android Development (React Native)' >> ~/.zshrc
+        echo 'export ANDROID_HOME=$HOME/Library/Android/sdk' >> ~/.zshrc
+        echo 'export PATH=$PATH:$ANDROID_HOME/emulator' >> ~/.zshrc
+        echo 'export PATH=$PATH:$ANDROID_HOME/platform-tools' >> ~/.zshrc
+        echo 'export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin' >> ~/.zshrc
+        print_success "Android environment variables added to .zshrc"
+    else
+        print_success "Android environment variables already configured"
+    fi
+    
+    # Set for current session
+    export ANDROID_HOME=$HOME/Library/Android/sdk
+    export PATH=$PATH:$ANDROID_HOME/emulator
+    export PATH=$PATH:$ANDROID_HOME/platform-tools
+    export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
+else
+    print_warning "Android Studio not found - environment variables will be set for future use"
+    # Still add the environment variables for when Android Studio is installed
+    if ! grep -q 'ANDROID_HOME' ~/.zshrc 2>/dev/null; then
+        echo '' >> ~/.zshrc
+        echo '# Android Development (React Native)' >> ~/.zshrc
+        echo 'export ANDROID_HOME=$HOME/Library/Android/sdk' >> ~/.zshrc
+        echo 'export PATH=$PATH:$ANDROID_HOME/emulator' >> ~/.zshrc
+        echo 'export PATH=$PATH:$ANDROID_HOME/platform-tools' >> ~/.zshrc
+        echo 'export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin' >> ~/.zshrc
+        print_success "Android environment variables added to .zshrc (for future use)"
+    fi
+fi
+
+print_success "Android development environment configured"
 # Note: Xcode needs to be installed from App Store manually
 
-# iOS Development Global Tools
-brew install ios-deploy  # Deploy to iOS devices
-brew install cocoapods  # iOS dependency manager
+# iOS Development Tools (Optional - Requires Manual Xcode Installation)
+print_status "iOS Development Setup..."
+echo ""
+echo "⚠️  ${YELLOW}IMPORTANT: iOS Development Requires Manual Steps${NC}"
+echo "   • Xcode CANNOT be installed via Homebrew (Apple restriction)"
+echo "   • Xcode must be downloaded from Mac App Store (~15GB)"
+echo "   • Some iOS tools require full Xcode installation"
+echo ""
 
-# Xcode optimization tools
-print_status "Installing Xcode optimization tools..."
-brew install xcodes  # Manage multiple Xcode versions
-brew install swiftlint  # Swift code linting tool
+read -p "Install iOS development tools? (requires manual Xcode install later) [y/N]: " install_ios
+install_ios=${install_ios:-n}
+
+if [[ "$install_ios" =~ ^[Yy]$ ]]; then
+    print_status "Installing iOS development tools..."
+    
+    # Check if Xcode is already installed and handle license
+    if [[ -d "/Applications/Xcode.app" ]]; then
+        print_status "Xcode found - checking license agreement..."
+        
+        # Check if license needs to be accepted
+        if ! xcodebuild -license check &>/dev/null; then
+            print_warning "Xcode license needs to be accepted"
+            echo "This will prompt for your password to accept the Xcode license..."
+            
+            if sudo xcodebuild -license accept 2>/dev/null; then
+                print_success "Xcode license accepted"
+            else
+                print_warning "Failed to accept Xcode license automatically"
+                print_warning "Please run manually: sudo xcodebuild -license accept"
+            fi
+        else
+            print_success "Xcode license already accepted"
+        fi
+    else
+        print_warning "Xcode not found - install from App Store first"
+    fi
+    
+    # Tools that work without Xcode
+    brew install ios-deploy  # Deploy to iOS devices
+    brew install cocoapods  # iOS dependency manager
+    
+    # Xcode management tool
+    print_status "Installing xcodes (Xcode version manager)..."
+    brew install xcodes  # Manage multiple Xcode versions
+    
+    # SwiftLint requires full Xcode installation
+    print_status "Checking SwiftLint (requires full Xcode)..."
+    if [[ -d "/Applications/Xcode.app" ]]; then
+        if brew install swiftlint 2>/dev/null; then
+            print_success "SwiftLint installed successfully"
+        else
+            print_warning "SwiftLint installation failed - may need Xcode license acceptance"
+        fi
+    else
+        print_warning "SwiftLint skipped - install Xcode from App Store first"
+        print_warning "After Xcode install, run: sudo xcodebuild -license accept && brew install swiftlint"
+    fi
+    
+    print_success "iOS development tools installed (Xcode setup required)"
+    echo ""
+    echo "📱 ${BLUE}Next Steps for iOS Development:${NC}"
+    if [[ -d "/Applications/Xcode.app" ]]; then
+        echo "   ✅ Xcode is installed and configured"
+        echo "   • Test iOS setup: npx react-native run-ios"
+        echo "   • Optional: xcodes install --latest (for specific versions)"
+    else
+        echo "   1. Install Xcode from Mac App Store (15+ GB download)"
+        echo "   2. Re-run this script to complete iOS setup (license will be accepted automatically)"
+        echo "   3. Or manually run: sudo xcodebuild -license accept && brew install swiftlint"
+    fi
+else
+    print_warning "iOS development tools skipped by user choice"
+    print_status "You can install iOS tools later by running:"
+    echo "   brew install ios-deploy cocoapods xcodes"
+    echo "   # After installing Xcode from App Store:"
+    echo "   brew install swiftlint"
+fi
 
 # Kubernetes and DevOps tools
 print_status "Installing Kubernetes and DevOps tools..."
@@ -530,8 +687,10 @@ echo "   • TypeScript (global compiler)"
 echo "   • Go (latest via Homebrew)"
 echo "   • Ruby (latest via Homebrew)"
 echo "   • Vue CLI, Nuxt CLI"
-echo "   • React Native CLI, Expo CLI"  
-echo "   • Vite (project creator)"
+echo "   • React Native CLI, Expo CLI, EAS CLI"
+echo "   • create-expo-app (Expo project creator)"
+echo "   • Vite, create-react-app (project creators)"
+echo "   • Watchman (React Native file watching - performance optimization)"
 echo ""
 echo "📦 Package Managers installed/updated:"
 echo "   • npm (Node.js default package manager - updated)"
@@ -545,16 +704,23 @@ echo "   • kubectl - Kubernetes command line interface"
 echo "   • kubectx - Switch between Kubernetes contexts"
 echo "   • kubens - Switch between Kubernetes namespaces"
 echo ""
-echo "📱 iOS Development Tools installed/updated:"
-echo "   • xcodes - Manage multiple Xcode versions"
-echo "   • SwiftLint - Swift code linting"
-echo "   • ios-deploy - Deploy to iOS devices"
-echo "   • CocoaPods - iOS dependency manager"
+if [[ "$install_ios" =~ ^[Yy]$ ]]; then
+    echo "📱 iOS Development Tools installed/updated:"
+    echo "   • xcodes - Manage multiple Xcode versions"
+    echo "   • SwiftLint - Swift code linting (requires Xcode)"
+    echo "   • ios-deploy - Deploy to iOS devices" 
+    echo "   • CocoaPods - iOS dependency manager"
+    echo "   ⚠️  MANUAL STEP: Install Xcode from Mac App Store"
+else
+    echo "📱 iOS Development Tools:"
+    echo "   • Skipped by user choice"
+    echo "   • Can be installed later with iOS-specific commands shown above"
+fi
 echo ""
 echo "☕ Java Development Tools installed/updated:"
-echo "   • OpenJDK 21 - Java Development Kit"
+echo "   • OpenJDK 17 - Java Development Kit (React Native compatible)"
 echo "   • JAVA_HOME - Environment variable configured"
-echo "   • Required for: React Native Android, Android Studio, Spring Boot"
+echo "   • Required for: React Native Android, Android Studio"
 echo ""
 echo "📝 Free Specialized Tools installed/updated:"
 echo "   • Obsidian - Free markdown editor with graph view and note-taking"
@@ -570,7 +736,14 @@ echo "   • Warp - Free modern terminal with AI features"
 echo "   • VS Code - Free with excellent JSON/YAML/Markdown support via extensions"
 echo ""
 echo "📝 Manual steps remaining:"
-echo "  1. Install Xcode from App Store (for iOS development)"
+if [[ "$install_ios" =~ ^[Yy]$ ]]; then
+    echo "  1. Install Xcode from App Store (15+ GB - REQUIRED for iOS development)"
+    echo "     • Cannot be automated due to Apple restrictions"
+    echo "     • After install: sudo xcodebuild -license accept"
+    echo "     • Then run: brew install swiftlint"
+else
+    echo "  1. iOS Development skipped - install Xcode manually if needed later"
+fi
 echo "  2. Run 'p10k configure' to setup PowerLevel10k theme"
 echo "  3. Configure iTerm2 color scheme and profile (or try Warp for modern terminal)"
 echo "  4. Run 'gh auth login' to authenticate with GitHub"
@@ -587,9 +760,19 @@ echo "  14. Configure kubectl with your Kubernetes cluster credentials"
 echo "  15. Import WireGuard VPN configurations if needed"
 echo "  16. Create PostgreSQL database: 'createdb your_project_name'"
 echo "  17. Sign in to Sequel Ace for database management"
-echo "  18. Configure Android Studio SDK for React Native (JDK is now installed)"
-echo "  19. Verify Java setup: 'java --version' and 'echo $JAVA_HOME'"
-echo "  20. Use 'xcodes list' to see available Xcode versions for iOS development"
+echo "  18. Configure Android Studio for React Native:"
+echo "      • Install Android SDK API 35 (latest)"
+echo "      • Install Android SDK Platform-Tools"
+echo "      • Create Android Virtual Device (AVD)"
+echo "      • Accept Android licenses: 'yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses'"
+echo "  19. Verify React Native environment: 'npx react-native doctor'"
+echo "  20. Test React Native setup:"
+echo "      • Create test project: 'npx react-native@latest init TestApp'"
+echo "      • Run Android: 'npx react-native run-android' (requires AVD running)"
+echo "      • Run iOS: 'npx react-native run-ios' (requires Xcode + Simulator)"
+echo "  21. EAS CLI setup: 'eas login' and 'eas build:configure' in Expo projects"
+echo "  22. Verify Java setup: 'java --version' and 'echo $JAVA_HOME' (should show JDK 17)"
+echo "  23. Use 'xcodes list' to see available Xcode versions for iOS development"
 echo ""
 echo "🐍 Python Version Management (pyenv commands):"
 echo "   • List installed versions: 'pyenv versions'"

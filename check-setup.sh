@@ -61,6 +61,20 @@ print_section "System Requirements"
 if xcode-select -p &> /dev/null; then
     xcode_version=$(xcodebuild -version 2>/dev/null | head -n1 || echo "Command Line Tools")
     print_installed "Xcode Command Line Tools ($xcode_version)"
+    
+    # Check if full Xcode is installed
+    if [[ -d "/Applications/Xcode.app" ]]; then
+        print_installed "  Full Xcode installation found"
+        
+        # Check Xcode license status
+        if xcodebuild -license check &>/dev/null; then
+            print_installed "  Xcode license accepted"
+        else
+            print_warning "  Xcode license NOT accepted (run: sudo xcodebuild -license accept)"
+        fi
+    else
+        print_warning "  Full Xcode not installed (iOS development limited)"
+    fi
 else
     print_missing "Xcode Command Line Tools"
 fi
@@ -201,6 +215,22 @@ if command_exists expo; then
     print_installed "Expo CLI ($expo_version)"
 else
     print_missing "Expo CLI"
+fi
+
+# EAS CLI
+if command_exists eas; then
+    eas_version=$(eas --version 2>/dev/null || echo "installed")
+    print_installed "EAS CLI ($eas_version)"
+else
+    print_missing "EAS CLI"
+fi
+
+# Watchman (React Native)
+if command_exists watchman; then
+    watchman_version=$(watchman version 2>/dev/null | jq -r '.version' 2>/dev/null || watchman --version 2>/dev/null || echo "installed")
+    print_installed "Watchman ($watchman_version)"
+else
+    print_missing "Watchman (React Native file watching)"
 fi
 
 # Vite
@@ -385,6 +415,20 @@ print_section "Mobile Development"
 # Android Studio
 if app_exists "/Applications/Android Studio.app"; then
     print_installed "Android Studio"
+    
+    # Check Android environment variables
+    if [[ -n "$ANDROID_HOME" ]]; then
+        print_installed "  ANDROID_HOME set ($ANDROID_HOME)"
+    else
+        print_warning "  ANDROID_HOME not set (restart terminal or source ~/.zshrc)"
+    fi
+    
+    # Check if Android SDK exists
+    if [[ -d "$HOME/Library/Android/sdk" ]]; then
+        print_installed "  Android SDK found"
+    else
+        print_warning "  Android SDK not found (configure in Android Studio)"
+    fi
 else
     print_missing "Android Studio"
 fi
@@ -400,7 +444,11 @@ fi
 if command_exists swiftlint; then
     print_installed "SwiftLint ($(swiftlint version))"
 else
-    print_missing "SwiftLint"
+    if [[ -d "/Applications/Xcode.app" ]]; then
+        print_missing "SwiftLint (Xcode available - run: brew install swiftlint)"
+    else
+        print_warning "SwiftLint (requires full Xcode from App Store)"
+    fi
 fi
 
 if command_exists ios-deploy; then
