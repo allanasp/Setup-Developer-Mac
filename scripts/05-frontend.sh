@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Frontend Development Tools Setup
-# Installs: TypeScript, Vue CLI, React Native CLI, Expo CLI, Vite, etc.
+# Installs: TypeScript, Vue CLI, React Native CLI, Expo CLI, Vite, Storyblok CLI, Sanity CLI, etc.
 
 set -e  # Exit on any error
 
@@ -28,6 +28,10 @@ install_volta_package "typescript"
 install_volta_package "create-vite"
 install_volta_package "serve"
 
+# Headless CMS tools
+install_volta_package "storyblok"  # Storyblok CLI
+install_volta_package "@sanity/cli"  # Sanity CLI
+
 # React Native Development Tools
 print_status "Installing React Native development tools..."
 install_volta_package "@react-native-community/cli"  # React Native CLI
@@ -46,6 +50,7 @@ echo "• TypeScript (global compiler)"
 echo "• Vue CLI & Nuxt CLI"
 echo "• React Native CLI & Expo CLI & EAS CLI"
 echo "• Vite (create-vite) & Serve"
+echo "• Storyblok CLI & Sanity CLI (headless CMS)"
 echo "• Watchman (file watching)"
 echo ""
 echo "Usage examples:"
@@ -53,6 +58,8 @@ echo "• Create Vue app: vue create my-app"
 echo "• Create React Native app: npx react-native@latest init MyApp"
 echo "• Create Expo app: npx create-expo-app@latest"
 echo "• Create Vite app: npm create vite@latest"
+echo "• Initialize Storyblok: storyblok init"
+echo "• Create Sanity project: sanity init"
 echo ""
 echo "Next steps:"
 echo "• Run development apps setup: ./scripts/06-dev-apps.sh"

@@ -63,7 +63,7 @@ optional_scripts=(
 
 optional_descriptions=(
     "Programming Languages (Java, Go, Ruby)"
-    "Frontend Tools (TypeScript, Vue, React Native, Vite)"
+    "Frontend Tools (TypeScript, Vue, React Native, Vite, Storyblok, Sanity CLI)"
     "Development Apps (VS Code, Cursor, Zed, Extensions)"
     "Mobile Development (Android Studio, iOS tools)"
     "Productivity Tools (Raycast, Rectangle, Browsers)"
