@@ -41,11 +41,25 @@ install_cask_app() {
     if [[ -d "$app_path" ]]; then
         print_success "$app_name already installed (will be updated by brew upgrade)"
     else
-        if brew install --cask "$cask_name" 2>/dev/null; then
+        if brew install --cask "$cask_name"; then
             print_success "$app_name installed successfully"
         else
-            print_warning "$app_name installation failed or skipped"
+            print_error "$app_name installation failed"
+            return 1
         fi
+    fi
+}
+
+# Function to safely install volta packages
+install_volta_package() {
+    local package_name="$1"
+    
+    print_status "Installing $package_name via Volta..."
+    if volta install "$package_name"; then
+        print_success "$package_name installed successfully"
+    else
+        print_error "$package_name installation failed"
+        return 1
     fi
 }
 
@@ -256,6 +270,10 @@ else
     fi
 fi
 
+# Additional code editors
+install_cask_app "Zed" "zed" "/Applications/Zed.app"
+install_cask_app "TextMate" "textmate" "/Applications/TextMate.app"
+
 # Add VS Code CLI to PATH if not already there
 if [[ -d "/Applications/Visual Studio Code.app" ]] && ! command -v code &> /dev/null; then
     print_status "Adding VS Code CLI to PATH..."
@@ -401,15 +419,22 @@ fi
 print_status "Installing frontend development tools..."
 
 # Vue CLI and Nuxt CLI
-volta install @vue/cli
-volta install nuxt
+install_volta_package "@vue/cli"
+install_volta_package "nuxt"
+
+# TypeScript (global)
+install_volta_package "typescript"
+
+# Vite and other build tools
+install_volta_package "create-vite"
+install_volta_package "serve"
 
 # React Native Development Tools
 print_status "Installing React Native development tools..."
-volta install @react-native-community/cli  # React Native CLI
-volta install @expo/cli                     # Expo CLI
-volta install eas-cli                       # EAS CLI for Expo Application Services
-volta install create-expo-app               # Create Expo apps
+install_volta_package "@react-native-community/cli"  # React Native CLI
+install_volta_package "@expo/cli"                     # Expo CLI
+install_volta_package "eas-cli"                       # EAS CLI for Expo Application Services
+install_volta_package "create-expo-app"               # Create Expo apps
 
 # Watchman (recommended by React Native docs for better performance)
 print_status "Installing Watchman (React Native file watching)..."
@@ -428,6 +453,7 @@ install_cask_app "Raycast" "raycast" "/Applications/Raycast.app"
 install_cask_app "Rectangle" "rectangle" "/Applications/Rectangle.app"
 install_cask_app "1Password" "1password" "/Applications/1Password.app"
 install_cask_app "Maccy" "maccy" "/Applications/Maccy.app"
+install_cask_app "Obsidian" "obsidian" "/Applications/Obsidian.app"
 
 # Additional browsers for testing
 install_cask_app "Firefox" "firefox" "/Applications/Firefox.app"
@@ -439,8 +465,15 @@ brew install ngrok  # Command line tool, no cask needed
 
 # Image optimization and utilities
 install_cask_app "ImageOptim" "imageoptim" "/Applications/ImageOptim.app"
-brew install eza  # Command line tool
+brew install eza  # Command line tool (modern ls replacement)
 brew install wget  # Command line tool
+
+# Additional utility apps
+install_cask_app "System Color Picker" "system-color-picker" "/Applications/System Color Picker.app"
+install_cask_app "AppCleaner" "appcleaner" "/Applications/AppCleaner.app"
+install_cask_app "Ice" "ice" "/Applications/Ice.app"
+install_cask_app "Syncthing" "syncthing" "/Applications/Syncthing.app"
+install_cask_app "Wireshark" "wireshark" "/Applications/Wireshark.app"
 
 # Useful development tools
 install_cask_app "OrbStack" "orbstack" "/Applications/OrbStack.app"
@@ -630,13 +663,17 @@ extensions=(
 )
 
 # Install each extension with error handling
-for extension in "${extensions[@]}"; do
-    if code --install-extension "$extension" 2>/dev/null; then
-        print_success "Installed VS Code extension: $extension"
-    else
-        print_warning "Failed to install VS Code extension: $extension (might already be installed)"
-    fi
-done
+if command -v code &> /dev/null; then
+    for extension in "${extensions[@]}"; do
+        if code --install-extension "$extension"; then
+            print_success "Installed VS Code extension: $extension"
+        else
+            print_warning "Failed to install VS Code extension: $extension (might already be installed)"
+        fi
+    done
+else
+    print_warning "VS Code CLI not available - extensions will need to be installed manually"
+fi
 
 # Configure Git (optional - user can skip)
 print_status "Git configuration (optional)..."
@@ -681,14 +718,14 @@ echo "🚀 Global Development Tools installed/updated:"
 echo "   • Node.js (latest LTS via Volta version manager)"
 echo "   • npm (updated to latest version)"
 echo "   • Python (3.9.6, 3.10.13, 3.12.1 via pyenv version manager)"
-echo "   • Java JDK (OpenJDK 21 - required for React Native Android)"
-echo "   • TypeScript (global compiler)"
+echo "   • Java JDK (OpenJDK 17 - required for React Native Android)"
+echo "   • TypeScript (global compiler)"  
 echo "   • Go (latest via Homebrew)"
 echo "   • Ruby (latest via Homebrew)"
 echo "   • Vue CLI, Nuxt CLI"
 echo "   • React Native CLI, Expo CLI, EAS CLI"
 echo "   • create-expo-app (Expo project creator)"
-echo "   • Vite, create-react-app (project creators)"
+echo "   • Vite (create-vite), Serve (static file server)"
 echo "   • Watchman (React Native file watching - performance optimization)"
 echo ""
 echo "📦 Package Managers installed/updated:"
@@ -720,18 +757,18 @@ echo "   • OpenJDK 17 - Java Development Kit (React Native compatible)"
 echo "   • JAVA_HOME - Environment variable configured"
 echo "   • Required for: React Native Android, Android Studio"
 echo ""
-echo "📝 Free Specialized Tools installed/updated:"
-echo "   • Obsidian - Free markdown editor with graph view and note-taking"
-echo "   • Zed - Free, ultra-fast code editor (written in Rust)"
+echo "📝 Specialized Tools installed/updated:"
+echo "   • Obsidian - Markdown editor with graph view and note-taking"
+echo "   • Zed - Ultra-fast code editor (written in Rust)"
 echo "   • TextMate - Lightweight text editor for quick file editing"
-echo "   • System Color Picker - Free native color picker tool"
-echo "   • AppCleaner - Free complete app uninstaller"
-echo "   • Ice - Free menubar organizer (hides overflow icons)"
-echo "   • Syncthing - Free file syncing between devices"
-echo "   • Wireshark - Free network protocol analyzer (debug APIs, network traffic)"
+echo "   • System Color Picker - Native color picker tool"
+echo "   • AppCleaner - Complete app uninstaller"
+echo "   • Ice - Menubar organizer (hides overflow icons)"
+echo "   • Syncthing - File syncing between devices"
+echo "   • Wireshark - Network protocol analyzer (debug APIs, network traffic)"
 echo "   • WireGuard - Modern, secure VPN client"
-echo "   • Warp - Free modern terminal with AI features"
-echo "   • VS Code - Free with excellent JSON/YAML/Markdown support via extensions"
+echo "   • Warp - Modern terminal with AI features"
+echo "   • VS Code - With excellent JSON/YAML/Markdown support via extensions"
 echo ""
 echo "📝 Manual steps remaining:"
 if [[ "$install_ios" =~ ^[Yy]$ ]]; then
@@ -814,7 +851,7 @@ echo "   • Firefox & Brave - Additional browsers for testing"
 echo ""
 echo "🔧 Command Line Utilities:"
 echo "   • ngrok - Local tunneling for webhook testing"
-echo "   • eza - Modern 'ls' replacement with colors and icons"
+echo "   • eza - Modern 'ls' replacement with colors and icons (not exa)"
 echo "   • wget - File download utility"
 echo "   • jq - JSON processor and formatter"
 echo "   • tree - Directory structure visualization"
