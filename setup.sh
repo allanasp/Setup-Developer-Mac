@@ -573,8 +573,7 @@ print_status "Installing Kubernetes and DevOps tools..."
 brew install kops  # Kubernetes cluster management
 brew install helm  # Kubernetes package manager  
 brew install kubernetes-cli  # kubectl command line tool
-brew install kubectx  # Switch between Kubernetes contexts
-brew install kubens  # Switch between Kubernetes namespaces
+brew install kubectx  # Switch between Kubernetes contexts (includes kubens)
 
 # Additional useful tools
 print_status "Installing/Updating additional development tools..."
@@ -701,8 +700,7 @@ echo "☸️ Kubernetes & DevOps Tools installed/updated:"
 echo "   • kOps - Kubernetes cluster management"
 echo "   • Helm - Kubernetes package manager"
 echo "   • kubectl - Kubernetes command line interface"
-echo "   • kubectx - Switch between Kubernetes contexts"
-echo "   • kubens - Switch between Kubernetes namespaces"
+echo "   • kubectx - Switch between Kubernetes contexts (includes kubens)"
 echo ""
 if [[ "$install_ios" =~ ^[Yy]$ ]]; then
     echo "📱 iOS Development Tools installed/updated:"
@@ -783,7 +781,7 @@ echo "   • List available versions: 'pyenv install --list'"
 echo ""
 echo "☸️ Kubernetes Quick Commands:"
 echo "   • Switch context: 'kubectx production'"
-echo "   • Switch namespace: 'kubens default'"
+echo "   • Switch namespace: 'kubens default' (included with kubectx)"
 echo "   • List clusters: 'kops get clusters'"
 echo "   • Install Helm chart: 'helm install myapp ./mychart'"
 echo ""

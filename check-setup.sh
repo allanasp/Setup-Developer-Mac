@@ -394,20 +394,19 @@ else
     print_missing "kubectl"
 fi
 
-# kubectx
+# kubectx (includes kubens)
 if command_exists kubectx; then
     kubectx_version=$(kubectx --version 2>/dev/null || echo "installed")
     print_installed "kubectx ($kubectx_version)"
+    
+    # Check if kubens is also available (should be bundled)
+    if command_exists kubens; then
+        print_installed "  kubens (bundled with kubectx)"
+    else
+        print_warning "  kubens not found (should be bundled with kubectx)"
+    fi
 else
-    print_missing "kubectx"
-fi
-
-# kubens
-if command_exists kubens; then
-    kubens_version=$(kubens --version 2>/dev/null || echo "installed")
-    print_installed "kubens ($kubens_version)"
-else
-    print_missing "kubens"
+    print_missing "kubectx (includes kubens)"
 fi
 
 print_section "Mobile Development"
