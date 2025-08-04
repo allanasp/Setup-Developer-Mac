@@ -15,11 +15,42 @@ echo ""
 # Check if running on macOS
 check_macos
 
-# Define all setup scripts in order
-scripts=(
+# Function to run a script
+run_script() {
+    local script="$1"
+    local script_path="$(dirname "$0")/scripts/$script"
+    
+    if [[ -f "$script_path" ]]; then
+        print_status "Running $script..."
+        chmod +x "$script_path"
+        if bash "$script_path"; then
+            print_success "$script completed successfully"
+        else
+            print_error "$script failed"
+            exit 1
+        fi
+        echo ""
+    else
+        print_error "Script not found: $script_path"
+        exit 1
+    fi
+}
+
+# Essential scripts (always installed first)
+essential_scripts=(
     "01-system.sh"
     "02-terminal.sh" 
     "03-version-managers.sh"
+)
+
+essential_descriptions=(
+    "System Requirements (Xcode, Homebrew)"
+    "Terminal & Shell (iTerm2, Oh My Zsh, PowerLevel10k)"
+    "Version Managers (Volta, pyenv)"
+)
+
+# Optional scripts (user can choose)
+optional_scripts=(
     "04-languages.sh"
     "05-frontend.sh"
     "06-dev-apps.sh"
@@ -30,11 +61,7 @@ scripts=(
     "11-fonts.sh"
 )
 
-# Script descriptions (using parallel arrays for compatibility)
-descriptions=(
-    "System Requirements (Xcode, Homebrew)"
-    "Terminal & Shell (iTerm2, Oh My Zsh, PowerLevel10k)"
-    "Version Managers (Volta, pyenv)"
+optional_descriptions=(
     "Programming Languages (Java, Go, Ruby)"
     "Frontend Tools (TypeScript, Vue, React Native, Vite)"
     "Development Apps (VS Code, Cursor, Zed, Extensions)"
@@ -45,47 +72,107 @@ descriptions=(
     "Developer Fonts (Fira Code, JetBrains Mono)"
 )
 
-# Interactive mode - let user choose which categories to install
-echo "Available setup categories:"
+# First, always install essential components
+echo "🔧 Installing essential components first (required for everything else):"
 echo ""
-for i in "${!scripts[@]}"; do
-    script="${scripts[$i]}"
-    description="${descriptions[$i]}"
-    printf "%2d. %s\n" $((i+1)) "$description"
+for i in "${!essential_scripts[@]}"; do
+    printf "   %d. %s\n" $((i+1)) "${essential_descriptions[i]}"
 done
 echo ""
 
-read -p "Install all categories? [Y/n]: " install_all
-install_all=${install_all:-y}
+print_status "Installing essential components..."
+echo ""
 
-if [[ "$install_all" =~ ^[Yy]$ ]]; then
-    # Run all scripts
-    for script in "${scripts[@]}"; do
-        script_path="$(dirname "$0")/scripts/$script"
-        if [[ -f "$script_path" ]]; then
-            print_status "Running $script..."
-            chmod +x "$script_path"
-            if bash "$script_path"; then
-                print_success "$script completed successfully"
-            else
-                print_error "$script failed"
-                exit 1
-            fi
-            echo ""
-        else
-            print_error "Script not found: $script_path"
-            exit 1
+for script in "${essential_scripts[@]}"; do
+    run_script "$script"
+done
+
+print_success "Essential components installed successfully!"
+echo ""
+echo "🎉 Core development environment is ready!"
+echo ""
+
+# Now show optional scripts for selection
+echo "📦 Additional Development Scripts (choose which ones to install):"
+echo ""
+for i in "${!optional_scripts[@]}"; do
+    printf "%2d. %s\n" $((i+4)) "${optional_descriptions[i]}"
+done
+echo ""
+
+# Simple CLI selection for optional scripts
+echo "Choose additional scripts to install:"
+echo "• Type numbers separated by spaces (e.g., '4 6 7' or '5 8 11')"
+echo "• Type 'all' to install all additional scripts" 
+echo "• Press Enter to skip additional scripts"
+echo "• Type 'quit' to exit"
+echo ""
+read -p "Additional scripts to install: " selection
+
+selected_scripts=()
+
+# Parse user selection for optional scripts
+case $selection in
+    'all'|'ALL')
+        selected_scripts=("${optional_scripts[@]}")
+        echo ""
+        echo "✅ Selected ALL additional scripts for installation"
+        ;;
+    'quit'|'QUIT'|'q'|'Q')
+        echo "❌ Setup cancelled"
+        exit 0
+        ;;
+    '')
+        echo "⏭️ Skipping additional scripts"
+        ;;
+    *)
+        # Parse numbers
+        if [[ -n "$selection" ]]; then
+            for num in $selection; do
+                if [[ "$num" =~ ^[0-9]+$ ]] && [[ "$num" -ge 4 ]] && [[ "$num" -le 11 ]]; then
+                    idx=$((num-4))  # Convert to optional_scripts index (4->0, 5->1, etc.)
+                    selected_scripts+=("${optional_scripts[$idx]}")
+                    echo "✓ Selected: ${optional_descriptions[$idx]}"
+                else
+                    echo "❌ Invalid script number: $num (valid range: 4-11)"
+                fi
+            done
         fi
+        ;;
+esac
+
+# Install additional selected scripts
+if [[ ${#selected_scripts[@]} -gt 0 ]]; then
+    echo ""
+    echo "📋 Additional scripts to be installed:"
+    for script in "${selected_scripts[@]}"; do
+        # Find description for this script
+        for i in "${!optional_scripts[@]}"; do
+            if [[ "${optional_scripts[$i]}" == "$script" ]]; then
+                echo "  • ${optional_descriptions[$i]}"
+                break
+            fi
+        done
+    done
+    echo ""
+    read -p "Proceed with additional installations? [Y/n]: " confirm
+    confirm=${confirm:-y}
+    if [[ ! "$confirm" =~ ^[Yy]$ ]]; then
+        echo "❌ Additional installations cancelled"
+        exit 0
+    fi
+    
+    # Install selected additional scripts
+    echo ""
+    print_status "Installing additional components..."
+    echo ""
+    
+    for script in "${selected_scripts[@]}"; do
+        run_script "$script"
     done
 else
-    # Interactive selection
-    echo "Enter the numbers of categories to install (e.g., 1 2 5-8):"
-    read -p "Categories: " selected
-    
-    # Parse selection (this is a simplified version)
-    echo "Selected categories: $selected"
-    echo "Note: For custom selection, run individual scripts manually:"
-    echo "Example: ./scripts/01-system.sh"
+    echo ""
+    echo "✅ Setup complete with essential components only!"
 fi
 
 # Final summary
@@ -93,10 +180,26 @@ print_section "Setup Complete!"
 echo "🎉 Modular setup process completed!"
 echo ""
 echo "📋 What was installed:"
-for i in "${!scripts[@]}"; do
-    description="${descriptions[$i]}"
-    echo "• $description"
+echo ""
+echo "🔧 Essential components:"
+for i in "${!essential_scripts[@]}"; do
+    description="${essential_descriptions[$i]}"
+    echo "• ${description/- REQUIRED/}"
 done
+
+if [[ ${#selected_optional[@]} -gt 0 ]]; then
+    echo ""
+    echo "📦 Optional components:"
+    for script in "${selected_optional[@]}"; do
+        # Find description for this script
+        for i in "${!optional_scripts[@]}"; do
+            if [[ "${optional_scripts[$i]}" == "$script" ]]; then
+                echo "• ${optional_descriptions[$i]}"
+                break
+            fi
+        done
+    done
+fi
 echo ""
 echo "🔄 Next steps:"
 echo "1. Restart terminal or run 'source ~/.zshrc'"
