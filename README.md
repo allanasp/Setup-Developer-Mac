@@ -101,7 +101,7 @@ cd mac-dev-setup
 
 - **Visual Studio Code** with CLI integration
 - **Cursor** AI-powered code editor
-- **iTerm2** with black background theme
+- **iTerm2** with Dracula theme and black background
 - **Oh My Zsh** with PowerLevel10k theme
 - **Warp** modern terminal with AI features
 </details>
@@ -179,7 +179,7 @@ The script automatically installs essential VS Code extensions:
 ## ⚙️ Custom Configurations
 
 ### 🖥️ **Terminal Enhancements**
-- **iTerm2**: Configured with black background and white text
+- **iTerm2**: Configured with Dracula theme for beautiful colors
 - **Oh My Zsh**: Includes autosuggestions and syntax highlighting
 - **PowerLevel10k**: Modern, informative prompt theme
 - **Custom Aliases**: Git shortcuts, better file listing, development shortcuts

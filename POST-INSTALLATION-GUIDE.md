@@ -55,12 +55,23 @@ p10k configure
 3. Navigate to **Profiles** → **Colors**
 4. Verify background is black - if not, select "Black" preset
 
-### Optional: Import Better Color Scheme
+### Import Dracula Color Scheme
+The setup includes the popular Dracula theme for iTerm2:
+
+**Activating Dracula Theme:**
+1. Open iTerm2 → **Preferences** (⌘+,)
+2. Navigate to **Profiles** → **Colors Tab**
+3. Open the **Color Presets...** drop-down in the bottom right corner
+4. Select **Import...** from the list
+5. Select the `Dracula.itermcolors` file from the setup directory
+6. Select **Dracula** from Color Presets... 💜
+
+**Alternative: Manual Installation**
 ```bash
-# Download popular Dracula theme (optional)
-git clone https://github.com/dracula/iterm.git /tmp/dracula-iterm
+# If theme file is missing, clone the repository:
+git clone https://github.com/dracula/iterm.git
 ```
-Then import `/tmp/dracula-iterm/Dracula.itermcolors` in iTerm2 Preferences.
+Then import the `Dracula.itermcolors` file from the cloned repository.
 
 ---
 

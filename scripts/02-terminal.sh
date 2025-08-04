@@ -21,31 +21,21 @@ else
     brew install --cask iterm2
 fi
 
-# Configure iTerm2 with black background
-print_status "Configuring iTerm2 with black background..."
+# Configure iTerm2 with Dracula theme
+print_status "Configuring iTerm2 with Dracula theme..."
 if [[ -d "/Applications/iTerm.app" ]]; then
     # Create iTerm2 preferences directory if it doesn't exist
     mkdir -p ~/Library/Preferences
     
-    # Set black background color for iTerm2
-    defaults write com.googlecode.iterm2 "New Bookmarks" -array-add '{
-        "Name" = "Default";
-        "Guid" = "Default";
-        "Background Color" = {
-            "Red Component" = 0;
-            "Green Component" = 0;
-            "Blue Component" = 0;
-            "Alpha Component" = 1;
-        };
-        "Foreground Color" = {
-            "Red Component" = 1;
-            "Green Component" = 1;
-            "Blue Component" = 1;
-            "Alpha Component" = 1;
-        };
-    }' 2>/dev/null || print_warning "iTerm2 configuration may need manual setup"
+    # Download and install Dracula theme for iTerm2
+    if [[ ! -f ~/Downloads/Dracula.itermcolors ]]; then
+        print_status "Downloading Dracula theme..."
+        curl -o ~/Downloads/Dracula.itermcolors https://raw.githubusercontent.com/dracula/iterm/master/Dracula.itermcolors
+        print_success "Dracula theme downloaded"
+    fi
     
-    print_success "iTerm2 configured with black background"
+    print_success "Dracula theme ready for import"
+    print_success "To apply: Open iTerm2 → Preferences → Profiles → Colors → Import Dracula.itermcolors"
 else
     print_warning "iTerm2 not found - skipping configuration"
 fi
