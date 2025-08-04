@@ -33,6 +33,38 @@ else
     print_success "AWS CLI already installed"
 fi
 
+# Configure AWS CLI for Amazon Q Developer
+print_status "Configuring AWS CLI for Amazon Q Developer..."
+if ! aws configure list &>/dev/null; then
+    print_status "AWS CLI needs configuration for Amazon Q Developer"
+    echo ""
+    echo "🔧 AWS Configuration Options:"
+    echo "1. For Amazon Q Developer (free tier)"
+    echo "2. Skip AWS configuration (can configure later)"
+    echo ""
+    read -p "Configure AWS now? [1/2]: " aws_choice
+    aws_choice=${aws_choice:-2}
+    
+    if [[ "$aws_choice" == "1" ]]; then
+        print_status "Setting up AWS for Amazon Q Developer..."
+        echo ""
+        echo "📝 For Amazon Q Developer, you can use dummy values:"
+        echo "   Access Key ID: dummy"
+        echo "   Secret Access Key: dummy"
+        echo "   Region: us-east-1"
+        echo "   Output format: json"
+        echo ""
+        echo "Note: You'll authenticate through your browser when using Amazon Q"
+        echo ""
+        aws configure
+        print_success "AWS CLI configured for Amazon Q Developer"
+    else
+        print_status "AWS configuration skipped - can be configured later with 'aws configure'"
+    fi
+else
+    print_success "AWS CLI already configured"
+fi
+
 # Command line utilities
 print_status "Installing command line utilities..."
 brew install ngrok  # Local tunneling

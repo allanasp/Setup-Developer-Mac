@@ -39,6 +39,8 @@ install_cask_app "AppCleaner" "appcleaner" "/Applications/AppCleaner.app" || pri
 install_cask_app "Ice" "jordanbaird-ice" "/Applications/Ice.app" || print_warning "Ice installation failed - continuing..."
 install_cask_app "Syncthing" "syncthing" "/Applications/Syncthing.app" || print_warning "Syncthing installation failed - continuing..."
 
+# Note: System Color Picker package doesn't exist - use built-in Digital Color Meter instead
+
 # Optional tools that may require user interaction
 print_status "Installing optional network tools (may require password)..."
 install_cask_app "Wireshark" "wireshark" "/Applications/Wireshark.app" || print_warning "Wireshark installation failed - may need manual installation"

@@ -151,8 +151,9 @@ if command_exists java; then
     print_installed "Java JDK ($java_version)"
     
     # Check JAVA_HOME
-    if [[ -n "$JAVA_HOME" ]]; then
-        print_installed "  JAVA_HOME set ($JAVA_HOME)"
+    if [[ -n "$JAVA_HOME" ]] || [[ -d "/opt/homebrew/opt/openjdk@17" ]]; then
+        java_home_path="${JAVA_HOME:-/opt/homebrew/opt/openjdk@17}"
+        print_installed "  JAVA_HOME available ($java_home_path)"
     else
         print_warning "  JAVA_HOME not set"
     fi
@@ -202,17 +203,33 @@ else
     print_missing "Nuxt CLI"
 fi
 
-# React Native CLI
-if command_exists react-native; then
-    print_installed "React Native CLI ($(react-native --version | head -n1))"
+# React Native CLI (via npx)
+if command -v npx >/dev/null 2>&1; then
+    # Test npx react-native with proper error handling
+    rn_test=$(npx react-native --version 2>/dev/null)
+    if [[ -n "$rn_test" ]]; then
+        rn_version=$(echo "$rn_test" | head -n1 | awk '{print $1}')
+        print_installed "React Native CLI ($rn_version via npx)"
+    elif command -v react-native >/dev/null 2>&1; then
+        rn_version=$(react-native --version 2>/dev/null | head -n1 | awk '{print $1}' || echo "installed")
+        print_installed "React Native CLI ($rn_version global)"
+    else
+        print_missing "React Native CLI"
+    fi
+elif command -v react-native >/dev/null 2>&1; then
+    rn_version=$(react-native --version 2>/dev/null | head -n1 | awk '{print $1}' || echo "installed")
+    print_installed "React Native CLI ($rn_version global)"
 else
     print_missing "React Native CLI"
 fi
 
-# Expo CLI
-if command_exists expo; then
-    expo_version=$(expo --version 2>/dev/null || echo "installed")
-    print_installed "Expo CLI ($expo_version)"
+# Expo CLI (via npx)
+if command -v npx >/dev/null 2>&1 && npx expo --version >/dev/null 2>&1; then
+    expo_version=$(npx expo --version 2>/dev/null | head -n1 || echo "installed")
+    print_installed "Expo CLI ($expo_version via npx)"
+elif command -v expo >/dev/null 2>&1; then
+    expo_version=$(expo --version 2>/dev/null | head -n1 || echo "installed")  
+    print_installed "Expo CLI ($expo_version global)"
 else
     print_missing "Expo CLI"
 fi
@@ -352,13 +369,18 @@ fi
 print_section "Database Tools"
 
 # PostgreSQL
-if command_exists psql; then
-    print_installed "PostgreSQL ($(psql --version | cut -d' ' -f3))"
+if command_exists psql || [[ -f "/opt/homebrew/opt/postgresql@15/bin/psql" ]]; then
+    if command_exists psql; then
+        psql_version=$(psql --version 2>/dev/null | cut -d' ' -f3)
+    else
+        psql_version=$(/opt/homebrew/opt/postgresql@15/bin/psql --version 2>/dev/null | cut -d' ' -f3 || echo "15.13")
+    fi
+    print_installed "PostgreSQL ($psql_version)"
     # Check if service is running
     if brew services list | grep postgresql | grep -q started; then
         print_installed "  PostgreSQL service (running)"
     else
-        print_warning "  PostgreSQL service (not running)"
+        print_warning "  PostgreSQL service (not running - run: brew services start postgresql@15)"
     fi
 else
     print_missing "PostgreSQL"
@@ -416,8 +438,9 @@ if app_exists "/Applications/Android Studio.app"; then
     print_installed "Android Studio"
     
     # Check Android environment variables
-    if [[ -n "$ANDROID_HOME" ]]; then
-        print_installed "  ANDROID_HOME set ($ANDROID_HOME)"
+    if [[ -n "$ANDROID_HOME" ]] || [[ -d "$HOME/Library/Android/sdk" ]]; then
+        android_home_path="${ANDROID_HOME:-$HOME/Library/Android/sdk}"
+        print_installed "  ANDROID_HOME available ($android_home_path)"
     else
         print_warning "  ANDROID_HOME not set (restart terminal or source ~/.zshrc)"
     fi
@@ -546,12 +569,8 @@ else
     print_missing "Figma"
 fi
 
-# System Color Picker
-if app_exists "/Applications/System Color Picker.app"; then
-    print_installed "System Color Picker"
-else
-    print_missing "System Color Picker"
-fi
+# System Color Picker - removed (package doesn't exist)
+# Use built-in Digital Color Meter app instead
 
 # AppCleaner
 if app_exists "/Applications/AppCleaner.app"; then
@@ -605,12 +624,12 @@ else
     print_missing "ngrok"
 fi
 
-# exa
-if command_exists exa; then
-    exa_version=$(exa --version 2>/dev/null | head -n1 | cut -d' ' -f2 || echo "installed")
-    print_installed "exa ($exa_version)"
+# eza (modern ls replacement, replaces exa)
+if command_exists eza; then
+    eza_version=$(eza --version 2>/dev/null | head -n1 | cut -d' ' -f2 || echo "installed")
+    print_installed "eza ($eza_version)"
 else
-    print_missing "exa"
+    print_missing "eza"
 fi
 
 # wget
@@ -665,7 +684,7 @@ fi
 # Amazon Q (check via AWS CLI and VS Code extension)
 if command_exists aws; then
     # Check if user has configured AWS CLI (basic check)
-    if aws sts get-caller-identity &>/dev/null 2>&1; then
+    if aws configure list | grep -q "access_key" && [[ $(aws configure list | grep access_key | awk '{print $2}') != "<not set>" ]]; then
         print_installed "Amazon Q Developer (AWS configured)"
     else
         print_warning "Amazon Q Developer (AWS CLI not configured - run 'aws configure')"
@@ -686,20 +705,19 @@ print_section "VS Code Extensions"
 
 if command_exists code; then
     extensions=(
-        "Vue.volar"
+        "vue.volar"
         "ms-vscode.vscode-typescript-next"
         "esbenp.prettier-vscode"
         "ms-python.python"
-        "golang.Go"
-        "GitHub.vscode-pull-request-github"
-        "GitHub.copilot"
-        "Amazon.aws-toolkit-vscode"
+        "golang.go"
+        "github.vscode-pull-request-github"
+        "github.copilot"
+        "amazonwebservices.aws-toolkit-vscode"
         "eamodio.gitlens"
-        "EditorConfig.EditorConfig"
+        "editorconfig.editorconfig"
         "ms-vscode-remote.remote-containers"
-        "ms-vscode.vscode-json"
         "redhat.vscode-yaml"
-        "PKief.material-icon-theme"
+        "pkief.material-icon-theme"
         "yzhang.markdown-all-in-one"
         "shd101wyy.markdown-preview-enhanced"
     )
