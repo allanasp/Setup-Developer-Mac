@@ -1,0 +1,230 @@
+name: Test Setup Scripts
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'scripts/**'
+      - 'setup-modular.sh'
+      - 'check-setup.sh'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'scripts/**'
+      - 'setup-modular.sh'
+      - 'check-setup.sh'
+
+jobs:
+  lint-scripts:
+    name: Lint Shell Scripts
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Install ShellCheck
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y shellcheck
+      
+      - name: Lint all shell scripts
+        run: |
+          echo "Linting shell scripts..."
+          find . -name "*.sh" -type f | while read -r script; do
+            echo "Checking: $script"
+            shellcheck "$script" || exit 1
+          done
+          echo "✅ All scripts pass linting"
+
+  test-syntax:
+    name: Test Script Syntax
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Test script syntax
+        run: |
+          echo "Testing script syntax..."
+          find . -name "*.sh" -type f | while read -r script; do
+            echo "Testing syntax: $script"
+            bash -n "$script" || exit 1
+          done
+          echo "✅ All scripts have valid syntax"
+
+  validate-structure:
+    name: Validate Project Structure
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Validate required files
+        run: |
+          echo "Validating project structure..."
+          
+          # Check required files exist
+          required_files=(
+            "setup-modular.sh"
+            "check-setup.sh"
+            "scripts/common.sh"
+            "scripts/01-system.sh"
+            "scripts/02-terminal.sh"
+            "scripts/03-version-managers.sh"
+            "README.md"
+            "POST-INSTALLATION-GUIDE.md"
+            "SCRIPT_GUIDE.md"
+          )
+          
+          for file in "${required_files[@]}"; do
+            if [[ ! -f "$file" ]]; then
+              echo "❌ Required file missing: $file"
+              exit 1
+            fi
+            echo "✅ Found: $file"
+          done
+          
+          # Check all scripts are executable or can be made executable
+          find scripts/ -name "*.sh" -type f | while read -r script; do
+            if [[ ! -x "$script" ]]; then
+              echo "ℹ️  Making executable: $script"
+              chmod +x "$script"
+            fi
+          done
+          
+          echo "✅ Project structure is valid"
+
+  test-macos:
+    name: Test on macOS
+    runs-on: macos-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Test system requirements script
+        run: |
+          echo "Testing system requirements script on macOS..."
+          chmod +x scripts/01-system.sh
+          
+          # Test dry run mode (if available)
+          if grep -q "DRY_RUN" scripts/01-system.sh; then
+            DRY_RUN=true bash scripts/01-system.sh
+          else
+            echo "⚠️  No dry run mode available, skipping full test"
+            bash -n scripts/01-system.sh
+          fi
+      
+      - name: Test common functions
+        run: |
+          echo "Testing common functions..."
+          chmod +x scripts/common.sh
+          
+          # Source common functions and test they exist
+          source scripts/common.sh
+          
+          # Test if required functions exist
+          declare -f print_section >/dev/null || { echo "❌ print_section function missing"; exit 1; }
+          declare -f print_status >/dev/null || { echo "❌ print_status function missing"; exit 1; }
+          declare -f print_success >/dev/null || { echo "❌ print_success function missing"; exit 1; }
+          declare -f print_error >/dev/null || { echo "❌ print_error function missing"; exit 1; }
+          
+          echo "✅ Common functions are available"
+
+  security-scan:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Scan for secrets
+        run: |
+          echo "Scanning for potential secrets or sensitive data..."
+          
+          # Check for hardcoded secrets, tokens, passwords
+          if grep -r -i -E "(password|token|secret|key)\s*=" scripts/ --include="*.sh" | grep -v "YOUR_" | grep -v "EXAMPLE"; then
+            echo "❌ Potential hardcoded secrets found"
+            exit 1
+          fi
+          
+          # Check for suspicious commands
+          if grep -r -E "(curl.*|.*|wget.*|)" scripts/ --include="*.sh"; then
+            echo "❌ Suspicious download commands found"
+            exit 1
+          fi
+          
+          # Check for sudo without proper context
+          if grep -r "sudo" scripts/ --include="*.sh" | grep -v "sudo -v" | grep -v "sudo xcodebuild" | grep -v "# sudo"; then
+            echo "⚠️  Found sudo usage - please review:"
+            grep -r "sudo" scripts/ --include="*.sh" | grep -v "sudo -v" | grep -v "sudo xcodebuild" | grep -v "# sudo"
+          fi
+          
+          echo "✅ Security scan completed"
+
+  test-documentation:
+    name: Test Documentation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Test markdown links
+        run: |
+          echo "Testing documentation links..."
+          
+          # Check for broken internal links in markdown files
+          find . -name "*.md" -type f | while read -r file; do
+            echo "Checking links in: $file"
+            
+            # Extract markdown links and check if referenced files exist
+            grep -o '\[.*\](.*\.md)' "$file" | sed 's/.*](\(.*\))/\1/' | while read -r link; do
+              # Skip external links
+              if [[ "$link" =~ ^https?:// ]]; then
+                continue
+              fi
+              
+              # Convert relative path to absolute
+              if [[ "$link" != /* ]]; then
+                dir=$(dirname "$file")
+                link="$dir/$link"
+              fi
+              
+              if [[ ! -f "$link" ]]; then
+                echo "❌ Broken link in $file: $link"
+                exit 1
+              fi
+            done
+          done
+          
+          echo "✅ Documentation links are valid"
+
+  notify-on-failure:
+    name: Notify on Failure
+    runs-on: ubuntu-latest
+    needs: [lint-scripts, test-syntax, validate-structure, security-scan, test-documentation]
+    if: failure()
+    steps:
+      - name: Comment on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## ❌ Build Failed
+              
+              The automated tests failed for this pull request. Please check the workflow logs and fix any issues:
+              
+              - Shell script linting
+              - Script syntax validation
+              - Project structure validation
+              - Security scanning
+              - Documentation validation
+              
+              Click on the "Details" link next to the failed check to see specific error messages.
+              
+              Once you've fixed the issues, push your changes and the tests will run again automatically.`
+            });

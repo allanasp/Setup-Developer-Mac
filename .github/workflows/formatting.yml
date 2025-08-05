@@ -1,0 +1,116 @@
+name: Code Formatting Check
+
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - '**.sh'
+      - '**.yml'
+      - '**.yaml'
+      - '**.md'
+
+jobs:
+  check-formatting:
+    name: Check Code Formatting
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install formatting tools
+        run: |
+          # Install shfmt for shell script formatting
+          curl -L "https://github.com/mvdan/sh/releases/latest/download/shfmt_v3.7.0_linux_amd64" -o shfmt
+          chmod +x shfmt
+          sudo mv shfmt /usr/local/bin/
+
+      - name: Check shell script formatting
+        run: |
+          echo "Checking shell script formatting..."
+          find . -name "*.sh" -type f | while read -r script; do
+            echo "Checking format: $script"
+            if ! shfmt -d -i 4 -ci "$script"; then
+              echo "❌ Formatting issues found in: $script"
+              echo "Run 'make format' or 'shfmt -w -i 4 -ci $script' to fix"
+              exit 1
+            fi
+          done
+          echo "✅ All shell scripts are properly formatted"
+
+      - name: Check YAML formatting
+        run: |
+          echo "Checking YAML formatting..."
+          # Check indentation is consistent (2 spaces)
+          find . -name "*.yml" -o -name "*.yaml" | while read -r file; do
+            echo "Checking YAML: $file"
+            # Basic YAML validation
+            python3 -c "
+            import yaml, sys
+            try:
+                with open('$file', 'r') as f:
+                    yaml.safe_load(f)
+                print('✅ Valid YAML: $file')
+            except yaml.YAMLError as e:
+                print('❌ Invalid YAML in $file:', e)
+                sys.exit(1)
+            " || exit 1
+          done
+
+      - name: Check line endings
+        run: |
+          echo "Checking line endings (should be LF)..."
+          if find . -name "*.sh" -o -name "*.yml" -o -name "*.yaml" -o -name "*.md" | xargs file | grep CRLF; then
+            echo "❌ Found files with CRLF line endings"
+            echo "Please convert to LF line endings"
+            exit 1
+          fi
+          echo "✅ All files use LF line endings"
+
+      - name: Check trailing whitespace
+        run: |
+          echo "Checking for trailing whitespace..."
+          if grep -r '[[:space:]]$' --include="*.sh" --include="*.yml" --include="*.yaml" .; then
+            echo "❌ Found trailing whitespace"
+            echo "Please remove trailing whitespace"
+            exit 1
+          fi
+          echo "✅ No trailing whitespace found"
+
+      - name: Comment on PR with formatting instructions
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## 🎨 Code Formatting Issues
+
+The automated formatting check failed. Please fix the formatting issues:
+
+### Quick Fix Commands
+
+\`\`\`bash
+# Install formatting tools
+make install-deps
+
+# Format all shell scripts
+make format
+
+# Check formatting
+make check-format
+
+# Or format specific file
+shfmt -w -i 4 -ci path/to/script.sh
+\`\`\`
+
+### What to check:
+- ✅ Shell scripts use 4-space indentation
+- ✅ YAML files use 2-space indentation  
+- ✅ Files end with newline
+- ✅ No trailing whitespace
+- ✅ Use LF line endings (not CRLF)
+
+Run \`make dev\` to format, lint, and test everything before committing.`
+            });

@@ -1,0 +1,173 @@
+name: 🛠️ Tool Request
+description: Request a new tool to be added to the setup scripts
+title: "[TOOL REQUEST] Add [Tool Name]"
+labels: ["enhancement", "tool-request"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a new tool! Please provide as much detail as possible to help us evaluate and implement your request.
+
+  - type: input
+    id: tool-name
+    attributes:
+      label: Tool Name
+      description: What's the name of the tool you'd like to add?
+      placeholder: e.g., Docker Desktop, Postman, Figma
+    validations:
+      required: true
+
+  - type: dropdown
+    id: script-category
+    attributes:
+      label: Which script should this tool be added to?
+      description: Select the most appropriate script category
+      options:
+        - "04-languages.sh (Programming Languages)"
+        - "05-frontend.sh (Frontend Tools)"
+        - "06-dev-apps.sh (Development Apps)"
+        - "07-mobile.sh (Mobile Development)"
+        - "08-productivity.sh (Productivity Tools)"
+        - "09-database.sh (Database Tools)"
+        - "10-devops.sh (DevOps Tools)"
+        - "11-fonts.sh (Developer Fonts)"
+        - "New script needed"
+        - "Not sure"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: installation-method
+    attributes:
+      label: How is this tool typically installed?
+      description: This helps us understand implementation complexity
+      options:
+        - "Homebrew (brew install)"
+        - "Homebrew Cask (brew install --cask)"
+        - "npm/Node.js package (npm install -g)"
+        - "Python package (pip install)"
+        - "Direct download from website"
+        - "App Store"
+        - "Other/Multiple methods"
+    validations:
+      required: true
+
+  - type: textarea
+    id: tool-description
+    attributes:
+      label: Tool Description
+      description: What does this tool do and why is it useful?
+      placeholder: |
+        Example:
+        - What: Visual database design and management tool
+        - Why: Helps developers design database schemas visually
+        - Use cases: Database modeling, ERD creation, team collaboration
+    validations:
+      required: true
+
+  - type: textarea
+    id: target-users
+    attributes:
+      label: Target Users
+      description: Who would benefit from this tool?
+      placeholder: |
+        e.g., 
+        - Frontend developers working with APIs
+        - Full-stack developers managing databases
+        - DevOps engineers deploying applications
+        - All developers (general productivity)
+
+  - type: input
+    id: tool-website
+    attributes:
+      label: Official Website
+      description: Link to the tool's official website or documentation
+      placeholder: https://example.com
+
+  - type: textarea
+    id: installation-commands
+    attributes:
+      label: Installation Commands
+      description: If you know how to install this tool, please share the commands
+      placeholder: |
+        e.g.,
+        brew install --cask example-tool
+        # or
+        npm install -g example-tool
+        # or
+        Download from: https://example.com/download
+
+  - type: textarea
+    id: configuration-needed
+    attributes:
+      label: Post-Installation Configuration
+      description: Does this tool need any setup after installation?
+      placeholder: |
+        e.g.,
+        - Account creation required
+        - License key needed
+        - Initial configuration steps
+        - Integration with other tools
+
+  - type: dropdown
+    id: tool-cost
+    attributes:
+      label: Is this tool free?
+      options:
+        - "Free and open source"
+        - "Free with paid features (freemium)"
+        - "Free trial, then paid"
+        - "Paid only"
+        - "Not sure"
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternative Tools
+      description: Are there similar tools that do the same thing?
+      placeholder: |
+        e.g.,
+        - Similar to Tool X but with better Y feature
+        - Alternative to Tool Z with different approach
+        - No direct alternatives
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: Contribution
+      description: Would you like to help implement this?
+      options:
+        - label: I'd like to help implement this tool request
+          required: false
+        - label: I can test the implementation on my machine
+          required: false
+        - label: I can help write documentation for this tool
+          required: false
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Anything else we should know about this tool?
+      placeholder: |
+        e.g.,
+        - Tool has breaking changes recently
+        - Specific version requirements
+        - Known compatibility issues
+        - Popular in certain communities
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        
+        ### What happens next?
+        
+        1. **Community feedback** - Others can vote and comment on your request
+        2. **Maintainer review** - We'll evaluate the tool's fit for the project
+        3. **Implementation** - If approved, we'll add it to the appropriate script
+        4. **Testing** - We'll test the installation and document any setup needed
+        
+        Thank you for helping improve Mac Developer Setup! 🚀

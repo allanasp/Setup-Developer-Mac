@@ -1,0 +1,194 @@
+name: 🐛 Bug Report
+description: Report a bug or issue with the setup scripts
+title: "[BUG] "
+labels: ["bug"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug! Please provide as much detail as possible to help us understand and fix the issue.
+
+  - type: dropdown
+    id: script-affected
+    attributes:
+      label: Which script is affected?
+      description: Select the script where you encountered the issue
+      options:
+        - "setup-modular.sh (Main setup script)"
+        - "01-system.sh (System Requirements)"
+        - "02-terminal.sh (Terminal & Shell)"
+        - "03-version-managers.sh (Version Managers)"
+        - "04-languages.sh (Programming Languages)"
+        - "05-frontend.sh (Frontend Tools)"
+        - "06-dev-apps.sh (Development Apps)"
+        - "07-mobile.sh (Mobile Development)"
+        - "08-productivity.sh (Productivity Tools)"
+        - "09-database.sh (Database Tools)"
+        - "10-devops.sh (DevOps Tools)"
+        - "11-fonts.sh (Developer Fonts)"
+        - "check-setup.sh (Setup Checker)"
+        - "Multiple scripts"
+        - "Not sure"
+    validations:
+      required: true
+
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: Bug Description
+      description: A clear description of what the bug is
+      placeholder: |
+        Example:
+        - The script fails when installing Node.js
+        - Error message appears during Homebrew installation
+        - Terminal theme doesn't apply correctly
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: Steps to Reproduce
+      description: Steps to reproduce the behavior
+      placeholder: |
+        1. Run `./setup-modular.sh`
+        2. Select scripts '5 6'
+        3. Script fails at line X
+        4. Error message appears
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected Behavior
+      description: What you expected to happen
+      placeholder: The script should install successfully without errors
+
+  - type: textarea
+    id: actual-behavior
+    attributes:
+      label: Actual Behavior
+      description: What actually happened
+      placeholder: The script failed with error message...
+
+  - type: textarea
+    id: error-output
+    attributes:
+      label: Error Output
+      description: Copy and paste any error messages or output
+      render: shell
+      placeholder: |
+        Paste the full error output here, including:
+        - Error messages
+        - Script output
+        - Terminal logs
+
+  - type: dropdown
+    id: macos-version
+    attributes:
+      label: macOS Version
+      description: What version of macOS are you running?
+      options:
+        - "macOS 15 Sequoia"
+        - "macOS 14 Sonoma"
+        - "macOS 13 Ventura"
+        - "macOS 12 Monterey"
+        - "macOS 11 Big Sur"
+        - "macOS 10.15 Catalina"
+        - "Other (please specify in additional context)"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: chip-type
+    attributes:
+      label: Mac Chip Type
+      description: What type of Mac are you using?
+      options:
+        - "Apple Silicon (M1/M2/M3/M4)"
+        - "Intel"
+        - "Not sure"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: installation-type
+    attributes:
+      label: Installation Type
+      description: How did you run the setup?
+      options:
+        - "Fresh installation (new Mac)"
+        - "Re-running on existing setup"
+        - "Partial installation (selected scripts)"
+        - "Full installation (all scripts)"
+
+  - type: checkboxes
+    id: troubleshooting-steps
+    attributes:
+      label: Troubleshooting Steps Tried
+      description: What have you already tried to fix this?
+      options:
+        - label: Restarted terminal/shell
+          required: false
+        - label: Re-ran the failing script
+          required: false
+        - label: Updated Homebrew (`brew update`)
+          required: false
+        - label: Checked internet connection
+          required: false
+        - label: Reviewed the script guide documentation
+          required: false
+        - label: Searched existing issues
+          required: false
+
+  - type: textarea
+    id: environment-info
+    attributes:
+      label: Environment Information
+      description: Additional system information (optional but helpful)
+      placeholder: |
+        Run these commands and paste the output:
+        
+        ```bash
+        # Homebrew version
+        brew --version
+        
+        # Shell version
+        echo $SHELL
+        $SHELL --version
+        
+        # Git version
+        git --version
+        
+        # Xcode tools
+        xcode-select --version
+        ```
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Any other context about the problem
+      placeholder: |
+        - Did this work before?
+        - Any custom configurations?
+        - Corporate network/proxy issues?
+        - Recently updated macOS?
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        
+        ### What happens next?
+        
+        1. **We'll review** your bug report and may ask for more information
+        2. **Reproduce the issue** on our end if possible
+        3. **Investigate and fix** the problem
+        4. **Test the solution** and update the affected script(s)
+        5. **Release the fix** and close the issue
+        
+        Thank you for helping improve Mac Developer Setup! 🐛→✨

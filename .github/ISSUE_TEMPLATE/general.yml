@@ -1,0 +1,76 @@
+name: 💬 General Issue
+description: General questions, suggestions, or other issues
+title: ""
+labels: ["question"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reaching out! Use this template for general questions, suggestions, or issues that don't fit the other categories.
+
+  - type: dropdown
+    id: issue-type
+    attributes:
+      label: Issue Type
+      description: What type of issue is this?
+      options:
+        - "Question about setup process"
+        - "Feature request/suggestion"
+        - "Documentation improvement"
+        - "General feedback"
+        - "Other"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Describe your question, suggestion, or issue
+      placeholder: |
+        Please provide as much detail as possible:
+        - What are you trying to achieve?
+        - What specific help do you need?
+        - Any suggestions for improvement?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: related-area
+    attributes:
+      label: Related Area (if applicable)
+      description: Which part of the project does this relate to?
+      options:
+        - "Installation process"
+        - "Specific script functionality" 
+        - "Documentation"
+        - "Project structure"
+        - "Community contribution"
+        - "Not applicable"
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Any other information that might be helpful
+      placeholder: |
+        - Screenshots (if applicable)
+        - Examples of what you're looking for
+        - Links to relevant resources
+        - Your development background/needs
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        
+        ### Other Ways to Get Help
+        
+        - 📖 **Documentation**: Check our [complete guide](../docs/) for detailed information
+        - 🐛 **Bug Report**: Use the bug report template for script issues
+        - 🛠️ **Tool Request**: Use the tool request template to suggest new tools
+        - 💡 **Ideas**: We welcome all suggestions for improvement!
+        
+        Thank you for being part of the Mac Developer Setup community! 🚀
