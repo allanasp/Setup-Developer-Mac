@@ -8,7 +8,8 @@ set -e  # Exit on any error
 # Source common functions
 source "$(dirname "$0")/scripts/common.sh"
 
-print_section "Mac Development Environment Setup"
+print_section "Mac Frontend Developer Environment Setup"
+echo "🎨 Optimized for JavaScript/TypeScript developers"
 echo "🚀 Starting modular setup process..."
 echo ""
 
@@ -89,11 +90,12 @@ done
 
 print_success "Essential components installed successfully!"
 echo ""
-echo "🎉 Core development environment is ready!"
+echo "🎉 Core frontend development environment is ready!"
+echo "   ✅ Node.js, npm, and JavaScript tools installed"
 echo ""
 
 # Now show optional scripts for selection
-echo "📦 Additional Development Scripts (choose which ones to install):"
+echo "📦 Additional Frontend & Development Scripts (choose which ones to install):"
 echo ""
 for i in "${!optional_scripts[@]}"; do
     printf "%2d. %s\n" $((i+4)) "${optional_descriptions[i]}"
@@ -102,10 +104,11 @@ echo ""
 
 # Simple CLI selection for optional scripts
 echo "Choose additional scripts to install:"
-echo "• Type numbers separated by spaces (e.g., '4 6 7' or '5 8 11')"
-echo "• Type 'all' to install all additional scripts" 
-echo "• Press Enter to skip additional scripts"
-echo "• Type 'quit' to exit"
+echo "• Frontend Focus: Type '5 6 8 11' (Frontend + Dev Apps + Productivity + Fonts)"
+echo "• React Native: Type '5 6 7 8 11' (includes Mobile development)"
+echo "• Fullstack: Type '4 5 6 8 9' (includes Languages + Database)"
+echo "• Custom: Type any numbers separated by spaces (e.g., '4 6 10')"
+echo "• Type 'all' to install everything | Press Enter to skip | Type 'quit' to exit"
 echo ""
 read -p "Additional scripts to install: " selection
 

@@ -1,19 +1,36 @@
-# 🚀 Complete Mac Developer Setup & Configuration Script
+# 🚀 Complete Mac Frontend Developer Setup & Configuration Script
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![macOS](https://img.shields.io/badge/macOS-Compatible-brightgreen.svg)](https://www.apple.com/macos/)
 [![Shell Script](https://img.shields.io/badge/Shell-Bash-blue.svg)](https://www.gnu.org/software/bash/)
 [![Homebrew](https://img.shields.io/badge/Package%20Manager-Homebrew-orange.svg)](https://brew.sh/)
 
-> **Automate your entire Mac development environment setup with a single command!** This comprehensive script installs and configures 80+ essential development tools, applications, and settings for modern web development, mobile development, and DevOps workflows.
+> **🎨 Tailored for Frontend Developers!** Automate your entire Mac development environment setup with a single command. This comprehensive script installs and configures 80+ essential tools, applications, and settings optimized for **modern frontend development**, including React, Vue, React Native, and the complete JavaScript/TypeScript ecosystem.
+
+## 🎯 Who This Is For
+
+**Primary Focus: Frontend Developers** working with:
+- **React** ecosystem (Create React App, Next.js, Gatsby)
+- **Vue.js** ecosystem (Vue CLI, Nuxt.js, Vite)
+- **React Native** mobile development
+- **TypeScript** and modern JavaScript
+- **Node.js** backend development
+- **JAMstack** and modern web architectures
+
+**Also Great For:**
+- Fullstack JavaScript developers (MERN, MEAN, etc.)
+- Mobile app developers using React Native/Expo
+- Web developers using modern build tools (Vite, Webpack, Parcel)
 
 ## ✨ Features
 
-### 🛠️ **Complete Development Stack**
-- **Programming Languages**: Node.js (via Volta), Python (via pyenv), Java JDK, Go, Ruby
-- **Package Managers**: npm, Yarn Berry, pnpm, Homebrew, CocoaPods
-- **Version Managers**: Volta (Node.js), pyenv (Python), xcodes (Xcode)
-- **Frontend Tools**: Vue CLI, Nuxt CLI, React Native CLI, Expo CLI, Vite
+### 🛠️ **Frontend-First Development Stack**
+- **JavaScript/TypeScript Ecosystem**: Node.js (via Volta), npm, Yarn Berry, pnpm
+- **Frontend Frameworks**: Vue CLI, Nuxt CLI, React, Angular, Svelte
+- **Build Tools**: Vite, Webpack, Rollup, Parcel
+- **Mobile Development**: React Native CLI, Expo CLI, iOS/Android tools
+- **Backend Support**: Python (pyenv), Java JDK, Go, Ruby for fullstack needs
+- **Package Managers**: Volta (Node.js), pyenv (Python), CocoaPods, Homebrew
 
 ### 🎨 **Code Editors & IDEs**
 - Visual Studio Code with 20+ essential extensions

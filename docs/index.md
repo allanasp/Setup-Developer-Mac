@@ -4,15 +4,15 @@ title: Mac Developer Setup
 description: Complete modular Mac development environment setup scripts
 ---
 
-# 🚀 Mac Developer Setup
+# 🚀 Mac Frontend Developer Setup
 
-> **Modular setup scripts for the perfect Mac development environment**
+> **🎨 Modular setup scripts tailored for frontend developers** - React, Vue, React Native, and the complete JavaScript/TypeScript ecosystem
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![macOS](https://img.shields.io/badge/macOS-Compatible-brightgreen.svg)](https://www.apple.com/macos/)
 [![Shell Script](https://img.shields.io/badge/Shell-Bash-blue.svg)](https://www.gnu.org/software/bash/)
 
-Choose exactly what you need - from essential system requirements to specialized development tools. No bloat, no unnecessary installations.
+Choose exactly what you need - from essential system requirements to frontend-specific development tools. **Optimized for JavaScript/TypeScript developers** working with React, Vue, Angular, React Native, and modern web technologies. No bloat, no unnecessary installations.
 
 ## ⚡ Quick Start
 
@@ -63,9 +63,9 @@ cd mac-dev-setup
     <code>./scripts/04-languages.sh</code>
   </div>
   
-  <div class="script-card optional">
-    <h4>5. Frontend Tools</h4>
-    <p>TypeScript, Vue, React Native, Vite, Storyblok, Sanity</p>
+  <div class="script-card optional frontend-highlight">
+    <h4>5. Frontend Tools ⭐ CORE</h4>
+    <p>TypeScript, Vue, React Native, Vite, Storyblok, Sanity - The heart of this setup!</p>
     <code>./scripts/05-frontend.sh</code>
   </div>
   
@@ -110,44 +110,49 @@ cd mac-dev-setup
 
 ## 🎯 Usage Examples
 
-### Full Stack Developer
+### 🎨 Frontend Developer (React/Vue)
 ```bash
 ./setup-modular.sh
-# Choose: 4 5 6 8 9
-# Gets: Languages + Frontend + Dev Apps + Productivity + Database
+# Choose: 5 6 8 11
+# Gets: Frontend Tools + Dev Apps + Productivity + Fonts
+# Perfect for: React, Vue, Angular, TypeScript development
 ```
 
-### Mobile Developer  
+### 📱 React Native Developer  
 ```bash
 ./setup-modular.sh
 # Choose: 5 6 7 8 11
 # Gets: Frontend + Dev Apps + Mobile + Productivity + Fonts
+# Perfect for: Cross-platform mobile app development
 ```
 
-### DevOps Engineer
+### 🚀 Fullstack JavaScript Developer
 ```bash
 ./setup-modular.sh
-# Choose: 4 6 8 9 10
-# Gets: Languages + Dev Apps + Productivity + Database + DevOps
+# Choose: 4 5 6 8 9
+# Gets: Languages + Frontend + Dev Apps + Productivity + Database
+# Perfect for: MERN/MEAN stack, Node.js backends
 ```
 
-### Minimalist Setup
+### 🏢 Enterprise Frontend Developer
 ```bash
 ./setup-modular.sh
-# Choose: 6 8
-# Gets: Just Dev Apps + Productivity (plus auto-installed essentials)
+# Choose: 4 5 6 8 9 10
+# Gets: Languages + Frontend + Dev Apps + Productivity + Database + DevOps
+# Perfect for: Large-scale applications with deployment needs
 ```
 
 ---
 
-## 🔧 What Makes This Different
+## 🔧 What Makes This Frontend-Focused
 
-- **🎯 Modular** - Install only what you need
-- **⚡ Fast** - Essential tools install first automatically  
-- **🔄 Maintainable** - Update individual components
-- **📖 Well Documented** - Every script explained in detail
-- **🛡️ Safe** - Scripts can be re-run safely
-- **🤝 Community Driven** - Open source and customizable
+- **🎨 Frontend-First** - Prioritizes JavaScript/TypeScript ecosystem
+- **🎯 Modular** - Install only what you need for your stack
+- **⚡ Fast** - Essential Node.js/npm tools install first automatically  
+- **🔄 Maintainable** - Update individual components as frameworks evolve
+- **📖 Well Documented** - Every script explained with frontend use cases
+- **🛡️ Safe** - Scripts can be re-run safely as projects change
+- **🤝 Community Driven** - Built by frontend developers, for frontend developers
 
 ---
 
@@ -229,6 +234,12 @@ cd mac-dev-setup
 .script-card.optional {
   border-color: #0366d6;
   background: #f1f8ff;
+}
+
+.script-card.frontend-highlight {
+  border-color: #ff6b35;
+  background: #fff5f2;
+  border-width: 2px;
 }
 
 .script-card h4 {

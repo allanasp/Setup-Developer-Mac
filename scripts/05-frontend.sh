@@ -1,7 +1,8 @@
 #!/bin/bash
 
-# Frontend Development Tools Setup
+# Frontend Development Tools Setup - The Heart of This Setup! 🎨
 # Installs: TypeScript, Vue CLI, React Native CLI, Expo CLI, Vite, Storyblok CLI, Sanity CLI, etc.
+# This is the primary focus of our Mac setup - optimized for modern frontend development
 
 set -e  # Exit on any error
 
