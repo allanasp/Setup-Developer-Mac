@@ -60,7 +60,7 @@ print_section "System Requirements"
 # Xcode Command Line Tools
 if xcode-select -p &> /dev/null; then
     xcode_version=$(xcodebuild -version 2>/dev/null | head -n1 || echo "Command Line Tools")
-    print_installed "Xcode Command Line Tools ($xcode_version)"
+    print_installed "Xcode Command Line Tools (${xcode_version})"
     
     # Check if full Xcode is installed
     if [[ -d "/Applications/Xcode.app" ]]; then
@@ -114,9 +114,9 @@ fi
 # Python versions via pyenv
 if command_exists pyenv; then
     echo -e "${BLUE}Python versions via pyenv:${NC}"
-    pyenv versions --bare | while read version; do
-        if [[ -n "$version" ]]; then
-            print_installed "  Python $version"
+    pyenv versions --bare | while read -r version; do
+        if [[ -n "${version}" ]]; then
+            print_installed "  Python ${version}"
         fi
     done
 else
@@ -140,7 +140,7 @@ fi
 # Ruby
 if command_exists ruby; then
     ruby_version=$(ruby --version | cut -d' ' -f2 || echo "installed")
-    print_installed "Ruby ($ruby_version)"
+    print_installed "Ruby (${ruby_version})"
 else
     print_missing "Ruby"
 fi
@@ -148,12 +148,12 @@ fi
 # Java (JDK)
 if command_exists java; then
     java_version=$(java --version 2>/dev/null | head -n1 | cut -d' ' -f2 || java -version 2>&1 | head -n1 | cut -d'"' -f2 || echo "installed")
-    print_installed "Java JDK ($java_version)"
+    print_installed "Java JDK (${java_version})"
     
     # Check JAVA_HOME
-    if [[ -n "$JAVA_HOME" ]] || [[ -d "/opt/homebrew/opt/openjdk@17" ]]; then
+    if [[ -n "${JAVA_HOME}" ]] || [[ -d "/opt/homebrew/opt/openjdk@17" ]]; then
         java_home_path="${JAVA_HOME:-/opt/homebrew/opt/openjdk@17}"
-        print_installed "  JAVA_HOME available ($java_home_path)"
+        print_installed "  JAVA_HOME available (${java_home_path})"
     else
         print_warning "  JAVA_HOME not set"
     fi
@@ -166,7 +166,7 @@ print_section "Package Managers"
 # npm (comes with Node.js)
 if command_exists npm; then
     npm_version=$(npm --version 2>/dev/null || echo "installed")
-    print_installed "npm ($npm_version)"
+    print_installed "npm (${npm_version})"
 else
     print_missing "npm"
 fi
@@ -174,7 +174,7 @@ fi
 # Yarn
 if command_exists yarn; then
     yarn_version=$(yarn --version 2>/dev/null || echo "installed")
-    print_installed "Yarn ($yarn_version)"
+    print_installed "Yarn (${yarn_version})"
 else
     print_missing "Yarn"
 fi
@@ -182,7 +182,7 @@ fi
 # pnpm
 if command_exists pnpm; then
     pnpm_version=$(pnpm --version 2>/dev/null || echo "installed")
-    print_installed "pnpm ($pnpm_version)"
+    print_installed "pnpm (${pnpm_version})"
 else
     print_missing "pnpm"
 fi
@@ -207,18 +207,18 @@ fi
 if command -v npx >/dev/null 2>&1; then
     # Test npx react-native with proper error handling
     rn_test=$(npx react-native --version 2>/dev/null)
-    if [[ -n "$rn_test" ]]; then
-        rn_version=$(echo "$rn_test" | head -n1 | awk '{print $1}')
-        print_installed "React Native CLI ($rn_version via npx)"
+    if [[ -n "${rn_test}" ]]; then
+        rn_version=$(echo "${rn_test}" | head -n1 | awk '{print $1}')
+        print_installed "React Native CLI (${rn_version} via npx)"
     elif command -v react-native >/dev/null 2>&1; then
         rn_version=$(react-native --version 2>/dev/null | head -n1 | awk '{print $1}' || echo "installed")
-        print_installed "React Native CLI ($rn_version global)"
+        print_installed "React Native CLI (${rn_version} global)"
     else
         print_missing "React Native CLI"
     fi
 elif command -v react-native >/dev/null 2>&1; then
     rn_version=$(react-native --version 2>/dev/null | head -n1 | awk '{print $1}' || echo "installed")
-    print_installed "React Native CLI ($rn_version global)"
+    print_installed "React Native CLI (${rn_version} global)"
 else
     print_missing "React Native CLI"
 fi
@@ -226,10 +226,10 @@ fi
 # Expo CLI (via npx)
 if command -v npx >/dev/null 2>&1 && npx expo --version >/dev/null 2>&1; then
     expo_version=$(npx expo --version 2>/dev/null | head -n1 || echo "installed")
-    print_installed "Expo CLI ($expo_version via npx)"
+    print_installed "Expo CLI (${expo_version} via npx)"
 elif command -v expo >/dev/null 2>&1; then
     expo_version=$(expo --version 2>/dev/null | head -n1 || echo "installed")  
-    print_installed "Expo CLI ($expo_version global)"
+    print_installed "Expo CLI (${expo_version} global)"
 else
     print_missing "Expo CLI"
 fi
@@ -237,7 +237,7 @@ fi
 # EAS CLI
 if command_exists eas; then
     eas_version=$(eas --version 2>/dev/null || echo "installed")
-    print_installed "EAS CLI ($eas_version)"
+    print_installed "EAS CLI (${eas_version})"
 else
     print_missing "EAS CLI"
 fi
@@ -245,7 +245,7 @@ fi
 # Watchman (React Native)
 if command_exists watchman; then
     watchman_version=$(watchman version 2>/dev/null | jq -r '.version' 2>/dev/null || watchman --version 2>/dev/null || echo "installed")
-    print_installed "Watchman ($watchman_version)"
+    print_installed "Watchman (${watchman_version})"
 else
     print_missing "Watchman (React Native file watching)"
 fi
@@ -253,7 +253,7 @@ fi
 # Vite
 if command_exists create-vite; then
     vite_version=$(npm list -g create-vite --depth=0 2>/dev/null | grep create-vite | cut -d'@' -f2 || echo "installed")
-    print_installed "Vite (create-vite@$vite_version)"
+    print_installed "Vite (create-vite@${vite_version})"
 else
     print_missing "Vite (create-vite)"
 fi
@@ -271,7 +271,7 @@ print_section "Development Applications"
 if app_exists "/Applications/Visual Studio Code.app"; then
     if command_exists code; then
         vscode_version=$(code --version 2>/dev/null | head -n1 || echo "installed")
-        print_installed "Visual Studio Code ($vscode_version)"
+        print_installed "Visual Studio Code (${vscode_version})"
     else
         print_installed "Visual Studio Code (CLI not in PATH)"
     fi
@@ -321,7 +321,7 @@ if [[ -d ~/.oh-my-zsh ]]; then
     if [[ -f ~/.oh-my-zsh/tools/upgrade.sh ]]; then
         # Try to get version from git if available
         omz_version=$(cd ~/.oh-my-zsh && git describe --tags 2>/dev/null || echo "installed")
-        print_installed "Oh My Zsh ($omz_version)"
+        print_installed "Oh My Zsh (${omz_version})"
     else
         print_installed "Oh My Zsh (installed)"
     fi
@@ -375,7 +375,7 @@ if command_exists psql || [[ -f "/opt/homebrew/opt/postgresql@15/bin/psql" ]]; t
     else
         psql_version=$(/opt/homebrew/opt/postgresql@15/bin/psql --version 2>/dev/null | cut -d' ' -f3 || echo "15.13")
     fi
-    print_installed "PostgreSQL ($psql_version)"
+    print_installed "PostgreSQL (${psql_version})"
     # Check if service is running
     if brew services list | grep postgresql | grep -q started; then
         print_installed "  PostgreSQL service (running)"
@@ -419,7 +419,7 @@ fi
 # kubectx (includes kubens)
 if command_exists kubectx; then
     kubectx_version=$(kubectx --version 2>/dev/null || echo "installed")
-    print_installed "kubectx ($kubectx_version)"
+    print_installed "kubectx (${kubectx_version})"
     
     # Check if kubens is also available (should be bundled)
     if command_exists kubens; then
@@ -438,15 +438,15 @@ if app_exists "/Applications/Android Studio.app"; then
     print_installed "Android Studio"
     
     # Check Android environment variables
-    if [[ -n "$ANDROID_HOME" ]] || [[ -d "$HOME/Library/Android/sdk" ]]; then
-        android_home_path="${ANDROID_HOME:-$HOME/Library/Android/sdk}"
-        print_installed "  ANDROID_HOME available ($android_home_path)"
+    if [[ -n "${ANDROID_HOME}" ]] || [[ -d "${HOME}/Library/Android/sdk" ]]; then
+        android_home_path="${ANDROID_HOME:-${HOME}/Library/Android/sdk}"
+        print_installed "  ANDROID_HOME available (${android_home_path})"
     else
         print_warning "  ANDROID_HOME not set (restart terminal or source ~/.zshrc)"
     fi
     
     # Check if Android SDK exists
-    if [[ -d "$HOME/Library/Android/sdk" ]]; then
+    if [[ -d "${HOME}/Library/Android/sdk" ]]; then
         print_installed "  Android SDK found"
     else
         print_warning "  Android SDK not found (configure in Android Studio)"
@@ -458,7 +458,7 @@ fi
 # iOS Development Tools
 if command_exists xcodes; then
     xcodes_version=$(xcodes version 2>/dev/null || echo "installed")
-    print_installed "xcodes ($xcodes_version)"
+    print_installed "xcodes (${xcodes_version})"
 else
     print_missing "xcodes"
 fi
@@ -475,7 +475,7 @@ fi
 
 if command_exists ios-deploy; then
     ios_deploy_version=$(ios-deploy --version 2>/dev/null || echo "installed")
-    print_installed "ios-deploy ($ios_deploy_version)"
+    print_installed "ios-deploy (${ios_deploy_version})"
 else
     print_missing "ios-deploy"
 fi
@@ -619,7 +619,7 @@ print_section "Command Line Utilities"
 # ngrok
 if command_exists ngrok; then
     ngrok_version=$(ngrok version 2>/dev/null | head -n1 | cut -d' ' -f2 || echo "installed")
-    print_installed "ngrok ($ngrok_version)"
+    print_installed "ngrok (${ngrok_version})"
 else
     print_missing "ngrok"
 fi
@@ -627,7 +627,7 @@ fi
 # eza (modern ls replacement, replaces exa)
 if command_exists eza; then
     eza_version=$(eza --version 2>/dev/null | head -n1 | cut -d' ' -f2 || echo "installed")
-    print_installed "eza ($eza_version)"
+    print_installed "eza (${eza_version})"
 else
     print_missing "eza"
 fi
@@ -635,7 +635,7 @@ fi
 # wget
 if command_exists wget; then
     wget_version=$(wget --version 2>/dev/null | head -n1 | cut -d' ' -f3 || echo "installed")
-    print_installed "wget ($wget_version)"
+    print_installed "wget (${wget_version})"
 else
     print_missing "wget"
 fi
@@ -650,7 +650,7 @@ fi
 # tree
 if command_exists tree; then
     tree_version=$(tree --version 2>/dev/null | head -n1 | cut -d' ' -f2 || echo "installed")
-    print_installed "tree ($tree_version)"
+    print_installed "tree (${tree_version})"
 else
     print_missing "tree"
 fi
@@ -658,7 +658,7 @@ fi
 # fzf
 if command_exists fzf; then
     fzf_version=$(fzf --version 2>/dev/null | cut -d' ' -f1 || echo "installed")
-    print_installed "fzf ($fzf_version)"
+    print_installed "fzf (${fzf_version})"
 else
     print_missing "fzf"
 fi
@@ -666,7 +666,7 @@ fi
 # watchman
 if command_exists watchman; then
     watchman_version=$(watchman version 2>/dev/null | jq -r '.version' 2>/dev/null || watchman --version 2>/dev/null || echo "installed")
-    print_installed "watchman ($watchman_version)"
+    print_installed "watchman (${watchman_version})"
 else
     print_missing "watchman"
 fi
@@ -676,7 +676,7 @@ print_section "AI Coding Assistants"
 # AWS CLI (required for Amazon Q)
 if command_exists aws; then
     aws_version=$(aws --version 2>/dev/null | cut -d' ' -f1 | cut -d'/' -f2 || echo "installed")
-    print_installed "AWS CLI ($aws_version)"
+    print_installed "AWS CLI (${aws_version})"
 else
     print_missing "AWS CLI (required for Amazon Q)"
 fi
@@ -696,7 +696,7 @@ fi
 # Claude Code
 if command_exists claude; then
     claude_version=$(claude --version 2>/dev/null | head -n1 || echo "installed")
-    print_installed "Claude Code ($claude_version)"
+    print_installed "Claude Code (${claude_version})"
 else
     print_missing "Claude Code"
 fi
@@ -723,10 +723,10 @@ if command_exists code; then
     )
     
     for extension in "${extensions[@]}"; do
-        if vscode_extension_exists "$extension"; then
-            print_installed "  $extension"
+        if vscode_extension_exists "${extension}"; then
+            print_installed "  ${extension}"
         else
-            print_missing "  $extension"
+            print_missing "  ${extension}"
         fi
     done
 else
@@ -739,18 +739,18 @@ print_section "Fonts"
 font_locations=(
     "/System/Library/Fonts"
     "/Library/Fonts" 
-    "$HOME/Library/Fonts"
+    "${HOME}/Library/Fonts"
 )
 
 fonts_found=false
 for location in "${font_locations[@]}"; do
-    if find "$location" -name "*Nerd*" -o -name "*Fira*Code*" -o -name "*JetBrains*Mono*" 2>/dev/null | grep -q .; then
+    if find "${location}" -name "*Nerd*" -o -name "*Fira*Code*" -o -name "*JetBrains*Mono*" 2>/dev/null | grep -q .; then
         fonts_found=true
         break
     fi
 done
 
-if $fonts_found; then
+if ${fonts_found}; then
     print_installed "Developer Fonts (Nerd Fonts/Fira Code/JetBrains Mono found)"
 else
     print_missing "Developer Fonts"
@@ -758,23 +758,24 @@ fi
 
 # Summary
 print_section "Summary"
-echo -e "${GREEN}✓ Installed: $INSTALLED${NC}"
-echo -e "${RED}✗ Missing: $MISSING${NC}"
-echo -e "${BLUE}📊 Total checked: $TOTAL${NC}"
+echo -e "${GREEN}✓ Installed: ${INSTALLED}${NC}"
+echo -e "${RED}✗ Missing: ${MISSING}${NC}"
+echo -e "${BLUE}📊 Total checked: ${TOTAL}${NC}"
 
 # Calculate percentage
-if [[ $TOTAL -gt 0 ]]; then
+if [[ ${TOTAL} -gt 0 ]]; then
     percentage=$((INSTALLED * 100 / TOTAL))
     echo -e "${BLUE}📈 Completion: ${percentage}%${NC}"
 fi
 
-if [[ $MISSING -eq 0 ]]; then
+if [[ ${MISSING} -eq 0 ]]; then
     echo -e "\n🎉 ${GREEN}Perfect! All development tools are installed with versions tracked!${NC}"
-elif [[ $MISSING -le 5 ]]; then
-    echo -e "\n👍 ${YELLOW}Great! Only $MISSING tools missing. Your setup is ${percentage}% complete!${NC}"
+elif [[ ${MISSING} -le 5 ]]; then
+    echo -e "\n👍 ${YELLOW}Great! Only ${MISSING} tools missing. Your setup is ${percentage}% complete!${NC}"
 else
-    echo -e "\n🔧 ${YELLOW}$MISSING tools are missing (${percentage}% complete). Consider running the setup script.${NC}"
+    echo -e "\n🔧 ${YELLOW}${MISSING} tools are missing (${percentage}% complete). Consider running the setup script.${NC}"
 fi
 
 echo -e "\n💡 ${BLUE}Tip: Run the main setup script to install missing tools automatically.${NC}"
 echo -e "🔄 ${BLUE}Version tracking helps monitor updates and compatibility.${NC}"
+

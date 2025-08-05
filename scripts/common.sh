@@ -39,16 +39,16 @@ install_cask_app() {
     local cask_name="$2"
     local app_path="$3"
     
-    print_status "Installing/Updating $app_name..."
-    if [[ -d "$app_path" ]]; then
-        print_success "$app_name already installed (will be updated by brew upgrade)"
+    print_status "Installing/Updating ${app_name}..."
+    if [[ -d "${app_path}" ]]; then
+        print_success "${app_name} already installed (will be updated by brew upgrade)"
         return 0
     else
-        if brew install --cask "$cask_name"; then
-            print_success "$app_name installed successfully"
+        if brew install --cask "${cask_name}"; then
+            print_success "${app_name} installed successfully"
             return 0
         else
-            print_error "$app_name installation failed"
+            print_error "${app_name} installation failed"
             return 1
         fi
     fi
@@ -58,18 +58,18 @@ install_cask_app() {
 install_volta_package() {
     local package_name="$1"
     
-    print_status "Installing $package_name via Volta..."
-    if volta install "$package_name"; then
-        print_success "$package_name installed successfully"
+    print_status "Installing ${package_name} via Volta..."
+    if volta install "${package_name}"; then
+        print_success "${package_name} installed successfully"
     else
-        print_error "$package_name installation failed"
+        print_error "${package_name} installation failed"
         return 1
     fi
 }
 
 # Check if running on macOS
 check_macos() {
-    if [[ "$OSTYPE" != "darwin"* ]]; then
+    if [[ "${OSTYPE}" != "darwin"* ]]; then
         print_error "This script is designed for macOS only"
         exit 1
     fi
@@ -89,4 +89,9 @@ check_volta() {
         print_error "Volta is required but not installed. Please run the version managers setup first."
         exit 1
     fi
+}
+
+# Check if command exists
+command_exists() {
+    command -v "$1" >/dev/null 2>&1
 }

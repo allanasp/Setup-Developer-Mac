@@ -26,10 +26,10 @@ fonts=(
 )
 
 for font in "${fonts[@]}"; do
-    if brew install --cask "$font"; then
-        print_success "$font installed"
+    if brew install --cask "${font}"; then
+        print_success "${font} installed"
     else
-        print_warning "$font installation failed or already exists"
+        print_warning "${font} installation failed or already exists"
     fi
 done
 

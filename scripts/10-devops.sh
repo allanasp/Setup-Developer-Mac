@@ -45,7 +45,7 @@ if ! aws configure list &>/dev/null; then
     read -p "Configure AWS now? [1/2]: " aws_choice
     aws_choice=${aws_choice:-2}
     
-    if [[ "$aws_choice" == "1" ]]; then
+    if [[ "${aws_choice}" == "1" ]]; then
         print_status "Setting up AWS for Amazon Q Developer..."
         echo ""
         echo "📝 For Amazon Q Developer, you can use dummy values:"

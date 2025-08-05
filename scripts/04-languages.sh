@@ -22,22 +22,22 @@ if ! command -v java &> /dev/null; then
     # Add JDK to PATH and set JAVA_HOME
     if ! grep -q 'JAVA_HOME' ~/.zshrc 2>/dev/null; then
         echo 'export JAVA_HOME="$(brew --prefix)/opt/openjdk@17"' >> ~/.zshrc
-        echo 'export PATH="$JAVA_HOME/bin:$PATH"' >> ~/.zshrc
+        echo 'export PATH="${JAVA_HOME}/bin:${PATH}"' >> ~/.zshrc
         print_success "Java environment variables added to .zshrc"
     fi
     
     # Set for current session
     export JAVA_HOME="$(brew --prefix)/opt/openjdk@17"
-    export PATH="$JAVA_HOME/bin:$PATH"
+    export PATH="${JAVA_HOME}/bin:${PATH}"
     
     print_success "OpenJDK 17 installed (React Native compatible)"
 else
     java_version=$(java --version 2>/dev/null | head -n1 | cut -d' ' -f2 || echo "unknown")
-    print_success "Java already installed ($java_version)"
+    print_success "Java already installed (${java_version})"
     
     # Verify Java version is 17+
     java_major=$(java --version 2>/dev/null | head -n1 | cut -d' ' -f2 | cut -d'.' -f1 || echo "0")
-    if [[ "$java_major" -lt 17 ]]; then
+    if [[ "${java_major}" -lt 17 ]]; then
         print_warning "Java version may be too old for React Native (requires JDK 17+)"
         print_warning "Consider upgrading: brew install openjdk@17"
     fi
@@ -63,4 +63,4 @@ echo "• Node.js (via Volta - from version managers script)"
 echo ""
 echo "Next steps:"
 echo "• Run frontend tools setup: ./scripts/05-frontend.sh"
-echo "• Check Java: java --version && echo \$JAVA_HOME"
+echo "• Check Java: java --version && echo \${JAVA_HOME}"

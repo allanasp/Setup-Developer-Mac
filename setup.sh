@@ -34,25 +34,25 @@ prompt_configuration() {
     local config_steps="$2"
     
     # Skip prompts if flag is set
-    if [[ "$SKIP_PROMPTS" == "true" ]]; then
-        if [[ -n "$config_steps" ]]; then
+    if [[ "${SKIP_PROMPTS}" == "true" ]]; then
+        if [[ -n "${config_steps}" ]]; then
             echo ""
-            print_status "⚙️  Configuration needed for $script_name (skipped in non-interactive mode):"
-            echo "$config_steps"
+            print_status "⚙️  Configuration needed for ${script_name} (skipped in non-interactive mode):"
+            echo "${config_steps}"
             echo ""
         fi
         return
     fi
     
-    if [[ -n "$config_steps" ]]; then
+    if [[ -n "${config_steps}" ]]; then
         echo ""
-        print_status "⚙️  Configuration needed for $script_name:"
-        echo "$config_steps"
+        print_status "⚙️  Configuration needed for ${script_name}:"
+        echo "${config_steps}"
         echo ""
         
         while true; do
             read -p "Have you completed these configuration steps? (y/n): " response
-            case $response in
+            case ${response} in
                 [Yy]|[Yy][Ee][Ss])
                     print_success "Configuration completed! Continuing..."
                     break
@@ -75,16 +75,16 @@ prompt_configuration() {
 # Function to run a script
 run_script() {
     local script="$1"
-    local script_path="$(dirname "$0")/scripts/$script"
+    local script_path="$(dirname "$0")/scripts/${script}"
     
-    if [[ -f "$script_path" ]]; then
-        print_status "Running $script..."
-        chmod +x "$script_path"
-        if bash "$script_path"; then
-            print_success "$script completed successfully"
+    if [[ -f "${script_path}" ]]; then
+        print_status "Running ${script}..."
+        chmod +x "${script_path}"
+        if bash "${script_path}"; then
+            print_success "${script} completed successfully"
             
             # Prompt for configuration based on script
-            case $script in
+            case ${script} in
                 "01-system.sh")
                     prompt_configuration "System Requirements" "• Open Xcode to accept license (if prompted)
 • Verify Homebrew: run 'brew --version'"
@@ -141,12 +141,12 @@ run_script() {
                     ;;
             esac
         else
-            print_error "$script failed"
+            print_error "${script} failed"
             exit 1
         fi
         echo ""
     else
-        print_error "Script not found: $script_path"
+        print_error "Script not found: ${script_path}"
         exit 1
     fi
 }
@@ -199,7 +199,7 @@ print_status "Installing essential components..."
 echo ""
 
 for script in "${essential_scripts[@]}"; do
-    run_script "$script"
+    run_script "${script}"
 done
 
 print_success "Essential components installed successfully!"
@@ -229,7 +229,7 @@ read -p "Additional scripts to install: " selection
 selected_scripts=()
 
 # Parse user selection for optional scripts
-case $selection in
+case ${selection} in
     'all'|'ALL')
         selected_scripts=("${optional_scripts[@]}")
         echo ""
@@ -244,14 +244,14 @@ case $selection in
         ;;
     *)
         # Parse numbers
-        if [[ -n "$selection" ]]; then
-            for num in $selection; do
-                if [[ "$num" =~ ^[0-9]+$ ]] && [[ "$num" -ge 4 ]] && [[ "$num" -le 11 ]]; then
+        if [[ -n "${selection}" ]]; then
+            for num in ${selection}; do
+                if [[ "${num}" =~ ^[0-9]+$ ]] && [[ "${num}" -ge 4 ]] && [[ "${num}" -le 11 ]]; then
                     idx=$((num-4))  # Convert to optional_scripts index (4->0, 5->1, etc.)
-                    selected_scripts+=("${optional_scripts[$idx]}")
-                    echo "✓ Selected: ${optional_descriptions[$idx]}"
+                    selected_scripts+=("${optional_scripts[${idx}]}")
+                    echo "✓ Selected: ${optional_descriptions[${idx}]}"
                 else
-                    echo "❌ Invalid script number: $num (valid range: 4-11)"
+                    echo "❌ Invalid script number: ${num} (valid range: 4-11)"
                 fi
             done
         fi
@@ -265,8 +265,8 @@ if [[ ${#selected_scripts[@]} -gt 0 ]]; then
     for script in "${selected_scripts[@]}"; do
         # Find description for this script
         for i in "${!optional_scripts[@]}"; do
-            if [[ "${optional_scripts[$i]}" == "$script" ]]; then
-                echo "  • ${optional_descriptions[$i]}"
+            if [[ "${optional_scripts[${i}]}" == "${script}" ]]; then
+                echo "  • ${optional_descriptions[${i}]}"
                 break
             fi
         done
@@ -274,7 +274,7 @@ if [[ ${#selected_scripts[@]} -gt 0 ]]; then
     echo ""
     read -p "Proceed with additional installations? [Y/n]: " confirm
     confirm=${confirm:-y}
-    if [[ ! "$confirm" =~ ^[Yy]$ ]]; then
+    if [[ ! "${confirm}" =~ ^[Yy]$ ]]; then
         echo "❌ Additional installations cancelled"
         exit 0
     fi
@@ -285,7 +285,7 @@ if [[ ${#selected_scripts[@]} -gt 0 ]]; then
     echo ""
     
     for script in "${selected_scripts[@]}"; do
-        run_script "$script"
+        run_script "${script}"
     done
 else
     echo ""
@@ -300,7 +300,7 @@ echo "📋 What was installed:"
 echo ""
 echo "🔧 Essential components:"
 for i in "${!essential_scripts[@]}"; do
-    description="${essential_descriptions[$i]}"
+    description="${essential_descriptions[${i}]}"
     echo "• ${description/- REQUIRED/}"
 done
 
@@ -310,15 +310,15 @@ if [[ ${#selected_scripts[@]} -gt 0 ]]; then
     for script in "${selected_scripts[@]}"; do
         # Find description for this script
         for i in "${!optional_scripts[@]}"; do
-            if [[ "${optional_scripts[$i]}" == "$script" ]]; then
-                echo "• ${optional_descriptions[$i]}"
+            if [[ "${optional_scripts[${i}]}" == "${script}" ]]; then
+                echo "• ${optional_descriptions[${i}]}"
                 break
             fi
         done
     done
 fi
 echo ""
-if [[ "$SKIP_PROMPTS" == "true" ]]; then
+if [[ "${SKIP_PROMPTS}" == "true" ]]; then
     echo "🔄 Configuration needed (was skipped in non-interactive mode):"
     echo "• Review configuration steps shown above for each installed component"
     echo "• Import Dracula theme: iTerm2 → Preferences → Colors"

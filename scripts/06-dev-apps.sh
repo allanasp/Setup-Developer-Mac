@@ -41,8 +41,8 @@ install_cask_app "TextMate" "textmate" "/Applications/TextMate.app"
 if [[ -d "/Applications/Visual Studio Code.app" ]] && ! command -v code &> /dev/null; then
     print_status "Adding VS Code CLI to PATH..."
     if ! grep -q 'Visual Studio Code' ~/.zshrc 2>/dev/null; then
-        echo 'export PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin:$PATH"' >> ~/.zshrc
-        export PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin:$PATH"
+        echo 'export PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin:${PATH}"' >> ~/.zshrc
+        export PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin:${PATH}"
         print_success "VS Code CLI added to PATH"
     fi
 fi
@@ -124,10 +124,10 @@ extensions=(
 # Install each extension with error handling
 if command -v code &> /dev/null; then
     for extension in "${extensions[@]}"; do
-        if code --install-extension "$extension"; then
-            print_success "Installed VS Code extension: $extension"
+        if code --install-extension "${extension}"; then
+            print_success "Installed VS Code extension: ${extension}"
         else
-            print_warning "Failed to install VS Code extension: $extension (might already be installed)"
+            print_warning "Failed to install VS Code extension: ${extension} (might already be installed)"
         fi
     done
 else

@@ -23,12 +23,12 @@ brew services start postgresql@15
 if ! grep -q "postgresql@15" ~/.zshrc 2>/dev/null; then
     echo '' >> ~/.zshrc
     echo '# PostgreSQL' >> ~/.zshrc
-    echo 'export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"' >> ~/.zshrc
+    echo 'export PATH="/opt/homebrew/opt/postgresql@15/bin:${PATH}"' >> ~/.zshrc
     print_success "PostgreSQL added to PATH in .zshrc" 
 fi
 
 # Add to current session
-export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
+export PATH="/opt/homebrew/opt/postgresql@15/bin:${PATH}"
 print_success "PostgreSQL installed and started"
 
 # Database GUI

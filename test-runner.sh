@@ -34,15 +34,15 @@ test_syntax() {
     local failed=0
     
     find . -name "*.sh" -type f | while read -r script; do
-        if bash -n "$script" 2>/dev/null; then
-            print_success "Syntax OK: $script"
+        if bash -n "${script}" 2>/dev/null; then
+            print_success "Syntax OK: ${script}"
         else
-            print_error "Syntax Error: $script"
+            print_error "Syntax Error: ${script}"
             failed=$((failed + 1))
         fi
     done
     
-    if [ $failed -eq 0 ]; then
+    if [ ${failed} -eq 0 ]; then
         print_success "All scripts have valid syntax"
     fi
 }
@@ -57,11 +57,11 @@ test_shellcheck() {
     fi
     
     find . -name "*.sh" -type f | while read -r script; do
-        if shellcheck "$script" >/dev/null 2>&1; then
-            print_success "ShellCheck OK: $script"
+        if shellcheck "${script}" >/dev/null 2>&1; then
+            print_success "ShellCheck OK: ${script}"
         else
-            print_warning "ShellCheck issues found in: $script"
-            shellcheck "$script"
+            print_warning "ShellCheck issues found in: ${script}"
+            shellcheck "${script}"
         fi
     done
 }
@@ -78,10 +78,10 @@ test_functions() {
         functions=("print_section" "print_status" "print_success" "print_error" "command_exists")
         
         for func in "${functions[@]}"; do
-            if declare -f "$func" >/dev/null; then
-                print_success "Function available: $func"
+            if declare -f "${func}" >/dev/null; then
+                print_success "Function available: ${func}"
             else
-                print_error "Function missing: $func"
+                print_error "Function missing: ${func}"
             fi
         done
     else
@@ -106,10 +106,10 @@ test_structure() {
     )
     
     for file in "${required_files[@]}"; do
-        if [[ -f "$file" ]]; then
-            print_success "Found: $file"
+        if [[ -f "${file}" ]]; then
+            print_success "Found: ${file}"
         else
-            print_error "Missing: $file"
+            print_error "Missing: ${file}"
         fi
     done
 }
@@ -121,15 +121,15 @@ test_dry_run() {
     scripts_with_dry_run=()
     
     find scripts/ -name "*.sh" -type f | while read -r script; do
-        if grep -q "DRY_RUN" "$script"; then
-            scripts_with_dry_run+=("$script")
-            print_success "Dry run available: $script"
+        if grep -q "DRY_RUN" "${script}"; then
+            scripts_with_dry_run+=("${script}")
+            print_success "Dry run available: ${script}"
             
             # Actually test dry run
-            if DRY_RUN=true bash "$script" >/dev/null 2>&1; then
-                print_success "Dry run successful: $script"
+            if DRY_RUN=true bash "${script}" >/dev/null 2>&1; then
+                print_success "Dry run successful: ${script}"
             else
-                print_warning "Dry run failed: $script"
+                print_warning "Dry run failed: ${script}"
             fi
         fi
     done
@@ -147,10 +147,10 @@ test_dependencies() {
     deps=("curl" "git" "brew")
     
     for dep in "${deps[@]}"; do
-        if command -v "$dep" >/dev/null 2>&1; then
-            print_success "Dependency available: $dep"
+        if command -v "${dep}" >/dev/null 2>&1; then
+            print_success "Dependency available: ${dep}"
         else
-            print_warning "Dependency missing: $dep"
+            print_warning "Dependency missing: ${dep}"
         fi
     done
 }

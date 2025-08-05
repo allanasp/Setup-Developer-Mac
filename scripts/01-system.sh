@@ -39,12 +39,12 @@ if ! command -v brew &> /dev/null; then
         echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
         eval "$(/opt/homebrew/bin/brew shellenv)"
         # Also add to current session
-        export PATH="/opt/homebrew/bin:$PATH"
+        export PATH="/opt/homebrew/bin:${PATH}"
     else
         # Intel Mac
         echo 'eval "$(/usr/local/bin/brew shellenv)"' >> ~/.zprofile
         eval "$(/usr/local/bin/brew shellenv)"
-        export PATH="/usr/local/bin:$PATH"
+        export PATH="/usr/local/bin:${PATH}"
     fi
     
     print_success "Homebrew installed and added to PATH"

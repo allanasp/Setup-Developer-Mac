@@ -20,13 +20,13 @@ brew install xz cairo gobject-introspection
 brew install pyenv
 
 # Add pyenv to PATH and initialize for current session
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
+export PYENV_ROOT="${HOME}/.pyenv"
+export PATH="${PYENV_ROOT}/bin:${PATH}"
 
 # Check if pyenv is already initialized in shell
 if ! grep -q 'pyenv init' ~/.zshrc 2>/dev/null; then
-    echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zshrc
-    echo '[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zshrc
+    echo 'export PYENV_ROOT="${HOME}/.pyenv"' >> ~/.zshrc
+    echo '[[ -d ${PYENV_ROOT}/bin ]] && export PATH="${PYENV_ROOT}/bin:${PATH}"' >> ~/.zshrc
     echo 'eval "$(pyenv init -)"' >> ~/.zshrc
     print_success "Pyenv added to .zshrc"
 fi
@@ -57,8 +57,8 @@ fi
 print_status "Installing Volta (Node.js version manager)..."
 if ! command -v volta &> /dev/null; then
     curl https://get.volta.sh | bash
-    export VOLTA_HOME="$HOME/.volta"
-    export PATH="$VOLTA_HOME/bin:$PATH"
+    export VOLTA_HOME="${HOME}/.volta"
+    export PATH="${VOLTA_HOME}/bin:${PATH}"
     print_success "Volta installed"
 else
     print_success "Volta already installed"

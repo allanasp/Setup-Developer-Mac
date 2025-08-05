@@ -19,35 +19,35 @@ install_cask_app "Android Studio" "android-studio" "/Applications/Android Studio
 
 # Configure Android environment variables for React Native
 print_status "Configuring Android environment for React Native..."
-if [[ -d "/Applications/Android Studio.app" ]] || [[ -d "$HOME/Library/Android" ]]; then
+if [[ -d "/Applications/Android Studio.app" ]] || [[ -d "${HOME}/Library/Android" ]]; then
     # Add Android environment variables to shell
     if ! grep -q 'ANDROID_HOME' ~/.zshrc 2>/dev/null; then
         echo '' >> ~/.zshrc
         echo '# Android Development (React Native)' >> ~/.zshrc
-        echo 'export ANDROID_HOME=$HOME/Library/Android/sdk' >> ~/.zshrc
-        echo 'export PATH=$PATH:$ANDROID_HOME/emulator' >> ~/.zshrc
-        echo 'export PATH=$PATH:$ANDROID_HOME/platform-tools' >> ~/.zshrc
-        echo 'export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin' >> ~/.zshrc
+        echo 'export ANDROID_HOME=${HOME}/Library/Android/sdk' >> ~/.zshrc
+        echo 'export PATH=${PATH}:${ANDROID_HOME}/emulator' >> ~/.zshrc
+        echo 'export PATH=${PATH}:${ANDROID_HOME}/platform-tools' >> ~/.zshrc
+        echo 'export PATH=${PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin' >> ~/.zshrc
         print_success "Android environment variables added to .zshrc"
     else
         print_success "Android environment variables already configured"
     fi
     
     # Set for current session
-    export ANDROID_HOME=$HOME/Library/Android/sdk
-    export PATH=$PATH:$ANDROID_HOME/emulator
-    export PATH=$PATH:$ANDROID_HOME/platform-tools
-    export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
+    export ANDROID_HOME=${HOME}/Library/Android/sdk
+    export PATH=${PATH}:${ANDROID_HOME}/emulator
+    export PATH=${PATH}:${ANDROID_HOME}/platform-tools
+    export PATH=${PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin
 else
     print_warning "Android Studio not found - environment variables will be set for future use"
     # Still add the environment variables for when Android Studio is installed
     if ! grep -q 'ANDROID_HOME' ~/.zshrc 2>/dev/null; then
         echo '' >> ~/.zshrc
         echo '# Android Development (React Native)' >> ~/.zshrc
-        echo 'export ANDROID_HOME=$HOME/Library/Android/sdk' >> ~/.zshrc
-        echo 'export PATH=$PATH:$ANDROID_HOME/emulator' >> ~/.zshrc
-        echo 'export PATH=$PATH:$ANDROID_HOME/platform-tools' >> ~/.zshrc
-        echo 'export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin' >> ~/.zshrc
+        echo 'export ANDROID_HOME=${HOME}/Library/Android/sdk' >> ~/.zshrc
+        echo 'export PATH=${PATH}:${ANDROID_HOME}/emulator' >> ~/.zshrc
+        echo 'export PATH=${PATH}:${ANDROID_HOME}/platform-tools' >> ~/.zshrc
+        echo 'export PATH=${PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin' >> ~/.zshrc
         print_success "Android environment variables added to .zshrc (for future use)"
     fi
 fi
@@ -66,7 +66,7 @@ echo ""
 read -p "Install iOS development tools? (requires manual Xcode install later) [y/N]: " install_ios
 install_ios=${install_ios:-n}
 
-if [[ "$install_ios" =~ ^[Yy]$ ]]; then
+if [[ "${install_ios}" =~ ^[Yy]$ ]]; then
     print_status "Installing iOS development tools..."
     
     # Check if Xcode is already installed and handle license
@@ -123,7 +123,7 @@ echo "• Android Studio installed"
 echo "• Environment variables configured"
 echo "• Manual steps: Configure Android SDK in Android Studio"
 echo ""
-if [[ "$install_ios" =~ ^[Yy]$ ]]; then
+if [[ "${install_ios}" =~ ^[Yy]$ ]]; then
     echo "📱 iOS Development:"
     echo "• iOS tools installed (xcodes, ios-deploy, cocoapods)"
     if [[ -d "/Applications/Xcode.app" ]]; then
