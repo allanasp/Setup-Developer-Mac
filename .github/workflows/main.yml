@@ -1,0 +1,409 @@
+name: Main CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:  # Allow manual trigger
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Parallel validation jobs using matrix
+  validate:
+    name: ${{ matrix.job-name }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - job-name: "Format Check"
+            task: "format"
+          - job-name: "Lint Scripts" 
+            task: "lint"
+          - job-name: "Test Syntax"
+            task: "syntax"
+          - job-name: "Security Scan"
+            task: "security"
+          - job-name: "Structure Check"
+            task: "structure"
+          - job-name: "YAML Validation"
+            task: "yaml"
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Install tools
+        if: matrix.task == 'format' || matrix.task == 'lint'
+        run: |
+          if [[ "${{ matrix.task }}" == "format" ]]; then
+            curl -L "https://github.com/mvdan/sh/releases/latest/download/shfmt_v3.7.0_linux_amd64" -o shfmt
+            chmod +x shfmt
+            sudo mv shfmt /usr/local/bin/
+          fi
+          
+          if [[ "${{ matrix.task }}" == "lint" ]]; then
+            sudo apt-get update
+            sudo apt-get install -y shellcheck
+          fi
+      
+      - name: Run validation task
+        run: |
+          case "${{ matrix.task }}" in
+            "format")
+              echo "🎨 Checking shell script formatting..."
+              format_issues=0
+              
+              find . -name "*.sh" -type f | while read -r script; do
+                echo "Checking format: $script"
+                if ! shfmt -d -i 4 -ci "$script"; then
+                  echo "❌ Formatting issues found in: $script"
+                  format_issues=$((format_issues + 1))
+                fi
+              done
+              
+              if [ $format_issues -gt 0 ]; then
+                exit 1
+              fi
+              echo "✅ All shell scripts are properly formatted"
+              ;;
+              
+            "lint")
+              echo "🔍 Linting shell scripts with ShellCheck..."
+              find . -name "*.sh" -type f | while read -r script; do
+                echo "Checking: $script"
+                shellcheck "$script" || exit 1
+              done
+              echo "✅ All scripts pass linting"
+              ;;
+              
+            "syntax")
+              echo "🧪 Testing script syntax..."
+              find . -name "*.sh" -type f | while read -r script; do
+                echo "Testing syntax: $script"
+                bash -n "$script" || exit 1
+              done
+              echo "✅ All scripts have valid syntax"
+              ;;
+              
+            "security")
+              echo "🔒 Running security scan..."
+              
+              # Check for hardcoded secrets
+              if grep -r -i -E "(password|token|secret|key)\s*=" scripts/ --include="*.sh" | grep -v "YOUR_" | grep -v "EXAMPLE"; then
+                echo "❌ Potential hardcoded secrets found"
+                exit 1
+              fi
+              
+              # Check for suspicious downloads
+              if grep -r -E "curl.*http[s]?://[^/]+" scripts/ --include="*.sh" | \
+                 grep -v "github.com" | \
+                 grep -v "githubusercontent.com" | \
+                 grep -v "get.volta.sh" | \
+                 grep -v "raw.github.com" | \
+                 grep -v "Homebrew/install" | \
+                 grep -v "ohmyzsh/ohmyzsh" | \
+                 grep -v "dracula/iterm" | \
+                 grep -v "dracula/powerlevel10k"; then
+                echo "❌ Suspicious download commands found"
+                exit 1
+              fi
+              
+              echo "✅ Security scan passed"
+              ;;
+              
+            "structure")
+              echo "📁 Validating project structure..."
+              
+              required_files=(
+                "setup.sh"
+                "check-setup.sh" 
+                "scripts/common.sh"
+                "scripts/01-system.sh"
+                "scripts/02-terminal.sh"
+                "scripts/03-version-managers.sh"
+                "README.md"
+              )
+              
+              for file in "${required_files[@]}"; do
+                if [[ ! -f "$file" ]]; then
+                  echo "❌ Required file missing: $file"
+                  exit 1
+                fi
+                echo "✅ Found: $file"
+              done
+              
+              echo "✅ Project structure is valid"
+              ;;
+              
+            "yaml")
+              echo "📝 Validating YAML files..."
+              find . -name "*.yml" -o -name "*.yaml" | while read -r file; do
+                echo "Checking YAML: $file"
+                python3 -c "
+                import yaml, sys
+                try:
+                    with open('$file', 'r') as f:
+                        yaml.safe_load(f)
+                    print('✅ Valid YAML: $file')
+                except yaml.YAMLError as e:
+                    print('❌ Invalid YAML in $file:', e)
+                    sys.exit(1)
+                " || exit 1
+              done
+              
+              # Check line endings and whitespace
+              echo "📋 Checking line endings and whitespace..."
+              
+              if find . -name "*.sh" -o -name "*.yml" -o -name "*.yaml" -o -name "*.md" | xargs file | grep CRLF; then
+                echo "❌ Found files with CRLF line endings"
+                exit 1
+              fi
+              
+              if grep -r '[[:space:]]$' --include="*.sh" --include="*.yml" --include="*.yaml" .; then
+                echo "❌ Found trailing whitespace"
+                exit 1
+              fi
+              
+              echo "✅ Code quality checks passed"
+              ;;
+          esac
+
+  # macOS Testing (only on PRs)
+  test-macos:
+    name: Test on macOS
+    runs-on: macos-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Test common functions
+        run: |
+          echo "🧪 Testing common functions..."
+          chmod +x scripts/common.sh
+          source scripts/common.sh
+          
+          # Test if required functions exist
+          declare -f print_section >/dev/null || { echo "❌ print_section missing"; exit 1; }
+          declare -f print_status >/dev/null || { echo "❌ print_status missing"; exit 1; }
+          declare -f print_success >/dev/null || { echo "❌ print_success missing"; exit 1; }
+          declare -f print_error >/dev/null || { echo "❌ print_error missing"; exit 1; }
+          
+          echo "✅ Common functions work correctly"
+      
+      - name: Test system requirements script
+        run: |
+          echo "🔧 Testing system requirements script..."
+          chmod +x scripts/01-system.sh
+          
+          # Test dry run if available
+          if grep -q "DRY_RUN" scripts/01-system.sh; then
+            DRY_RUN=true bash scripts/01-system.sh
+          else
+            bash -n scripts/01-system.sh
+          fi
+          
+          echo "✅ System script test passed"
+
+  # Auto-labeling for Issues and PRs
+  auto-label:
+    name: Auto Label
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' || github.event_name == 'issues'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        if: github.event_name == 'pull_request'
+      
+      - name: Label issues
+        if: github.event_name == 'issues'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const title = issue.title.toLowerCase();
+            const body = issue.body ? issue.body.toLowerCase() : '';
+            const labels = [];
+            
+            if (title.includes('add') || title.includes('request')) labels.push('enhancement', 'tool-request');
+            if (title.includes('bug') || title.includes('error')) labels.push('bug');
+            if (title.includes('doc') || title.includes('guide')) labels.push('documentation');
+            
+            if (labels.length > 0) {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                labels: labels
+              });
+            }
+      
+      - name: Label PRs and welcome contributors
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            const title = pr.title.toLowerCase();
+            const labels = [];
+            
+            // Get changed files
+            const { data: files } = await github.rest.pulls.listFiles({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pr.number
+            });
+            
+            const changedFiles = files.map(file => file.filename);
+            
+            // Label based on changes
+            if (changedFiles.some(file => file.startsWith('scripts/'))) labels.push('scripts');
+            if (changedFiles.some(file => file.endsWith('.md'))) labels.push('documentation');
+            if (changedFiles.some(file => file.startsWith('.github/'))) labels.push('ci/cd');
+            if (title.includes('fix')) labels.push('bug');
+            if (title.includes('add') || title.includes('new')) labels.push('enhancement');
+            
+            // Size labels
+            const totalChanges = files.reduce((sum, file) => sum + file.additions + file.deletions, 0);
+            if (totalChanges > 500) labels.push('size:large');
+            else if (totalChanges > 100) labels.push('size:medium');
+            else labels.push('size:small');
+            
+            if (labels.length > 0) {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: pr.number,
+                labels: labels
+              });
+            }
+            
+            // Welcome first-time contributors
+            if (context.payload.action === 'opened') {
+              const author = pr.user.login;
+              const { data: prs } = await github.rest.pulls.list({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                creator: author,
+                state: 'all'
+              });
+              
+              if (prs.length === 1) {
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: pr.number,
+                  body: `## 🎉 Welcome @${author}!
+                  
+                  Thank you for your first contribution! The automated tests will validate your changes.
+                  
+                  **Testing your changes:**
+                  \`\`\`bash
+                  bash -n scripts/your-script.sh  # Test syntax
+                  ./scripts/your-script.sh        # Run script
+                  \`\`\`
+                  
+                  Thanks for contributing! 🚀`
+                });
+                
+                await github.rest.issues.addLabels({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: pr.number,
+                  labels: ['first-time-contributor']
+                });
+              }
+            }
+
+  # GitHub Pages deployment (only on main branch push)
+  build-docs:
+    name: Build Documentation
+    runs-on: ubuntu-latest
+    needs: [validate]
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1'
+      
+      - name: Install dependencies
+        run: |
+          cd docs
+          gem install bundler
+          bundle install
+      
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      
+      - name: Build with Jekyll
+        run: |
+          cd docs
+          bundle exec jekyll build --baseurl "${{ github.event.repository.name }}"
+        env:
+          JEKYLL_ENV: production
+      
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/_site
+
+  deploy-docs:
+    name: Deploy Documentation
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build-docs
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  # Notification on failure
+  notify-failure:
+    name: Notify on Failure
+    runs-on: ubuntu-latest
+    needs: [validate, test-macos]
+    if: failure() && github.event_name == 'pull_request'
+    steps:
+      - name: Comment on PR failure
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const message = `## ❌ CI Pipeline Failed
+            
+            The automated validation failed. Please check the workflow logs and fix:
+            
+            ### Common Issues:
+            - **Formatting**: Run \`shfmt -w -i 4 -ci scripts/*.sh\`
+            - **Linting**: Check ShellCheck suggestions  
+            - **Syntax**: Validate with \`bash -n script.sh\`
+            - **Security**: Remove hardcoded secrets or suspicious downloads
+            
+            Click "Details" next to failed checks for specific errors.
+            
+            Push fixes and tests will run automatically. 🔄`;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: message
+            });
