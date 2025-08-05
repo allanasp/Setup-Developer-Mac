@@ -28,6 +28,7 @@ header_pages:
   - tools-guide.md
   - script-guide.md
   - post-installation.md
+  - setup-checker.md
 
 # Social media
 github_username: yourusername

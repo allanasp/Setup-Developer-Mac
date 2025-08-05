@@ -329,8 +329,11 @@ else
     echo ""
     echo "🔄 Final steps:"
     echo "• Restart terminal for all changes to take effect"
-    echo "• Run './check-setup.sh' to verify everything is working"
 fi
+echo ""
+echo "🔍 Verify your setup:"
+echo "• Run './check-setup.sh' to see what's working"
+echo "• Check versions, identify any issues, see completion percentage"
 echo ""
 echo "📁 Individual scripts available in ./scripts/ directory"
 echo "🔧 Re-run any category: ./scripts/XX-category.sh"

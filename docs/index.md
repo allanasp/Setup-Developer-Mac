@@ -167,6 +167,7 @@ cd mac-dev-setup
 1. **Restart terminal** or `source ~/.zshrc`
 2. **Configure PowerLevel10k**: `p10k configure` 
 3. **Import Dracula theme**: iTerm2 → Preferences → Colors
+4. **Verify setup**: `./check-setup.sh` - shows what's working ✅
 
 ### Tool Configuration
 - Set up Git identity and GitHub authentication
@@ -182,6 +183,7 @@ cd mac-dev-setup
 
 - **[🛠️ Complete Tools Guide](tools-guide.html)** - Detailed info on all 100+ tools installed
 - **[📖 Script Documentation](script-guide.html)** - How each script works
+- **[🔍 Setup Checker](setup-checker.html)** - Verify your installation works
 - **[🔧 Troubleshooting](script-guide.html#troubleshooting)** - Common issues and solutions  
 - **[⚙️ Customization](script-guide.html#customization)** - Add your own tools
 

@@ -1,4 +1,6 @@
-# 🚀 Complete Mac Frontend Developer Setup & Configuration Script
+# 🚀 Mac Frontend Developer Setup
+
+> **👉 [START HERE](START_HERE.md) for quick setup** or continue reading for full details
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![macOS](https://img.shields.io/badge/macOS-Compatible-brightgreen.svg)](https://www.apple.com/macos/)
@@ -311,21 +313,28 @@ chmod +x scripts/*.sh
 2. **PowerLevel10k**: Pre-configured with Dracula colors! (run `p10k configure` to customize)
 3. **Import Dracula theme**: iTerm2 → Preferences → Colors → Import `Dracula.itermcolors`
 
+### Verify Everything Works
+4. **Run the setup checker**: `./check-setup.sh`
+   - Shows what's installed and working ✅
+   - Identifies any issues ❌  
+   - Displays version information 🔧
+   - Gives overall completion percentage 📊
+
 ### Authentication Setup
-4. **GitHub CLI**: `gh auth login`
-5. **AWS CLI**: `aws configure` (for Amazon Q)
-6. **Supabase**: `supabase login` (if using)
+5. **GitHub CLI**: `gh auth login`
+6. **AWS CLI**: `aws configure` (for Amazon Q)
+7. **Supabase**: `supabase login` (if using)
 
 ### Productivity Apps (if installed)
-7. **Raycast**: Set CMD+Space shortcut, install extensions
-8. **Rectangle**: Configure window shortcuts (⌘+⌥+arrows)
-9. **1Password**: Sign in, install browser extensions
-10. **Maccy**: Set clipboard shortcut (⌘+Shift+V)
+8. **Raycast**: Set CMD+Space shortcut, install extensions
+9. **Rectangle**: Configure window shortcuts (⌘+⌥+arrows)
+10. **1Password**: Sign in, install browser extensions
+11. **Maccy**: Set clipboard shortcut (⌘+Shift+V)
 
 ### Mobile Development (if script 7 chosen)
-11. **Install Xcode** from App Store (~15GB download)
-12. **Accept Xcode license**: `sudo xcodebuild -license accept`
-13. **Create Android AVDs** in Android Studio
+12. **Install Xcode** from App Store (~15GB download)
+13. **Accept Xcode license**: `sudo xcodebuild -license accept`
+14. **Create Android AVDs** in Android Studio
 
 > 📖 **[Complete Setup Guide](SCRIPT_GUIDE.md#-whats-next)** - Detailed post-installation instructions
 
