@@ -49,13 +49,31 @@
 
 ## 🚀 Quick Start
 
-### One-Command Installation
+### Modular Setup (Recommended)
 
 ```bash
-# Clone and run the setup script
+# Clone the repository
 git clone https://github.com/yourusername/mac-dev-setup.git
 cd mac-dev-setup
-./setup.sh
+
+# Run the modular setup - choose exactly what you need
+./setup-modular.sh
+```
+
+> 🌐 **[View Documentation Website](https://yourusername.github.io/mac-dev-setup)** - Beautiful, interactive documentation
+
+**Example selections:**
+- Type `5 6 9` → Install Frontend Tools, Dev Apps, Database Tools
+- Type `all` → Install everything
+- Press Enter after essentials → Just core development environment
+
+### Individual Script Installation
+
+```bash
+# Run specific scripts as needed
+./scripts/01-system.sh        # Essential: System requirements
+./scripts/05-frontend.sh      # Frontend development tools
+./scripts/09-database.sh      # Database tools
 ```
 
 ### Verify Your Installation
@@ -65,7 +83,28 @@ cd mac-dev-setup
 ./check-setup.sh
 ```
 
-## 📋 What Gets Installed
+## 📋 Available Scripts
+
+### 🔧 Essential Scripts (Auto-Installed)
+| Script | Description | Contents |
+|--------|-------------|----------|
+| `01-system.sh` | System Requirements | Xcode CLI Tools, Homebrew |
+| `02-terminal.sh` | Terminal & Shell | iTerm2, Oh My Zsh, PowerLevel10k, Dracula theme |
+| `03-version-managers.sh` | Version Managers | Volta (Node.js), pyenv (Python) |
+
+### 📦 Optional Scripts (Choose What You Need)
+| # | Script | Description | Key Tools |
+|---|--------|-------------|-----------|
+| 4 | `04-languages.sh` | Programming Languages | Java, Go, Ruby |
+| 5 | `05-frontend.sh` | Frontend Tools | TypeScript, Vue, React Native, Vite, Storyblok, Sanity |
+| 6 | `06-dev-apps.sh` | Development Apps | VS Code + extensions, Cursor, Git tools |
+| 7 | `07-mobile.sh` | Mobile Development | Android Studio, iOS tools, CocoaPods |
+| 8 | `08-productivity.sh` | Productivity Tools | Raycast, Rectangle, 1Password, Maccy |
+| 9 | `09-database.sh` | Database Tools | PostgreSQL, Sequel Ace, Supabase CLI |
+| 10 | `10-devops.sh` | DevOps Tools | Kubernetes, AWS CLI, OrbStack, ngrok |
+| 11 | `11-fonts.sh` | Developer Fonts | Fira Code, JetBrains Mono |
+
+> 📖 **[Complete Script Guide](SCRIPT_GUIDE.md)** - Detailed documentation for each script
 
 <details>
 <summary><strong>🔧 System Tools & Package Managers</strong></summary>
@@ -200,13 +239,25 @@ The script creates a organized development directory structure:
 
 ## 🏃‍♂️ Usage
 
-### Initial Setup
+### Modular Setup (Recommended)
 ```bash
-# Make the script executable (already done in repo)
-chmod +x setup.sh
+# Interactive setup - choose what you need
+./setup-modular.sh
 
-# Run the complete setup
-./setup.sh
+# Example: Install specific tools
+# Type: 5 6 9
+# Installs: Frontend Tools + Dev Apps + Database Tools
+```
+
+### Individual Scripts
+```bash
+# Install just what you need
+./scripts/01-system.sh      # System essentials
+./scripts/05-frontend.sh    # Web development tools
+./scripts/09-database.sh    # Database tools
+
+# Make scripts executable if needed
+chmod +x scripts/*.sh
 ```
 
 ### Verification
@@ -217,41 +268,68 @@ chmod +x setup.sh
 
 ### Updates (Every 6 Months)
 ```bash
-# Re-run the script to update everything
-./setup.sh
+# Re-run specific scripts to update tools
+./scripts/05-frontend.sh    # Update frontend tools
+./scripts/06-dev-apps.sh    # Update development apps
+
+# Or run full modular setup again
+./setup-modular.sh
 ```
 
-## 📋 Manual Steps After Installation
+## 📋 Post-Installation Steps
 
-1. **Install Xcode** from App Store (for iOS development)
-2. **Configure PowerLevel10k**: Run `p10k configure`
-3. **Setup GitHub CLI**: Run `gh auth login`
-4. **Configure AWS CLI**: Run `aws configure` for Amazon Q access
-5. **Setup Rectangle**: Configure window management shortcuts
-6. **Initialize Git Flow**: Run `git flow init` in your projects
-7. **Configure Raycast**: Set CMD+Space shortcut
-8. **Setup 1Password**: Sign in and configure browser extensions
+### Essential Configuration
+1. **Restart terminal** or run `source ~/.zshrc`
+2. **Configure PowerLevel10k**: `p10k configure`
+3. **Import Dracula theme**: iTerm2 → Preferences → Colors → Import `Dracula.itermcolors`
+
+### Authentication Setup
+4. **GitHub CLI**: `gh auth login`
+5. **AWS CLI**: `aws configure` (for Amazon Q)
+6. **Supabase**: `supabase login` (if using)
+
+### Productivity Apps (if installed)
+7. **Raycast**: Set CMD+Space shortcut, install extensions
+8. **Rectangle**: Configure window shortcuts (⌘+⌥+arrows)
+9. **1Password**: Sign in, install browser extensions
+10. **Maccy**: Set clipboard shortcut (⌘+Shift+V)
+
+### Mobile Development (if script 7 chosen)
+11. **Install Xcode** from App Store (~15GB download)
+12. **Accept Xcode license**: `sudo xcodebuild -license accept`
+13. **Create Android AVDs** in Android Studio
+
+> 📖 **[Complete Setup Guide](SCRIPT_GUIDE.md#-whats-next)** - Detailed post-installation instructions
 
 ## 🔧 Customization
 
 ### Adding New Tools
-Edit `setup.sh` and add your tools using the provided helper functions:
+Edit individual scripts in the `scripts/` directory:
 
 ```bash
-# For GUI applications
+# Add to specific script (e.g., scripts/05-frontend.sh)
+install_volta_package "your-node-package"
+
+# Add GUI app to any script
 install_cask_app "App Name" "cask-name" "/Applications/App Name.app"
 
-# For command line tools
-brew install tool-name
+# Add command line tool
+brew install your-tool
+```
 
-# For Node.js tools
-volta install package-name
+### Creating Custom Scripts
+```bash
+# Create new script
+cp scripts/11-fonts.sh scripts/12-custom.sh
+
+# Edit and customize
+# Add to setup-modular.sh optional_scripts array
 ```
 
 ### Modifying Configurations
-- **iTerm2 colors**: Edit the defaults write section around line 111
-- **Zsh aliases**: Modify the EOF section around line 153
-- **VS Code extensions**: Update the extensions array around line 446
+- **Terminal setup**: Edit `scripts/02-terminal.sh`
+- **VS Code extensions**: Edit `scripts/06-dev-apps.sh`
+- **Database tools**: Edit `scripts/09-database.sh`
 
 ## 📊 System Requirements
 
@@ -306,4 +384,34 @@ If this project helped you set up your development environment, please give it a
 
 ---
 
+## 🎯 Common Usage Examples
+
+### Full Stack Developer
+```bash
+./setup-modular.sh
+# Choose: 4 5 6 8 9 (Languages, Frontend, Dev Apps, Productivity, Database)
+```
+
+### Mobile Developer
+```bash
+./setup-modular.sh
+# Choose: 5 6 7 8 11 (Frontend, Dev Apps, Mobile, Productivity, Fonts)
+```
+
+### DevOps Engineer
+```bash
+./setup-modular.sh
+# Choose: 4 6 8 9 10 (Languages, Dev Apps, Productivity, Database, DevOps)
+```
+
+### Minimalist Setup
+```bash
+./setup-modular.sh
+# Choose: 6 8 (Just Dev Apps + Productivity)
+```
+
+---
+
 **Made with ❤️ for the developer community**
+
+> 📖 **[Complete Script Guide](SCRIPT_GUIDE.md)** | 🔧 **[Troubleshooting](SCRIPT_GUIDE.md#-troubleshooting)** | 🚀 **[What's Next](SCRIPT_GUIDE.md#-whats-next)**

@@ -1,0 +1,53 @@
+title: Mac Developer Setup
+description: Complete modular Mac development environment setup scripts
+url: https://yourusername.github.io/mac-dev-setup
+
+# GitHub Pages settings
+theme: minima
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# Markdown settings
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+# Collections
+collections:
+  scripts:
+    output: true
+    permalink: /:collection/:name/
+
+# Navigation
+header_pages:
+  - index.md
+  - script-guide.md
+
+# Social media
+github_username: yourusername
+
+# SEO
+twitter:
+  username: yourusername
+  card: summary_large_image
+
+# Google Analytics (optional)
+# google_analytics: G-XXXXXXXXXX
+
+# Exclude files
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - scripts/
+  - setup-modular.sh
+  - check-setup.sh
+  - "*.sh"
