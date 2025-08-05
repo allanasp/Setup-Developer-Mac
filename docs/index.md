@@ -172,7 +172,8 @@ cd mac-dev-setup
 
 ## 📚 Documentation
 
-- **[📖 Complete Script Guide](script-guide.html)** - Detailed docs for every script
+- **[🛠️ Complete Tools Guide](tools-guide.html)** - Detailed info on all 100+ tools installed
+- **[📖 Script Documentation](script-guide.html)** - How each script works
 - **[🔧 Troubleshooting](script-guide.html#troubleshooting)** - Common issues and solutions  
 - **[⚙️ Customization](script-guide.html#customization)** - Add your own tools
 

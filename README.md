@@ -105,6 +105,7 @@ cd mac-dev-setup
 | 11 | `11-fonts.sh` | Developer Fonts | Fira Code, JetBrains Mono |
 
 > 📖 **[Complete Script Guide](SCRIPT_GUIDE.md)** - Detailed documentation for each script
+> 🛠️ **[Tools Guide](docs/tools-guide.md)** - Comprehensive info on all 100+ tools installed
 
 <details>
 <summary><strong>🔧 System Tools & Package Managers</strong></summary>

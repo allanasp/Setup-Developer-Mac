@@ -25,6 +25,7 @@ collections:
 # Navigation
 header_pages:
   - index.md
+  - tools-guide.md
   - script-guide.md
 
 # Social media
