@@ -201,6 +201,6 @@ After running the checker:
 1. **100% Complete**: You're ready to develop! 🎉
 2. **Missing Tools**: Re-run specific scripts or `./setup.sh`
 3. **Configuration Issues**: Check the [Post-Installation Guide](post-installation.html)
-4. **Still Having Issues**: [Report a bug](https://github.com/yourusername/mac-dev-setup/issues)
+4. **Still Having Issues**: [Report a bug](https://github.com/allanasp/Setup-Developer-Mac/issues)
 
 The setup checker ensures your Mac development environment is not just installed, but actually working and ready for productive frontend development! 🚀

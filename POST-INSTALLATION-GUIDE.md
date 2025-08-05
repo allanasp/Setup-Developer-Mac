@@ -828,4 +828,4 @@ Your Mac is now a powerful development machine. Remember:
 
 ---
 
-**Need help?** Check the [GitHub repository](https://github.com/yourusername/mac-dev-setup) for updates and to report issues.
+**Need help?** Check the [GitHub repository](https://github.com/allanasp/Setup-Developer-Mac) for updates and to report issues.

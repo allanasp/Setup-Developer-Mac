@@ -692,7 +692,7 @@ This guide provides detailed explanations of every tool included in the setup sc
 
 ---
 
-**[← Back to Home](index.html)** | **[Script Guide →](script-guide.html)** | **[GitHub Repository →](https://github.com/yourusername/mac-dev-setup)**
+**[← Back to Home](index.html)** | **[Script Guide →](script-guide.html)** | **[GitHub Repository →](https://github.com/allanasp/Setup-Developer-Mac)**
 
 ---
 
@@ -700,6 +700,6 @@ This guide provides detailed explanations of every tool included in the setup sc
   <h3>🚀 Ready to Install These Amazing Tools?</h3>
   <p style="color: #586069; margin: 1rem 0;">Choose exactly what you need with our modular setup</p>
   <p>
-    <a href="https://github.com/yourusername/mac-dev-setup" style="display: inline-block; background: #28a745; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold;">Get Started Now</a>
+    <a href="https://github.com/allanasp/Setup-Developer-Mac" style="display: inline-block; background: #28a745; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold;">Get Started Now</a>
   </p>
 </div>

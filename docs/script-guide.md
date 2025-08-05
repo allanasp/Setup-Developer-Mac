@@ -631,10 +631,10 @@ After installation:
 <div style="text-align: center; margin: 2rem 0; padding: 2rem; background: #f6f8fa; border-radius: 8px;">
   <h3>🎉 Ready to Set Up Your Perfect Dev Environment?</h3>
   <p>
-    <a href="https://github.com/yourusername/mac-dev-setup" style="display: inline-block; background: #28a745; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold; margin: 8px;">Get Started Now</a>
+    <a href="https://github.com/allanasp/Setup-Developer-Mac" style="display: inline-block; background: #28a745; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold; margin: 8px;">Get Started Now</a>
   </p>
 </div>
 
 ---
 
-**[← Back to Home](index.html)** | **[GitHub Repository →](https://github.com/yourusername/mac-dev-setup)**
+**[← Back to Home](index.html)** | **[GitHub Repository →](https://github.com/allanasp/Setup-Developer-Mac)**

@@ -1,6 +1,6 @@
 title: Mac Frontend Developer Setup
 description: Complete modular Mac development environment setup scripts tailored for frontend developers
-url: https://yourusername.github.io/mac-dev-setup
+url: https://allanasp.github.io/Setup-Developer-Mac
 
 # GitHub Pages settings
 theme: minima
@@ -31,11 +31,11 @@ header_pages:
   - setup-checker.md
 
 # Social media
-github_username: yourusername
+github_username: allanasp
 
 # SEO
 twitter:
-  username: yourusername
+  username: allanasp
   card: summary_large_image
 
 # Google Analytics (optional)

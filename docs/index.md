@@ -18,8 +18,8 @@ Choose exactly what you need - from essential system requirements to frontend-sp
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/mac-dev-setup.git
-cd mac-dev-setup
+git clone https://github.com/allanasp/Setup-Developer-Mac.git
+cd Setup-Developer-Mac
 
 # Interactive setup (recommended)
 ./setup.sh
@@ -192,7 +192,7 @@ cd mac-dev-setup
 ## 🚀 Get Started
 
 <div class="cta-section">
-  <a href="https://github.com/yourusername/mac-dev-setup" class="cta-button primary">
+  <a href="https://github.com/allanasp/Setup-Developer-Mac" class="cta-button primary">
     📥 Clone Repository
   </a>
   
@@ -202,8 +202,8 @@ cd mac-dev-setup
 </div>
 
 ```bash
-git clone https://github.com/yourusername/mac-dev-setup.git
-cd mac-dev-setup
+git clone https://github.com/allanasp/Setup-Developer-Mac.git
+cd Setup-Developer-Mac
 ./setup.sh
 ```
 
@@ -212,9 +212,9 @@ cd mac-dev-setup
 <div class="footer">
   <p><strong>Made with ❤️ for the developer community</strong></p>
   <p>
-    <a href="https://github.com/yourusername/mac-dev-setup">GitHub</a> •
+    <a href="https://github.com/allanasp/Setup-Developer-Mac">GitHub</a> •
     <a href="script-guide.html">Full Documentation</a> •
-    <a href="https://github.com/yourusername/mac-dev-setup/issues">Report Issues</a>
+    <a href="https://github.com/allanasp/Setup-Developer-Mac/issues">Report Issues</a>
   </p>
 </div>
 

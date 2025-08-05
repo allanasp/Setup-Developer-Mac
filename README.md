@@ -72,8 +72,8 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/mac-dev-setup.git
-cd mac-dev-setup
+git clone https://github.com/allanasp/Setup-Developer-Mac.git
+cd Setup-Developer-Mac
 
 # Interactive setup - guides you through each step
 ./setup.sh
@@ -89,7 +89,7 @@ The setup now **guides you through each step** with configuration prompts:
 - No more guessing what to do after installation!
 ```
 
-> 🌐 **[View Documentation Website](https://yourusername.github.io/mac-dev-setup)** - Beautiful, interactive documentation
+> 🌐 **[View Documentation Website](https://allanasp.github.io/Setup-Developer-Mac)** - Beautiful, interactive documentation
 
 **Example selections:**
 - Type `5 6 9` → Install Frontend Tools, Dev Apps, Database Tools

@@ -4,8 +4,8 @@
 
 ### 1. Clone this repository
 ```bash
-git clone https://github.com/yourusername/mac-dev-setup.git
-cd mac-dev-setup
+git clone https://github.com/allanasp/Setup-Developer-Mac.git
+cd Setup-Developer-Mac
 ```
 
 ### 2. Run the main setup script
@@ -55,9 +55,9 @@ No guessing, no broken setups!
 
 ## 🆘 Need Help?
 
-- 📖 **Full documentation**: [View website](https://yourusername.github.io/mac-dev-setup)
-- 🐛 **Found a bug?**: [Report issue](https://github.com/yourusername/mac-dev-setup/issues)
-- 💡 **Want a tool added?**: [Request tool](https://github.com/yourusername/mac-dev-setup/issues/new/choose)
+- 📖 **Full documentation**: [View website](https://allanasp.github.io/Setup-Developer-Mac)
+- 🐛 **Found a bug?**: [Report issue](https://github.com/allanasp/Setup-Developer-Mac/issues)
+- 💡 **Want a tool added?**: [Request tool](https://github.com/allanasp/Setup-Developer-Mac/issues/new/choose)
 
 ---
 
