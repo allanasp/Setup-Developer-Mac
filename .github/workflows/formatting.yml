@@ -91,7 +91,7 @@ The automated formatting check failed. Please fix the formatting issues:
 
 ### Quick Fix Commands
 
-\`\`\`bash
+\\\`\\\`\\\`bash
 # Install formatting tools
 make install-deps
 
@@ -103,7 +103,7 @@ make check-format
 
 # Or format specific file
 shfmt -w -i 4 -ci path/to/script.sh
-\`\`\`
+\\\`\\\`\\\`
 
 ### What to check:
 - ✅ Shell scripts use 4-space indentation
@@ -112,5 +112,5 @@ shfmt -w -i 4 -ci path/to/script.sh
 - ✅ No trailing whitespace
 - ✅ Use LF line endings (not CRLF)
 
-Run \`make dev\` to format, lint, and test everything before committing.`
+Run \\\`make dev\\\` to format, lint, and test everything before committing.`
             });
