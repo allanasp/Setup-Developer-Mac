@@ -81,36 +81,38 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
+            const message = `## 🎨 Code Formatting Issues
+
+            The automated formatting check failed. Please fix the formatting issues:
+
+            ### Quick Fix Commands
+
+            \`\`\`bash
+            # Install formatting tools
+            make install-deps
+
+            # Format all shell scripts
+            make format
+
+            # Check formatting
+            make check-format
+
+            # Or format specific file
+            shfmt -w -i 4 -ci path/to/script.sh
+            \`\`\`
+
+            ### What to check:
+            - ✅ Shell scripts use 4-space indentation
+            - ✅ YAML files use 2-space indentation  
+            - ✅ Files end with newline
+            - ✅ No trailing whitespace
+            - ✅ Use LF line endings (not CRLF)
+
+            Run \`make dev\` to format, lint, and test everything before committing.`;
+            
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `## 🎨 Code Formatting Issues
-
-The automated formatting check failed. Please fix the formatting issues:
-
-### Quick Fix Commands
-
-\\\`\\\`\\\`bash
-# Install formatting tools
-make install-deps
-
-# Format all shell scripts
-make format
-
-# Check formatting
-make check-format
-
-# Or format specific file
-shfmt -w -i 4 -ci path/to/script.sh
-\\\`\\\`\\\`
-
-### What to check:
-- ✅ Shell scripts use 4-space indentation
-- ✅ YAML files use 2-space indentation  
-- ✅ Files end with newline
-- ✅ No trailing whitespace
-- ✅ Use LF line endings (not CRLF)
-
-Run \\\`make dev\\\` to format, lint, and test everything before committing.`
+              body: message
             });
