@@ -5,6 +5,7 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+  workflow_dispatch:  # Allow manual trigger
 
 permissions:
   contents: read
@@ -26,17 +27,20 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.1'
-          bundler-cache: true
-          working-directory: docs
+      
+      - name: Install dependencies
+        run: |
+          cd docs
+          gem install bundler
+          bundle install
       
       - name: Setup Pages
-        id: pages
         uses: actions/configure-pages@v4
       
       - name: Build with Jekyll
         run: |
           cd docs
-          bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
+          bundle exec jekyll build --baseurl "${{ github.event.repository.name }}"
         env:
           JEKYLL_ENV: production
       
