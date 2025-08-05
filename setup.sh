@@ -90,49 +90,52 @@ run_script() {
 • Verify Homebrew: run 'brew --version'"
                     ;;
                 "02-terminal.sh")
-                    prompt_configuration "Terminal & Shell" "• Import Dracula theme: iTerm2 → Preferences → Colors → Import ~/Downloads/Dracula.itermcolors
+                    prompt_configuration "Terminal & Shell" "• Import Dracula theme: iTerm2 → Preferences → Colors → Import ~/Downloads/Dracula.itermcolors (copied from repo)
 • Restart terminal or run 'source ~/.zshrc'
-• Verify PowerLevel10k theme is working"
+• PowerLevel10k is pre-configured with Dracula colors (no need to run 'p10k configure' unless you want to customize)"
                     ;;
                 "03-version-managers.sh")
                     prompt_configuration "Version Managers" "• Restart terminal or run 'source ~/.zshrc'
+• Verify Volta: run 'volta --version'
+• Verify pyenv: run 'pyenv --version'
 • Verify Node.js: run 'node --version'
 • Verify Python: run 'python --version'"
                     ;;
                 "04-languages.sh")
-                    prompt_configuration "Programming Languages" "• Verify Java: run 'java -version'
+                    prompt_configuration "Programming Languages" "• Verify Java: run 'java -version' (should show JDK 17+)
 • Verify Go: run 'go version'
-• Set JAVA_HOME if needed"
+• JAVA_HOME is automatically configured in your shell"
                     ;;
                 "05-frontend.sh")
-                    prompt_configuration "Frontend Tools" "• Verify TypeScript: run 'tsc --version'
-• Verify Vue CLI: run 'vue --version'
-• Test creating a project: 'npm create vue@latest test-project'"
+                    prompt_configuration "Frontend Tools" "• Review the TODO list above for account creation steps
+• Verify installations work after completing authentication
+• Test project creation: 'npm create vue@latest test-project'"
                     ;;
                 "06-dev-apps.sh")
-                    prompt_configuration "Development Apps" "• Open VS Code and sign in with GitHub/Microsoft
-• Install any additional extensions you need
-• Configure VS Code settings"
+                    prompt_configuration "Development Apps" "• Review the TODO list above for editor account setup
+• Sign in to VS Code, Cursor, and Zed editors
+• Enable settings sync in VS Code
+• Git and GitHub should already be configured from the prompts"
                     ;;
                 "07-mobile.sh")
-                    prompt_configuration "Mobile Development" "• Open Android Studio and complete setup
-• Install Xcode from App Store (manual step)
-• Verify React Native: run 'npx react-native --version'"
+                    prompt_configuration "Mobile Development" "• Review the TODO list above for setup steps
+• Complete Android Studio configuration
+• Install Xcode from App Store if doing iOS development"
                     ;;
                 "08-productivity.sh")
-                    prompt_configuration "Productivity Tools" "• Set up Raycast hotkey (recommended: ⌘Space)
-• Configure Rectangle window shortcuts
-• Sign in to 1Password and other apps"
+                    prompt_configuration "Productivity Tools" "• Review the TODO list above for all app setups
+• Complete account creation and login for each app
+• Configure launch on login settings where needed"
                     ;;
                 "09-database.sh")
-                    prompt_configuration "Database Tools" "• Test PostgreSQL: run 'psql --version'
-• Open Sequel Ace and test database connection
-• Login to Supabase CLI: 'supabase login'"
+                    prompt_configuration "Database Tools" "• Review the TODO list above for DBeaver and Supabase setup
+• Test PostgreSQL: run 'psql --version'
+• Configure DBeaver to connect to local PostgreSQL"
                     ;;
                 "10-devops.sh")
-                    prompt_configuration "DevOps Tools" "• Test kubectl: run 'kubectl version --client'
-• Configure AWS CLI: run 'aws configure'
-• Start OrbStack and verify Docker compatibility"
+                    prompt_configuration "DevOps Tools" "• Review the TODO list above for account creation steps
+• Test kubectl: run 'kubectl version --client'
+• Verify installations are working"
                     ;;
                 "11-fonts.sh")
                     prompt_configuration "Developer Fonts" "• Restart applications to use new fonts
@@ -183,7 +186,7 @@ optional_descriptions=(
     "Mobile Development (Android Studio, iOS tools)"
     "Productivity Tools (Raycast, Rectangle, Browsers)"
     "Database Tools (PostgreSQL, Sequel Ace, Supabase CLI)"
-    "DevOps Tools (Kubernetes, AWS CLI, Utilities)"
+    "DevOps Tools (ngrok, Command Line Utilities)"
     "Developer Fonts (Fira Code, JetBrains Mono)"
 )
 

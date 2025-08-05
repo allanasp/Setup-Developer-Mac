@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # DevOps Tools Setup
-# Installs: Kubernetes tools, AWS CLI, command line utilities
+# Installs: AWS CLI, ngrok, command line utilities
 
 set -e  # Exit on any error
 
@@ -13,18 +13,7 @@ print_section "DevOps Tools Setup"
 check_macos
 check_homebrew
 
-# Kubernetes and DevOps tools
-print_status "Installing Kubernetes and DevOps tools..."
-brew install kops  # Kubernetes cluster management
-brew install helm  # Kubernetes package manager  
-brew install kubernetes-cli  # kubectl command line tool
-brew install kubectx  # Switch between Kubernetes contexts (includes kubens)
-print_success "Kubernetes tools installed"
-
-# AI Coding Assistants
-print_status "Installing AI coding assistants..."
-
-# AWS CLI (required for Amazon Q)
+# AWS CLI (for S3, CloudFront, Lambda deployment)
 print_status "Installing AWS CLI..."
 if ! command -v aws &> /dev/null; then
     brew install awscli
@@ -33,34 +22,23 @@ else
     print_success "AWS CLI already installed"
 fi
 
-# Configure AWS CLI for Amazon Q Developer
+# Configure AWS CLI for Amazon Q Developer (uses dummy config)
 print_status "Configuring AWS CLI for Amazon Q Developer..."
 if ! aws configure list &>/dev/null; then
-    print_status "AWS CLI needs configuration for Amazon Q Developer"
+    print_status "Setting up dummy AWS config for Amazon Q Developer..."
     echo ""
-    echo "🔧 AWS Configuration Options:"
-    echo "1. For Amazon Q Developer (free tier)"
-    echo "2. Skip AWS configuration (can configure later)"
+    echo "ℹ️  Amazon Q only needs AWS CLI installed - using dummy credentials"
+    echo "   You'll authenticate through VS Code with AWS Builder ID (free)"
     echo ""
-    read -p "Configure AWS now? [1/2]: " aws_choice
-    aws_choice=${aws_choice:-2}
     
-    if [[ "${aws_choice}" == "1" ]]; then
-        print_status "Setting up AWS for Amazon Q Developer..."
-        echo ""
-        echo "📝 For Amazon Q Developer, you can use dummy values:"
-        echo "   Access Key ID: dummy"
-        echo "   Secret Access Key: dummy"
-        echo "   Region: us-east-1"
-        echo "   Output format: json"
-        echo ""
-        echo "Note: You'll authenticate through your browser when using Amazon Q"
-        echo ""
-        aws configure
-        print_success "AWS CLI configured for Amazon Q Developer"
-    else
-        print_status "AWS configuration skipped - can be configured later with 'aws configure'"
-    fi
+    # Set dummy AWS credentials for Amazon Q
+    aws configure set aws_access_key_id "dummy-for-amazon-q"
+    aws configure set aws_secret_access_key "dummy-for-amazon-q"
+    aws configure set default.region "us-east-1"
+    aws configure set default.output "json"
+    
+    print_success "AWS CLI configured with dummy credentials for Amazon Q"
+    print_status "To use Amazon Q: Open VS Code → Amazon Q icon → Sign in with Builder ID"
 else
     print_success "AWS CLI already configured"
 fi
@@ -77,27 +55,31 @@ print_success "Command line utilities installed"
 
 print_success "DevOps tools setup completed!"
 echo ""
-echo "Installed Kubernetes tools:"
-echo "• kOps (cluster management)"
-echo "• Helm (package manager)"
-echo "• kubectl (CLI)"
-echo "• kubectx & kubens (context switching)"
-echo ""
-echo "Installed CLI utilities:"
-echo "• AWS CLI (for Amazon Q)"
-echo "• ngrok (local tunneling)"
-echo "• eza (better ls with colors)"
+echo "Installed tools:"
+echo "• AWS CLI (for S3, CloudFront, Lambda deployment)"
+echo "• ngrok (local tunneling for sharing dev servers)"
+echo "• eza (modern ls replacement with colors)"
 echo "• wget (file downloads)"
-echo "• jq (JSON processing)"
+echo "• jq (JSON processing for APIs)"
 echo "• tree (directory visualization)"
-echo "• fzf (fuzzy finder)"
+echo "• fzf (fuzzy finder for terminal)"
 echo ""
-echo "Kubernetes usage:"
-echo "• Switch context: kubectx production"
-echo "• Switch namespace: kubens default"
-echo "• Install chart: helm install myapp ./chart"
+echo "📋 TODO: Account Creation & Configuration"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "□ Amazon Q Developer (AI Coding Assistant)"
+echo "  → Open VS Code"
+echo "  → Click Amazon Q icon in sidebar"
+echo "  → Sign in with AWS Builder ID (free, no credit card)"
+echo "  → NOT an AWS account - just for Amazon Q"
+echo ""
+echo "□ ngrok Account (for sharing local dev)"
+echo "  → Sign up: https://ngrok.com"
+echo "  → Get auth token: ngrok config add-authtoken <token>"
+echo "  → Usage: ngrok http 3000 (share your dev server)"
+echo ""
+echo "□ AWS Account (OPTIONAL - only if deploying to AWS)"
+echo "  → Only needed for S3, CloudFront, Lambda"
+echo "  → Skip if using Vercel/Netlify instead"
 echo ""
 echo "Next steps:"
-echo "• Configure AWS: aws configure"
-echo "• Configure kubectl with cluster credentials"
 echo "• Run fonts setup: ./scripts/11-fonts.sh"

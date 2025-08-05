@@ -57,10 +57,10 @@ print_success "Android development environment configured"
 # iOS Development Tools (Optional - Requires Manual Xcode Installation)
 print_status "iOS Development Setup..."
 echo ""
-echo "⚠️  ${YELLOW}IMPORTANT: iOS Development Requires Manual Steps${NC}"
-echo "   • Xcode CANNOT be installed via Homebrew (Apple restriction)"
-echo "   • Xcode must be downloaded from Mac App Store (~15GB)"
-echo "   • Some iOS tools require full Xcode installation"
+echo "📱 ${BLUE}iOS Development Information${NC}"
+echo "   • Xcode needs to be installed from the Mac App Store"
+echo "   • Download size is approximately 15GB"
+echo "   • We'll install supporting tools once Xcode is ready"
 echo ""
 
 read -p "Install iOS development tools? (requires manual Xcode install later) [y/N]: " install_ios
@@ -121,7 +121,6 @@ echo ""
 echo "📱 Android Development:"
 echo "• Android Studio installed"
 echo "• Environment variables configured"
-echo "• Manual steps: Configure Android SDK in Android Studio"
 echo ""
 if [[ "${install_ios}" =~ ^[Yy]$ ]]; then
     echo "📱 iOS Development:"
@@ -129,13 +128,33 @@ if [[ "${install_ios}" =~ ^[Yy]$ ]]; then
     if [[ -d "/Applications/Xcode.app" ]]; then
         echo "• Xcode found and configured"
     else
-        echo "• Manual step: Install Xcode from App Store"
+        echo "• Xcode installation needed (see TODO below)"
     fi
 else
-    echo "📱 iOS Development: Skipped"
+    echo "📱 iOS Development: Skipped (can install later)"
 fi
 echo ""
+echo "📋 TODO: Mobile Development Setup"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "□ Android Studio Configuration"
+echo "  → Open Android Studio"
+echo "  → Complete initial setup wizard"
+echo "  → Install Android SDK (API 33+ for React Native)"
+echo "  → Create an Android Virtual Device (AVD)"
+echo ""
+if [[ "${install_ios}" =~ ^[Yy]$ ]] && [[ ! -d "/Applications/Xcode.app" ]]; then
+    echo "□ Xcode Installation (iOS Development)"
+    echo "  → Open Mac App Store"
+    echo "  → Search for 'Xcode' and install (~15GB)"
+    echo "  → Open Xcode and accept license agreement"
+    echo "  → Install additional components when prompted"
+    echo ""
+fi
+echo "□ React Native Verification"
+echo "  → Run: npx @react-native-community/cli doctor"
+echo "  → Fix any issues reported by the doctor command"
+echo "  → To verify CLI: npx @react-native-community/cli --version"
+echo ""
 echo "Next steps:"
-echo "• Configure Android Studio (SDK, AVD)"
-echo "• Test React Native: npx react-native doctor"
+echo "• Complete the TODO items above"
 echo "• Run productivity tools setup: ./scripts/08-productivity.sh"

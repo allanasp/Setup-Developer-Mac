@@ -27,15 +27,21 @@ if [[ -d "/Applications/iTerm.app" ]]; then
     # Create iTerm2 preferences directory if it doesn't exist
     mkdir -p ~/Library/Preferences
     
-    # Download and install Dracula theme for iTerm2
-    if [[ ! -f ~/Downloads/Dracula.itermcolors ]]; then
-        print_status "Downloading Dracula theme..."
+    # Copy Dracula theme from repo
+    script_dir="$(dirname "$(dirname "$0")")"  # Go up to repo root
+    if [[ -f "${script_dir}/Dracula.itermcolors" ]]; then
+        if [[ ! -f ~/Downloads/Dracula.itermcolors ]]; then
+            print_status "Copying Dracula theme from repo..."
+            cp "${script_dir}/Dracula.itermcolors" ~/Downloads/
+            print_success "Dracula theme copied to Downloads"
+        fi
+    else
+        print_warning "Dracula.itermcolors not found in repo, downloading..."
         curl -o ~/Downloads/Dracula.itermcolors https://raw.githubusercontent.com/dracula/iterm/master/Dracula.itermcolors
-        print_success "Dracula theme downloaded"
     fi
     
     print_success "Dracula theme ready for import"
-    print_success "To apply: Open iTerm2 → Preferences → Profiles → Colors → Import Dracula.itermcolors"
+    print_success "To apply: Open iTerm2 → Preferences → Profiles → Colors → Import ~/Downloads/Dracula.itermcolors"
 else
     print_warning "iTerm2 not found - skipping configuration"
 fi

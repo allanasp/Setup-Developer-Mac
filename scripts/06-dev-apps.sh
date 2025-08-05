@@ -124,10 +124,16 @@ extensions=(
 # Install each extension with error handling
 if command -v code &> /dev/null; then
     for extension in "${extensions[@]}"; do
-        if code --install-extension "${extension}"; then
-            print_success "Installed VS Code extension: ${extension}"
+        # Check if extension is already installed
+        if code --list-extensions | grep -q "^${extension}$"; then
+            print_success "VS Code extension already installed: ${extension}"
         else
-            print_warning "Failed to install VS Code extension: ${extension} (might already be installed)"
+            print_status "Installing VS Code extension: ${extension}"
+            if code --install-extension "${extension}" 2>/dev/null; then
+                print_success "Installed VS Code extension: ${extension}"
+            else
+                print_warning "Failed to install VS Code extension: ${extension}"
+            fi
         fi
     done
 else
@@ -150,8 +156,120 @@ echo "• cursor .   - Open Cursor in current directory"
 echo "• zed .      - Open Zed in current directory"
 echo "• mate .     - Open TextMate in current directory"
 echo ""
+
+# Git Configuration
+print_section "Git Configuration"
+echo "Git and GitHub CLI are installed. Let's configure them for your development work."
+echo ""
+
+# Check if Git is already configured
+git_name=$(git config --global user.name 2>/dev/null || echo "")
+git_email=$(git config --global user.email 2>/dev/null || echo "")
+
+if [[ -z "${git_name}" || -z "${git_email}" ]]; then
+    print_status "Git needs to be configured with your identity"
+    echo ""
+    
+    if [[ -z "${git_name}" ]]; then
+        read -p "Enter your full name for Git commits: " user_name
+        if [[ -n "${user_name}" ]]; then
+            git config --global user.name "${user_name}"
+            print_success "Git user.name set to: ${user_name}"
+        fi
+    else
+        print_success "Git user.name already set to: ${git_name}"
+    fi
+    
+    if [[ -z "${git_email}" ]]; then
+        read -p "Enter your email for Git commits: " user_email
+        if [[ -n "${user_email}" ]]; then
+            git config --global user.email "${user_email}"
+            print_success "Git user.email set to: ${user_email}"
+        fi
+    else
+        print_success "Git user.email already set to: ${git_email}"
+    fi
+else
+    print_success "Git already configured:"
+    echo "  Name: ${git_name}"
+    echo "  Email: ${git_email}"
+fi
+
+echo ""
+
+# GitHub CLI Authentication
+print_status "GitHub CLI Authentication"
+if gh auth status &>/dev/null; then
+    print_success "GitHub CLI already authenticated"
+    gh auth status
+else
+    echo "GitHub CLI needs authentication to work with repositories."
+    echo ""
+    read -p "Authenticate with GitHub now? [Y/n]: " gh_auth
+    gh_auth=${gh_auth:-Y}
+    
+    if [[ "${gh_auth}" =~ ^[Yy]$ ]]; then
+        print_status "Starting GitHub authentication..."
+        echo ""
+        echo "🌐 This will open your browser for GitHub authentication"
+        echo "   Choose: Login with a web browser"
+        echo "   Protocol: HTTPS (recommended)"
+        echo "   Authenticate Git: Yes"
+        echo ""
+        read -p "Press Enter to continue..."
+        
+        if gh auth login; then
+            print_success "GitHub CLI authenticated successfully!"
+            echo ""
+            print_status "Testing GitHub connection..."
+            gh auth status
+            echo ""
+            print_status "📝 SSH Key Information:"
+            echo "GitHub CLI generates SSH keys automatically during authentication."
+            echo ""
+            echo "🔑 SSH Key Management Options:"
+            echo "• GitHub CLI: Automatic key generation (recommended)"
+            echo "• 1Password: SSH agent integration for secure key storage"
+            echo "• Manual: Generate keys with 'ssh-keygen -t ed25519 -C \"your@email.com\"'"
+            echo ""
+            echo "📍 SSH Key Locations:"
+            echo "• Private key: ~/.ssh/id_ed25519"
+            echo "• Public key: ~/.ssh/id_ed25519.pub"
+            echo "• SSH config: ~/.ssh/config"
+            echo ""
+            echo "🔧 1Password SSH Agent Setup (if using 1Password):"
+            echo "• 1Password → Settings → Developer → SSH Agent"
+            echo "• Configure git: git config --global gpg.ssh.program \"/Applications/1Password.app/Contents/MacOS/op-ssh-sign\""
+        else
+            print_warning "GitHub authentication failed - you can try again later with 'gh auth login'"
+        fi
+    else
+        print_status "GitHub authentication skipped - run 'gh auth login' later to authenticate"
+    fi
+fi
+
+echo ""
+echo "📋 TODO: Additional Development Setup"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "□ VS Code Settings Sync"
+echo "  → Open VS Code: code ."
+echo "  → Sign in with GitHub/Microsoft account"
+echo "  → Enable Settings Sync to backup extensions & preferences"
+echo ""
+echo "□ Cursor AI Editor Setup"
+echo "  → Open Cursor: cursor ."
+echo "  → Sign in to enable AI features"
+echo "  → Configure API keys if needed"
+echo ""
+echo "□ Zed Editor Setup"
+echo "  → Open Zed: zed ."
+echo "  → Sign in with GitHub account"
+echo "  → Enable collaboration features"
+echo ""
+echo "□ GitHub Desktop (if using Git GUI)"
+echo "  → Open GitHub Desktop"
+echo "  → Sign in with your GitHub account"
+echo ""
 echo "Next steps:"
 echo "• Restart terminal or run 'source ~/.zshrc' to activate commands"
-echo "• Configure Git: git config --global user.name 'Your Name'"
-echo "• Authenticate GitHub: gh auth login"
 echo "• Run mobile development setup: ./scripts/07-mobile.sh"

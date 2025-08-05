@@ -85,6 +85,12 @@ fi
 
 print_success "Version managers setup completed!"
 echo ""
+echo "📋 Verification commands (run after restarting terminal):"
+echo "• Verify Volta: volta --version"
+echo "• Verify pyenv: pyenv --version"
+echo "• Verify Node.js: node --version"
+echo "• Verify Python: python --version"
+echo ""
 echo "Python management commands:"
 echo "• List versions: pyenv versions"
 echo "• Install version: pyenv install 3.11.7"

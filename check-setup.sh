@@ -203,24 +203,18 @@ else
     print_missing "Nuxt CLI"
 fi
 
-# React Native CLI (via npx)
+# React Native CLI (via @react-native-community/cli)
 if command -v npx >/dev/null 2>&1; then
-    # Test npx react-native with proper error handling
-    rn_test=$(npx react-native --version 2>/dev/null)
+    # Test the correct React Native CLI command
+    rn_test=$(npx @react-native-community/cli --version 2>/dev/null)
     if [[ -n "${rn_test}" ]]; then
         rn_version=$(echo "${rn_test}" | head -n1 | awk '{print $1}')
-        print_installed "React Native CLI (${rn_version} via npx)"
-    elif command -v react-native >/dev/null 2>&1; then
-        rn_version=$(react-native --version 2>/dev/null | head -n1 | awk '{print $1}' || echo "installed")
-        print_installed "React Native CLI (${rn_version} global)"
+        print_installed "React Native CLI (${rn_version})"
     else
         print_missing "React Native CLI"
     fi
-elif command -v react-native >/dev/null 2>&1; then
-    rn_version=$(react-native --version 2>/dev/null | head -n1 | awk '{print $1}' || echo "installed")
-    print_installed "React Native CLI (${rn_version} global)"
 else
-    print_missing "React Native CLI"
+    print_missing "React Native CLI (npx not available)"
 fi
 
 # Expo CLI (via npx)
@@ -393,42 +387,22 @@ else
     print_missing "Sequel Ace"
 fi
 
-print_section "Kubernetes & DevOps Tools"
+print_section "DevOps Tools"
 
-# kOps
-if command_exists kops; then
-    print_installed "kOps ($(kops version --short))"
+# AWS CLI
+if command_exists aws; then
+    aws_version=$(aws --version 2>&1 | cut -d' ' -f1 | cut -d'/' -f2 || echo "installed")
+    print_installed "AWS CLI (${aws_version})"
 else
-    print_missing "kOps"
+    print_missing "AWS CLI"
 fi
 
-# Helm
-if command_exists helm; then
-    print_installed "Helm ($(helm version --short))"
+# ngrok
+if command_exists ngrok; then
+    ngrok_version=$(ngrok version 2>/dev/null | head -n1 | awk '{print $3}' || echo "installed")
+    print_installed "ngrok (${ngrok_version})"
 else
-    print_missing "Helm"
-fi
-
-# kubectl
-if command_exists kubectl; then
-    print_installed "kubectl ($(kubectl version --client --short 2>/dev/null || echo 'installed'))"
-else
-    print_missing "kubectl"
-fi
-
-# kubectx (includes kubens)
-if command_exists kubectx; then
-    kubectx_version=$(kubectx --version 2>/dev/null || echo "installed")
-    print_installed "kubectx (${kubectx_version})"
-    
-    # Check if kubens is also available (should be bundled)
-    if command_exists kubens; then
-        print_installed "  kubens (bundled with kubectx)"
-    else
-        print_warning "  kubens not found (should be bundled with kubectx)"
-    fi
-else
-    print_missing "kubectx (includes kubens)"
+    print_missing "ngrok"
 fi
 
 print_section "Mobile Development"
