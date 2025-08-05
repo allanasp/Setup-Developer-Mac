@@ -153,20 +153,18 @@ cd mac-dev-setup
 
 ## 📋 Post-Installation
 
-### Essential Steps
+### Essential First Steps
 1. **Restart terminal** or `source ~/.zshrc`
 2. **Configure PowerLevel10k**: `p10k configure` 
-3. **Import Dracula theme**: iTerm2 → Preferences → Colors → Import
+3. **Import Dracula theme**: iTerm2 → Preferences → Colors
 
-### Authentication
-4. **GitHub**: `gh auth login`
-5. **AWS**: `aws configure` 
-6. **Supabase**: `supabase login`
+### Tool Configuration
+- Set up Git identity and GitHub authentication
+- Configure VS Code settings and extensions
+- Initialize cloud accounts (AWS, Supabase)
+- Set up productivity apps (Raycast, Rectangle)
 
-### App Configuration
-7. **Raycast**: Set CMD+Space, install extensions
-8. **Rectangle**: Configure window shortcuts
-9. **1Password**: Sign in, browser extensions
+**[📋 Complete Post-Installation Guide →](post-installation.html)**
 
 ---
 
