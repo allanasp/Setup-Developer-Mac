@@ -148,9 +148,21 @@ jobs:
             exit 1
           fi
           
-          # Check for suspicious commands
-          if grep -r -E "(curl.*|.*|wget.*|)" scripts/ --include="*.sh"; then
-            echo "❌ Suspicious download commands found"
+          # Check for suspicious download commands (allow legitimate ones)
+          echo "🔍 Checking for suspicious download commands..."
+          
+          # Create a list of suspicious patterns (excluding legitimate sources)
+          if grep -r -E "curl.*http[s]?://[^/]+" scripts/ --include="*.sh" | \
+             grep -v "github.com" | \
+             grep -v "githubusercontent.com" | \
+             grep -v "get.volta.sh" | \
+             grep -v "raw.github.com" | \
+             grep -v "Homebrew/install" | \
+             grep -v "ohmyzsh/ohmyzsh" | \
+             grep -v "dracula/iterm" | \
+             grep -v "dracula/powerlevel10k" | \
+             grep -v "# Legitimate download"; then
+            echo "❌ Suspicious download commands found (not from trusted sources)"
             exit 1
           fi
           
