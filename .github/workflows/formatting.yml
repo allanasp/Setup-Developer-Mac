@@ -87,7 +87,7 @@ jobs:
 
             ### Quick Fix Commands
 
-            \`\`\`bash
+            ```bash
             # Install formatting tools
             make install-deps
 
@@ -97,9 +97,9 @@ jobs:
             # Check formatting
             make check-format
 
-            # Or format specific file
+            # Or format specific file  
             shfmt -w -i 4 -ci path/to/script.sh
-            \`\`\`
+            ```
 
             ### What to check:
             - ✅ Shell scripts use 4-space indentation
