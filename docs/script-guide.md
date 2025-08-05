@@ -397,7 +397,7 @@ Update font settings in:
 
 ### 🌐 Full Stack Web Developer
 ```bash
-./setup-modular.sh
+./setup.sh
 # Choose: 4 5 6 8 9
 
 # Gets you:
@@ -410,7 +410,7 @@ Update font settings in:
 
 ### 📱 Mobile App Developer
 ```bash
-./setup-modular.sh  
+./setup.sh  
 # Choose: 5 6 7 8 11
 
 # Gets you:
@@ -423,7 +423,7 @@ Update font settings in:
 
 ### ☸️ DevOps Engineer
 ```bash
-./setup-modular.sh
+./setup.sh
 # Choose: 4 6 8 9 10
 
 # Gets you:
@@ -436,7 +436,7 @@ Update font settings in:
 
 ### 🎯 Minimalist Developer
 ```bash
-./setup-modular.sh
+./setup.sh
 # Choose: 6 8
 
 # Gets you:

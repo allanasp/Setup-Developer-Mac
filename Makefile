@@ -115,6 +115,12 @@ test-ci: ## Run GitHub Actions tests locally (requires 'act')
 dev: format lint test ## Development workflow: format, lint, and test
 	@echo "🎉 Development checks complete - ready to commit!"
 
+# Test interactive prompts (dry run)
+test-interactive: ## Test the interactive prompt system
+	@echo "🧪 Testing interactive prompts..."
+	@echo "This will run setup in test mode with prompts"
+	@DRY_RUN=true ./setup.sh --skip-prompts
+
 # Pre-commit checks
 pre-commit: check test ## Pre-commit checks (use in git hooks)
 	@echo "✅ Pre-commit checks passed"

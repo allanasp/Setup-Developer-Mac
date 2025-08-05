@@ -66,15 +66,25 @@
 
 ## 🚀 Quick Start
 
-### Modular Setup (Recommended)
+### Interactive Setup (Recommended)
 
 ```bash
 # Clone the repository
 git clone https://github.com/yourusername/mac-dev-setup.git
 cd mac-dev-setup
 
-# Run the modular setup - choose exactly what you need
-./setup-modular.sh
+# Interactive setup - guides you through each step
+./setup.sh
+
+# Non-interactive setup (for automation)
+./setup.sh --skip-prompts
+```
+
+### 🎯 Interactive Experience
+The setup now **guides you through each step** with configuration prompts:
+- ✅ Install script → ⚙️ Configure → ✅ Verify → Continue  
+- Each tool gets properly configured before moving to the next
+- No more guessing what to do after installation!
 ```
 
 > 🌐 **[View Documentation Website](https://yourusername.github.io/mac-dev-setup)** - Beautiful, interactive documentation
@@ -260,7 +270,7 @@ The script creates a organized development directory structure:
 ### Modular Setup (Recommended)
 ```bash
 # Interactive setup - choose what you need
-./setup-modular.sh
+./setup.sh
 
 # Example: Install specific tools
 # Type: 5 6 9
@@ -291,7 +301,7 @@ chmod +x scripts/*.sh
 ./scripts/06-dev-apps.sh    # Update development apps
 
 # Or run full modular setup again
-./setup-modular.sh
+./setup.sh
 ```
 
 ## 📋 Post-Installation Steps
@@ -406,25 +416,25 @@ If this project helped you set up your development environment, please give it a
 
 ### Full Stack Developer
 ```bash
-./setup-modular.sh
+./setup.sh
 # Choose: 4 5 6 8 9 (Languages, Frontend, Dev Apps, Productivity, Database)
 ```
 
 ### Mobile Developer
 ```bash
-./setup-modular.sh
+./setup.sh
 # Choose: 5 6 7 8 11 (Frontend, Dev Apps, Mobile, Productivity, Fonts)
 ```
 
 ### DevOps Engineer
 ```bash
-./setup-modular.sh
+./setup.sh
 # Choose: 4 6 8 9 10 (Languages, Dev Apps, Productivity, Database, DevOps)
 ```
 
 ### Minimalist Setup
 ```bash
-./setup-modular.sh
+./setup.sh
 # Choose: 6 8 (Just Dev Apps + Productivity)
 ```
 

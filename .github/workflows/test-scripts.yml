@@ -5,13 +5,13 @@ on:
     branches: [ main, develop ]
     paths:
       - 'scripts/**'
-      - 'setup-modular.sh'
+      - 'setup.sh'
       - 'check-setup.sh'
   pull_request:
     branches: [ main ]
     paths:
       - 'scripts/**'
-      - 'setup-modular.sh'
+      - 'setup.sh'
       - 'check-setup.sh'
 
 jobs:
@@ -65,7 +65,7 @@ jobs:
           
           # Check required files exist
           required_files=(
-            "setup-modular.sh"
+            "setup.sh"
             "check-setup.sh"
             "scripts/common.sh"
             "scripts/01-system.sh"

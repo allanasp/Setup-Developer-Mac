@@ -94,7 +94,7 @@ test_structure() {
     print_header "Testing Project Structure"
     
     required_files=(
-        "setup-modular.sh"
+        "setup.sh"
         "check-setup.sh"
         "scripts/common.sh"
         "scripts/01-system.sh"

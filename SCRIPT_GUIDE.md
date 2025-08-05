@@ -8,7 +8,7 @@ This guide provides detailed information about each script in the modular Mac de
 
 ```bash
 # Run the main setup script
-./setup-modular.sh
+./setup.sh
 
 # Or run individual scripts
 ./scripts/01-system.sh
@@ -390,28 +390,28 @@ After installation, update your editor/terminal font settings:
 ### Full Stack Web Developer
 ```bash
 # Run these scripts:
-./setup-modular.sh
+./setup.sh
 # Choose: 4 5 6 8 9 (Languages, Frontend, Dev Apps, Productivity, Database)
 ```
 
 ### Mobile App Developer  
 ```bash
 # Run these scripts:
-./setup-modular.sh
+./setup.sh
 # Choose: 5 6 7 8 11 (Frontend, Dev Apps, Mobile, Productivity, Fonts)
 ```
 
 ### DevOps Engineer
 ```bash
 # Run these scripts:
-./setup-modular.sh  
+./setup.sh  
 # Choose: 4 6 8 9 10 (Languages, Dev Apps, Productivity, Database, DevOps)
 ```
 
 ### Minimalist Setup
 ```bash
 # Just essentials + code editor
-./setup-modular.sh
+./setup.sh
 # Choose: 6 (Dev Apps only)
 ```
 

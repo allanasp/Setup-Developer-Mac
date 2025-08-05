@@ -16,7 +16,7 @@ body:
       label: Which script is affected?
       description: Select the script where you encountered the issue
       options:
-        - "setup-modular.sh (Main setup script)"
+        - "setup.sh (Main setup script)"
         - "01-system.sh (System Requirements)"
         - "02-terminal.sh (Terminal & Shell)"
         - "03-version-managers.sh (Version Managers)"

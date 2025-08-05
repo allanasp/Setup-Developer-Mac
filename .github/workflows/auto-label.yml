@@ -135,7 +135,7 @@ jobs:
               labels.push('ci/cd', 'github-actions');
             }
             
-            if (changedFiles.some(file => file === 'setup-modular.sh')) {
+            if (changedFiles.some(file => file === 'setup.sh')) {
               labels.push('core', 'setup-script');
             }
             

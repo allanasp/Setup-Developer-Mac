@@ -21,9 +21,14 @@ Choose exactly what you need - from essential system requirements to frontend-sp
 git clone https://github.com/yourusername/mac-dev-setup.git
 cd mac-dev-setup
 
-# Run the modular setup
-./setup-modular.sh
+# Interactive setup (recommended)
+./setup.sh
 ```
+
+**🎯 Interactive Experience:**
+- ✅ Install → ⚙️ Configure → ✅ Verify → Continue
+- Each tool gets properly set up before moving to the next
+- No more guessing what to do after installation!
 
 **Example selections:**
 - Type `5 6 9` → Frontend Tools + Dev Apps + Database Tools
@@ -112,7 +117,7 @@ cd mac-dev-setup
 
 ### 🎨 Frontend Developer (React/Vue)
 ```bash
-./setup-modular.sh
+./setup.sh
 # Choose: 5 6 8 11
 # Gets: Frontend Tools + Dev Apps + Productivity + Fonts
 # Perfect for: React, Vue, Angular, TypeScript development
@@ -120,7 +125,7 @@ cd mac-dev-setup
 
 ### 📱 React Native Developer  
 ```bash
-./setup-modular.sh
+./setup.sh
 # Choose: 5 6 7 8 11
 # Gets: Frontend + Dev Apps + Mobile + Productivity + Fonts
 # Perfect for: Cross-platform mobile app development
@@ -128,7 +133,7 @@ cd mac-dev-setup
 
 ### 🚀 Fullstack JavaScript Developer
 ```bash
-./setup-modular.sh
+./setup.sh
 # Choose: 4 5 6 8 9
 # Gets: Languages + Frontend + Dev Apps + Productivity + Database
 # Perfect for: MERN/MEAN stack, Node.js backends
@@ -136,7 +141,7 @@ cd mac-dev-setup
 
 ### 🏢 Enterprise Frontend Developer
 ```bash
-./setup-modular.sh
+./setup.sh
 # Choose: 4 5 6 8 9 10
 # Gets: Languages + Frontend + Dev Apps + Productivity + Database + DevOps
 # Perfect for: Large-scale applications with deployment needs
@@ -197,7 +202,7 @@ cd mac-dev-setup
 ```bash
 git clone https://github.com/yourusername/mac-dev-setup.git
 cd mac-dev-setup
-./setup-modular.sh
+./setup.sh
 ```
 
 ---

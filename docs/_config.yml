@@ -50,6 +50,6 @@ exclude:
   - vendor/gems/
   - vendor/ruby/
   - scripts/
-  - setup-modular.sh
+  - setup.sh
   - check-setup.sh
   - "*.sh"

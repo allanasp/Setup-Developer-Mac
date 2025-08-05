@@ -2,11 +2,23 @@
 
 # Modular Mac Development Setup Script
 # Main orchestrator that runs all category scripts
+#
+# Usage:
+#   ./setup.sh                 # Interactive mode with configuration prompts
+#   ./setup.sh --skip-prompts  # Non-interactive mode (CI/automated)
+#   ./setup.sh -y              # Same as --skip-prompts
 
 set -e  # Exit on any error
 
 # Source common functions
 source "$(dirname "$0")/scripts/common.sh"
+
+# Check for skip prompts flag
+SKIP_PROMPTS=${SKIP_PROMPTS:-false}
+if [[ "$1" == "--skip-prompts" || "$1" == "-y" ]]; then
+    SKIP_PROMPTS=true
+    print_status "Running in non-interactive mode (skipping configuration prompts)"
+fi
 
 print_section "Mac Frontend Developer Environment Setup"
 echo "🎨 Optimized for JavaScript/TypeScript developers"
@@ -15,6 +27,50 @@ echo ""
 
 # Check if running on macOS
 check_macos
+
+# Function to prompt user for configuration completion
+prompt_configuration() {
+    local script_name="$1"
+    local config_steps="$2"
+    
+    # Skip prompts if flag is set
+    if [[ "$SKIP_PROMPTS" == "true" ]]; then
+        if [[ -n "$config_steps" ]]; then
+            echo ""
+            print_status "⚙️  Configuration needed for $script_name (skipped in non-interactive mode):"
+            echo "$config_steps"
+            echo ""
+        fi
+        return
+    fi
+    
+    if [[ -n "$config_steps" ]]; then
+        echo ""
+        print_status "⚙️  Configuration needed for $script_name:"
+        echo "$config_steps"
+        echo ""
+        
+        while true; do
+            read -p "Have you completed these configuration steps? (y/n): " response
+            case $response in
+                [Yy]|[Yy][Ee][Ss])
+                    print_success "Configuration completed! Continuing..."
+                    break
+                    ;;
+                [Nn]|[Nn][Oo])
+                    echo ""
+                    echo "Please complete the configuration steps above before continuing."
+                    echo "The script will wait here until you're ready."
+                    echo ""
+                    ;;
+                *)
+                    echo "Please answer y (yes) or n (no)"
+                    ;;
+            esac
+        done
+        echo ""
+    fi
+}
 
 # Function to run a script
 run_script() {
@@ -26,6 +82,64 @@ run_script() {
         chmod +x "$script_path"
         if bash "$script_path"; then
             print_success "$script completed successfully"
+            
+            # Prompt for configuration based on script
+            case $script in
+                "01-system.sh")
+                    prompt_configuration "System Requirements" "• Open Xcode to accept license (if prompted)
+• Verify Homebrew: run 'brew --version'"
+                    ;;
+                "02-terminal.sh")
+                    prompt_configuration "Terminal & Shell" "• Import Dracula theme: iTerm2 → Preferences → Colors → Import ~/Downloads/Dracula.itermcolors
+• Restart terminal or run 'source ~/.zshrc'
+• Verify PowerLevel10k theme is working"
+                    ;;
+                "03-version-managers.sh")
+                    prompt_configuration "Version Managers" "• Restart terminal or run 'source ~/.zshrc'
+• Verify Node.js: run 'node --version'
+• Verify Python: run 'python --version'"
+                    ;;
+                "04-languages.sh")
+                    prompt_configuration "Programming Languages" "• Verify Java: run 'java -version'
+• Verify Go: run 'go version'
+• Set JAVA_HOME if needed"
+                    ;;
+                "05-frontend.sh")
+                    prompt_configuration "Frontend Tools" "• Verify TypeScript: run 'tsc --version'
+• Verify Vue CLI: run 'vue --version'
+• Test creating a project: 'npm create vue@latest test-project'"
+                    ;;
+                "06-dev-apps.sh")
+                    prompt_configuration "Development Apps" "• Open VS Code and sign in with GitHub/Microsoft
+• Install any additional extensions you need
+• Configure VS Code settings"
+                    ;;
+                "07-mobile.sh")
+                    prompt_configuration "Mobile Development" "• Open Android Studio and complete setup
+• Install Xcode from App Store (manual step)
+• Verify React Native: run 'npx react-native --version'"
+                    ;;
+                "08-productivity.sh")
+                    prompt_configuration "Productivity Tools" "• Set up Raycast hotkey (recommended: ⌘Space)
+• Configure Rectangle window shortcuts
+• Sign in to 1Password and other apps"
+                    ;;
+                "09-database.sh")
+                    prompt_configuration "Database Tools" "• Test PostgreSQL: run 'psql --version'
+• Open Sequel Ace and test database connection
+• Login to Supabase CLI: 'supabase login'"
+                    ;;
+                "10-devops.sh")
+                    prompt_configuration "DevOps Tools" "• Test kubectl: run 'kubectl version --client'
+• Configure AWS CLI: run 'aws configure'
+• Start OrbStack and verify Docker compatibility"
+                    ;;
+                "11-fonts.sh")
+                    prompt_configuration "Developer Fonts" "• Restart applications to use new fonts
+• Configure your editor to use Fira Code or JetBrains Mono
+• Enable font ligatures in VS Code/editor"
+                    ;;
+            esac
         else
             print_error "$script failed"
             exit 1
@@ -190,10 +304,10 @@ for i in "${!essential_scripts[@]}"; do
     echo "• ${description/- REQUIRED/}"
 done
 
-if [[ ${#selected_optional[@]} -gt 0 ]]; then
+if [[ ${#selected_scripts[@]} -gt 0 ]]; then
     echo ""
     echo "📦 Optional components:"
-    for script in "${selected_optional[@]}"; do
+    for script in "${selected_scripts[@]}"; do
         # Find description for this script
         for i in "${!optional_scripts[@]}"; do
             if [[ "${optional_scripts[$i]}" == "$script" ]]; then
@@ -204,11 +318,19 @@ if [[ ${#selected_optional[@]} -gt 0 ]]; then
     done
 fi
 echo ""
-echo "🔄 Next steps:"
-echo "1. Restart terminal or run 'source ~/.zshrc'"
-echo "2. Run 'p10k configure' to setup PowerLevel10k theme"
-echo "3. Configure applications as needed"
-echo "4. Run './check-setup.sh' to verify installation"
+if [[ "$SKIP_PROMPTS" == "true" ]]; then
+    echo "🔄 Configuration needed (was skipped in non-interactive mode):"
+    echo "• Review configuration steps shown above for each installed component"
+    echo "• Import Dracula theme: iTerm2 → Preferences → Colors"
+    echo "• PowerLevel10k: Dracula colors pre-configured (run 'p10k configure' to customize)"
+    echo "• Restart terminal or run 'source ~/.zshrc'"
+else
+    echo "✅ All configurations completed during interactive setup!"
+    echo ""
+    echo "🔄 Final steps:"
+    echo "• Restart terminal for all changes to take effect"
+    echo "• Run './check-setup.sh' to verify everything is working"
+fi
 echo ""
 echo "📁 Individual scripts available in ./scripts/ directory"
 echo "🔧 Re-run any category: ./scripts/XX-category.sh"
