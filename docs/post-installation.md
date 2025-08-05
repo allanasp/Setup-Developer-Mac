@@ -25,7 +25,7 @@ description: Complete configuration guide for all installed tools
 
 ### ✅ Quick Checklist
 - [ ] Restart terminal or run `source ~/.zshrc`
-- [ ] Configure PowerLevel10k (`p10k configure`)
+- [ ] PowerLevel10k (Dracula colors pre-configured, `p10k configure` optional)
 - [ ] Import iTerm2 Dracula theme
 - [ ] Set up Git identity
 - [ ] Configure primary editor
@@ -42,7 +42,9 @@ description: Complete configuration guide for all installed tools
 
 ### ⚡ 2. PowerLevel10k Configuration
 
-Run the configuration wizard:
+**🎨 Dracula colors are pre-configured!** Your prompt already matches your terminal theme.
+
+If you want to customize further, run the configuration wizard:
 ```bash
 p10k configure
 ```

@@ -139,9 +139,28 @@ else
     print_success "PowerLevel10k already installed"
 fi
 
+# Install Dracula theme for PowerLevel10k (for matching prompt colors)
+print_status "Installing Dracula theme for PowerLevel10k..."
+if [[ ! -d ~/.dracula-powerlevel10k ]]; then
+    git clone https://github.com/dracula/powerlevel10k.git ~/.dracula-powerlevel10k
+    
+    # Copy Dracula PowerLevel10k configuration
+    if [[ -f ~/.dracula-powerlevel10k/files/.p10k.zsh ]]; then
+        cp ~/.dracula-powerlevel10k/files/.p10k.zsh ~/.p10k.zsh
+        print_success "Dracula PowerLevel10k configuration installed"
+    fi
+    
+    print_success "Dracula PowerLevel10k theme installed"
+else
+    print_success "Dracula PowerLevel10k theme already installed"
+fi
+
 print_success "Terminal setup completed!"
 echo ""
+echo "🎨 Dracula Theme Setup Complete:"
+echo "• iTerm2: Import ~/Downloads/Dracula.itermcolors in iTerm2 → Preferences → Colors"
+echo "• PowerLevel10k: Dracula colors pre-configured (skip 'p10k configure' or run to customize)"
+echo "• Restart terminal or run 'source ~/.zshrc' to see changes"
+echo ""
 echo "Next steps:"
-echo "• Run 'p10k configure' to setup PowerLevel10k theme"
-echo "• Restart terminal or run 'source ~/.zshrc'"
 echo "• Run version managers setup: ./scripts/03-version-managers.sh"

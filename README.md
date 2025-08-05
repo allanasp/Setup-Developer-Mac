@@ -298,7 +298,7 @@ chmod +x scripts/*.sh
 
 ### Essential Configuration
 1. **Restart terminal** or run `source ~/.zshrc`
-2. **Configure PowerLevel10k**: `p10k configure`
+2. **PowerLevel10k**: Pre-configured with Dracula colors! (run `p10k configure` to customize)
 3. **Import Dracula theme**: iTerm2 → Preferences → Colors → Import `Dracula.itermcolors`
 
 ### Authentication Setup
