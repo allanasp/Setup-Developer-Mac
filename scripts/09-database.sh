@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Database Tools Setup
-# Installs: PostgreSQL, Sequel Ace, Supabase CLI
+# Installs: PostgreSQL, DBeaver Community Edition, Supabase CLI
 
 set -e  # Exit on any error
 

@@ -89,9 +89,9 @@ The setup checker (`check-setup.sh`) verifies your Mac development environment a
 
 ### Optional Components
 - **Mobile Development**: Android Studio, iOS tools, simulators
-- **Productivity**: Raycast, Rectangle, 1Password, Maccy
-- **Database**: PostgreSQL, Sequel Ace, Supabase CLI
-- **DevOps**: Docker alternatives, Kubernetes, AWS CLI
+- **Productivity**: Raycast, Rectangle, Maccy, Obsidian
+- **Database**: PostgreSQL, DBeaver Community Edition, Supabase CLI
+- **DevOps**: AWS CLI, ngrok, command line utilities (jq, fzf, eza)
 - **Developer Fonts**: Fira Code, JetBrains Mono
 
 ## 🔧 Common Issues & Fixes

@@ -368,40 +368,6 @@ Configure in Rectangle Preferences:
 - Set gap between windows (if desired)
 - Configure multiple display behavior
 
-### 1Password Setup
-
-#### 1. Account Setup
-1. Open **1Password**
-2. Choose setup option:
-   - Sign in to existing account
-   - Create new account at [1password.com](https://1password.com)
-3. Save Emergency Kit PDF securely
-
-#### 2. Browser Extensions
-1. In 1Password: **Preferences** → **Browser**
-2. Install for your browsers:
-   - Chrome: [Chrome Web Store](https://chrome.google.com/webstore/detail/1password/aeblfdkhhhdcdjpifhhbdiojplfjncoa)
-   - Firefox: [Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/1password-x-password-manager/)
-   - Safari: Enable in Safari Extensions preferences
-
-#### 3. Developer Features
-**SSH Key Management:**
-1. **Developer** → **SSH Agent** → Turn on
-2. Add SSH keys to 1Password
-3. Configure `~/.ssh/config`:
-```bash
-Host *
-    IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
-```
-
-**CLI Tool:**
-```bash
-# Install 1Password CLI
-brew install --cask 1password-cli
-
-# Sign in
-op signin
-```
 
 ### Maccy Clipboard Manager
 
@@ -458,22 +424,24 @@ code /opt/homebrew/var/postgresql@15/postgresql.conf
 # max_connections = 100
 ```
 
-### Sequel Ace Setup
+### DBeaver Setup
 
 #### 1. First Connection
-1. Open **Sequel Ace**
+1. Open **DBeaver Community Edition**
 2. Create new connection:
-   - **Name**: Local PostgreSQL
-   - **Host**: 127.0.0.1
-   - **Username**: Your Mac username or `dev_user`
-   - **Password**: Leave blank (for local)
-   - **Database**: postgres or dev_db
+   - **Database**: PostgreSQL
+   - **Host**: localhost
    - **Port**: 5432
+   - **Database**: postgres
+   - **Username**: Your Mac username
+   - **Password**: Leave blank (for local)
+3. Test connection and save
 
-#### 2. Save Favorites
-1. Click "Add to Favorites"
-2. Organize connections in folders
-3. Set up SSH tunnels for remote databases
+#### 2. Additional Features
+- Universal database support (PostgreSQL, MySQL, SQLite, etc.)
+- Visual query builder
+- Data export/import tools
+- SSH tunneling for remote connections
 
 ### Supabase CLI Setup
 
@@ -565,39 +533,32 @@ aws s3 ls
 aws s3 ls --profile dev
 ```
 
-### Kubernetes Setup
+### Command Line Utilities
 
-#### 1. kubectl Configuration
+#### ngrok Setup
+1. Create account at [ngrok.com](https://ngrok.com)
+2. Get auth token from dashboard
+3. Configure:
 ```bash
-# If you have a cluster, get credentials:
-# For EKS:
-aws eks update-kubeconfig --name your-cluster --region us-east-1
+ngrok config add-authtoken YOUR_TOKEN
 
-# For other providers, follow their docs
-# Verify connection
-kubectl cluster-info
-kubectl get nodes
+# Test
+ngrok http 3000
 ```
 
-#### 2. Kubernetes Context Management
+#### Additional Utilities Usage
 ```bash
-# List all contexts
-kubectx
+# JSON processing
+echo '{"name": "test"}' | jq '.name'
 
-# Switch context
-kubectx production
+# Fuzzy finding
+fzf  # Interactive file finder
 
-# List namespaces
-kubens
+# Better file listing
+eza -la  # Modern ls replacement
 
-# Switch namespace
-kubens backend
-
-# Create aliases for common operations
-echo 'alias k=kubectl' >> ~/.zshrc
-echo 'alias kgp="kubectl get pods"' >> ~/.zshrc
-echo 'alias kgs="kubectl get services"' >> ~/.zshrc
-source ~/.zshrc
+# Directory tree
+tree -L 2  # Show 2 levels deep
 ```
 
 ### OrbStack Configuration
@@ -623,7 +584,7 @@ docker-compose --version
 #### 3. Kubernetes in OrbStack (Optional)
 1. OrbStack Settings → Kubernetes → Enable
 2. Wait for cluster to start
-3. Use `kubectl` with local cluster
+3. Use Docker commands with local development
 
 ### ngrok Setup
 
@@ -701,7 +662,7 @@ docker --version
 
 # Cloud tools (if configured)
 aws sts get-caller-identity
-kubectl version --client
+aws --version
 
 # Database
 psql --version

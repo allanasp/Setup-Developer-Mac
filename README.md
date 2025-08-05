@@ -47,11 +47,12 @@
 - Xcode Command Line Tools
 - **⚠️ Note**: iOS development requires manual Xcode installation from App Store (cannot be automated)
 
-### ☸️ **DevOps & Cloud Tools**
-- Kubernetes toolkit (kubectl, helm, kops, kubectx, kubens)
-- AWS CLI for cloud development
+### ☁️ **DevOps & Cloud Tools**
+- AWS CLI for frontend deployment (S3, CloudFront, Lambda)
+- ngrok for sharing local development servers
+- Command line utilities (jq, fzf, eza, wget, tree)
 - Docker alternative with OrbStack
-- Database tools (PostgreSQL, Sequel Ace)
+- Database tools (PostgreSQL, DBeaver)
 
 ### 🤖 **AI Coding Assistants**
 - GitHub Copilot (via VS Code extension)
@@ -61,7 +62,7 @@
 
 ### 🎯 **Productivity & Utilities**
 - **Window Management**: Rectangle, Raycast (Spotlight replacement)
-- **Security**: 1Password integration
+- **Note Taking**: Obsidian for documentation
 - **Clipboard**: Maccy clipboard manager
 - **File Management**: Hidden files enabled, better file listing with eza
 - **Network Tools**: ngrok for local tunneling, Wireshark for debugging
@@ -128,9 +129,9 @@ The setup now **guides you through each step** with configuration prompts:
 | 5 | `05-frontend.sh` | Frontend Tools | TypeScript, Vue, React Native, Vite, Storyblok, Sanity |
 | 6 | `06-dev-apps.sh` | Development Apps | VS Code + extensions, Cursor, Git tools |
 | 7 | `07-mobile.sh` | Mobile Development | Android Studio, iOS tools, CocoaPods |
-| 8 | `08-productivity.sh` | Productivity Tools | Raycast, Rectangle, 1Password, Maccy |
-| 9 | `09-database.sh` | Database Tools | PostgreSQL, Sequel Ace, Supabase CLI |
-| 10 | `10-devops.sh` | DevOps Tools | Kubernetes, AWS CLI, OrbStack, ngrok |
+| 8 | `08-productivity.sh` | Productivity Tools | Raycast, Rectangle, Obsidian, Maccy |
+| 9 | `09-database.sh` | Database Tools | PostgreSQL, DBeaver, Supabase CLI |
+| 10 | `10-devops.sh` | DevOps Tools | AWS CLI, ngrok, Command Line Utilities |
 | 11 | `11-fonts.sh` | Developer Fonts | Fira Code, JetBrains Mono |
 
 > 📖 **[Complete Script Guide](SCRIPT_GUIDE.md)** - Detailed documentation for each script
@@ -197,7 +198,7 @@ The setup now **guides you through each step** with configuration prompts:
 <details>
 <summary><strong>☸️ DevOps & Cloud</strong></summary>
 
-- **Kubernetes**: kubectl, helm, kops, kubectx, kubens
+- **Command line utilities**: jq, fzf, eza, wget, tree
 - **AWS CLI** for cloud development
 - **OrbStack** (Docker alternative)
 - **PostgreSQL** database server
@@ -217,15 +218,15 @@ The setup now **guides you through each step** with configuration prompts:
 
 - **Raycast** (advanced Spotlight replacement)
 - **Rectangle** (window management)
-- **1Password** (password manager)
 - **Maccy** (clipboard manager)
+- **Obsidian** (note-taking)
 - **Firefox & Brave** (additional browsers for testing)
 </details>
 
 <details>
 <summary><strong>🔧 Developer Utilities</strong></summary>
 
-- **Database**: Sequel Ace (PostgreSQL/MySQL GUI)
+- **Database**: DBeaver Community Edition (universal database GUI)
 - **API Testing**: Postman
 - **Design**: Figma
 - **Network**: ngrok (local tunneling), Wireshark
@@ -328,8 +329,8 @@ chmod +x scripts/*.sh
 ### Productivity Apps (if installed)
 8. **Raycast**: Set CMD+Space shortcut, install extensions
 9. **Rectangle**: Configure window shortcuts (⌘+⌥+arrows)
-10. **1Password**: Sign in, install browser extensions
-11. **Maccy**: Set clipboard shortcut (⌘+Shift+V)
+10. **Maccy**: Set clipboard shortcut (⌘+Shift+V)
+11. **Obsidian**: Create vault, configure sync (optional)
 
 ### Mobile Development (if script 7 chosen)
 12. **Install Xcode** from App Store (~15GB download)

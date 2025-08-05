@@ -50,7 +50,7 @@ No guessing, no broken setups!
 - Mobile development (Android Studio, iOS tools)
 - Productivity tools (Raycast, Rectangle)
 - Database tools (PostgreSQL, Supabase)
-- DevOps tools (Docker, Kubernetes, AWS)
+- DevOps tools (AWS CLI, ngrok, utilities)
 - Developer fonts (Fira Code, JetBrains Mono)
 
 ## 🆘 Need Help?

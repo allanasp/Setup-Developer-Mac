@@ -271,9 +271,10 @@ $ANDROID_HOME/emulator/emulator -avd Pixel_API_35
 **What it installs:**
 - 🔍 **Raycast** - Advanced Spotlight replacement
 - 🪟 **Rectangle** - Window management
-- 🔐 **1Password** - Password manager
 - 📋 **Maccy** - Clipboard history manager
+- 📝 **Obsidian** - Note-taking application
 - 🌐 **Browsers** - Firefox, Brave (testing)
+- 🛠️ **Developer utilities** - OrbStack, Postman, Figma
 
 **Dependencies:** 01-system.sh
 **Runtime:** ~5-8 minutes
@@ -282,8 +283,8 @@ $ANDROID_HOME/emulator/emulator -avd Pixel_API_35
 **Setup Required:**
 - **Raycast**: Set CMD+Space shortcut, install extensions
 - **Rectangle**: Configure window shortcuts (⌘+⌥+arrows)
-- **1Password**: Sign in, install browser extensions
 - **Maccy**: Set clipboard shortcut (⌘+Shift+V)
+- **Obsidian**: Create vault, configure sync (optional)
 
 **Usage:**
 ```bash
@@ -305,7 +306,7 @@ CMD+OPT+F               # Maximize window
 
 **What it installs:**
 - 🐘 **PostgreSQL 15** - Production database
-- 🖥️ **Sequel Ace** - Database GUI client
+- 🖥️ **DBeaver Community Edition** - Universal database GUI client
 - ⚡ **Supabase CLI** - Backend-as-a-service
 - 🏗️ **Database configuration** - Auto-start, PATH setup
 
@@ -333,14 +334,14 @@ postgresql://localhost:5432/myproject
 
 ### 🔟 DevOps Tools (`10-devops.sh`)
 
-**Purpose:** Infrastructure, deployment, and DevOps workflows
+**Purpose:** Frontend deployment and command line utilities
 
 **What it installs:**
-- ☸️ **Kubernetes tools** - kubectl, helm, kops, kubectx, kubens
-- ☁️ **AWS CLI** - Cloud development
-- 🐳 **OrbStack** - Docker alternative (faster, more efficient)
-- 🌐 **Network tools** - ngrok, wget, jq
-- 🔍 **Monitoring** - Wireshark
+- ☁️ **AWS CLI** - For S3, CloudFront, Lambda deployment
+- 🌐 **ngrok** - Local tunneling for sharing dev servers
+- 🛠️ **Command line utilities** - jq, fzf, eza, wget, tree
+- 📊 **JSON processing** - jq for API responses
+- 🔍 **Fuzzy finding** - fzf for terminal productivity
 
 **Dependencies:** 01-system.sh
 **Runtime:** ~8-12 minutes
@@ -348,18 +349,18 @@ postgresql://localhost:5432/myproject
 
 **Usage:**
 ```bash
-# Kubernetes
-kubectl get pods               # List pods
-kubectx                       # Switch contexts
-kubens                        # Switch namespaces
-helm install myapp ./chart   # Deploy with Helm
-
-# AWS
+# AWS CLI (for frontend deployment)
 aws configure                 # Setup credentials
-aws s3 ls                     # List S3 buckets
+aws s3 sync ./dist s3://bucket  # Deploy static site
+aws cloudfront create-invalidation  # Refresh CDN
 
 # Local tunneling
 ngrok http 3000              # Expose local port 3000
+
+# Command line utilities
+jq '.data[] | .name' api.json  # Process JSON
+fzf                          # Fuzzy find files
+eza -la                      # Better file listing
 ```
 
 ---

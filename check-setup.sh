@@ -380,11 +380,11 @@ else
     print_missing "PostgreSQL"
 fi
 
-# Sequel Ace
-if app_exists "/Applications/Sequel Ace.app"; then
-    print_installed "Sequel Ace"
+# DBeaver Community Edition
+if app_exists "/Applications/DBeaver.app"; then
+    print_installed "DBeaver Community Edition"
 else
-    print_missing "Sequel Ace"
+    print_missing "DBeaver Community Edition"
 fi
 
 print_section "DevOps Tools"

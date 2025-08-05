@@ -14,9 +14,9 @@ description: Complete configuration guide for all installed tools
 - [Development Tools](#development-tools) - VS Code, Git, GitHub
 - [Frontend Development](#frontend-development) - Package managers, CMS tools
 - [Mobile Development](#mobile-development) - Android Studio, Xcode
-- [Productivity Apps](#productivity-apps) - Raycast, Rectangle, 1Password
+- [Productivity Apps](#productivity-apps) - Raycast, Rectangle, Maccy
 - [Database Setup](#database-setup) - PostgreSQL, Supabase
-- [DevOps & Cloud](#devops--cloud) - AWS, Kubernetes, Docker
+- [DevOps & Cloud](#devops--cloud) - AWS, ngrok, command line utilities
 - [Troubleshooting](#troubleshooting) - Common issues
 
 ---
@@ -274,12 +274,6 @@ Default shortcuts (customize in preferences):
 - `⌘⌥F` Maximize
 - `⌘⌥C` Center
 
-### 🔐 1Password
-
-1. Open 1Password → Sign in/Create account
-2. Save Emergency Kit securely
-3. Install browser extensions
-4. Enable SSH agent for developer keys
 
 ### 📋 Maccy Clipboard
 
@@ -309,13 +303,15 @@ psql postgres
 createdb myapp_dev
 ```
 
-### 🖥️ Sequel Ace
+### 🖥️ DBeaver Community Edition
 
 **First Connection:**
-- Host: `127.0.0.1`
-- Username: Your Mac username
+- Database: PostgreSQL
+- Host: `localhost`  
 - Port: `5432`
 - Database: `postgres`
+- Username: Your Mac username
+- Test connection before saving
 
 ### ⚡ Supabase
 
@@ -362,20 +358,21 @@ aws configure
 aws sts get-caller-identity
 ```
 
-### ☸️ Kubernetes
+### 🌐 Command Line Utilities
 
 ```bash
-# If you have a cluster
-aws eks update-kubeconfig --name cluster-name
+# ngrok for local tunneling
+ngrok config add-authtoken YOUR_TOKEN
+ngrok http 3000  # Share local development server
 
-# Context management
-kubectx              # List contexts
-kubectx production   # Switch context
-kubens backend       # Switch namespace
+# JSON processing with jq
+echo '{"name": "test"}' | jq '.name'
+curl api.example.com | jq '.data[]'
 
-# Aliases
-echo 'alias k=kubectl' >> ~/.zshrc
-echo 'alias kgp="kubectl get pods"' >> ~/.zshrc
+# Better file operations
+eza -la          # Modern ls replacement
+tree -L 2        # Directory structure
+fzf              # Fuzzy file finder
 ```
 
 ### 🐳 OrbStack (Docker)

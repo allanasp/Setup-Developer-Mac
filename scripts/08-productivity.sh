@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Productivity Tools Setup
-# Installs: Raycast, Rectangle, 1Password, Maccy, Obsidian, browsers, utilities
+# Installs: Raycast, Rectangle, Maccy, Obsidian, browsers, utilities
 
 # Don't exit on errors for optional apps - continue installing others
 # set -e  # Exit on any error

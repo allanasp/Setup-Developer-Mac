@@ -88,19 +88,19 @@ cd Setup-Developer-Mac
   
   <div class="script-card optional">
     <h4>8. Productivity Tools</h4>
-    <p>Raycast, Rectangle, 1Password, Maccy clipboard</p>
+    <p>Raycast, Rectangle, Maccy, Obsidian, browsers, utilities</p>
     <code>./scripts/08-productivity.sh</code>
   </div>
   
   <div class="script-card optional">
     <h4>9. Database Tools</h4>
-    <p>PostgreSQL, Sequel Ace, Supabase CLI</p>
+    <p>PostgreSQL, DBeaver Community Edition, Supabase CLI</p>
     <code>./scripts/09-database.sh</code>
   </div>
   
   <div class="script-card optional">
     <h4>10. DevOps Tools</h4>
-    <p>Kubernetes, AWS CLI, OrbStack, ngrok</p>
+    <p>AWS CLI, ngrok, command line utilities (jq, fzf, eza)</p>
     <code>./scripts/10-devops.sh</code>
   </div>
   

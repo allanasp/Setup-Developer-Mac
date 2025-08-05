@@ -36,9 +36,9 @@ description: Detailed documentation for all Mac development setup scripts
 | 5 | `05-frontend.sh` | ~12 min | Web/mobile devs | Vue, React, Storyblok, Sanity |
 | 6 | `06-dev-apps.sh` | ~15 min | All developers | VS Code, Cursor, Git tools |
 | 7 | `07-mobile.sh` | ~25 min | Mobile devs | Android Studio, iOS tools |
-| 8 | `08-productivity.sh` | ~8 min | Productivity focus | Raycast, Rectangle, 1Password |
-| 9 | `09-database.sh` | ~10 min | Full-stack devs | PostgreSQL, Supabase |
-| 10 | `10-devops.sh` | ~12 min | DevOps engineers | Kubernetes, AWS, Docker |
+| 8 | `08-productivity.sh` | ~8 min | Productivity focus | Raycast, Rectangle, Maccy |
+| 9 | `09-database.sh` | ~10 min | Full-stack devs | PostgreSQL, DBeaver, Supabase |
+| 10 | `10-devops.sh` | ~12 min | Frontend deployment | AWS CLI, ngrok, utilities |
 | 11 | `11-fonts.sh` | ~3 min | Better coding | Fira Code, JetBrains Mono |
 
 ---
@@ -282,15 +282,16 @@ $ANDROID_HOME/emulator/emulator -avd Pixel_API_35
 **What it installs:**
 - 🔍 **Raycast** - Advanced Spotlight replacement
 - 🪟 **Rectangle** - Window management
-- 🔐 **1Password** - Password manager  
-- 📋 **Maccy** - Clipboard history
+- 📋 **Maccy** - Clipboard history manager
+- 📝 **Obsidian** - Note-taking application
 - 🌐 **Browsers** - Firefox, Brave for testing
+- 🛠️ **Developer utilities** - OrbStack, Postman, Figma
 
 **Setup required after installation:**
 - **Raycast:** Set CMD+Space shortcut, install extensions
 - **Rectangle:** Configure shortcuts (⌘+⌥+arrows)
-- **1Password:** Sign in, install browser extensions
 - **Maccy:** Set clipboard shortcut (⌘+Shift+V)
+- **Obsidian:** Create vault, configure sync (optional)
 
 **Productivity shortcuts:**
 ```bash
@@ -314,7 +315,7 @@ CMD+Shift+V         # Clipboard history
 
 **What it installs:**
 - 🐘 **PostgreSQL 15** - Production database with auto-start
-- 🖥️ **Sequel Ace** - Beautiful database GUI  
+- 🖥️ **DBeaver Community Edition** - Universal database GUI client  
 - ⚡ **Supabase CLI** - Backend-as-a-service platform
 
 **Usage examples:**
@@ -337,35 +338,35 @@ postgresql://localhost:5432/myproject
 
 ### 🔟 DevOps Tools (`10-devops.sh`)
 
-**Infrastructure and deployment tools**
+**Frontend deployment and command line utilities**
 
 ```bash
 ./scripts/10-devops.sh
 ```
 
-**Perfect for:** DevOps engineers, cloud developers
+**Perfect for:** Frontend developers, deployment workflows
 
 **What it installs:**
-- ☸️ **Kubernetes Tools** - kubectl, helm, kops, kubectx, kubens
-- ☁️ **AWS CLI** - Cloud development
-- 🐳 **OrbStack** - Docker alternative (faster, lighter)
-- 🌐 **Network Tools** - ngrok, wget, jq
-- 🔍 **Wireshark** - Network analysis
+- ☁️ **AWS CLI** - For S3, CloudFront, Lambda deployment
+- 🌐 **ngrok** - Local tunneling for sharing dev servers
+- 🛠️ **Command line utilities** - jq, fzf, eza, wget, tree
+- 📊 **JSON processing** - jq for API responses
+- 🔍 **Fuzzy finding** - fzf for terminal productivity
 
 **Usage examples:**  
 ```bash
-# Kubernetes
-kubectl get pods
-kubectx                    # Switch contexts
-kubens                     # Switch namespaces
-helm install myapp ./chart
-
-# AWS
+# AWS CLI (for frontend deployment)
 aws configure
-aws s3 ls
+aws s3 sync ./dist s3://bucket  # Deploy static site
+aws cloudfront create-invalidation  # Refresh CDN
 
 # Local tunneling
-ngrok http 3000
+ngrok http 3000  # Share local dev server
+
+# Command line utilities
+jq '.data[] | .name' api.json  # Process JSON
+fzf                          # Fuzzy find files
+eza -la                      # Better file listing
 ```
 
 ---
@@ -404,8 +405,8 @@ Update font settings in:
 # ✅ Languages (Java, Go, Ruby)
 # ✅ Frontend (Vue, React, TypeScript, Storyblok, Sanity)  
 # ✅ Dev Apps (VS Code, Cursor, Git tools)
-# ✅ Productivity (Raycast, Rectangle, 1Password)
-# ✅ Database (PostgreSQL, Supabase, Sequel Ace)
+# ✅ Productivity (Raycast, Rectangle, Maccy)
+# ✅ Database (PostgreSQL, Supabase, DBeaver)
 ```
 
 ### 📱 Mobile App Developer

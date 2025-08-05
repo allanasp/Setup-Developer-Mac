@@ -429,15 +429,6 @@ This guide provides detailed explanations of every tool included in the setup sc
 - `⌘+⌥+C` : Center
 **Pro tip:** Customize shortcuts to your preference
 
-### 🔐 1Password
-**What it is:** Password manager and secure vault  
-**Developer features:**
-- SSH key management
-- Environment secrets
-- API credentials
-- 2FA codes
-- Secure notes
-**Integration:** Browser extensions, CLI tool
 
 ### 📋 Maccy
 **What it is:** Clipboard history manager  
@@ -476,15 +467,15 @@ This guide provides detailed explanations of every tool included in the setup sc
 - Great performance
 **Auto-configured:** Starts on boot, PATH updated
 
-### 🖥️ Sequel Ace
-**What it is:** MySQL/MariaDB/PostgreSQL GUI  
+### 🖥️ DBeaver Community Edition
+**What it is:** Universal database GUI client  
 **Features:**
-- Query editor
-- Table designer
-- Import/export
-- SSH tunneling
-- Multiple connections
-**Replaces:** Sequel Pro (discontinued)
+- Query editor with syntax highlighting
+- Visual query builder
+- Data export/import tools
+- SSH tunneling support
+- Multiple database support (PostgreSQL, MySQL, SQLite, etc.)
+**Benefits:** Free, cross-platform, extensive database support
 
 ### ⚡ Supabase CLI
 **What it is:** Open source Firebase alternative  
@@ -501,45 +492,14 @@ This guide provides detailed explanations of every tool included in the setup sc
 
 ## DevOps & Cloud Tools
 
-### ☸️ Kubernetes Tools Suite
-
-#### kubectl
-**What it is:** Kubernetes command-line tool  
-**Purpose:** Deploy applications, inspect resources, view logs  
-**Common commands:**
-- `kubectl get pods`
-- `kubectl apply -f`
-- `kubectl logs`
-- `kubectl exec`
-
-#### Helm
-**What it is:** Kubernetes package manager  
-**Purpose:** Deploy complex applications with one command  
-**Concepts:** Charts (packages), releases, repositories  
-**Usage:** `helm install myapp ./chart`
-
-#### kops
-**What it is:** Kubernetes Operations  
-**Purpose:** Production-grade Kubernetes cluster provisioning  
-**Supports:** AWS (official), GCE, OpenStack  
-**Features:** Rolling updates, multi-zone
-
-#### kubectx
-**What it is:** Switch between Kubernetes contexts (clusters)  
-**Why useful:** Work with multiple clusters easily  
-**Command:** `kubectx` lists contexts, `kubectx prod` switches
-
-#### kubens
-**What it is:** Switch between Kubernetes namespaces  
-**Companion to:** kubectx  
-**Usage:** `kubens` lists namespaces, `kubens backend` switches
 
 ### ☁️ AWS CLI
 **What it is:** Amazon Web Services command line interface  
-**Capabilities:** Manage all AWS services from terminal  
+**Primary use:** Frontend deployment to S3, CloudFront, Lambda  
 **Features:** Profiles, MFA support, output formats  
-**Common uses:** S3 operations, EC2 management, Lambda deployment  
+**Common uses:** Static site deployment, CDN management, serverless functions  
 **Configuration:** `aws configure` sets up credentials
+**Amazon Q Integration:** Includes dummy config for Amazon Q Developer (VS Code AI assistant)
 
 ### 🐳 OrbStack
 **What it is:** Fast, light Docker Desktop alternative  
@@ -556,11 +516,12 @@ This guide provides detailed explanations of every tool included in the setup sc
 **What it is:** Expose local servers to the internet  
 **Use cases:**
 - Webhook development
-- Demo local sites
-- Mobile app testing
-- API testing
+- Demo local sites to clients
+- Mobile app testing with real devices
+- API testing with external services
 **Security:** HTTPS by default, authentication available  
 **Command:** `ngrok http 3000`
+**Perfect for:** Sharing local development servers
 
 #### wget
 **What it is:** Non-interactive network downloader  
@@ -569,8 +530,9 @@ This guide provides detailed explanations of every tool included in the setup sc
 
 #### jq
 **What it is:** Command-line JSON processor  
-**Why essential:** Parse API responses, filter JSON data  
+**Why essential:** Parse API responses, filter JSON data, work with REST APIs  
 **Example:** `curl api.example.com | jq '.data[]'`
+**Perfect for:** Frontend developers working with APIs
 
 #### tree
 **What it is:** Display directory structure as tree  
@@ -579,8 +541,9 @@ This guide provides detailed explanations of every tool included in the setup sc
 
 #### fzf
 **What it is:** Fuzzy finder for command line  
-**Integration:** History search (Ctrl+R), file finding  
+**Integration:** History search (Ctrl+R), file finding, interactive selection  
 **Power user tip:** Pipe any list to fzf for interactive selection
+**Productivity boost:** Find files and commands instantly
 
 #### Wireshark
 **What it is:** Network protocol analyzer  
@@ -627,7 +590,7 @@ This guide provides detailed explanations of every tool included in the setup sc
 
 ### Backend Developer Essentials
 - **Languages:** Go, Java, Python, Ruby
-- **Databases:** PostgreSQL, Sequel Ace
+- **Databases:** PostgreSQL, DBeaver
 - **API tools:** Postman, curl, jq
 - **Cloud:** AWS CLI
 - **Containers:** OrbStack/Docker
