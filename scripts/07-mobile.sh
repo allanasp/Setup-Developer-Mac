@@ -25,6 +25,7 @@ if [[ -d "/Applications/Android Studio.app" ]] || [[ -d "${HOME}/Library/Android
         {
             echo ''
             echo '# Android Development (React Native)'
+            # shellcheck disable=SC2016  # We want literal ${} in shell config
             echo 'export ANDROID_HOME=${HOME}/Library/Android/sdk'
             echo 'export PATH=${PATH}:${ANDROID_HOME}/emulator'
             echo 'export PATH=${PATH}:${ANDROID_HOME}/platform-tools'
@@ -47,6 +48,7 @@ else
         {
             echo ''
             echo '# Android Development (React Native)'
+            # shellcheck disable=SC2016  # We want literal ${} in shell config
             echo 'export ANDROID_HOME=${HOME}/Library/Android/sdk'
             echo 'export PATH=${PATH}:${ANDROID_HOME}/emulator'
             echo 'export PATH=${PATH}:${ANDROID_HOME}/platform-tools'
