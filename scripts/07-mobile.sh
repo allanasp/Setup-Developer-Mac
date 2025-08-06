@@ -22,12 +22,14 @@ print_status "Configuring Android environment for React Native..."
 if [[ -d "/Applications/Android Studio.app" ]] || [[ -d "${HOME}/Library/Android" ]]; then
     # Add Android environment variables to shell
     if ! grep -q 'ANDROID_HOME' ~/.zshrc 2>/dev/null; then
-        echo '' >> ~/.zshrc
-        echo '# Android Development (React Native)' >> ~/.zshrc
-        echo 'export ANDROID_HOME=${HOME}/Library/Android/sdk' >> ~/.zshrc
-        echo 'export PATH=${PATH}:${ANDROID_HOME}/emulator' >> ~/.zshrc
-        echo 'export PATH=${PATH}:${ANDROID_HOME}/platform-tools' >> ~/.zshrc
-        echo 'export PATH=${PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin' >> ~/.zshrc
+        {
+            echo ''
+            echo '# Android Development (React Native)'
+            echo 'export ANDROID_HOME=${HOME}/Library/Android/sdk'
+            echo 'export PATH=${PATH}:${ANDROID_HOME}/emulator'
+            echo 'export PATH=${PATH}:${ANDROID_HOME}/platform-tools'
+            echo 'export PATH=${PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin'
+        } >> ~/.zshrc
         print_success "Android environment variables added to .zshrc"
     else
         print_success "Android environment variables already configured"
@@ -42,12 +44,14 @@ else
     print_warning "Android Studio not found - environment variables will be set for future use"
     # Still add the environment variables for when Android Studio is installed
     if ! grep -q 'ANDROID_HOME' ~/.zshrc 2>/dev/null; then
-        echo '' >> ~/.zshrc
-        echo '# Android Development (React Native)' >> ~/.zshrc
-        echo 'export ANDROID_HOME=${HOME}/Library/Android/sdk' >> ~/.zshrc
-        echo 'export PATH=${PATH}:${ANDROID_HOME}/emulator' >> ~/.zshrc
-        echo 'export PATH=${PATH}:${ANDROID_HOME}/platform-tools' >> ~/.zshrc
-        echo 'export PATH=${PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin' >> ~/.zshrc
+        {
+            echo ''
+            echo '# Android Development (React Native)'
+            echo 'export ANDROID_HOME=${HOME}/Library/Android/sdk'
+            echo 'export PATH=${PATH}:${ANDROID_HOME}/emulator'
+            echo 'export PATH=${PATH}:${ANDROID_HOME}/platform-tools'
+            echo 'export PATH=${PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin'
+        } >> ~/.zshrc
         print_success "Android environment variables added to .zshrc (for future use)"
     fi
 fi
@@ -57,13 +61,14 @@ print_success "Android development environment configured"
 # iOS Development Tools (Optional - Requires Manual Xcode Installation)
 print_status "iOS Development Setup..."
 echo ""
+# shellcheck disable=SC2154
 echo "📱 ${BLUE}iOS Development Information${NC}"
 echo "   • Xcode needs to be installed from the Mac App Store"
 echo "   • Download size is approximately 15GB"
 echo "   • We'll install supporting tools once Xcode is ready"
 echo ""
 
-read -p "Install iOS development tools? (requires manual Xcode install later) [y/N]: " install_ios
+read -r -p "Install iOS development tools? (requires manual Xcode install later) [y/N]: " install_ios
 install_ios=${install_ios:-n}
 
 if [[ "${install_ios}" =~ ^[Yy]$ ]]; then
