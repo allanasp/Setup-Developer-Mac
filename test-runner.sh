@@ -33,16 +33,16 @@ test_syntax() {
     print_header "Testing Script Syntax"
     local failed=0
     
-    find . -name "*.sh" -type f | while read -r script; do
+    while IFS= read -r script; do
         if bash -n "${script}" 2>/dev/null; then
             print_success "Syntax OK: ${script}"
         else
             print_error "Syntax Error: ${script}"
-            failed=$((failed + 1))
+            ((failed++))
         fi
-    done
+    done < <(find . -name "*.sh" -type f)
     
-    if [ ${failed} -eq 0 ]; then
+    if [ "${failed}" -eq 0 ]; then
         print_success "All scripts have valid syntax"
     fi
 }
@@ -56,14 +56,14 @@ test_shellcheck() {
         return
     fi
     
-    find . -name "*.sh" -type f | while read -r script; do
+    while IFS= read -r script; do
         if shellcheck "${script}" >/dev/null 2>&1; then
             print_success "ShellCheck OK: ${script}"
         else
             print_warning "ShellCheck issues found in: ${script}"
             shellcheck "${script}"
         fi
-    done
+    done < <(find . -name "*.sh" -type f)
 }
 
 # Test 3: Function availability
@@ -118,9 +118,9 @@ test_structure() {
 test_dry_run() {
     print_header "Testing Dry Run Mode"
     
-    scripts_with_dry_run=()
+    local scripts_with_dry_run=()
     
-    find scripts/ -name "*.sh" -type f | while read -r script; do
+    while IFS= read -r script; do
         if grep -q "DRY_RUN" "${script}"; then
             scripts_with_dry_run+=("${script}")
             print_success "Dry run available: ${script}"
@@ -132,9 +132,9 @@ test_dry_run() {
                 print_warning "Dry run failed: ${script}"
             fi
         fi
-    done
+    done < <(find scripts/ -name "*.sh" -type f)
     
-    if [ ${#scripts_with_dry_run[@]} -eq 0 ]; then
+    if [ "${#scripts_with_dry_run[@]}" -eq 0 ]; then
         print_warning "No scripts support dry run mode"
     fi
 }
