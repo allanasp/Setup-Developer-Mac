@@ -51,7 +51,7 @@ prompt_configuration() {
         echo ""
         
         while true; do
-            read -p "Have you completed these configuration steps? (y/n): " response
+            read -r -p "Have you completed these configuration steps? (y/n): " response
             case ${response} in
                 [Yy]|[Yy][Ee][Ss])
                     print_success "Configuration completed! Continuing..."
@@ -75,7 +75,8 @@ prompt_configuration() {
 # Function to run a script
 run_script() {
     local script="$1"
-    local script_path="$(dirname "$0")/scripts/${script}"
+    local script_path
+    script_path="$(dirname "$0")/scripts/${script}"
     
     if [[ -f "${script_path}" ]]; then
         print_status "Running ${script}..."
@@ -134,13 +135,16 @@ run_script() {
                     ;;
                 "10-devops.sh")
                     prompt_configuration "DevOps Tools" "• Review the TODO list above for account creation steps
-• Test kubectl: run 'kubectl version --client'
+• Test AWS CLI: run 'aws --version'
 • Verify installations are working"
                     ;;
                 "11-fonts.sh")
                     prompt_configuration "Developer Fonts" "• Restart applications to use new fonts
 • Configure your editor to use Fira Code or JetBrains Mono
 • Enable font ligatures in VS Code/editor"
+                    ;;
+                *)
+                    # No specific configuration needed for this script
                     ;;
             esac
         else
@@ -227,7 +231,7 @@ echo "• Fullstack: Type '4 5 6 8 9' (includes Languages + Database)"
 echo "• Custom: Type any numbers separated by spaces (e.g., '4 6 10')"
 echo "• Type 'all' to install everything | Press Enter to skip | Type 'quit' to exit"
 echo ""
-read -p "Additional scripts to install: " selection
+read -r -p "Additional scripts to install: " selection
 
 selected_scripts=()
 
@@ -275,7 +279,7 @@ if [[ ${#selected_scripts[@]} -gt 0 ]]; then
         done
     done
     echo ""
-    read -p "Proceed with additional installations? [Y/n]: " confirm
+    read -r -p "Proceed with additional installations? [Y/n]: " confirm
     confirm=${confirm:-y}
     if [[ ! "${confirm}" =~ ^[Yy]$ ]]; then
         echo "❌ Additional installations cancelled"
