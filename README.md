@@ -58,6 +58,7 @@
 - GitHub Copilot (via VS Code extension)
 - Amazon Q Developer (via AWS CLI integration)
 - Claude Code terminal assistant
+- OpenCode AI terminal coding agent
 - AWS Toolkit for VS Code
 
 ### 🎯 **Productivity & Utilities**

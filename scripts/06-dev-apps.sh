@@ -37,6 +37,38 @@ install_cask_app "Cursor" "cursor" "/Applications/Cursor.app"
 install_cask_app "Zed" "zed" "/Applications/Zed.app"
 install_cask_app "TextMate" "textmate" "/Applications/TextMate.app"
 
+# OpenCode AI coding agent
+print_status "Checking OpenCode AI coding agent..."
+if command_exists opencode; then
+    local opencode_version
+    opencode_version=$(opencode --version 2>/dev/null || echo "unknown")
+    print_success "OpenCode already installed (${opencode_version})"
+else
+    print_status "Installing OpenCode AI coding agent..."
+    # Try Homebrew tap first
+    if brew install sst/tap/opencode 2>/dev/null; then
+        if command_exists opencode; then
+            print_success "OpenCode installed successfully via Homebrew"
+        else
+            print_warning "OpenCode installation completed but command not found"
+        fi
+    else
+        # Fallback to install script
+        print_status "Trying OpenCode install script..."
+        if curl -fsSL https://opencode.ai/install | bash; then
+            if command_exists opencode; then
+                print_success "OpenCode installed successfully via install script"
+            else
+                print_error "OpenCode installation failed"
+                print_status "Try manually: curl -fsSL https://opencode.ai/install | bash"
+            fi
+        else
+            print_error "Failed to install OpenCode"
+            print_warning "Continuing without OpenCode..."
+        fi
+    fi
+fi
+
 # Add VS Code CLI to PATH if not already there
 if [[ -d "/Applications/Visual Studio Code.app" ]] && ! command -v code &> /dev/null; then
     print_status "Adding VS Code CLI to PATH..."
@@ -147,6 +179,7 @@ echo "• Visual Studio Code (with extensions)"
 echo "• Cursor (AI-powered editor)"
 echo "• Zed (fast Rust-based editor)"
 echo "• TextMate (lightweight editor)"
+echo "• OpenCode (AI coding agent for terminal)"
 echo "• GitHub Desktop"
 echo "• Git & Git Flow & GitHub CLI"
 echo ""
@@ -155,6 +188,7 @@ echo "• code .     - Open VS Code in current directory"
 echo "• cursor .   - Open Cursor in current directory"
 echo "• zed .      - Open Zed in current directory"
 echo "• mate .     - Open TextMate in current directory"
+echo "• opencode   - Start OpenCode AI agent in terminal"
 echo ""
 
 # Git Configuration
@@ -263,6 +297,14 @@ echo "  → Configure API keys if needed"
 echo ""
 echo "□ Zed Editor Setup"
 echo "  → Open Zed: zed ."
+echo "  → Sign in to sync settings (optional)"
+echo ""
+echo "□ OpenCode AI Agent Setup"
+echo "  → Run: opencode auth login"
+echo "  → Select your LLM provider (OpenAI, Anthropic, etc.)"
+echo "  → Add your API key"
+echo "  → Test with: opencode"
+echo "  → Configuration stored in ~/.opencode/config.json"
 echo "  → Sign in with GitHub account"
 echo "  → Enable collaboration features"
 echo ""

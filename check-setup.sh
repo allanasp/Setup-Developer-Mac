@@ -483,6 +483,21 @@ else
     print_missing "1Password"
 fi
 
+# 1Password CLI
+if command_exists op; then
+    op_version=$(op --version 2>/dev/null || echo "installed")
+    print_installed "1Password CLI (${op_version})"
+    
+    # Check if signed in
+    if op whoami &>/dev/null; then
+        print_installed "  1Password CLI (authenticated)"
+    else
+        print_warning "  1Password CLI (not signed in - run: op signin)"
+    fi
+else
+    print_missing "1Password CLI"
+fi
+
 # Maccy
 if app_exists "/Applications/Maccy.app"; then
     print_installed "Maccy"
@@ -518,6 +533,21 @@ if app_exists "/Applications/Brave Browser.app"; then
     print_installed "Brave Browser"
 else
     print_missing "Brave Browser"
+fi
+
+# Comet Browser (Perplexity AI)
+if app_exists "/Applications/Comet.app"; then
+    print_installed "Comet Browser (Perplexity AI)"
+    
+    # Check if it's set as default browser
+    default_browser=$(duti -x http 2>/dev/null | grep -o 'com\.perplexity\.Comet' || echo "")
+    if [[ -n "${default_browser}" ]]; then
+        print_installed "  Comet (set as default browser)"
+    else
+        print_warning "  Comet (not default browser - set manually in System Settings)"
+    fi
+else
+    print_missing "Comet Browser (requires manual installation)"
 fi
 
 print_section "Developer Utilities"
@@ -673,6 +703,21 @@ if command_exists claude; then
     print_installed "Claude Code (${claude_version})"
 else
     print_missing "Claude Code"
+fi
+
+# OpenCode
+if command_exists opencode; then
+    opencode_version=$(opencode --version 2>/dev/null | head -n1 || echo "installed")
+    print_installed "OpenCode AI (${opencode_version})"
+    
+    # Check if authenticated
+    if [[ -f ~/.opencode/config.json ]] && grep -q "apiKey" ~/.opencode/config.json 2>/dev/null; then
+        print_installed "  OpenCode (authenticated)"
+    else
+        print_warning "  OpenCode (not configured - run: opencode auth login)"
+    fi
+else
+    print_missing "OpenCode AI"
 fi
 
 print_section "VS Code Extensions"
