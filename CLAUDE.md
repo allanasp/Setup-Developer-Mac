@@ -20,10 +20,11 @@ Modular Bash script system for automated macOS development environment setup, op
 │   ├── 05-frontend.sh      # Vue, React Native, TypeScript, Vite (optional)
 │   ├── 06-dev-apps.sh      # VS Code, Cursor, Git tools (optional)
 │   ├── 07-mobile.sh        # Android Studio, iOS tools (optional)
-│   ├── 08-productivity.sh  # Raycast, Rectangle, browsers (optional)
+│   ├── 08-productivity.sh  # Rectangle, browsers, Mockoon, Expo Orbit (optional)
 │   ├── 09-database.sh      # PostgreSQL, DBeaver, Supabase (optional)
-│   ├── 10-devops.sh        # AWS CLI, ngrok, utilities (optional)
-│   └── 11-fonts.sh         # Fira Code, JetBrains Mono (optional)
+│   ├── 10-devops.sh        # ngrok, UpCloud, Kubernetes, Tilt, Terraform (optional)
+│   ├── 11-fonts.sh         # Developer fonts (optional)
+│   └── 12-expo-rn.sh       # Expo + React Native local dev env (optional)
 └── docs/                   # GitHub Pages documentation
 
 ## Code Conventions

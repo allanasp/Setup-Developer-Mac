@@ -123,7 +123,6 @@ extensions=(
     "ms-vscode-remote.remote-containers"
     "GitHub.vscode-pull-request-github"
     "GitHub.copilot"
-    "amazonwebservices.aws-toolkit-vscode"
     "eamodio.gitlens"
     "formulahendry.auto-close-tag"
     "formulahendry.auto-rename-tag"

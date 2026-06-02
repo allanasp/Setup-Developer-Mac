@@ -135,7 +135,8 @@ run_script() {
                     ;;
                 "10-devops.sh")
                     prompt_configuration "DevOps Tools" "• Review the TODO list above for account creation steps
-• Test AWS CLI: run 'aws --version'
+• Test kubectl: run 'kubectl version --client'
+• Test Terraform: run 'terraform version'
 • Verify installations are working"
                     ;;
                 "11-fonts.sh")
@@ -189,9 +190,9 @@ optional_descriptions=(
     "Frontend Tools (TypeScript, Vue, React Native, Vite, Turbo, Vercel, Storyblok, Sanity CLI)"
     "Development Apps (VS Code, Cursor, Kiro, Extensions)"
     "Mobile Development (Android Studio, iOS tools)"
-    "Productivity Tools (Raycast, Rectangle, Browsers, Mockoon, Expo Orbit)"
+    "Productivity Tools (Rectangle, Browsers, Mockoon, Expo Orbit)"
     "Database Tools (PostgreSQL, DBeaver, Supabase CLI)"
-    "DevOps Tools (AWS CLI, ngrok, UpCloud, Command Line Utilities)"
+    "DevOps Tools (ngrok, UpCloud, Kubernetes, Tilt, Terraform, Utilities)"
     "Developer Fonts (Fira Code, JetBrains Mono)"
     "Expo + React Native Local Dev (Watchman, JDK 17, Maestro, full iOS/Android toolchain)"
 )

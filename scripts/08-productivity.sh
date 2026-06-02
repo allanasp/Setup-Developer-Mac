@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Productivity Tools Setup
-# Installs: Raycast, Rectangle, Maccy, Obsidian, browsers, utilities
+# Installs: Rectangle, Maccy, Obsidian, browsers, utilities
 
 # Don't exit on errors for optional apps - continue installing others
 # set -e  # Exit on any error
@@ -16,7 +16,6 @@ check_homebrew
 
 # Essential productivity tools
 print_status "Installing productivity & development tools..."
-install_cask_app "Raycast" "raycast" "/Applications/Raycast.app"
 install_cask_app "Rectangle" "rectangle" "/Applications/Rectangle.app"
 install_cask_app "Maccy" "maccy" "/Applications/Maccy.app"
 install_cask_app "Obsidian" "obsidian" "/Applications/Obsidian.app"
@@ -120,7 +119,6 @@ install_cask_app "Wireshark" "wireshark" "/Applications/Wireshark.app" || print_
 print_success "Productivity tools setup completed!"
 echo ""
 echo "Installed productivity tools:"
-echo "• Raycast (better Spotlight)"
 echo "• Rectangle (window management)"
 echo "• Maccy (clipboard manager)"
 echo "• Obsidian (note-taking)"
@@ -150,12 +148,6 @@ echo "• WiFiman (network/WiFi analyzer)"
 echo ""
 echo "📋 TODO: Application Setup & Account Creation"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "□ Raycast Setup (Spotlight Replacement)"
-echo "  → Open Raycast"
-echo "  → Create account at raycast.com or sign in"
-echo "  → Set hotkey to ⌘Space (recommended)"
-echo "  → Disable Spotlight: System Settings → Keyboard → Shortcuts → Spotlight"
-echo ""
 echo "□ Rectangle Configuration (Window Management)"
 echo "  → Open Rectangle"
 echo "  → Follow the setup wizard"

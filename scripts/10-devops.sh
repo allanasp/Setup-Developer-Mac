@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # DevOps Tools Setup
-# Installs: AWS CLI, ngrok, command line utilities
+# Installs: ngrok, UpCloud CLI, Kubernetes/Tilt/Terraform, command line utilities
 
 set -e  # Exit on any error
 
@@ -12,34 +12,6 @@ print_section "DevOps Tools Setup"
 
 check_macos
 check_homebrew
-
-# AWS CLI (for S3, CloudFront, Lambda deployment)
-if command -v aws &> /dev/null; then
-    print_success "AWS CLI already installed"
-else
-    install_brew_formula "awscli" "AWS CLI"
-fi
-
-# Configure AWS CLI for Amazon Q Developer (uses dummy config)
-print_status "Configuring AWS CLI for Amazon Q Developer..."
-if ! aws configure list &>/dev/null; then
-    print_status "Setting up dummy AWS config for Amazon Q Developer..."
-    echo ""
-    echo "ℹ️  Amazon Q only needs AWS CLI installed - using dummy credentials"
-    echo "   You'll authenticate through VS Code with AWS Builder ID (free)"
-    echo ""
-    
-    # Set dummy AWS credentials for Amazon Q
-    aws configure set aws_access_key_id "dummy-for-amazon-q"
-    aws configure set aws_secret_access_key "dummy-for-amazon-q"
-    aws configure set default.region "us-east-1"
-    aws configure set default.output "json"
-    
-    print_success "AWS CLI configured with dummy credentials for Amazon Q"
-    print_status "To use Amazon Q: Open VS Code → Amazon Q icon → Sign in with Builder ID"
-else
-    print_success "AWS CLI already configured"
-fi
 
 # Command line utilities
 print_status "Installing command line utilities..."
@@ -54,10 +26,21 @@ else
     install_brew_formula "UpCloudLtd/tap/upcloud-cli" "UpCloud CLI (upctl)"
 fi
 
+# Infrastructure / orchestration tooling
+print_status "Installing infrastructure tools..."
+install_brew_formula "kubernetes-cli" "kubectl (Kubernetes CLI)"
+install_brew_formula "tilt" "Tilt"
+# Terraform lives in HashiCorp's tap (moved out of core under the BSL license);
+# `brew install` auto-taps hashicorp/tap.
+if command -v terraform &> /dev/null; then
+    print_success "Terraform already installed"
+else
+    install_brew_formula "hashicorp/tap/terraform" "Terraform"
+fi
+
 print_success "DevOps tools setup completed!"
 echo ""
 echo "Installed tools:"
-echo "• AWS CLI (for S3, CloudFront, Lambda deployment)"
 echo "• ngrok (local tunneling for sharing dev servers)"
 echo "• eza (modern ls replacement with colors)"
 echo "• wget (file downloads)"
@@ -65,23 +48,20 @@ echo "• jq (JSON processing for APIs)"
 echo "• tree (directory visualization)"
 echo "• fzf (fuzzy finder for terminal)"
 echo "• UpCloud CLI (upctl - manage UpCloud infrastructure)"
+echo "• kubectl (Kubernetes CLI)"
+echo "• Tilt (Kubernetes dev environments)"
+echo "• Terraform (infrastructure as code)"
 echo ""
 echo "📋 TODO: Account Creation & Configuration"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "□ Amazon Q Developer (AI Coding Assistant)"
-echo "  → Open VS Code"
-echo "  → Click Amazon Q icon in sidebar"
-echo "  → Sign in with AWS Builder ID (free, no credit card)"
-echo "  → NOT an AWS account - just for Amazon Q"
-echo ""
 echo "□ ngrok Account (for sharing local dev)"
 echo "  → Sign up: https://ngrok.com"
 echo "  → Get auth token: ngrok config add-authtoken <token>"
 echo "  → Usage: ngrok http 3000 (share your dev server)"
 echo ""
-echo "□ AWS Account (OPTIONAL - only if deploying to AWS)"
-echo "  → Only needed for S3, CloudFront, Lambda"
-echo "  → Skip if using Vercel/Netlify instead"
+echo "□ UpCloud (if managing UpCloud infrastructure)"
+echo "  → Sign up: https://upcloud.com"
+echo "  → Authenticate: upctl account login"
 echo ""
 echo "Next steps:"
 echo "• Run fonts setup: ./scripts/11-fonts.sh"

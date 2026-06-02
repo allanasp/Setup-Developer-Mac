@@ -50,22 +50,21 @@
 - **⚠️ Note**: iOS development requires manual Xcode installation from App Store (cannot be automated)
 
 ### ☁️ **DevOps & Cloud Tools**
-- AWS CLI for frontend deployment (S3, CloudFront, Lambda)
 - UpCloud CLI (upctl) for managing UpCloud infrastructure
+- Kubernetes (kubectl), Tilt, and Terraform for infrastructure & orchestration
 - ngrok for sharing local development servers
 - Command line utilities (jq, fzf, eza, wget, tree)
 - Docker alternative with OrbStack
-- Database tools (PostgreSQL, DBeaver, Supabase CLI)
+- Database tools (PostgreSQL, DBeaver, pgAdmin 4, Supabase CLI)
 
 ### 🤖 **AI Coding Assistants**
 - GitHub Copilot (via VS Code extension)
-- Amazon Q Developer (via AWS CLI integration)
+- Kiro (AWS agentic IDE)
 - Claude Code terminal assistant
 - OpenCode AI terminal coding agent
-- AWS Toolkit for VS Code
 
 ### 🎯 **Productivity & Utilities**
-- **Window Management**: Rectangle, Raycast (Spotlight replacement)
+- **Window Management**: Rectangle
 - **Note Taking**: Obsidian for documentation
 - **Clipboard / Menubar**: Maccy clipboard manager, Ice menubar organizer
 - **API Tooling**: Postman, Mockoon (API mocking)
@@ -152,13 +151,14 @@ The setup now **guides you through each step** with configuration prompts:
 | # | Script | Description | Key Tools |
 |---|--------|-------------|-----------|
 | 4 | `04-languages.sh` | Programming Languages | Java, Go, Ruby |
-| 5 | `05-frontend.sh` | Frontend Tools | TypeScript, Vue, React Native, Vite, Storyblok, Sanity |
-| 6 | `06-dev-apps.sh` | Development Apps | VS Code + extensions, Cursor, Git tools |
+| 5 | `05-frontend.sh` | Frontend Tools | TypeScript, Vue, React Native, Vite, Turbo, Vercel, Storyblok, Sanity |
+| 6 | `06-dev-apps.sh` | Development Apps | VS Code + extensions, Cursor, Kiro, Git tools |
 | 7 | `07-mobile.sh` | Mobile Development | Android Studio, iOS tools, CocoaPods |
-| 8 | `08-productivity.sh` | Productivity Tools | Raycast, Rectangle, Obsidian, Maccy |
-| 9 | `09-database.sh` | Database Tools | PostgreSQL, DBeaver, Supabase CLI |
-| 10 | `10-devops.sh` | DevOps Tools | AWS CLI, ngrok, Command Line Utilities |
+| 8 | `08-productivity.sh` | Productivity Tools | Rectangle, Obsidian, Maccy, Mockoon, Expo Orbit |
+| 9 | `09-database.sh` | Database Tools | PostgreSQL, DBeaver, pgAdmin 4, Supabase CLI |
+| 10 | `10-devops.sh` | DevOps Tools | ngrok, UpCloud, Kubernetes, Tilt, Terraform |
 | 11 | `11-fonts.sh` | Developer Fonts | Fira Code, JetBrains Mono |
+| 12 | `12-expo-rn.sh` | Expo + React Native Local Dev | Watchman, JDK 17, Maestro, iOS/Android toolchain |
 
 > 📖 **[Complete Script Guide](SCRIPT_GUIDE.md)** - Detailed documentation for each script
 > 🛠️ **[Tools Guide](docs/tools-guide.md)** - Comprehensive info on all 100+ tools installed
@@ -187,8 +187,8 @@ The setup now **guides you through each step** with configuration prompts:
 <summary><strong>📦 Package Managers</strong></summary>
 
 - npm (Node.js default, updated to latest)
-- Yarn Berry (Facebook's modern package manager)
 - pnpm (Performant Node.js package manager)
+- bun (fast all-in-one JavaScript runtime & package manager)
 - CocoaPods (iOS dependency manager)
 </details>
 
@@ -225,7 +225,8 @@ The setup now **guides you through each step** with configuration prompts:
 <summary><strong>☸️ DevOps & Cloud</strong></summary>
 
 - **Command line utilities**: jq, fzf, eza, wget, tree
-- **AWS CLI** for cloud development
+- **UpCloud CLI** (upctl) for cloud infrastructure
+- **Kubernetes** (kubectl), **Tilt**, **Terraform**
 - **OrbStack** (Docker alternative)
 - **PostgreSQL** database server
 </details>
@@ -234,15 +235,14 @@ The setup now **guides you through each step** with configuration prompts:
 <summary><strong>🤖 AI Development Tools</strong></summary>
 
 - GitHub Copilot (VS Code extension)
-- Amazon Q Developer (AWS integration)
+- Kiro (AWS agentic IDE)
 - Claude Code terminal assistant
-- AWS Toolkit for VS Code
+- OpenCode AI terminal coding agent
 </details>
 
 <details>
 <summary><strong>🎯 Productivity Applications</strong></summary>
 
-- **Raycast** (advanced Spotlight replacement)
 - **Rectangle** (window management)
 - **Maccy** (clipboard manager)
 - **Obsidian** (note-taking)
@@ -252,10 +252,11 @@ The setup now **guides you through each step** with configuration prompts:
 <details>
 <summary><strong>🔧 Developer Utilities</strong></summary>
 
-- **Database**: DBeaver Community Edition (universal database GUI)
-- **API Testing**: Postman
+- **Database**: DBeaver Community Edition, pgAdmin 4
+- **API Testing**: Postman, Mockoon
+- **Mobile**: Expo Orbit
 - **Design**: Figma
-- **Network**: ngrok (local tunneling), Wireshark
+- **Network**: ngrok (local tunneling), Wireshark, WiFiman
 - **File Management**: ImageOptim, AppCleaner
 - **Command Line**: eza, wget, jq, tree, fzf
 </details>
@@ -266,7 +267,7 @@ The script automatically installs essential VS Code extensions:
 
 - **Language Support**: Vue.volar, Python, Go, TypeScript
 - **Git Integration**: GitLens, GitHub Pull Requests
-- **AI Assistants**: GitHub Copilot, Amazon Q (AWS Toolkit)
+- **AI Assistants**: GitHub Copilot
 - **Code Quality**: ESLint, Prettier, EditorConfig
 - **Productivity**: Auto Close Tag, Better Comments, Path Intellisense
 - **Themes**: Material Icon Theme
@@ -349,14 +350,13 @@ chmod +x scripts/*.sh
 
 ### Authentication Setup
 5. **GitHub CLI**: `gh auth login`
-6. **AWS CLI**: `aws configure` (for Amazon Q)
-7. **Supabase**: `supabase login` (if using)
+6. **Supabase**: `supabase login` (if using)
+7. **Vercel**: `vercel login` (if using)
 
 ### Productivity Apps (if installed)
-8. **Raycast**: Set CMD+Space shortcut, install extensions
-9. **Rectangle**: Configure window shortcuts (⌘+⌥+arrows)
-10. **Maccy**: Set clipboard shortcut (⌘+Shift+V)
-11. **Obsidian**: Create vault, configure sync (optional)
+8. **Rectangle**: Configure window shortcuts (⌘+⌥+arrows)
+9. **Maccy**: Set clipboard shortcut (⌘+Shift+V)
+10. **Obsidian**: Create vault, configure sync (optional)
 
 ### Mobile Development (if script 7 chosen)
 12. **Install Xcode** from App Store (~15GB download)

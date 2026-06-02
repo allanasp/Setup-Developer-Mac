@@ -445,19 +445,32 @@ fi
 
 print_section "DevOps Tools"
 
-# AWS CLI
-if command_exists aws; then
-    aws_version=$(aws --version 2>&1 | cut -d' ' -f1 | cut -d'/' -f2 || echo "installed")
-    print_installed "AWS CLI (${aws_version})"
-else
-    print_missing "AWS CLI"
-fi
-
 # UpCloud CLI (upctl)
 if command_exists upctl; then
     print_installed "UpCloud CLI (upctl $(upctl version 2>/dev/null | head -n1 || echo installed))"
 else
     print_missing "UpCloud CLI (upctl)"
+fi
+
+# kubectl (Kubernetes CLI)
+if command_exists kubectl; then
+    print_installed "kubectl ($(kubectl version --client -o yaml 2>/dev/null | grep gitVersion | head -n1 | awk '{print $2}' || echo installed))"
+else
+    print_missing "kubectl (Kubernetes CLI)"
+fi
+
+# Tilt
+if command_exists tilt; then
+    print_installed "Tilt ($(tilt version 2>/dev/null | head -n1 || echo installed))"
+else
+    print_missing "Tilt"
+fi
+
+# Terraform
+if command_exists terraform; then
+    print_installed "Terraform ($(terraform version 2>/dev/null | head -n1 | awk '{print $2}' || echo installed))"
+else
+    print_missing "Terraform"
 fi
 
 # Note: ngrok is verified in the "Command Line Utilities" section below.
@@ -527,13 +540,6 @@ else
 fi
 
 print_section "Productivity Tools"
-
-# Raycast
-if app_exists "/Applications/Raycast.app"; then
-    print_installed "Raycast"
-else
-    print_missing "Raycast"
-fi
 
 # Rectangle
 if app_exists "/Applications/Rectangle.app"; then
@@ -776,18 +782,6 @@ fi
 
 print_section "AI Coding Assistants"
 
-# Amazon Q (check via AWS CLI and VS Code extension)
-if command_exists aws; then
-    # Check if user has configured AWS CLI (basic check)
-    if aws configure list | grep -q "access_key" && [[ $(aws configure list | grep access_key | awk '{print $2}') != "<not set>" ]]; then
-        print_installed "Amazon Q Developer (AWS configured)"
-    else
-        print_warning "Amazon Q Developer (AWS CLI not configured - run 'aws configure')"
-    fi
-else
-    print_missing "Amazon Q Developer (AWS CLI missing)"
-fi
-
 # Claude Code
 if command_exists claude; then
     claude_version=$(claude --version 2>/dev/null | head -n1 || echo "installed")
@@ -822,7 +816,6 @@ if command_exists code; then
         "golang.go"
         "github.vscode-pull-request-github"
         "github.copilot"
-        "amazonwebservices.aws-toolkit-vscode"
         "eamodio.gitlens"
         "editorconfig.editorconfig"
         "ms-vscode-remote.remote-containers"

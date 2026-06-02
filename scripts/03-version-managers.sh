@@ -87,14 +87,22 @@ else
     print_warning "Volta not available - restart terminal and run: volta install node@lts"
 fi
 
-# Install pnpm + bun (preferred package managers)
-print_status "Installing pnpm and bun via Volta..."
+# Install pnpm (preferred package manager) via Volta
+print_status "Installing pnpm via Volta..."
 if command -v volta &> /dev/null; then
     install_volta_package "pnpm"
-    install_volta_package "bun"
-    print_success "pnpm and bun installed via Volta"
+    print_success "pnpm installed via Volta"
 else
-    print_warning "Volta not available - pnpm/bun installation skipped"
+    print_warning "Volta not available - pnpm installation skipped"
+fi
+
+# Install bun via its official Homebrew tap (Volta doesn't manage bun).
+# `brew install` auto-taps oven-sh/bun.
+print_status "Installing bun..."
+if command -v bun &> /dev/null; then
+    print_success "bun already installed ($(bun --version))"
+else
+    install_brew_formula "oven-sh/bun/bun" "bun"
 fi
 
 print_success "Version managers setup completed!"
