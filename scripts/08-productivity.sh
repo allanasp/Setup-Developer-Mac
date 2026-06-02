@@ -30,6 +30,7 @@ if command_exists op; then
 else
     print_status "Installing 1Password CLI..."
     if brew install 1password-cli 2>/dev/null; then
+    
         # Verify installation
         if command_exists op; then
             print_success "1Password CLI installed successfully ($(op --version))"
