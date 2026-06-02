@@ -15,9 +15,11 @@ check_homebrew
 
 # Python via pyenv (version manager)
 print_status "Installing Python via pyenv..."
-# Install pyenv dependencies first
-brew install xz cairo gobject-introspection
-brew install pyenv
+# Install pyenv build dependencies first
+for dep in xz cairo gobject-introspection; do
+    install_brew_formula "${dep}"
+done
+install_brew_formula "pyenv"
 
 # Add pyenv to PATH and initialize for current session
 export PYENV_ROOT="${HOME}/.pyenv"
@@ -64,6 +66,18 @@ else
     print_success "Volta already installed"
 fi
 
+# Ensure Volta is on PATH in future shells (the installer usually does this,
+# but guard it so a restart never loses Volta)
+if ! grep -q 'VOLTA_HOME' ~/.zshrc 2>/dev/null; then
+    {
+        echo ''
+        echo '# Volta (Node.js version manager)'
+        echo 'export VOLTA_HOME="${HOME}/.volta"'
+        echo 'export PATH="${VOLTA_HOME}/bin:${PATH}"'
+    } >> ~/.zshrc
+    print_success "Volta added to .zshrc"
+fi
+
 # Install Node.js via Volta
 print_status "Installing Node.js via Volta..."
 if command -v volta &> /dev/null; then
@@ -73,14 +87,14 @@ else
     print_warning "Volta not available - restart terminal and run: volta install node@lts"
 fi
 
-# Install Yarn Berry
-print_status "Installing Yarn Berry..."
+# Install pnpm + bun (preferred package managers)
+print_status "Installing pnpm and bun via Volta..."
 if command -v volta &> /dev/null; then
-    volta install yarn
-    yarn set version berry 2>/dev/null || print_warning "Yarn Berry setup may need manual configuration"
-    print_success "Yarn installed via Volta"
+    install_volta_package "pnpm"
+    install_volta_package "bun"
+    print_success "pnpm and bun installed via Volta"
 else
-    print_warning "Volta not available - Yarn installation skipped"
+    print_warning "Volta not available - pnpm/bun installation skipped"
 fi
 
 print_success "Version managers setup completed!"

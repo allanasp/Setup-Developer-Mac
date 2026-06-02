@@ -14,12 +14,10 @@ check_macos
 check_homebrew
 
 # AWS CLI (for S3, CloudFront, Lambda deployment)
-print_status "Installing AWS CLI..."
-if ! command -v aws &> /dev/null; then
-    brew install awscli
-    print_success "AWS CLI installed"
-else
+if command -v aws &> /dev/null; then
     print_success "AWS CLI already installed"
+else
+    install_brew_formula "awscli" "AWS CLI"
 fi
 
 # Configure AWS CLI for Amazon Q Developer (uses dummy config)
@@ -45,13 +43,16 @@ fi
 
 # Command line utilities
 print_status "Installing command line utilities..."
-brew install ngrok  # Local tunneling
-brew install eza    # Modern ls replacement
-brew install wget   # File download utility
-brew install jq     # JSON processor
-brew install tree   # Directory tree viewer
-brew install fzf    # Fuzzy finder
-print_success "Command line utilities installed"
+for util in ngrok eza wget jq tree fzf; do
+    install_brew_formula "${util}"
+done
+
+# UpCloud CLI (upctl) - manage UpCloud infrastructure
+if command -v upctl &> /dev/null; then
+    print_success "UpCloud CLI (upctl) already installed"
+else
+    install_brew_formula "UpCloudLtd/tap/upcloud-cli" "UpCloud CLI (upctl)"
+fi
 
 print_success "DevOps tools setup completed!"
 echo ""
@@ -63,6 +64,7 @@ echo "• wget (file downloads)"
 echo "• jq (JSON processing for APIs)"
 echo "• tree (directory visualization)"
 echo "• fzf (fuzzy finder for terminal)"
+echo "• UpCloud CLI (upctl - manage UpCloud infrastructure)"
 echo ""
 echo "📋 TODO: Account Creation & Configuration"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"

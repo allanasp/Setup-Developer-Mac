@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Development Applications Setup
-# Installs: VS Code, Cursor, Zed, TextMate, VS Code extensions
+# Installs: VS Code, Cursor, Kiro, TextMate, VS Code extensions
 
 set -e  # Exit on any error
 
@@ -15,9 +15,9 @@ check_homebrew
 
 # Git and GitHub tools
 print_status "Installing Git and GitHub tools..."
-brew install git
-brew install git-flow-avh  # Git Flow extension for branching model
-brew install gh  # GitHub CLI
+install_brew_formula "git"
+install_brew_formula "git-flow-avh" "Git Flow (AVH)"  # Git Flow extension for branching model
+install_brew_formula "gh" "GitHub CLI"
 install_cask_app "GitHub Desktop" "github" "/Applications/GitHub Desktop.app"
 
 # Visual Studio Code
@@ -34,13 +34,12 @@ fi
 
 # Additional code editors
 install_cask_app "Cursor" "cursor" "/Applications/Cursor.app"
-install_cask_app "Zed" "zed" "/Applications/Zed.app"
 install_cask_app "TextMate" "textmate" "/Applications/TextMate.app"
+install_cask_app "Kiro" "kiro" "/Applications/Kiro.app"  # AWS agentic IDE
 
 # OpenCode AI coding agent
 print_status "Checking OpenCode AI coding agent..."
 if command_exists opencode; then
-    local opencode_version
     opencode_version=$(opencode --version 2>/dev/null || echo "unknown")
     print_success "OpenCode already installed (${opencode_version})"
 else
@@ -93,15 +92,6 @@ cursor() {
         open -a "Cursor" "${1:-.}"
     else
         echo "Cursor not installed"
-    fi
-}
-
-# Zed
-zed() {
-    if [[ -d "/Applications/Zed.app" ]]; then
-        open -a "Zed" "${1:-.}"
-    else
-        echo "Zed not installed"
     fi
 }
 
@@ -177,8 +167,8 @@ echo ""
 echo "Installed applications:"
 echo "• Visual Studio Code (with extensions)"
 echo "• Cursor (AI-powered editor)"
-echo "• Zed (fast Rust-based editor)"
 echo "• TextMate (lightweight editor)"
+echo "• Kiro (AWS agentic IDE)"
 echo "• OpenCode (AI coding agent for terminal)"
 echo "• GitHub Desktop"
 echo "• Git & Git Flow & GitHub CLI"
@@ -186,7 +176,6 @@ echo ""
 echo "Editor CLI commands available:"
 echo "• code .     - Open VS Code in current directory"
 echo "• cursor .   - Open Cursor in current directory"
-echo "• zed .      - Open Zed in current directory"
 echo "• mate .     - Open TextMate in current directory"
 echo "• opencode   - Start OpenCode AI agent in terminal"
 echo ""
@@ -294,10 +283,6 @@ echo "□ Cursor AI Editor Setup"
 echo "  → Open Cursor: cursor ."
 echo "  → Sign in to enable AI features"
 echo "  → Configure API keys if needed"
-echo ""
-echo "□ Zed Editor Setup"
-echo "  → Open Zed: zed ."
-echo "  → Sign in to sync settings (optional)"
 echo ""
 echo "□ OpenCode AI Agent Setup"
 echo "  → Run: opencode auth login"

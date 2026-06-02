@@ -29,6 +29,10 @@ install_volta_package "typescript"
 install_volta_package "create-vite"
 install_volta_package "serve"
 
+# Monorepo + deployment tooling
+install_volta_package "turbo"   # Turborepo
+install_volta_package "vercel"  # Vercel CLI
+
 # Headless CMS tools
 install_volta_package "storyblok"  # Storyblok CLI
 install_volta_package "@sanity/cli"  # Sanity CLI
@@ -41,8 +45,7 @@ install_volta_package "eas-cli"                       # EAS CLI for Expo Applica
 install_volta_package "create-expo-app"               # Create Expo apps
 
 # Watchman (recommended by React Native docs for better performance)
-print_status "Installing Watchman (React Native file watching)..."
-brew install watchman
+install_brew_formula "watchman" "Watchman"
 
 print_success "Frontend development tools setup completed!"
 echo ""
@@ -51,6 +54,7 @@ echo "• TypeScript (global compiler)"
 echo "• Vue CLI & Nuxt CLI"
 echo "• React Native CLI & Expo CLI & EAS CLI"
 echo "• Vite (create-vite) & Serve"
+echo "• Turbo (Turborepo) & Vercel CLI"
 echo "• Storyblok CLI & Sanity CLI (headless CMS)"
 echo "• Watchman (file watching)"
 echo ""

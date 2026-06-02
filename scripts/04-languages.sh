@@ -17,7 +17,7 @@ check_homebrew
 print_status "Installing Java Development Kit (JDK 17 for React Native)..."
 if ! command -v java &> /dev/null; then
     # Install JDK 17 (React Native requirement)
-    brew install openjdk@17
+    install_brew_formula "openjdk@17" "OpenJDK 17"
     
     # Add JDK to PATH and set JAVA_HOME
     if ! grep -q 'JAVA_HOME' ~/.zshrc 2>/dev/null; then
@@ -44,13 +44,8 @@ else
 fi
 
 # Go and Ruby (standalone installations)
-print_status "Installing Go..."
-brew install go
-print_success "Go installed"
-
-print_status "Installing Ruby..."
-brew install ruby
-print_success "Ruby installed"
+install_brew_formula "go" "Go"
+install_brew_formula "ruby" "Ruby"
 
 print_success "Programming languages setup completed!"
 echo ""

@@ -172,7 +172,7 @@ fi
 # Expo + React Native CLIs via Volta
 # ----------------------------------------------------------
 print_status "Installing Expo + React Native CLIs via Volta..."
-if check_volta; then
+if command_exists volta; then
     install_volta_package "@expo/cli"
     install_volta_package "eas-cli"
     install_volta_package "create-expo-app"

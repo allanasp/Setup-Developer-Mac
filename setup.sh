@@ -114,7 +114,7 @@ run_script() {
                     ;;
                 "06-dev-apps.sh")
                     prompt_configuration "Development Apps" "• Review the TODO list above for editor account setup
-• Sign in to VS Code, Cursor, and Zed editors
+• Sign in to VS Code, Cursor, and Kiro editors
 • Enable settings sync in VS Code
 • Git and GitHub should already be configured from the prompts"
                     ;;
@@ -181,17 +181,19 @@ optional_scripts=(
     "09-database.sh"
     "10-devops.sh"
     "11-fonts.sh"
+    "12-expo-rn.sh"
 )
 
 optional_descriptions=(
     "Programming Languages (Java, Go, Ruby)"
-    "Frontend Tools (TypeScript, Vue, React Native, Vite, Storyblok, Sanity CLI)"
-    "Development Apps (VS Code, Cursor, Zed, Extensions)"
+    "Frontend Tools (TypeScript, Vue, React Native, Vite, Turbo, Vercel, Storyblok, Sanity CLI)"
+    "Development Apps (VS Code, Cursor, Kiro, Extensions)"
     "Mobile Development (Android Studio, iOS tools)"
-    "Productivity Tools (Raycast, Rectangle, Browsers)"
-    "Database Tools (PostgreSQL, Sequel Ace, Supabase CLI)"
-    "DevOps Tools (ngrok, Command Line Utilities)"
+    "Productivity Tools (Raycast, Rectangle, Browsers, Mockoon, Expo Orbit)"
+    "Database Tools (PostgreSQL, DBeaver, Supabase CLI)"
+    "DevOps Tools (AWS CLI, ngrok, UpCloud, Command Line Utilities)"
     "Developer Fonts (Fira Code, JetBrains Mono)"
+    "Expo + React Native Local Dev (Watchman, JDK 17, Maestro, full iOS/Android toolchain)"
 )
 
 # First, always install essential components
@@ -226,12 +228,20 @@ echo ""
 # Simple CLI selection for optional scripts
 echo "Choose additional scripts to install:"
 echo "• Frontend Focus: Type '5 6 8 11' (Frontend + Dev Apps + Productivity + Fonts)"
-echo "• React Native: Type '5 6 7 8 11' (includes Mobile development)"
+echo "• React Native: Type '5 6 7 8 11 12' (includes Mobile + Expo/RN local dev)"
 echo "• Fullstack: Type '4 5 6 8 9' (includes Languages + Database)"
 echo "• Custom: Type any numbers separated by spaces (e.g., '4 6 10')"
 echo "• Type 'all' to install everything | Press Enter to skip | Type 'quit' to exit"
 echo ""
-read -r -p "Additional scripts to install: " selection
+if [[ "${SKIP_PROMPTS}" == "true" ]]; then
+    # Non-interactive mode (CI / curl bootstrap): take selection from env,
+    # defaulting to installing everything. Set SETUP_OPTIONAL="" to skip optional,
+    # or e.g. SETUP_OPTIONAL="5 6 8 11" to pick specific scripts.
+    selection="${SETUP_OPTIONAL-all}"
+    print_status "Non-interactive mode: optional scripts = '${selection:-<none>}'"
+else
+    read -r -p "Additional scripts to install: " selection
+fi
 
 selected_scripts=()
 
@@ -253,12 +263,12 @@ case ${selection} in
         # Parse numbers
         if [[ -n "${selection}" ]]; then
             for num in ${selection}; do
-                if [[ "${num}" =~ ^[0-9]+$ ]] && [[ "${num}" -ge 4 ]] && [[ "${num}" -le 11 ]]; then
+                if [[ "${num}" =~ ^[0-9]+$ ]] && [[ "${num}" -ge 4 ]] && [[ "${num}" -le 12 ]]; then
                     idx=$((num-4))  # Convert to optional_scripts index (4->0, 5->1, etc.)
                     selected_scripts+=("${optional_scripts[${idx}]}")
                     echo "✓ Selected: ${optional_descriptions[${idx}]}"
                 else
-                    echo "❌ Invalid script number: ${num} (valid range: 4-11)"
+                    echo "❌ Invalid script number: ${num} (valid range: 4-12)"
                 fi
             done
         fi
@@ -279,7 +289,11 @@ if [[ ${#selected_scripts[@]} -gt 0 ]]; then
         done
     done
     echo ""
-    read -r -p "Proceed with additional installations? [Y/n]: " confirm
+    if [[ "${SKIP_PROMPTS}" == "true" ]]; then
+        confirm="y"
+    else
+        read -r -p "Proceed with additional installations? [Y/n]: " confirm
+    fi
     confirm=${confirm:-y}
     if [[ ! "${confirm}" =~ ^[Yy]$ ]]; then
         echo "❌ Additional installations cancelled"

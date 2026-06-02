@@ -24,13 +24,11 @@ install_cask_app "Obsidian" "obsidian" "/Applications/Obsidian.app"
 # 1Password CLI
 print_status "Checking 1Password CLI..."
 if command_exists op; then
-    local op_version
     op_version=$(op --version 2>/dev/null || echo "unknown")
     print_success "1Password CLI already installed (${op_version})"
 else
     print_status "Installing 1Password CLI..."
     if brew install 1password-cli 2>/dev/null; then
-    
         # Verify installation
         if command_exists op; then
             print_success "1Password CLI installed successfully ($(op --version))"
@@ -67,25 +65,25 @@ fi
 # Set Comet as default browser if installed
 if app_exists "/Applications/Comet.app"; then
     print_status "Setting Comet as default browser..."
-    
-    # Use duti if available, otherwise fallback to open
-    if command_exists duti; then
-        # Install duti if not present
+
+    # Prefer duti; install it first if it's missing
+    if ! command_exists duti; then
+        print_status "Installing duti utility..."
         brew install duti 2>/dev/null || true
-        
-        # Set Comet as default for HTTP and HTTPS
-        if command_exists duti; then
-            echo "com.perplexity.Comet http" > ~/.duti
-            echo "com.perplexity.Comet https" >> ~/.duti
-            duti ~/.duti 2>/dev/null && print_success "Comet set as default browser" || print_warning "Could not set default browser automatically"
-        fi
+    fi
+
+    if command_exists duti; then
+        duti_rules="$(mktemp)"
+        printf 'com.perplexity.Comet http\ncom.perplexity.Comet https\n' > "${duti_rules}"
+        duti "${duti_rules}" 2>/dev/null && print_success "Comet set as default browser" || print_warning "Could not set default browser automatically"
+        rm -f "${duti_rules}"
     else
-        # Alternative method using defaultbrowser
+        # Fallback: defaultbrowser utility
         if ! command_exists defaultbrowser; then
             print_status "Installing defaultbrowser utility..."
             brew install defaultbrowser 2>/dev/null || true
         fi
-        
+
         if command_exists defaultbrowser; then
             defaultbrowser comet 2>/dev/null && print_success "Comet set as default browser" || print_warning "Could not set default browser automatically"
         else
@@ -99,9 +97,14 @@ fi
 # Developer utilities
 install_cask_app "OrbStack" "orbstack" "/Applications/OrbStack.app"
 install_cask_app "Postman" "postman" "/Applications/Postman.app"
+install_cask_app "Mockoon" "mockoon" "/Applications/Mockoon.app"
+install_cask_app "Expo Orbit" "expo-orbit" "/Applications/Expo Orbit.app"
 install_cask_app "Figma" "figma" "/Applications/Figma.app"
 install_cask_app "ImageOptim" "imageoptim" "/Applications/ImageOptim.app"
 install_cask_app "WireGuard" "wireguard" "/Applications/WireGuard.app"
+install_cask_app "DevToys" "devtoys" "/Applications/DevToys.app"
+install_cask_app "Signal" "signal" "/Applications/Signal.app"
+install_cask_app "WiFiman" "wifiman" "/Applications/WiFiman Desktop.app"
 
 # Additional utility apps (optional - don't fail if some don't install)
 install_cask_app "AppCleaner" "appcleaner" "/Applications/AppCleaner.app" || print_warning "AppCleaner installation failed - continuing..."
@@ -132,6 +135,8 @@ echo ""
 echo "Installed utilities:"
 echo "• OrbStack (Docker replacement)"
 echo "• Postman (API testing)"
+echo "• Mockoon (API mocking)"
+echo "• Expo Orbit (Expo build/simulator launcher)"
 echo "• Figma (design)"
 echo "• ImageOptim (image compression)"
 echo "• AppCleaner (uninstaller)"
@@ -139,6 +144,9 @@ echo "• Ice (menubar organizer)"
 echo "• Syncthing (file sync)"
 echo "• WireGuard (VPN)"
 echo "• Wireshark (network analysis - if installation succeeded)"
+echo "• DevToys (developer Swiss-army knife)"
+echo "• Signal (encrypted messaging)"
+echo "• WiFiman (network/WiFi analyzer)"
 echo ""
 echo "📋 TODO: Application Setup & Account Creation"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"

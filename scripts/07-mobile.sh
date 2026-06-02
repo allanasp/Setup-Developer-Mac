@@ -99,12 +99,11 @@ if [[ "${install_ios}" =~ ^[Yy]$ ]]; then
     fi
     
     # Tools that work without Xcode
-    brew install ios-deploy  # Deploy to iOS devices
-    brew install cocoapods  # iOS dependency manager
-    
+    install_brew_formula "ios-deploy"  # Deploy to iOS devices
+    install_brew_formula "cocoapods"   # iOS dependency manager
+
     # Xcode management tool
-    print_status "Installing xcodes (Xcode version manager)..."
-    brew install xcodes  # Manage multiple Xcode versions
+    install_brew_formula "xcodes"      # Manage multiple Xcode versions
     
     # SwiftLint requires full Xcode installation
     print_status "Checking SwiftLint (requires full Xcode)..."

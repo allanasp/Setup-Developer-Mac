@@ -14,6 +14,13 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
+# Architecture-aware Homebrew prefix (Apple Silicon vs Intel)
+if [[ "$(uname -m)" == "arm64" ]]; then
+    BREW_PREFIX="/opt/homebrew"
+else
+    BREW_PREFIX="/usr/local"
+fi
+
 # Counters
 INSTALLED=0
 MISSING=0
@@ -50,9 +57,9 @@ app_exists() {
     [[ -d "$1" ]]
 }
 
-# Function to check VS Code extension
+# Function to check VS Code extension (anchored, case-insensitive)
 vscode_extension_exists() {
-    code --list-extensions 2>/dev/null | grep -q "$1"
+    code --list-extensions 2>/dev/null | grep -qi "^$1$"
 }
 
 print_section "System Requirements"
@@ -151,8 +158,8 @@ if command_exists java; then
     print_installed "Java JDK (${java_version})"
     
     # Check JAVA_HOME
-    if [[ -n "${JAVA_HOME}" ]] || [[ -d "/opt/homebrew/opt/openjdk@17" ]]; then
-        java_home_path="${JAVA_HOME:-/opt/homebrew/opt/openjdk@17}"
+    if [[ -n "${JAVA_HOME}" ]] || [[ -d "${BREW_PREFIX}/opt/openjdk@17" ]]; then
+        java_home_path="${JAVA_HOME:-${BREW_PREFIX}/opt/openjdk@17}"
         print_installed "  JAVA_HOME available (${java_home_path})"
     else
         print_warning "  JAVA_HOME not set"
@@ -171,20 +178,20 @@ else
     print_missing "npm"
 fi
 
-# Yarn
-if command_exists yarn; then
-    yarn_version=$(yarn --version 2>/dev/null || echo "installed")
-    print_installed "Yarn (${yarn_version})"
-else
-    print_missing "Yarn"
-fi
-
 # pnpm
 if command_exists pnpm; then
     pnpm_version=$(pnpm --version 2>/dev/null || echo "installed")
     print_installed "pnpm (${pnpm_version})"
 else
     print_missing "pnpm"
+fi
+
+# bun
+if command_exists bun; then
+    bun_version=$(bun --version 2>/dev/null || echo "installed")
+    print_installed "bun (${bun_version})"
+else
+    print_missing "bun"
 fi
 
 print_section "Frontend CLI Tools"
@@ -259,6 +266,41 @@ else
     print_missing "Serve"
 fi
 
+# Turbo (Turborepo)
+if command_exists turbo; then
+    print_installed "Turbo ($(turbo --version 2>/dev/null || echo installed))"
+else
+    print_missing "Turbo (Turborepo)"
+fi
+
+# Vercel CLI
+if command_exists vercel; then
+    print_installed "Vercel CLI ($(vercel --version 2>/dev/null | head -n1 || echo installed))"
+else
+    print_missing "Vercel CLI"
+fi
+
+# create-expo-app
+if command_exists create-expo-app; then
+    print_installed "create-expo-app"
+else
+    print_missing "create-expo-app"
+fi
+
+# Storyblok CLI
+if command_exists storyblok; then
+    print_installed "Storyblok CLI ($(storyblok --version 2>/dev/null | head -n1 || echo installed))"
+else
+    print_missing "Storyblok CLI"
+fi
+
+# Sanity CLI
+if command_exists sanity; then
+    print_installed "Sanity CLI ($(sanity --version 2>/dev/null | head -n1 || echo installed))"
+else
+    print_missing "Sanity CLI"
+fi
+
 print_section "Development Applications"
 
 # VS Code
@@ -280,18 +322,18 @@ else
     print_missing "Cursor"
 fi
 
-# Zed
-if app_exists "/Applications/Zed.app"; then
-    print_installed "Zed"
-else
-    print_missing "Zed"
-fi
-
 # TextMate
 if app_exists "/Applications/TextMate.app"; then
     print_installed "TextMate"
 else
     print_missing "TextMate"
+fi
+
+# Kiro (AWS agentic IDE)
+if app_exists "/Applications/Kiro.app"; then
+    print_installed "Kiro"
+else
+    print_missing "Kiro"
 fi
 
 print_section "Terminals"
@@ -339,9 +381,9 @@ else
     print_missing "Git"
 fi
 
-# Git Flow
-if command_exists git-flow; then
-    print_installed "Git Flow"
+# Git Flow (AVH edition provides the `git flow` subcommand)
+if command_exists git-flow || git flow version &>/dev/null || brew list git-flow-avh &>/dev/null; then
+    print_installed "Git Flow (AVH)"
 else
     print_missing "Git Flow"
 fi
@@ -363,15 +405,15 @@ fi
 print_section "Database Tools"
 
 # PostgreSQL
-if command_exists psql || [[ -f "/opt/homebrew/opt/postgresql@15/bin/psql" ]]; then
+if command_exists psql || [[ -f "${BREW_PREFIX}/opt/postgresql@15/bin/psql" ]]; then
     if command_exists psql; then
         psql_version=$(psql --version 2>/dev/null | cut -d' ' -f3)
     else
-        psql_version=$(/opt/homebrew/opt/postgresql@15/bin/psql --version 2>/dev/null | cut -d' ' -f3 || echo "15.13")
+        psql_version=$("${BREW_PREFIX}/opt/postgresql@15/bin/psql" --version 2>/dev/null | cut -d' ' -f3 || echo "15.x")
     fi
     print_installed "PostgreSQL (${psql_version})"
     # Check if service is running
-    if brew services list | grep postgresql | grep -q started; then
+    if brew services list 2>/dev/null | grep '^postgresql@15 ' | grep -q started; then
         print_installed "  PostgreSQL service (running)"
     else
         print_warning "  PostgreSQL service (not running - run: brew services start postgresql@15)"
@@ -387,6 +429,20 @@ else
     print_missing "DBeaver Community Edition"
 fi
 
+# pgAdmin 4
+if app_exists "/Applications/pgAdmin 4.app"; then
+    print_installed "pgAdmin 4"
+else
+    print_missing "pgAdmin 4"
+fi
+
+# Supabase CLI
+if command_exists supabase; then
+    print_installed "Supabase CLI ($(supabase --version 2>/dev/null | head -n1 || echo installed))"
+else
+    print_missing "Supabase CLI"
+fi
+
 print_section "DevOps Tools"
 
 # AWS CLI
@@ -397,13 +453,14 @@ else
     print_missing "AWS CLI"
 fi
 
-# ngrok
-if command_exists ngrok; then
-    ngrok_version=$(ngrok version 2>/dev/null | head -n1 | awk '{print $3}' || echo "installed")
-    print_installed "ngrok (${ngrok_version})"
+# UpCloud CLI (upctl)
+if command_exists upctl; then
+    print_installed "UpCloud CLI (upctl $(upctl version 2>/dev/null | head -n1 || echo installed))"
 else
-    print_missing "ngrok"
+    print_missing "UpCloud CLI (upctl)"
 fi
+
+# Note: ngrok is verified in the "Command Line Utilities" section below.
 
 print_section "Mobile Development"
 
@@ -458,6 +515,15 @@ if command_exists pod; then
     print_installed "CocoaPods ($(pod --version))"
 else
     print_missing "CocoaPods"
+fi
+
+# Maestro (mobile UI testing)
+if command_exists maestro || [[ -x "${HOME}/.maestro/bin/maestro" ]]; then
+    maestro_bin="$(command -v maestro || echo "${HOME}/.maestro/bin/maestro")"
+    maestro_version=$("${maestro_bin}" --version 2>/dev/null | head -n1 || echo "installed")
+    print_installed "Maestro (${maestro_version})"
+else
+    print_missing "Maestro (mobile UI testing)"
 fi
 
 print_section "Productivity Tools"
@@ -539,12 +605,16 @@ fi
 if app_exists "/Applications/Comet.app"; then
     print_installed "Comet Browser (Perplexity AI)"
     
-    # Check if it's set as default browser
-    default_browser=$(duti -x http 2>/dev/null | grep -o 'com\.perplexity\.Comet' || echo "")
-    if [[ -n "${default_browser}" ]]; then
-        print_installed "  Comet (set as default browser)"
+    # Check if it's set as default browser (only if duti is available)
+    if command_exists duti; then
+        default_browser=$(duti -x http 2>/dev/null | grep -o 'com\.perplexity\.Comet' || echo "")
+        if [[ -n "${default_browser}" ]]; then
+            print_installed "  Comet (set as default browser)"
+        else
+            print_warning "  Comet (not default browser - set manually in System Settings)"
+        fi
     else
-        print_warning "  Comet (not default browser - set manually in System Settings)"
+        print_warning "  Comet (install 'duti' to verify default-browser status)"
     fi
 else
     print_missing "Comet Browser (requires manual installation)"
@@ -564,6 +634,20 @@ if app_exists "/Applications/Postman.app"; then
     print_installed "Postman"
 else
     print_missing "Postman"
+fi
+
+# Mockoon
+if app_exists "/Applications/Mockoon.app"; then
+    print_installed "Mockoon"
+else
+    print_missing "Mockoon"
+fi
+
+# Expo Orbit
+if app_exists "/Applications/Expo Orbit.app"; then
+    print_installed "Expo Orbit"
+else
+    print_missing "Expo Orbit"
 fi
 
 # Figma
@@ -609,6 +693,27 @@ if app_exists "/Applications/WireGuard.app"; then
     print_installed "WireGuard"
 else
     print_missing "WireGuard"
+fi
+
+# DevToys
+if app_exists "/Applications/DevToys.app"; then
+    print_installed "DevToys"
+else
+    print_missing "DevToys"
+fi
+
+# Signal
+if app_exists "/Applications/Signal.app"; then
+    print_installed "Signal"
+else
+    print_missing "Signal"
+fi
+
+# WiFiman
+if app_exists "/Applications/WiFiman Desktop.app"; then
+    print_installed "WiFiman"
+else
+    print_missing "WiFiman"
 fi
 
 # ImageOptim
@@ -667,23 +772,9 @@ else
     print_missing "fzf"
 fi
 
-# watchman
-if command_exists watchman; then
-    watchman_version=$(watchman version 2>/dev/null | jq -r '.version' 2>/dev/null || watchman --version 2>/dev/null || echo "installed")
-    print_installed "watchman (${watchman_version})"
-else
-    print_missing "watchman"
-fi
+# Note: watchman is verified in the "Frontend CLI Tools" section above.
 
 print_section "AI Coding Assistants"
-
-# AWS CLI (required for Amazon Q)
-if command_exists aws; then
-    aws_version=$(aws --version 2>/dev/null | cut -d' ' -f1 | cut -d'/' -f2 || echo "installed")
-    print_installed "AWS CLI (${aws_version})"
-else
-    print_missing "AWS CLI (required for Amazon Q)"
-fi
 
 # Amazon Q (check via AWS CLI and VS Code extension)
 if command_exists aws; then

@@ -14,12 +14,7 @@ check_macos
 check_homebrew
 
 # Install iTerm2
-print_status "Installing iTerm2..."
-if [[ -d "/Applications/iTerm.app" ]]; then
-    print_success "iTerm2 already installed"
-else
-    brew install --cask iterm2
-fi
+install_cask_app "iTerm2" "iterm2" "/Applications/iTerm.app"
 
 # Configure iTerm2 with Dracula theme
 print_status "Configuring iTerm2 with Dracula theme..."
@@ -52,7 +47,7 @@ install_cask_app "Warp" "warp" "/Applications/Warp.app"
 # Install Oh My Zsh
 print_status "Installing Oh My Zsh..."
 if [[ ! -d ~/.oh-my-zsh ]]; then
-    sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
     print_success "Oh My Zsh installed"
 else
     print_success "Oh My Zsh already installed"
@@ -79,15 +74,23 @@ if [[ -d ~/.oh-my-zsh ]]; then
     # Create improved .zshrc configuration
     print_status "Setting up improved .zshrc configuration..."
     
+    # Ensure a .zshrc exists (Oh My Zsh normally creates one, but guard anyway)
+    [[ -f ~/.zshrc ]] || touch ~/.zshrc
+
     # Backup existing .zshrc if not already backed up
     if [[ ! -f ~/.zshrc.backup ]]; then
         cp ~/.zshrc ~/.zshrc.backup
         print_success "Backed up existing .zshrc"
     fi
-    
+
     # Add plugins to .zshrc if not already there
     if ! grep -q "zsh-autosuggestions" ~/.zshrc 2>/dev/null; then
-        sed -i '' 's/plugins=(git)/plugins=(git zsh-completions zsh-autosuggestions zsh-syntax-highlighting)/' ~/.zshrc
+        if grep -q '^plugins=(git)' ~/.zshrc 2>/dev/null; then
+            sed -i '' 's/plugins=(git)/plugins=(git zsh-completions zsh-autosuggestions zsh-syntax-highlighting)/' ~/.zshrc
+        else
+            # No default plugins line to replace — append an explicit one
+            echo 'plugins=(git zsh-completions zsh-autosuggestions zsh-syntax-highlighting)' >> ~/.zshrc
+        fi
         print_success "Updated plugin list in .zshrc"
     else
         print_success "Plugins already configured in .zshrc"
@@ -137,9 +140,13 @@ fi
 print_status "Installing PowerLevel10k theme..."
 if [[ ! -d ~/.oh-my-zsh/custom/themes/powerlevel10k ]]; then
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.oh-my-zsh/custom/themes/powerlevel10k
-    
+
     # Update .zshrc to use PowerLevel10k
-    sed -i '' 's/ZSH_THEME="robbyrussell"/ZSH_THEME="powerlevel10k\/powerlevel10k"/' ~/.zshrc
+    if grep -q '^ZSH_THEME="robbyrussell"' ~/.zshrc 2>/dev/null; then
+        sed -i '' 's/ZSH_THEME="robbyrussell"/ZSH_THEME="powerlevel10k\/powerlevel10k"/' ~/.zshrc
+    elif ! grep -q 'powerlevel10k/powerlevel10k' ~/.zshrc 2>/dev/null; then
+        echo 'ZSH_THEME="powerlevel10k/powerlevel10k"' >> ~/.zshrc
+    fi
     print_success "PowerLevel10k installed"
 else
     print_success "PowerLevel10k already installed"

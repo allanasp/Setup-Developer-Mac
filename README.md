@@ -27,17 +27,19 @@
 ## ✨ Features
 
 ### 🛠️ **Frontend-First Development Stack**
-- **JavaScript/TypeScript Ecosystem**: Node.js (via Volta), npm, Yarn Berry, pnpm
+- **JavaScript/TypeScript Ecosystem**: Node.js (via Volta), npm, pnpm, bun
 - **Frontend Frameworks**: Vue CLI, Nuxt CLI, React, Angular, Svelte
-- **Build Tools**: Vite, Webpack, Rollup, Parcel
-- **Mobile Development**: React Native CLI, Expo CLI, iOS/Android tools
+- **Build & Monorepo Tools**: Vite, Turbo (Turborepo), Vercel CLI, serve
+- **Mobile Development**: React Native CLI, Expo CLI, EAS CLI, iOS/Android tools
+- **Headless CMS**: Storyblok CLI, Sanity CLI
 - **Backend Support**: Python (pyenv), Java JDK, Go, Ruby for fullstack needs
 - **Package Managers**: Volta (Node.js), pyenv (Python), CocoaPods, Homebrew
 
 ### 🎨 **Code Editors & IDEs**
 - Visual Studio Code with 20+ essential extensions
 - Cursor AI-powered editor
-- iTerm2 with black background configuration
+- Kiro (AWS agentic IDE), TextMate
+- iTerm2 with Dracula theme configuration
 - Oh My Zsh with PowerLevel10k theme and productivity plugins
 
 ### 📱 **Mobile Development**
@@ -49,10 +51,11 @@
 
 ### ☁️ **DevOps & Cloud Tools**
 - AWS CLI for frontend deployment (S3, CloudFront, Lambda)
+- UpCloud CLI (upctl) for managing UpCloud infrastructure
 - ngrok for sharing local development servers
 - Command line utilities (jq, fzf, eza, wget, tree)
 - Docker alternative with OrbStack
-- Database tools (PostgreSQL, DBeaver)
+- Database tools (PostgreSQL, DBeaver, Supabase CLI)
 
 ### 🤖 **AI Coding Assistants**
 - GitHub Copilot (via VS Code extension)
@@ -64,13 +67,35 @@
 ### 🎯 **Productivity & Utilities**
 - **Window Management**: Rectangle, Raycast (Spotlight replacement)
 - **Note Taking**: Obsidian for documentation
-- **Clipboard**: Maccy clipboard manager
+- **Clipboard / Menubar**: Maccy clipboard manager, Ice menubar organizer
+- **API Tooling**: Postman, Mockoon (API mocking)
+- **Mobile**: Expo Orbit (build & simulator launcher)
+- **Dev Utilities**: DevToys (developer Swiss-army knife)
+- **Messaging**: Signal
 - **File Management**: Hidden files enabled, better file listing with eza
-- **Network Tools**: ngrok for local tunneling, Wireshark for debugging
+- **Network Tools**: ngrok for local tunneling, Wireshark & WiFiman for debugging, WireGuard VPN
 
 ## 🚀 Quick Start
 
-### Interactive Setup (Recommended)
+### One-line Install (Fastest)
+
+Bootstrap everything from a fresh Mac with a single command — it installs Xcode
+Command Line Tools if needed, clones the repo, and launches the setup:
+
+```sh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/allanasp/Setup-Developer-Mac/main/install.sh)"
+```
+
+For a fully unattended run (CI / scripted machines):
+
+```sh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/allanasp/Setup-Developer-Mac/main/install.sh)" -- --skip-prompts
+```
+
+> In non-interactive mode all optional scripts install by default. Set
+> `SETUP_OPTIONAL="5 6 8 11"` to pick specific ones, or `SETUP_OPTIONAL=""` to skip them.
+
+### Interactive Setup (Manual clone)
 
 ```bash
 # Clone the repository

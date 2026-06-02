@@ -10,6 +10,13 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
+# Architecture-aware Homebrew prefix (Apple Silicon vs Intel)
+if [[ "$(uname -m)" == "arm64" ]]; then
+    BREW_PREFIX="/opt/homebrew"
+else
+    BREW_PREFIX="/usr/local"
+fi
+
 print_status() {
     echo -e "${BLUE}[INFO]${NC} $1"
 }
@@ -41,7 +48,7 @@ install_cask_app() {
     
     print_status "Installing/Updating ${app_name}..."
     if [[ -d "${app_path}" ]]; then
-        print_success "${app_name} already installed (will be updated by brew upgrade)"
+        print_success "${app_name} already installed"
         return 0
     else
         if brew install --cask "${cask_name}"; then
@@ -54,17 +61,41 @@ install_cask_app() {
     fi
 }
 
+# Function to safely install a Homebrew formula (idempotent + graceful)
+# `brew install` already returns 0 when a formula is present, and running it
+# inside the `if` condition means a real failure never trips `set -e`.
+install_brew_formula() {
+    local formula="$1"
+    local label="${2:-$1}"
+
+    print_status "Installing ${label}..."
+    if brew install "${formula}"; then
+        print_success "${label} installed"
+        return 0
+    else
+        print_error "${label} installation failed"
+        print_warning "Continuing without ${label}..."
+        return 0
+    fi
+}
+
 # Function to safely install volta packages
 install_volta_package() {
     local package_name="$1"
-    
+
     print_status "Installing ${package_name} via Volta..."
     if volta install "${package_name}"; then
         print_success "${package_name} installed successfully"
     else
         print_error "${package_name} installation failed"
-        return 1
+        print_warning "Continuing without ${package_name}..."
     fi
+    return 0
+}
+
+# Check if a macOS application bundle exists
+app_exists() {
+    [[ -d "$1" ]]
 }
 
 # Check if running on macOS

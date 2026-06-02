@@ -14,8 +14,9 @@ check_macos
 check_homebrew
 
 # Fonts for development
+# Note: homebrew/cask-fonts was deprecated in 2024 — font casks now live in the
+# default homebrew/cask tap, so no `brew tap` is needed.
 print_status "Installing developer fonts..."
-brew tap homebrew/cask-fonts 2>/dev/null || print_warning "Font tap already exists"
 
 # Install fonts with error handling
 fonts=(
@@ -56,7 +57,6 @@ echo "  → Size: 14pt recommended"
 echo ""
 echo "□ Other Editors"
 echo "  → Cursor: Same font settings as VS Code"
-echo "  → Zed: Settings → Font Family"
 echo ""
 echo "✨ Font Features You'll Love:"
 echo "• Ligatures: !== becomes ≠, => becomes →"
