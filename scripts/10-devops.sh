@@ -15,7 +15,9 @@ check_homebrew
 
 # Command line utilities
 print_status "Installing command line utilities..."
-for util in ngrok eza wget jq tree fzf; do
+# ripgrep (rg), fd, bat and git-delta are modern replacements that pair with
+# fzf/eza; git-delta also powers the git pager configured in 06-dev-apps.sh.
+for util in ngrok eza wget jq tree fzf ripgrep fd bat git-delta; do
     install_brew_formula "${util}"
 done
 
@@ -53,6 +55,8 @@ echo "• wget (file downloads)"
 echo "• jq (JSON processing for APIs)"
 echo "• tree (directory visualization)"
 echo "• fzf (fuzzy finder for terminal)"
+echo "• ripgrep (rg), fd, bat (fast search/find/cat)"
+echo "• git-delta (syntax-highlighted git diffs)"
 echo "• UpCloud CLI (upctl - manage UpCloud infrastructure)"
 echo "• kubectl (Kubernetes CLI)"
 echo "• Tilt (Kubernetes dev environments)"

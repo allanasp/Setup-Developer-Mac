@@ -778,6 +778,34 @@ else
     print_missing "fzf"
 fi
 
+# ripgrep
+if command_exists rg; then
+    print_installed "ripgrep ($(rg --version 2>/dev/null | head -n1 | awk '{print $2}' || echo installed))"
+else
+    print_missing "ripgrep (rg)"
+fi
+
+# fd
+if command_exists fd; then
+    print_installed "fd ($(fd --version 2>/dev/null | awk '{print $2}' || echo installed))"
+else
+    print_missing "fd"
+fi
+
+# bat
+if command_exists bat; then
+    print_installed "bat ($(bat --version 2>/dev/null | awk '{print $2}' || echo installed))"
+else
+    print_missing "bat"
+fi
+
+# git-delta
+if command_exists delta; then
+    print_installed "git-delta ($(delta --version 2>/dev/null | awk '{print $2}' || echo installed))"
+else
+    print_missing "git-delta"
+fi
+
 # Note: watchman is verified in the "Frontend CLI Tools" section above.
 
 print_section "AI Coding Assistants"
