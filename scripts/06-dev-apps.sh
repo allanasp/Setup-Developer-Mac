@@ -209,6 +209,11 @@ else
     echo "  Email: ${git_email}"
 fi
 
+# Pretty graph log alias (used by the `gitl` shell alias in 02-terminal.sh)
+git config --global alias.lg \
+    "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --all"
+print_success "Configured 'git lg' alias"
+
 echo ""
 
 # GitHub CLI Authentication
