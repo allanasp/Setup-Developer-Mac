@@ -7,7 +7,7 @@
 
 echo "🔍 Checking Mac Development Setup (with versions)..."
 
-# Color codes for output  
+# Color codes for output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
@@ -65,14 +65,14 @@ vscode_extension_exists() {
 print_section "System Requirements"
 
 # Xcode Command Line Tools
-if xcode-select -p &> /dev/null; then
+if xcode-select -p &>/dev/null; then
     xcode_version=$(xcodebuild -version 2>/dev/null | head -n1 || echo "Command Line Tools")
     print_installed "Xcode Command Line Tools (${xcode_version})"
-    
+
     # Check if full Xcode is installed
     if [[ -d "/Applications/Xcode.app" ]]; then
         print_installed "  Full Xcode installation found"
-        
+
         # Check Xcode license status
         if xcodebuild -license check &>/dev/null; then
             print_installed "  Xcode license accepted"
@@ -156,7 +156,7 @@ fi
 if command_exists java; then
     java_version=$(java --version 2>/dev/null | head -n1 | cut -d' ' -f2 || java -version 2>&1 | head -n1 | cut -d'"' -f2 || echo "installed")
     print_installed "Java JDK (${java_version})"
-    
+
     # Check JAVA_HOME
     if [[ -n "${JAVA_HOME}" ]] || [[ -d "${BREW_PREFIX}/opt/openjdk@17" ]]; then
         java_home_path="${JAVA_HOME:-${BREW_PREFIX}/opt/openjdk@17}"
@@ -229,7 +229,7 @@ if command -v npx >/dev/null 2>&1 && npx expo --version >/dev/null 2>&1; then
     expo_version=$(npx expo --version 2>/dev/null | head -n1 || echo "installed")
     print_installed "Expo CLI (${expo_version} via npx)"
 elif command -v expo >/dev/null 2>&1; then
-    expo_version=$(expo --version 2>/dev/null | head -n1 || echo "installed")  
+    expo_version=$(expo --version 2>/dev/null | head -n1 || echo "installed")
     print_installed "Expo CLI (${expo_version} global)"
 else
     print_missing "Expo CLI"
@@ -480,7 +480,7 @@ print_section "Mobile Development"
 # Android Studio
 if app_exists "/Applications/Android Studio.app"; then
     print_installed "Android Studio"
-    
+
     # Check Android environment variables
     if [[ -n "${ANDROID_HOME}" ]] || [[ -d "${HOME}/Library/Android/sdk" ]]; then
         android_home_path="${ANDROID_HOME:-${HOME}/Library/Android/sdk}"
@@ -488,7 +488,7 @@ if app_exists "/Applications/Android Studio.app"; then
     else
         print_warning "  ANDROID_HOME not set (restart terminal or source ~/.zshrc)"
     fi
-    
+
     # Check if Android SDK exists
     if [[ -d "${HOME}/Library/Android/sdk" ]]; then
         print_installed "  Android SDK found"
@@ -559,7 +559,7 @@ fi
 if command_exists op; then
     op_version=$(op --version 2>/dev/null || echo "installed")
     print_installed "1Password CLI (${op_version})"
-    
+
     # Check if signed in
     if op whoami &>/dev/null; then
         print_installed "  1Password CLI (authenticated)"
@@ -610,7 +610,7 @@ fi
 # Comet Browser (Perplexity AI)
 if app_exists "/Applications/Comet.app"; then
     print_installed "Comet Browser (Perplexity AI)"
-    
+
     # Check if it's set as default browser (only if duti is available)
     if command_exists duti; then
         default_browser=$(duti -x http 2>/dev/null | grep -o 'com\.perplexity\.Comet' || echo "")
@@ -759,7 +759,7 @@ fi
 if command_exists jq; then
     print_installed "jq ($(jq --version))"
 else
-    print_missing "jq"  
+    print_missing "jq"
 fi
 
 # tree
@@ -794,7 +794,7 @@ fi
 if command_exists opencode; then
     opencode_version=$(opencode --version 2>/dev/null | head -n1 || echo "installed")
     print_installed "OpenCode AI (${opencode_version})"
-    
+
     # Check if authenticated
     if [[ -f ~/.opencode/config.json ]] && grep -q "apiKey" ~/.opencode/config.json 2>/dev/null; then
         print_installed "  OpenCode (authenticated)"
@@ -824,7 +824,7 @@ if command_exists code; then
         "yzhang.markdown-all-in-one"
         "shd101wyy.markdown-preview-enhanced"
     )
-    
+
     for extension in "${extensions[@]}"; do
         if vscode_extension_exists "${extension}"; then
             print_installed "  ${extension}"
@@ -841,7 +841,7 @@ print_section "Fonts"
 # Check for Nerd Fonts (common locations)
 font_locations=(
     "/System/Library/Fonts"
-    "/Library/Fonts" 
+    "/Library/Fonts"
     "${HOME}/Library/Fonts"
 )
 
@@ -881,4 +881,3 @@ fi
 
 echo -e "\n💡 ${BLUE}Tip: Run the main setup script to install missing tools automatically.${NC}"
 echo -e "🔄 ${BLUE}Version tracking helps monitor updates and compatibility.${NC}"
-

@@ -3,7 +3,7 @@
 # DevOps Tools Setup
 # Installs: ngrok, UpCloud CLI, Kubernetes/Tilt/Terraform, command line utilities
 
-set -e  # Exit on any error
+set -e # Exit on any error
 
 # Source common functions
 source "$(dirname "$0")/common.sh"
@@ -20,7 +20,7 @@ for util in ngrok eza wget jq tree fzf; do
 done
 
 # UpCloud CLI (upctl) - manage UpCloud infrastructure
-if command -v upctl &> /dev/null; then
+if command -v upctl &>/dev/null; then
     print_success "UpCloud CLI (upctl) already installed"
 else
     install_brew_formula "UpCloudLtd/tap/upcloud-cli" "UpCloud CLI (upctl)"
@@ -32,7 +32,7 @@ install_brew_formula "kubernetes-cli" "kubectl (Kubernetes CLI)"
 install_brew_formula "tilt" "Tilt"
 # Terraform lives in HashiCorp's tap (moved out of core under the BSL license);
 # `brew install` auto-taps hashicorp/tap.
-if command -v terraform &> /dev/null; then
+if command -v terraform &>/dev/null; then
     print_success "Terraform already installed"
 else
     install_brew_formula "hashicorp/tap/terraform" "Terraform"

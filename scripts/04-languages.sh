@@ -3,7 +3,7 @@
 # Programming Languages Setup
 # Installs: Java JDK, Go, Ruby
 
-set -e  # Exit on any error
+set -e # Exit on any error
 
 # Source common functions
 source "$(dirname "$0")/common.sh"
@@ -15,26 +15,26 @@ check_homebrew
 
 # Java Development Kit (React Native requires JDK 17 minimum)
 print_status "Installing Java Development Kit (JDK 17 for React Native)..."
-if ! command -v java &> /dev/null; then
+if ! command -v java &>/dev/null; then
     # Install JDK 17 (React Native requirement)
     install_brew_formula "openjdk@17" "OpenJDK 17"
-    
+
     # Add JDK to PATH and set JAVA_HOME
     if ! grep -q 'JAVA_HOME' ~/.zshrc 2>/dev/null; then
-        echo 'export JAVA_HOME="$(brew --prefix)/opt/openjdk@17"' >> ~/.zshrc
-        echo 'export PATH="${JAVA_HOME}/bin:${PATH}"' >> ~/.zshrc
+        echo 'export JAVA_HOME="$(brew --prefix)/opt/openjdk@17"' >>~/.zshrc
+        echo 'export PATH="${JAVA_HOME}/bin:${PATH}"' >>~/.zshrc
         print_success "Java environment variables added to .zshrc"
     fi
-    
+
     # Set for current session
     export JAVA_HOME="$(brew --prefix)/opt/openjdk@17"
     export PATH="${JAVA_HOME}/bin:${PATH}"
-    
+
     print_success "OpenJDK 17 installed (React Native compatible)"
 else
     java_version=$(java --version 2>/dev/null | head -n1 | cut -d' ' -f2 || echo "unknown")
     print_success "Java already installed (${java_version})"
-    
+
     # Verify Java version is 17+
     java_major=$(java --version 2>/dev/null | head -n1 | cut -d' ' -f2 | cut -d'.' -f1 || echo "0")
     if [[ "${java_major}" -lt 17 ]]; then

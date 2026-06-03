@@ -3,7 +3,7 @@
 # Terminal and Shell Setup
 # Installs: iTerm2, Warp, Oh My Zsh, PowerLevel10k, plugins, aliases
 
-set -e  # Exit on any error
+set -e # Exit on any error
 
 # Source common functions
 source "$(dirname "$0")/common.sh"
@@ -21,9 +21,9 @@ print_status "Configuring iTerm2 with Dracula theme..."
 if [[ -d "/Applications/iTerm.app" ]]; then
     # Create iTerm2 preferences directory if it doesn't exist
     mkdir -p ~/Library/Preferences
-    
+
     # Copy Dracula theme from repo
-    script_dir="$(dirname "$(dirname "$0")")"  # Go up to repo root
+    script_dir="$(dirname "$(dirname "$0")")" # Go up to repo root
     if [[ -f "${script_dir}/Dracula.itermcolors" ]]; then
         if [[ ! -f ~/Downloads/Dracula.itermcolors ]]; then
             print_status "Copying Dracula theme from repo..."
@@ -34,7 +34,7 @@ if [[ -d "/Applications/iTerm.app" ]]; then
         print_warning "Dracula.itermcolors not found in repo, downloading..."
         curl -o ~/Downloads/Dracula.itermcolors https://raw.githubusercontent.com/dracula/iterm/master/Dracula.itermcolors
     fi
-    
+
     print_success "Dracula theme ready for import"
     print_success "To apply: Open iTerm2 → Preferences → Profiles → Colors → Import ~/Downloads/Dracula.itermcolors"
 else
@@ -63,17 +63,17 @@ if [[ -d ~/.oh-my-zsh ]]; then
     else
         print_success "zsh-autosuggestions plugin already installed"
     fi
-    
+
     if [[ ! -d ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting ]]; then
         git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
-        print_success "zsh-syntax-highlighting plugin installed"  
+        print_success "zsh-syntax-highlighting plugin installed"
     else
         print_success "zsh-syntax-highlighting plugin already installed"
     fi
-    
+
     # Create improved .zshrc configuration
     print_status "Setting up improved .zshrc configuration..."
-    
+
     # Ensure a .zshrc exists (Oh My Zsh normally creates one, but guard anyway)
     [[ -f ~/.zshrc ]] || touch ~/.zshrc
 
@@ -89,16 +89,16 @@ if [[ -d ~/.oh-my-zsh ]]; then
             sed -i '' 's/plugins=(git)/plugins=(git zsh-completions zsh-autosuggestions zsh-syntax-highlighting)/' ~/.zshrc
         else
             # No default plugins line to replace — append an explicit one
-            echo 'plugins=(git zsh-completions zsh-autosuggestions zsh-syntax-highlighting)' >> ~/.zshrc
+            echo 'plugins=(git zsh-completions zsh-autosuggestions zsh-syntax-highlighting)' >>~/.zshrc
         fi
         print_success "Updated plugin list in .zshrc"
     else
         print_success "Plugins already configured in .zshrc"
     fi
-    
+
     # Add useful aliases if not already there
     if ! grep -q "# Useful aliases for development" ~/.zshrc 2>/dev/null; then
-        cat >> ~/.zshrc << 'EOF'
+        cat >>~/.zshrc <<'EOF'
 
 # Useful aliases for development
 alias ip="ipconfig getifaddr en0"
@@ -130,7 +130,7 @@ EOF
     else
         print_success "Development aliases already present in .zshrc"
     fi
-    
+
     print_success "Oh My Zsh plugins and configuration updated"
 else
     print_warning "Oh My Zsh not found, skipping plugin installation"
@@ -145,7 +145,7 @@ if [[ ! -d ~/.oh-my-zsh/custom/themes/powerlevel10k ]]; then
     if grep -q '^ZSH_THEME="robbyrussell"' ~/.zshrc 2>/dev/null; then
         sed -i '' 's/ZSH_THEME="robbyrussell"/ZSH_THEME="powerlevel10k\/powerlevel10k"/' ~/.zshrc
     elif ! grep -q 'powerlevel10k/powerlevel10k' ~/.zshrc 2>/dev/null; then
-        echo 'ZSH_THEME="powerlevel10k/powerlevel10k"' >> ~/.zshrc
+        echo 'ZSH_THEME="powerlevel10k/powerlevel10k"' >>~/.zshrc
     fi
     print_success "PowerLevel10k installed"
 else
@@ -156,13 +156,13 @@ fi
 print_status "Installing Dracula theme for PowerLevel10k..."
 if [[ ! -d ~/.dracula-powerlevel10k ]]; then
     git clone https://github.com/dracula/powerlevel10k.git ~/.dracula-powerlevel10k
-    
+
     # Copy Dracula PowerLevel10k configuration
     if [[ -f ~/.dracula-powerlevel10k/files/.p10k.zsh ]]; then
         cp ~/.dracula-powerlevel10k/files/.p10k.zsh ~/.p10k.zsh
         print_success "Dracula PowerLevel10k configuration installed"
     fi
-    
+
     print_success "Dracula PowerLevel10k theme installed"
 else
     print_success "Dracula PowerLevel10k theme already installed"

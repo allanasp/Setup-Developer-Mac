@@ -3,7 +3,7 @@
 # Mobile Development Setup
 # Installs: Android Studio, iOS tools, React Native environment
 
-set -e  # Exit on any error
+set -e # Exit on any error
 
 # Source common functions
 source "$(dirname "$0")/common.sh"
@@ -30,12 +30,12 @@ if [[ -d "/Applications/Android Studio.app" ]] || [[ -d "${HOME}/Library/Android
             echo 'export PATH=${PATH}:${ANDROID_HOME}/emulator'
             echo 'export PATH=${PATH}:${ANDROID_HOME}/platform-tools'
             echo 'export PATH=${PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin'
-        } >> ~/.zshrc
+        } >>~/.zshrc
         print_success "Android environment variables added to .zshrc"
     else
         print_success "Android environment variables already configured"
     fi
-    
+
     # Set for current session
     export ANDROID_HOME=${HOME}/Library/Android/sdk
     export PATH=${PATH}:${ANDROID_HOME}/emulator
@@ -53,7 +53,7 @@ else
             echo 'export PATH=${PATH}:${ANDROID_HOME}/emulator'
             echo 'export PATH=${PATH}:${ANDROID_HOME}/platform-tools'
             echo 'export PATH=${PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin'
-        } >> ~/.zshrc
+        } >>~/.zshrc
         print_success "Android environment variables added to .zshrc (for future use)"
     fi
 fi
@@ -75,16 +75,16 @@ install_ios=${install_ios:-n}
 
 if [[ "${install_ios}" =~ ^[Yy]$ ]]; then
     print_status "Installing iOS development tools..."
-    
+
     # Check if Xcode is already installed and handle license
     if [[ -d "/Applications/Xcode.app" ]]; then
         print_status "Xcode found - checking license agreement..."
-        
+
         # Check if license needs to be accepted
         if ! xcodebuild -license check &>/dev/null; then
             print_warning "Xcode license needs to be accepted"
             echo "This will prompt for your password to accept the Xcode license..."
-            
+
             if sudo xcodebuild -license accept 2>/dev/null; then
                 print_success "Xcode license accepted"
             else
@@ -97,14 +97,14 @@ if [[ "${install_ios}" =~ ^[Yy]$ ]]; then
     else
         print_warning "Xcode not found - install from App Store first"
     fi
-    
+
     # Tools that work without Xcode
-    install_brew_formula "ios-deploy"  # Deploy to iOS devices
-    install_brew_formula "cocoapods"   # iOS dependency manager
+    install_brew_formula "ios-deploy" # Deploy to iOS devices
+    install_brew_formula "cocoapods"  # iOS dependency manager
 
     # Xcode management tool
-    install_brew_formula "xcodes"      # Manage multiple Xcode versions
-    
+    install_brew_formula "xcodes" # Manage multiple Xcode versions
+
     # SwiftLint requires full Xcode installation
     print_status "Checking SwiftLint (requires full Xcode)..."
     if [[ -d "/Applications/Xcode.app" ]]; then
@@ -116,7 +116,7 @@ if [[ "${install_ios}" =~ ^[Yy]$ ]]; then
     else
         print_warning "SwiftLint skipped - install Xcode from App Store first"
     fi
-    
+
     print_success "iOS development tools installed (Xcode setup required)"
 else
     print_warning "iOS development tools skipped by user choice"

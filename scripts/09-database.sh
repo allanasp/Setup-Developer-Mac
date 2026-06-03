@@ -3,7 +3,7 @@
 # Database Tools Setup
 # Installs: PostgreSQL, DBeaver Community Edition, Supabase CLI
 
-set -e  # Exit on any error
+set -e # Exit on any error
 
 # Source common functions
 source "$(dirname "$0")/common.sh"
@@ -24,9 +24,9 @@ fi
 
 # Add PostgreSQL to PATH (architecture-aware prefix from common.sh)
 if ! grep -q "postgresql@15" ~/.zshrc 2>/dev/null; then
-    echo '' >> ~/.zshrc
-    echo '# PostgreSQL' >> ~/.zshrc
-    echo "export PATH=\"${BREW_PREFIX}/opt/postgresql@15/bin:\${PATH}\"" >> ~/.zshrc
+    echo '' >>~/.zshrc
+    echo '# PostgreSQL' >>~/.zshrc
+    echo "export PATH=\"${BREW_PREFIX}/opt/postgresql@15/bin:\${PATH}\"" >>~/.zshrc
     print_success "PostgreSQL added to PATH in .zshrc"
 fi
 

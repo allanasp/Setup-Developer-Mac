@@ -83,7 +83,7 @@ if ! grep -q 'JAVA_HOME' ~/.zshrc 2>/dev/null; then
         echo '# Java (for Android / React Native)'
         echo 'export JAVA_HOME="$(/usr/libexec/java_home -v 17 2>/dev/null)"'
         echo 'export PATH="$JAVA_HOME/bin:$PATH"'
-    } >> ~/.zshrc
+    } >>~/.zshrc
     print_success "JAVA_HOME added to ~/.zshrc"
 else
     print_success "JAVA_HOME already configured"
@@ -103,7 +103,7 @@ if ! grep -q 'ANDROID_HOME' ~/.zshrc 2>/dev/null; then
         echo 'export PATH="$PATH:$ANDROID_HOME/emulator"'
         echo 'export PATH="$PATH:$ANDROID_HOME/platform-tools"'
         echo 'export PATH="$PATH:$ANDROID_HOME/cmdline-tools/latest/bin"'
-    } >> ~/.zshrc
+    } >>~/.zshrc
     print_success "Android SDK environment added to ~/.zshrc"
 else
     print_success "ANDROID_HOME already configured"
@@ -201,7 +201,7 @@ if ! grep -q '.maestro/bin' ~/.zshrc 2>/dev/null; then
         echo ''
         echo '# Maestro'
         echo 'export PATH="$PATH:$HOME/.maestro/bin"'
-    } >> ~/.zshrc
+    } >>~/.zshrc
     print_success "Maestro added to PATH in ~/.zshrc"
 else
     print_success "Maestro PATH already configured"

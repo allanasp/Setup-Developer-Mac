@@ -73,7 +73,7 @@ body:
       label: Target Users
       description: Who would benefit from this tool?
       placeholder: |
-        e.g., 
+        e.g.,
         - Frontend developers working with APIs
         - Full-stack developers managing databases
         - DevOps engineers deploying applications
@@ -162,12 +162,12 @@ body:
     attributes:
       value: |
         ---
-        
+
         ### What happens next?
-        
+
         1. **Community feedback** - Others can vote and comment on your request
         2. **Maintainer review** - We'll evaluate the tool's fit for the project
         3. **Implementation** - If approved, we'll add it to the appropriate script
         4. **Testing** - We'll test the installation and document any setup needed
-        
+
         Thank you for helping improve Mac Developer Setup! 🚀

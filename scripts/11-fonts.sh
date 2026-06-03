@@ -3,7 +3,7 @@
 # Developer Fonts Setup
 # Installs: Nerd Fonts and other programming fonts
 
-set -e  # Exit on any error
+set -e # Exit on any error
 
 # Source common functions
 source "$(dirname "$0")/common.sh"
@@ -21,7 +21,7 @@ print_status "Installing developer fonts..."
 # Install fonts with error handling
 fonts=(
     "font-fira-code"
-    "font-jetbrains-mono" 
+    "font-jetbrains-mono"
     "font-source-code-pro"
     "font-hack-nerd-font"
 )

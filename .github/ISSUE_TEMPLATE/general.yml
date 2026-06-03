@@ -44,7 +44,7 @@ body:
       description: Which part of the project does this relate to?
       options:
         - "Installation process"
-        - "Specific script functionality" 
+        - "Specific script functionality"
         - "Documentation"
         - "Project structure"
         - "Community contribution"
@@ -65,12 +65,12 @@ body:
     attributes:
       value: |
         ---
-        
+
         ### Other Ways to Get Help
-        
+
         - 📖 **Documentation**: Check our [complete guide](../docs/) for detailed information
         - 🐛 **Bug Report**: Use the bug report template for script issues
         - 🛠️ **Tool Request**: Use the tool request template to suggest new tools
         - 💡 **Ideas**: We welcome all suggestions for improvement!
-        
+
         Thank you for being part of the Mac Developer Setup community! 🚀

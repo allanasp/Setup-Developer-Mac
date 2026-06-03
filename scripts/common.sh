@@ -45,7 +45,7 @@ install_cask_app() {
     local app_name="$1"
     local cask_name="$2"
     local app_path="$3"
-    
+
     print_status "Installing/Updating ${app_name}..."
     if [[ -d "${app_path}" ]]; then
         print_success "${app_name} already installed"
@@ -108,7 +108,7 @@ check_macos() {
 
 # Check if Homebrew is installed
 check_homebrew() {
-    if ! command -v brew &> /dev/null; then
+    if ! command -v brew &>/dev/null; then
         print_error "Homebrew is required but not installed. Please run the system setup first."
         exit 1
     fi
@@ -116,7 +116,7 @@ check_homebrew() {
 
 # Check if Volta is installed
 check_volta() {
-    if ! command -v volta &> /dev/null; then
+    if ! command -v volta &>/dev/null; then
         print_error "Volta is required but not installed. Please run the version managers setup first."
         exit 1
     fi

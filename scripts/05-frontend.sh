@@ -4,7 +4,7 @@
 # Installs: TypeScript, Vue CLI, React Native CLI, Expo CLI, Vite, Storyblok CLI, Sanity CLI, etc.
 # This is the primary focus of our Mac setup - optimized for modern frontend development
 
-set -e  # Exit on any error
+set -e # Exit on any error
 
 # Source common functions
 source "$(dirname "$0")/common.sh"
@@ -30,19 +30,19 @@ install_volta_package "create-vite"
 install_volta_package "serve"
 
 # Monorepo + deployment tooling
-install_volta_package "turbo"   # Turborepo
-install_volta_package "vercel"  # Vercel CLI
+install_volta_package "turbo"  # Turborepo
+install_volta_package "vercel" # Vercel CLI
 
 # Headless CMS tools
-install_volta_package "storyblok"  # Storyblok CLI
-install_volta_package "@sanity/cli"  # Sanity CLI
+install_volta_package "storyblok"   # Storyblok CLI
+install_volta_package "@sanity/cli" # Sanity CLI
 
 # React Native Development Tools
 print_status "Installing React Native development tools..."
-install_volta_package "@react-native-community/cli"  # React Native CLI
-install_volta_package "@expo/cli"                     # Expo CLI
-install_volta_package "eas-cli"                       # EAS CLI for Expo Application Services
-install_volta_package "create-expo-app"               # Create Expo apps
+install_volta_package "@react-native-community/cli" # React Native CLI
+install_volta_package "@expo/cli"                   # Expo CLI
+install_volta_package "eas-cli"                     # EAS CLI for Expo Application Services
+install_volta_package "create-expo-app"             # Create Expo apps
 
 # Watchman (recommended by React Native docs for better performance)
 install_brew_formula "watchman" "Watchman"

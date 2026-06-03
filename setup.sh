@@ -8,7 +8,7 @@
 #   ./setup.sh --skip-prompts  # Non-interactive mode (CI/automated)
 #   ./setup.sh -y              # Same as --skip-prompts
 
-set -e  # Exit on any error
+set -e # Exit on any error
 
 # Source common functions
 source "$(dirname "$0")/scripts/common.sh"
@@ -32,7 +32,7 @@ check_macos
 prompt_configuration() {
     local script_name="$1"
     local config_steps="$2"
-    
+
     # Skip prompts if flag is set
     if [[ "${SKIP_PROMPTS}" == "true" ]]; then
         if [[ -n "${config_steps}" ]]; then
@@ -43,21 +43,21 @@ prompt_configuration() {
         fi
         return
     fi
-    
+
     if [[ -n "${config_steps}" ]]; then
         echo ""
         print_status "⚙️  Configuration needed for ${script_name}:"
         echo "${config_steps}"
         echo ""
-        
+
         while true; do
             read -r -p "Have you completed these configuration steps? (y/n): " response
             case ${response} in
-                [Yy]|[Yy][Ee][Ss])
+                [Yy] | [Yy][Ee][Ss])
                     print_success "Configuration completed! Continuing..."
                     break
                     ;;
-                [Nn]|[Nn][Oo])
+                [Nn] | [Nn][Oo])
                     echo ""
                     echo "Please complete the configuration steps above before continuing."
                     echo "The script will wait here until you're ready."
@@ -77,13 +77,13 @@ run_script() {
     local script="$1"
     local script_path
     script_path="$(dirname "$0")/scripts/${script}"
-    
+
     if [[ -f "${script_path}" ]]; then
         print_status "Running ${script}..."
         chmod +x "${script_path}"
         if bash "${script_path}"; then
             print_success "${script} completed successfully"
-            
+
             # Prompt for configuration based on script
             case ${script} in
                 "01-system.sh")
@@ -162,7 +162,7 @@ run_script() {
 # Essential scripts (always installed first)
 essential_scripts=(
     "01-system.sh"
-    "02-terminal.sh" 
+    "02-terminal.sh"
     "03-version-managers.sh"
 )
 
@@ -201,7 +201,7 @@ optional_descriptions=(
 echo "🔧 Installing essential components first (required for everything else):"
 echo ""
 for i in "${!essential_scripts[@]}"; do
-    printf "   %d. %s\n" $((i+1)) "${essential_descriptions[i]}"
+    printf "   %d. %s\n" $((i + 1)) "${essential_descriptions[i]}"
 done
 echo ""
 
@@ -222,7 +222,7 @@ echo ""
 echo "📦 Additional Frontend & Development Scripts (choose which ones to install):"
 echo ""
 for i in "${!optional_scripts[@]}"; do
-    printf "%2d. %s\n" $((i+4)) "${optional_descriptions[i]}"
+    printf "%2d. %s\n" $((i + 4)) "${optional_descriptions[i]}"
 done
 echo ""
 
@@ -248,12 +248,12 @@ selected_scripts=()
 
 # Parse user selection for optional scripts
 case ${selection} in
-    'all'|'ALL')
+    'all' | 'ALL')
         selected_scripts=("${optional_scripts[@]}")
         echo ""
         echo "✅ Selected ALL additional scripts for installation"
         ;;
-    'quit'|'QUIT'|'q'|'Q')
+    'quit' | 'QUIT' | 'q' | 'Q')
         echo "❌ Setup cancelled"
         exit 0
         ;;
@@ -265,7 +265,7 @@ case ${selection} in
         if [[ -n "${selection}" ]]; then
             for num in ${selection}; do
                 if [[ "${num}" =~ ^[0-9]+$ ]] && [[ "${num}" -ge 4 ]] && [[ "${num}" -le 12 ]]; then
-                    idx=$((num-4))  # Convert to optional_scripts index (4->0, 5->1, etc.)
+                    idx=$((num - 4)) # Convert to optional_scripts index (4->0, 5->1, etc.)
                     selected_scripts+=("${optional_scripts[${idx}]}")
                     echo "✓ Selected: ${optional_descriptions[${idx}]}"
                 else
@@ -300,12 +300,12 @@ if [[ ${#selected_scripts[@]} -gt 0 ]]; then
         echo "❌ Additional installations cancelled"
         exit 0
     fi
-    
+
     # Install selected additional scripts
     echo ""
     print_status "Installing additional components..."
     echo ""
-    
+
     for script in "${selected_scripts[@]}"; do
         run_script "${script}"
     done

@@ -151,18 +151,18 @@ body:
       description: Additional system information (optional but helpful)
       placeholder: |
         Run these commands and paste the output:
-        
+
         ```bash
         # Homebrew version
         brew --version
-        
+
         # Shell version
         echo $SHELL
         $SHELL --version
-        
+
         # Git version
         git --version
-        
+
         # Xcode tools
         xcode-select --version
         ```
@@ -182,13 +182,13 @@ body:
     attributes:
       value: |
         ---
-        
+
         ### What happens next?
-        
+
         1. **We'll review** your bug report and may ask for more information
         2. **Reproduce the issue** on our end if possible
         3. **Investigate and fix** the problem
         4. **Test the solution** and update the affected script(s)
         5. **Release the fix** and close the issue
-        
+
         Thank you for helping improve Mac Developer Setup! 🐛→✨

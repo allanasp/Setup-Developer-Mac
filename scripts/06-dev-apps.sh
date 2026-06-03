@@ -3,7 +3,7 @@
 # Development Applications Setup
 # Installs: VS Code, Cursor, Kiro, TextMate, VS Code extensions
 
-set -e  # Exit on any error
+set -e # Exit on any error
 
 # Source common functions
 source "$(dirname "$0")/common.sh"
@@ -16,7 +16,7 @@ check_homebrew
 # Git and GitHub tools
 print_status "Installing Git and GitHub tools..."
 install_brew_formula "git"
-install_brew_formula "git-flow-avh" "Git Flow (AVH)"  # Git Flow extension for branching model
+install_brew_formula "git-flow-avh" "Git Flow (AVH)" # Git Flow extension for branching model
 install_brew_formula "gh" "GitHub CLI"
 install_cask_app "GitHub Desktop" "github" "/Applications/GitHub Desktop.app"
 
@@ -35,7 +35,7 @@ fi
 # Additional code editors
 install_cask_app "Cursor" "cursor" "/Applications/Cursor.app"
 install_cask_app "TextMate" "textmate" "/Applications/TextMate.app"
-install_cask_app "Kiro" "kiro" "/Applications/Kiro.app"  # AWS agentic IDE
+install_cask_app "Kiro" "kiro" "/Applications/Kiro.app" # AWS agentic IDE
 
 # OpenCode AI coding agent
 print_status "Checking OpenCode AI coding agent..."
@@ -69,10 +69,10 @@ else
 fi
 
 # Add VS Code CLI to PATH if not already there
-if [[ -d "/Applications/Visual Studio Code.app" ]] && ! command -v code &> /dev/null; then
+if [[ -d "/Applications/Visual Studio Code.app" ]] && ! command -v code &>/dev/null; then
     print_status "Adding VS Code CLI to PATH..."
     if ! grep -q 'Visual Studio Code' ~/.zshrc 2>/dev/null; then
-        echo 'export PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin:${PATH}"' >> ~/.zshrc
+        echo 'export PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin:${PATH}"' >>~/.zshrc
         export PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin:${PATH}"
         print_success "VS Code CLI added to PATH"
     fi
@@ -81,7 +81,7 @@ fi
 # Add CLI commands for all editors
 print_status "Setting up editor CLI commands..."
 if ! grep -q "# Editor CLI commands" ~/.zshrc 2>/dev/null; then
-    cat >> ~/.zshrc << 'EOF'
+    cat >>~/.zshrc <<'EOF'
 
 # Editor CLI commands
 # VS Code - already has built-in 'code' command
@@ -143,7 +143,7 @@ extensions=(
 )
 
 # Install each extension with error handling
-if command -v code &> /dev/null; then
+if command -v code &>/dev/null; then
     for extension in "${extensions[@]}"; do
         # Check if extension is already installed
         if code --list-extensions | grep -q "^${extension}$"; then
@@ -191,7 +191,7 @@ git_email=$(git config --global user.email 2>/dev/null || echo "")
 if [[ -z "${git_name}" || -z "${git_email}" ]]; then
     print_status "Git needs to be configured with your identity"
     echo ""
-    
+
     if [[ -z "${git_name}" ]]; then
         read -p "Enter your full name for Git commits: " user_name
         if [[ -n "${user_name}" ]]; then
@@ -201,7 +201,7 @@ if [[ -z "${git_name}" || -z "${git_email}" ]]; then
     else
         print_success "Git user.name already set to: ${git_name}"
     fi
-    
+
     if [[ -z "${git_email}" ]]; then
         read -p "Enter your email for Git commits: " user_email
         if [[ -n "${user_email}" ]]; then
@@ -229,7 +229,7 @@ else
     echo ""
     read -p "Authenticate with GitHub now? [Y/n]: " gh_auth
     gh_auth=${gh_auth:-Y}
-    
+
     if [[ "${gh_auth}" =~ ^[Yy]$ ]]; then
         print_status "Starting GitHub authentication..."
         echo ""
@@ -239,7 +239,7 @@ else
         echo "   Authenticate Git: Yes"
         echo ""
         read -p "Press Enter to continue..."
-        
+
         if gh auth login; then
             print_success "GitHub CLI authenticated successfully!"
             echo ""

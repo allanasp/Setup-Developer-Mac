@@ -73,7 +73,7 @@ if app_exists "/Applications/Comet.app"; then
 
     if command_exists duti; then
         duti_rules="$(mktemp)"
-        printf 'com.perplexity.Comet http\ncom.perplexity.Comet https\n' > "${duti_rules}"
+        printf 'com.perplexity.Comet http\ncom.perplexity.Comet https\n' >"${duti_rules}"
         duti "${duti_rules}" 2>/dev/null && print_success "Comet set as default browser" || print_warning "Could not set default browser automatically"
         rm -f "${duti_rules}"
     else

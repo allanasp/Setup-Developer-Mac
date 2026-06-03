@@ -22,14 +22,20 @@ INSTALL_DIR="${SETUP_INSTALL_DIR:-$HOME/Setup-Developer-Mac}"
 
 # --- Minimal coloured output (matches the project's style) -------------------
 if [ -t 1 ]; then
-    BLUE='\033[0;34m'; GREEN='\033[0;32m'; RED='\033[0;31m'; NC='\033[0m'
+    BLUE='\033[0;34m'
+    GREEN='\033[0;32m'
+    RED='\033[0;31m'
+    NC='\033[0m'
 else
-    BLUE=''; GREEN=''; RED=''; NC=''
+    BLUE=''
+    GREEN=''
+    RED=''
+    NC=''
 fi
 
-info()    { printf "${BLUE}ℹ️  %s${NC}\n" "$1"; }
+info() { printf "${BLUE}ℹ️  %s${NC}\n" "$1"; }
 success() { printf "${GREEN}✅ %s${NC}\n" "$1"; }
-error()   { printf "${RED}❌ %s${NC}\n" "$1" >&2; }
+error() { printf "${RED}❌ %s${NC}\n" "$1" >&2; }
 
 # --- 1. macOS check ----------------------------------------------------------
 if [ "$(uname -s)" != "Darwin" ]; then
