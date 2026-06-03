@@ -30,10 +30,8 @@ export PATH="${PYENV_ROOT}/bin:${PATH}"
 add_to_zshenv "PYENV_ROOT" \
     'export PYENV_ROOT="${HOME}/.pyenv"' \
     '[[ -d ${PYENV_ROOT}/bin ]] && export PATH="${PYENV_ROOT}/bin:${PATH}"'
-if ! grep -q 'pyenv init' ~/.zshrc 2>/dev/null; then
-    echo 'eval "$(pyenv init -)"' >>~/.zshrc
-    print_success "pyenv shell integration added to .zshrc"
-fi
+add_to_zshrc "pyenv init" 'eval "$(pyenv init -)"'
+print_success "pyenv shell integration ensured in .zshrc"
 
 # Initialize pyenv for current session
 if command -v pyenv >/dev/null 2>&1; then

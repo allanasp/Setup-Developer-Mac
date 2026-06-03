@@ -96,11 +96,8 @@ if [[ -d ~/.oh-my-zsh ]]; then
         print_success "Plugins already configured in .zshrc"
     fi
 
-    # Add useful aliases if not already there
-    if ! grep -q "# Useful aliases for development" ~/.zshrc 2>/dev/null; then
-        cat >>~/.zshrc <<'EOF'
-
-# Useful aliases for development
+    # Add useful aliases (interactive config → ~/.zshrc)
+    add_to_zshrc "Useful aliases for development" <<'EOF'
 alias ip="ipconfig getifaddr en0"
 alias zshconfig="vim ~/.zshrc"
 alias zshsource="source ~/.zshrc"
@@ -124,12 +121,8 @@ alias tree="eza --tree"
 
 # Load completions
 autoload -U compinit && compinit
-
 EOF
-        print_success "Added development aliases to .zshrc"
-    else
-        print_success "Development aliases already present in .zshrc"
-    fi
+    print_success "Development aliases ensured in .zshrc"
 
     print_success "Oh My Zsh plugins and configuration updated"
 else

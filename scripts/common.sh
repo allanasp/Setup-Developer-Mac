@@ -121,6 +121,35 @@ add_to_zshenv() {
     } >>"${zshenv}"
 }
 
+# Append a block of shell config to ~/.zshrc exactly once, keyed by a marker.
+# Use this for *interactive* shell config — aliases, prompt setup, shell
+# integrations (`pyenv init`), convenience functions. Pure env/PATH exports
+# belong in ~/.zshenv via add_to_zshenv instead.
+# Pass the content as arguments (one per line), or via stdin for larger
+# blocks (heredoc). The marker is written as a comment header and used as the
+# dedup guard.
+# Usage: add_to_zshrc "MARKER" 'line1' 'line2'
+#        add_to_zshrc "MARKER" <<'EOF' ... EOF
+add_to_zshrc() {
+    local marker="$1"
+    shift
+    local zshrc="${HOME}/.zshrc"
+
+    [[ -f "${zshrc}" ]] || touch "${zshrc}"
+    if grep -qF "${marker}" "${zshrc}" 2>/dev/null; then
+        return 0
+    fi
+    {
+        echo ""
+        echo "# ${marker}"
+        if [[ $# -gt 0 ]]; then
+            printf '%s\n' "$@"
+        else
+            cat
+        fi
+    } >>"${zshrc}"
+}
+
 # Check if running on macOS
 check_macos() {
     if [[ "${OSTYPE}" != "darwin"* ]]; then

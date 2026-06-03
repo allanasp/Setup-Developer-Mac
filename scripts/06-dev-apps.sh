@@ -77,12 +77,9 @@ if [[ -d "/Applications/Visual Studio Code.app" ]] && ! command -v code &>/dev/n
     print_success "VS Code CLI added to PATH"
 fi
 
-# Add CLI commands for all editors
+# Add CLI commands for all editors (interactive convenience → ~/.zshrc)
 print_status "Setting up editor CLI commands..."
-if ! grep -q "# Editor CLI commands" ~/.zshrc 2>/dev/null; then
-    cat >>~/.zshrc <<'EOF'
-
-# Editor CLI commands
+add_to_zshrc "Editor CLI commands" <<'EOF'
 # VS Code - already has built-in 'code' command
 
 # Cursor
@@ -102,12 +99,8 @@ mate() {
         echo "TextMate not installed"
     fi
 }
-
 EOF
-    print_success "Editor CLI commands added to .zshrc"
-else
-    print_success "Editor CLI commands already configured"
-fi
+print_success "Editor CLI commands ensured in .zshrc"
 
 # VS Code Extensions
 print_status "Installing useful VS Code extensions..."
