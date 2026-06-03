@@ -201,6 +201,7 @@ optional_scripts=(
     "10-devops.sh"
     "11-fonts.sh"
     "12-expo-rn.sh"
+    "13-macos-defaults.sh"
 )
 
 optional_descriptions=(
@@ -213,6 +214,7 @@ optional_descriptions=(
     "DevOps Tools (ngrok, UpCloud, Kubernetes, Tilt, Terraform, Utilities)"
     "Developer Fonts (Fira Code, JetBrains Mono)"
     "Expo + React Native Local Dev (Watchman, JDK 17, Maestro, full iOS/Android toolchain)"
+    "macOS System Defaults (keyboard, Finder, Dock, screenshots, dialogs)"
 )
 
 # First, always install essential components
@@ -282,12 +284,12 @@ case ${selection} in
         # Parse numbers
         if [[ -n "${selection}" ]]; then
             for num in ${selection}; do
-                if [[ "${num}" =~ ^[0-9]+$ ]] && [[ "${num}" -ge 4 ]] && [[ "${num}" -le 12 ]]; then
+                if [[ "${num}" =~ ^[0-9]+$ ]] && [[ "${num}" -ge 4 ]] && [[ "${num}" -le 13 ]]; then
                     idx=$((num - 4)) # Convert to optional_scripts index (4->0, 5->1, etc.)
                     selected_scripts+=("${optional_scripts[${idx}]}")
                     echo "✓ Selected: ${optional_descriptions[${idx}]}"
                 else
-                    echo "❌ Invalid script number: ${num} (valid range: 4-12)"
+                    echo "❌ Invalid script number: ${num} (valid range: 4-13)"
                 fi
             done
         fi
