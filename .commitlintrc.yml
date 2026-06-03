@@ -1,0 +1,22 @@
+# Conventional Commits config (enforced in CI only — no local Node setup needed).
+# https://www.conventionalcommits.org
+extends:
+  - '@commitlint/config-conventional'
+
+rules:
+  # Allow a slightly longer subject than the 72-char default for descriptive
+  # script/tooling changes.
+  header-max-length: [2, always, 100]
+  # Permit the commit types this project actually uses.
+  type-enum:
+    - 2
+    - always
+    - - feat      # new tool, script, or capability
+      - fix       # bug fix in a script
+      - docs       # documentation only
+      - chore      # tooling, CI, gitignore, housekeeping
+      - refactor   # restructuring without behaviour change
+      - style      # formatting only
+      - test       # test / verification changes
+      - ci         # CI workflow changes
+      - revert     # revert a previous commit
