@@ -806,6 +806,22 @@ else
     print_missing "git-delta"
 fi
 
+# Shell power-ups
+for tool in zoxide lazygit direnv atuin btop dust duf; do
+    if command_exists "${tool}"; then
+        print_installed "${tool}"
+    else
+        print_missing "${tool}"
+    fi
+done
+
+# tldr (provided by tealdeer)
+if command_exists tldr; then
+    print_installed "tldr (tealdeer)"
+else
+    print_missing "tldr (tealdeer)"
+fi
+
 # Note: watchman is verified in the "Frontend CLI Tools" section above.
 
 print_section "AI Coding Assistants"

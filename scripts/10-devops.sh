@@ -46,6 +46,19 @@ else
     install_brew_formula "hashicorp/tap/terraform" "Terraform"
 fi
 
+# Shell power-ups
+print_status "Installing shell power-ups..."
+for tool in zoxide lazygit direnv atuin tealdeer btop dust duf; do
+    install_brew_formula "${tool}"
+done
+
+# Shell integrations (interactive → ~/.zshrc). atuin is added after fzf so it
+# owns Ctrl-R history search; fzf keeps Ctrl-T / Alt-C.
+add_to_zshrc "zoxide init" 'command -v zoxide >/dev/null && eval "$(zoxide init zsh)"'
+add_to_zshrc "direnv hook" 'command -v direnv >/dev/null && eval "$(direnv hook zsh)"'
+add_to_zshrc "atuin init" 'command -v atuin >/dev/null && eval "$(atuin init zsh)"'
+print_status "Tip: run 'tldr --update' once to fetch the tealdeer page cache"
+
 print_success "DevOps tools setup completed!"
 echo ""
 echo "Installed tools:"
@@ -57,6 +70,8 @@ echo "• tree (directory visualization)"
 echo "• fzf (fuzzy finder for terminal)"
 echo "• ripgrep (rg), fd, bat (fast search/find/cat)"
 echo "• git-delta (syntax-highlighted git diffs)"
+echo "• zoxide (smart cd), lazygit (git TUI), direnv (per-dir env)"
+echo "• atuin (searchable history), tldr, btop/dust/duf (top/du/df)"
 echo "• UpCloud CLI (upctl - manage UpCloud infrastructure)"
 echo "• kubectl (Kubernetes CLI)"
 echo "• Tilt (Kubernetes dev environments)"
