@@ -3,8 +3,7 @@
 # Productivity Tools Setup
 # Installs: Rectangle, Maccy, Obsidian, browsers, utilities
 
-# Don't exit on errors for optional apps - continue installing others
-# set -e  # Exit on any error
+set -e # Exit on any error (install helpers are graceful and never abort)
 
 # Source common functions
 source "$(dirname "$0")/common.sh"
@@ -105,16 +104,16 @@ install_cask_app "DevToys" "devtoys" "/Applications/DevToys.app"
 install_cask_app "Signal" "signal" "/Applications/Signal.app"
 install_cask_app "WiFiman" "wifiman" "/Applications/WiFiman Desktop.app"
 
-# Additional utility apps (optional - don't fail if some don't install)
-install_cask_app "AppCleaner" "appcleaner" "/Applications/AppCleaner.app" || print_warning "AppCleaner installation failed - continuing..."
-install_cask_app "Ice" "jordanbaird-ice" "/Applications/Ice.app" || print_warning "Ice installation failed - continuing..."
-install_cask_app "Syncthing" "syncthing" "/Applications/Syncthing.app" || print_warning "Syncthing installation failed - continuing..."
+# Additional utility apps (optional - the helper warns and continues on failure)
+install_cask_app "AppCleaner" "appcleaner" "/Applications/AppCleaner.app"
+install_cask_app "Ice" "jordanbaird-ice" "/Applications/Ice.app"
+install_cask_app "Syncthing" "syncthing" "/Applications/Syncthing.app"
 
 # Note: System Color Picker package doesn't exist - use built-in Digital Color Meter instead
 
 # Optional tools that may require user interaction
 print_status "Installing optional network tools (may require password)..."
-install_cask_app "Wireshark" "wireshark" "/Applications/Wireshark.app" || print_warning "Wireshark installation failed - may need manual installation"
+install_cask_app "Wireshark" "wireshark" "/Applications/Wireshark.app"
 
 print_success "Productivity tools setup completed!"
 echo ""

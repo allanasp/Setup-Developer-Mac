@@ -53,11 +53,13 @@ install_cask_app() {
     else
         if brew install --cask "${cask_name}"; then
             print_success "${app_name} installed successfully"
-            return 0
         else
             print_error "${app_name} installation failed"
-            return 1
+            print_warning "Continuing without ${app_name}..."
         fi
+        # Graceful: never abort the caller (which may run under `set -e`) just
+        # because one optional app failed to install.
+        return 0
     fi
 }
 
