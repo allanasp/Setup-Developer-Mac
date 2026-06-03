@@ -137,10 +137,13 @@ extensions=(
 )
 
 # Install each extension with error handling
-if command -v code &>/dev/null; then
+if is_dry_run; then
+    print_status "[dry-run] would install ${#extensions[@]} VS Code extensions"
+elif command -v code &>/dev/null; then
+    installed_exts="$(code --list-extensions 2>/dev/null)"
     for extension in "${extensions[@]}"; do
         # Check if extension is already installed
-        if code --list-extensions | grep -q "^${extension}$"; then
+        if grep -qx "${extension}" <<<"${installed_exts}"; then
             print_success "VS Code extension already installed: ${extension}"
         else
             print_status "Installing VS Code extension: ${extension}"
@@ -182,7 +185,9 @@ echo ""
 git_name=$(git config --global user.name 2>/dev/null || echo "")
 git_email=$(git config --global user.email 2>/dev/null || echo "")
 
-if [[ -z "${git_name}" || -z "${git_email}" ]]; then
+if is_dry_run; then
+    print_status "[dry-run] would configure git identity (name/email) if unset"
+elif [[ -z "${git_name}" || -z "${git_email}" ]]; then
     print_status "Git needs to be configured with your identity"
     echo ""
 
@@ -241,7 +246,9 @@ echo ""
 
 # GitHub CLI Authentication
 print_status "GitHub CLI Authentication"
-if gh auth status &>/dev/null; then
+if is_dry_run; then
+    print_status "[dry-run] would prompt for GitHub CLI authentication (gh auth login)"
+elif gh auth status &>/dev/null; then
     print_success "GitHub CLI already authenticated"
     gh auth status
 else

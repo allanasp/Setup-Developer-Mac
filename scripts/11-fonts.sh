@@ -27,7 +27,9 @@ fonts=(
 )
 
 for font in "${fonts[@]}"; do
-    if brew install --cask "${font}"; then
+    if is_dry_run; then
+        print_status "[dry-run] would install font cask: ${font}"
+    elif brew install --cask "${font}"; then
         print_success "${font} installed"
     else
         print_warning "${font} installation failed or already exists"

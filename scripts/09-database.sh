@@ -16,7 +16,9 @@ check_homebrew
 # Database tools
 print_status "Installing database tools..."
 install_brew_formula "postgresql@15" "PostgreSQL 15"
-if brew services start postgresql@15; then
+if is_dry_run; then
+    print_status "[dry-run] would start the postgresql@15 service"
+elif brew services start postgresql@15; then
     print_success "PostgreSQL service started"
 else
     print_warning "PostgreSQL service may already be running - continuing"

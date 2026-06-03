@@ -63,7 +63,9 @@ else
 fi
 
 # Set Comet as default browser if installed
-if app_exists "/Applications/Comet.app"; then
+if app_exists "/Applications/Comet.app" && is_dry_run; then
+    print_status "[dry-run] would set Comet as the default browser"
+elif app_exists "/Applications/Comet.app"; then
     print_status "Setting Comet as default browser..."
 
     # Prefer duti; install it first if it's missing
