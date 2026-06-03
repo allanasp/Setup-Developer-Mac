@@ -24,6 +24,8 @@ description: Complete configuration guide for all installed tools
 - [Productivity Apps](#productivity-apps) - Rectangle, Maccy
 - [Database Setup](#database-setup) - PostgreSQL, Supabase
 - [DevOps & Cloud](#devops--cloud) - ngrok, UpCloud, Kubernetes, command line utilities
+- [macOS System Defaults](#macos-system-defaults) - Optional system tweaks
+- [Maintenance](#maintenance-update--uninstall) - Update, uninstall, dry-run
 - [Troubleshooting](#troubleshooting) - Common issues
 
 ---
@@ -90,6 +92,35 @@ pyenv versions
 pyenv global 3.12.1
 ```
 
+### 🛠️ 5. Modern CLI Tools
+
+The setup installs a set of modern command-line tools. Most work immediately, but a few have useful first-run steps:
+
+```bash
+# Prime the tldr cache
+tldr --update
+
+# zoxide replaces cd — jump to a directory with `z`
+z myproject
+
+# atuin owns Ctrl-R for searchable shell history
+# (just press Ctrl-R after restarting your shell)
+```
+
+**Available after setup:**
+- **git-delta** — syntax-highlighted git diffs (wired in as the git pager)
+- **ripgrep** (`rg`) — fast recursive search
+- **fd** — friendly `find` replacement
+- **bat** — `cat` with syntax highlighting
+- **zoxide** (`z`) — smarter `cd` that learns your directories
+- **lazygit** — terminal UI for git
+- **direnv** — per-directory environment variables
+- **atuin** — searchable shell history (owns Ctrl-R)
+- **tldr** — simplified man pages (run `tldr --update` first)
+- **btop** — resource monitor
+- **dust** — `du` replacement for disk usage
+- **duf** — `df` replacement for free disk space
+
 ---
 
 ## Development Tools
@@ -136,6 +167,10 @@ git config --global user.name "Your Name"
 git config --global user.email "email@example.com"
 git config --global init.defaultBranch main
 ```
+
+> **Already configured:** The setup applies sensible Git defaults and uses **git-delta** as
+> the diff pager (no action needed). It also adds a `git lg` alias for a compact, graphical
+> commit log.
 
 ### 🤖 Cursor AI Setup
 1. Open Cursor app
@@ -409,6 +444,41 @@ ngrok config add-authtoken YOUR_TOKEN
 # Test
 ngrok http 3000
 ```
+
+---
+
+## macOS System Defaults
+
+The optional `13-macos-defaults.sh` script applies sensible macOS system tweaks: faster
+key repeat, Finder improvements, screenshots routed to `~/Screenshots`, and Dock
+adjustments.
+
+```bash
+# Apply the macOS system defaults
+./scripts/13-macos-defaults.sh
+```
+
+> **Log out or restart** after running this script so all changes take full effect.
+
+---
+
+## Maintenance: Update & Uninstall
+
+Keep your environment current or roll it back with the repo helper scripts:
+
+```bash
+# Upgrade everything (Homebrew, Volta, Oh My Zsh, PowerLevel10k)
+./update.sh
+
+# Roll back what the setup installed
+./uninstall.sh
+```
+
+> **Preview first:** Pass `--dry-run` to `setup.sh`, `update.sh`, or `uninstall.sh` to see
+> what would happen without making changes.
+
+Each `setup.sh` run is logged to `~/mac-setup-YYYY-MM-DD.log` and prints an install summary
+when it finishes.
 
 ---
 

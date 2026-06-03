@@ -54,6 +54,7 @@
 - Kubernetes (kubectl), Tilt, and Terraform for infrastructure & orchestration
 - ngrok for sharing local development servers
 - Command line utilities (jq, fzf, eza, wget, tree)
+- Modern CLI tools: git-delta (syntax-highlighted diffs), ripgrep (rg), fd, bat, zoxide (smart cd), lazygit (git TUI), direnv, atuin (searchable shell history, owns Ctrl-R), tldr, btop, dust, duf — plus fzf shell integration (Ctrl-T files, Alt-C cd)
 - Docker alternative with OrbStack
 - Database tools (PostgreSQL, DBeaver, pgAdmin 4, Supabase CLI)
 
@@ -106,7 +107,13 @@ cd Setup-Developer-Mac
 
 # Non-interactive setup (for automation)
 ./setup.sh --skip-prompts
+
+# Preview installs/config without changing anything
+./setup.sh --dry-run    # or -n
 ```
+
+> Every run is logged to `~/mac-setup-YYYY-MM-DD.log`, and an aggregate Setup
+> Summary (installed / skipped / failed) is printed at the end.
 
 ### 🎯 Interactive Experience
 The setup now **guides you through each step** with configuration prompts:
@@ -159,6 +166,7 @@ The setup now **guides you through each step** with configuration prompts:
 | 10 | `10-devops.sh` | DevOps Tools | ngrok, UpCloud, Kubernetes, Tilt, Terraform |
 | 11 | `11-fonts.sh` | Developer Fonts | Fira Code, JetBrains Mono |
 | 12 | `12-expo-rn.sh` | Expo + React Native Local Dev | Watchman, JDK 17, Maestro, iOS/Android toolchain |
+| 13 | `13-macos-defaults.sh` | macOS System Tweaks | Fast key repeat, Finder hidden files/extensions, screenshots to ~/Screenshots, Dock autohide, expanded save/print panels |
 
 > 📖 **[Complete Script Guide](SCRIPT_GUIDE.md)** - Detailed documentation for each script
 > 🛠️ **[Tools Guide](docs/tools-guide.md)** - Comprehensive info on all 100+ tools installed
@@ -225,6 +233,7 @@ The setup now **guides you through each step** with configuration prompts:
 <summary><strong>☸️ DevOps & Cloud</strong></summary>
 
 - **Command line utilities**: jq, fzf, eza, wget, tree
+- **Modern CLI tools**: git-delta, ripgrep (rg), fd, bat, zoxide, lazygit, direnv, atuin, tldr, btop, dust, duf (with fzf shell integration: Ctrl-T, Alt-C)
 - **UpCloud CLI** (upctl) for cloud infrastructure
 - **Kubernetes** (kubectl), **Tilt**, **Terraform**
 - **OrbStack** (Docker alternative)
@@ -283,7 +292,7 @@ The script automatically installs essential VS Code extensions:
 
 ### 🔍 **System Settings**
 - **Hidden Files**: Enabled in Finder for better development workflow
-- **Git Configuration**: Improved defaults with useful aliases
+- **Git Configuration**: `git lg` graph alias, delta as the pager, and sensible defaults (`init.defaultBranch=main`, `push.autoSetupRemote`, `pull.ff=only`)
 - **Shell Environment**: Optimized PATH and environment variables
 
 ### 📁 **Directory Structure**
@@ -326,12 +335,23 @@ chmod +x scripts/*.sh
 
 ### Updates (Every 6 Months)
 ```bash
-# Re-run specific scripts to update tools
+# Upgrade everything at once (brew, Volta/Node, Oh My Zsh, PowerLevel10k)
+./update.sh
+./update.sh --dry-run       # preview without changing anything
+
+# Or re-run specific scripts to update tools
 ./scripts/05-frontend.sh    # Update frontend tools
 ./scripts/06-dev-apps.sh    # Update development apps
 
 # Or run full modular setup again
 ./setup.sh
+```
+
+### Uninstall / Rollback
+```bash
+# Roll back installed casks/formulae/Volta packages, with per-category confirmation
+./uninstall.sh
+./uninstall.sh --dry-run    # preview what would be removed
 ```
 
 ## 📋 Post-Installation Steps

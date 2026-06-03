@@ -26,9 +26,18 @@ cd Setup-Developer-Mac
 
 # Interactive setup (recommended)
 ./setup.sh
+
+# Preview changes without installing anything
+./setup.sh --dry-run
+
+# Keep everything current (brew, Volta, Oh My Zsh, PowerLevel10k)
+./update.sh
+
+# Roll back what the scripts installed
+./uninstall.sh
 ```
 
-> Append `-- --skip-prompts` to the one-line installer for a non-interactive run. Set the `SETUP_OPTIONAL` env var to choose which optional scripts get installed.
+> Append `-- --skip-prompts` to the one-line installer for a non-interactive run. Set the `SETUP_OPTIONAL` env var to choose which optional scripts get installed. Pass `--dry-run` to any of `setup.sh`, `update.sh`, or `uninstall.sh` to preview changes first.
 
 **🎯 Interactive Experience:**
 - ✅ Install → ⚙️ Configure → ✅ Verify → Continue
@@ -105,7 +114,7 @@ cd Setup-Developer-Mac
   
   <div class="script-card optional">
     <h4>10. DevOps Tools</h4>
-    <p>ngrok, UpCloud CLI (upctl), kubectl, Tilt, Terraform, command line utilities (jq, fzf, eza, wget, tree)</p>
+    <p>ngrok, UpCloud CLI (upctl), kubectl, Tilt, Terraform, command line utilities (jq, fzf, eza, wget, tree) plus modern CLIs: ripgrep, fd, bat, git-delta, zoxide, lazygit, direnv, atuin, tldr, btop, dust, duf</p>
     <code>./scripts/10-devops.sh</code>
   </div>
   
@@ -119,6 +128,12 @@ cd Setup-Developer-Mac
     <h4>12. Expo + React Native</h4>
     <p>Watchman, OpenJDK 17, Android Studio, iOS toolchain, Maestro for local Expo/RN dev</p>
     <code>./scripts/12-expo-rn.sh</code>
+  </div>
+
+  <div class="script-card optional">
+    <h4>13. macOS Defaults</h4>
+    <p>Opinionated macOS system tweaks (Finder, Dock, keyboard, and more)</p>
+    <code>./scripts/13-macos-defaults.sh</code>
   </div>
 </div>
 
@@ -187,6 +202,11 @@ cd Setup-Developer-Mac
 - Set up productivity apps (Rectangle, Mockoon)
 
 **[📋 Complete Post-Installation Guide →](post-installation.html)**
+
+### Maintenance
+- **Update everything**: `./update.sh` upgrades Homebrew, Volta-managed tools, Oh My Zsh, and PowerLevel10k
+- **Roll back**: `./uninstall.sh` removes what the scripts installed
+- **Preview first**: add `--dry-run` to any of these to see what would change
 
 ---
 

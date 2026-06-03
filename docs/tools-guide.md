@@ -347,7 +347,8 @@ This guide provides detailed explanations of every tool included in the setup sc
 
 #### Git
 **Version control:** Track changes, collaborate on code  
-**Pre-configured:** Better defaults and aliases
+**Pre-configured:** Sensible global defaults plus the `git lg` alias for a compact, graphed log  
+**Better diffs:** [git-delta](#-git-delta) is wired up as Git's pager for syntax-highlighted diffs
 
 #### git-flow
 **What it is:** Git branching model and workflow  
@@ -602,6 +603,70 @@ This guide provides detailed explanations of every tool included in the setup sc
 **What it is:** Network protocol analyzer  
 **Use cases:** Debug API calls, analyze network issues  
 **Features:** Packet capture, protocol dissection, filters
+
+### ⚡ Modern CLI Power-Ups
+
+These faster, friendlier replacements and shell enhancements are installed by `10-devops.sh`. The fzf shell integration (Ctrl+R history search, Ctrl+T file finder) is wired up automatically.
+
+#### 🔺 git-delta
+**What it is:** A syntax-highlighting pager for git and diff output  
+**Why use it:** Side-by-side views, line numbers, and readable highlighting  
+**Configured as:** Git's default pager
+
+#### 🔎 ripgrep (rg)
+**What it is:** Extremely fast recursive search tool  
+**Why use it:** Faster than grep, respects `.gitignore` by default  
+**Command:** `rg "pattern"`
+
+#### 📁 fd
+**What it is:** Simple, fast alternative to `find`  
+**Why use it:** Intuitive syntax, smart defaults, respects `.gitignore`  
+**Command:** `fd pattern`
+
+#### 🦇 bat
+**What it is:** A `cat` clone with syntax highlighting and Git integration  
+**Why use it:** Readable file previews with line numbers  
+**Command:** `bat file.ts`
+
+#### 🧭 zoxide
+**What it is:** Smarter `cd` that learns your most-used directories  
+**Why use it:** Jump to directories by partial name  
+**Command:** `z projectname`
+
+#### 🌿 lazygit
+**What it is:** Terminal UI for Git  
+**Why use it:** Stage, commit, branch, and rebase visually without leaving the terminal  
+**Command:** `lazygit`
+
+#### 🧩 direnv
+**What it is:** Loads and unloads environment variables per directory  
+**Why use it:** Automatic per-project env setup via `.envrc`  
+**Command:** `direnv allow`
+
+#### 🕰️ atuin
+**What it is:** Magical, searchable shell history  
+**Why use it:** Synced, context-aware history with full-text search  
+**Command:** Replaces Ctrl+R history search
+
+#### 📖 tldr (tealdeer)
+**What it is:** Community-driven simplified man pages with practical examples  
+**Why use it:** Quick, example-first command help  
+**Command:** `tldr tar`
+
+#### 📊 btop
+**What it is:** Resource monitor for CPU, memory, disk, network, and processes  
+**Why use it:** A beautiful, modern alternative to `top`/`htop`  
+**Command:** `btop`
+
+#### 💾 dust
+**What it is:** More intuitive `du` for disk usage  
+**Why use it:** Instantly see what's eating disk space, sorted and visualized  
+**Command:** `dust`
+
+#### 🧮 duf
+**What it is:** A better `df` for free/used disk space  
+**Why use it:** Clean, colorized overview of mounts and filesystems  
+**Command:** `duf`
 
 ---
 

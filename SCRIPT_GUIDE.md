@@ -19,11 +19,16 @@ SETUP_OPTIONAL="5 6 8" sh -c "$(curl -fsSL https://raw.githubusercontent.com/all
 # Run the main setup script
 ./setup.sh
 
+# Preview changes without mutating anything
+./setup.sh --dry-run        # alias: -n
+
 # Or run individual scripts
 ./scripts/01-system.sh
 ./scripts/05-frontend.sh
 ./scripts/09-database.sh
 ```
+
+> `setup.sh` logs the full run to `~/mac-setup-YYYY-MM-DD.log` and prints an aggregate **Setup Summary** at the end.
 
 ---
 
@@ -52,6 +57,9 @@ These scripts provide the foundation for all development work:
 | 10 | `10-devops.sh` | DevOps Tools | Infrastructure |
 | 11 | `11-fonts.sh` | Developer Fonts | Better coding experience |
 | 12 | `12-expo-rn.sh` | Expo + React Native | Local mobile dev |
+| 13 | `13-macos-defaults.sh` | macOS Defaults | System tweaks (keyboard, Finder, Dock) |
+
+> Optional scripts span the range **4-13**.
 
 ---
 
@@ -85,7 +93,7 @@ These scripts provide the foundation for all development work:
 - 🖥️ **iTerm2** - Better terminal with Dracula theme
 - 🐚 **Oh My Zsh** - Powerful shell framework
 - ⚡ **PowerLevel10k** - Beautiful, informative prompt
-- 🔌 **Zsh plugins** - autosuggestions, syntax highlighting
+- 🔌 **Zsh plugins** - autosuggestions, syntax highlighting, zsh-completions
 - 🎨 **Dracula.itermcolors** - Beautiful color scheme
 - 📝 **Development aliases** - Git shortcuts, better ls
 
@@ -213,6 +221,7 @@ sanity init
 - 🛠️ **Kiro** - AWS agentic IDE
 - 📝 **TextMate** - Lightweight editor
 - 🔧 **Git & GitHub tools** - git-flow, GitHub CLI, GitHub Desktop
+- ⚙️ **Git configuration** - `git lg` graph alias, sensible defaults (`init.defaultBranch=main`, `push.autoSetupRemote=true`, `pull.ff=only`, `merge.conflictStyle=zdiff3`), and git-delta set as the pager
 
 **Key VS Code Extensions:**
 - GitHub Copilot
@@ -359,6 +368,8 @@ postgresql://localhost:5432/myproject
 - 🛠️ **Command line utilities** - jq, fzf, eza, wget, tree
 - 📊 **JSON processing** - jq for API responses
 - 🔍 **Fuzzy finding** - fzf for terminal productivity
+- 🔬 **Modern CLI tools** - git-delta, ripgrep (`rg`), fd, bat, zoxide, lazygit, direnv, atuin, tldr (tealdeer), btop, dust, duf
+- ⌨️ **Shell integration** - fzf key bindings (Ctrl-T / Alt-C) plus zoxide, direnv, and atuin shell init wired into `~/.zshrc` (atuin owns Ctrl-R history search)
 
 **Dependencies:** 01-system.sh
 **Runtime:** ~8-12 minutes
@@ -384,6 +395,15 @@ terraform apply              # Apply infrastructure changes
 jq '.data[] | .name' api.json  # Process JSON
 fzf                          # Fuzzy find files
 eza -la                      # Better file listing
+
+# Modern CLI tools
+rg "TODO"                    # Fast recursive search (ripgrep)
+fd config                    # Fast file finder
+bat file.js                  # Syntax-highlighted cat
+z myproject                  # Jump to dir (zoxide)
+lazygit                      # Terminal Git UI
+btop                         # Resource monitor
+# atuin owns Ctrl-R for shell history search
 ```
 
 ---
@@ -448,6 +468,30 @@ maestro studio
 
 ---
 
+### 1️⃣3️⃣ macOS Defaults (`13-macos-defaults.sh`)
+
+**Purpose:** Sensible macOS system tweaks via `defaults write`
+
+**What it configures:**
+- ⌨️ **Keyboard** - Faster key repeat, disable press-and-hold
+- 📁 **Finder** - Show extensions, path/status bar, default to list view
+- 📸 **Screenshots** - Save to `~/Screenshots`
+- 🚀 **Dock** - Tweaked size, autohide, and behavior
+- 💬 **Dialogs** - Expanded save/print panels by default
+
+**Dependencies:** None (pure `defaults write`)
+**Runtime:** ~1 minute
+**Best for:** Anyone wanting a tuned macOS experience
+
+**Note:** Some changes require logging out, or restarting Finder/Dock, to take full effect.
+
+**Usage:**
+```bash
+./scripts/13-macos-defaults.sh
+```
+
+---
+
 ## 🎯 Common Usage Patterns
 
 ### Full Stack Web Developer
@@ -482,7 +526,25 @@ maestro studio
 
 ## 🔧 Maintenance & Updates
 
-### Update All Tools
+### Update Everything (`update.sh`)
+```bash
+# Upgrade Homebrew, Volta, Oh My Zsh, and PowerLevel10k in one go
+./update.sh
+
+# Preview what would be upgraded
+./update.sh --dry-run        # alias: -n
+```
+
+### Uninstall / Rollback (`uninstall.sh`)
+```bash
+# Category-by-category rollback of what the setup installed
+./uninstall.sh
+
+# Preview what would be removed
+./uninstall.sh --dry-run     # alias: -n
+```
+
+### Update All Tools (manual)
 ```bash
 # Homebrew packages
 brew update && brew upgrade
@@ -566,6 +628,7 @@ graph TD
     A --> H[09-database.sh]
     A --> I[10-devops.sh]
     A --> J[11-fonts.sh]
+    M[13-macos-defaults.sh]
     
     B --> E[05-frontend.sh]
     C --> E

@@ -81,6 +81,35 @@ pip --version     # Should be available
 pyenv global 3.12.1
 ```
 
+### 5. Modern CLI Tools
+
+The setup installs a set of modern command-line tools that improve everyday terminal work. Most are ready to use immediately, but a few have useful first-run steps:
+
+```bash
+# Prime the tldr cache for simplified command examples
+tldr --update
+
+# zoxide replaces cd — use `z` to jump to frequently-used directories
+z myproject
+
+# atuin owns Ctrl-R for a searchable shell history
+# (just press Ctrl-R after restarting your shell)
+```
+
+**Tools available after setup:**
+- **git-delta** - syntax-highlighted git diffs (wired in as the git pager, see below)
+- **ripgrep** (`rg`) - fast recursive search
+- **fd** - fast, user-friendly `find` replacement
+- **bat** - `cat` with syntax highlighting and paging
+- **zoxide** (`z`) - smarter `cd` that learns your most-used directories
+- **lazygit** - terminal UI for git
+- **direnv** - per-directory environment variables (auto-loads `.envrc`)
+- **atuin** - searchable, synced shell history (owns Ctrl-R)
+- **tldr** - simplified, example-driven man pages (run `tldr --update` first)
+- **btop** - resource monitor
+- **dust** - intuitive `du` replacement for disk usage
+- **duf** - friendly `df` replacement for free disk space
+
 ---
 
 ## 💻 Development Apps Configuration (Script 6)
@@ -150,6 +179,10 @@ git config --global fetch.prune true
 # Optional: Set your preferred editor
 git config --global core.editor "code --wait"
 ```
+
+> **Already configured for you:** The setup applies sensible Git defaults and wires in
+> **git-delta** as the diff pager, so no manual configuration is needed there. It also adds
+> a `git lg` alias for a compact, graphical commit log — try it with `git lg`.
 
 ### Cursor AI Editor Setup
 1. Open **Cursor** app
@@ -688,6 +721,41 @@ eas login
 # Diagnose your environment and fix any reported issues
 npx expo-doctor
 ```
+
+---
+
+## ⚙️ macOS System Defaults (Script 13 - Optional)
+
+The optional `13-macos-defaults.sh` script applies a set of sensible macOS system tweaks,
+including faster key repeat, Finder improvements, routing screenshots to `~/Screenshots`,
+and Dock adjustments.
+
+```bash
+# Apply the macOS system defaults
+./scripts/13-macos-defaults.sh
+```
+
+> **Log out or restart** after running this script so all changes take full effect.
+
+---
+
+## 🔄 Maintenance: Update & Uninstall
+
+Keep your environment current or roll it back with the helper scripts in the repo:
+
+```bash
+# Upgrade everything (Homebrew, Volta, Oh My Zsh, PowerLevel10k)
+./update.sh
+
+# Roll back what the setup installed
+./uninstall.sh
+```
+
+> **Preview first:** Pass `--dry-run` to any of `setup.sh`, `update.sh`, or `uninstall.sh`
+> to see exactly what would happen without making any changes.
+
+Each `setup.sh` run is logged to `~/mac-setup-YYYY-MM-DD.log` and prints an install summary
+when it finishes.
 
 ---
 

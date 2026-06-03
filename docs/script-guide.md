@@ -20,6 +20,8 @@ Append `-- --skip-prompts` to run non-interactively, and set the `SETUP_OPTIONAL
 SETUP_OPTIONAL="5 6 8 12" sh -c "$(curl -fsSL https://raw.githubusercontent.com/allanasp/Setup-Developer-Mac/main/install.sh)" -- --skip-prompts
 ```
 
+Run `./setup.sh --dry-run` (alias `-n`) to preview every change without mutating your system. `setup.sh` also logs the full run to `~/mac-setup-YYYY-MM-DD.log` and prints an aggregate **Setup Summary** at the end.
+
 ## 🚀 Quick Navigation
 
 - [Essential Scripts](#essential-scripts) - Always installed first
@@ -53,6 +55,9 @@ SETUP_OPTIONAL="5 6 8 12" sh -c "$(curl -fsSL https://raw.githubusercontent.com/
 | 10 | `10-devops.sh` | ~12 min | Frontend deployment | ngrok, kubectl, Terraform, utilities |
 | 11 | `11-fonts.sh` | ~3 min | Better coding | Fira Code, JetBrains Mono |
 | 12 | `12-expo-rn.sh` | ~30 min | Expo/RN devs | Watchman, Android Studio, iOS, EAS |
+| 13 | `13-macos-defaults.sh` | ~1 min | Tuned macOS | Keyboard, Finder, Dock, screenshots |
+
+> Optional scripts span the range **4-13**.
 
 ---
 
@@ -87,7 +92,7 @@ SETUP_OPTIONAL="5 6 8 12" sh -c "$(curl -fsSL https://raw.githubusercontent.com/
 - 🖥️ **iTerm2** - Better terminal with Dracula theme
 - 🐚 **Oh My Zsh** - Powerful shell framework  
 - ⚡ **PowerLevel10k** - Beautiful prompt with git info
-- 🔌 **Zsh Plugins** - Autosuggestions, syntax highlighting
+- 🔌 **Zsh Plugins** - Autosuggestions, syntax highlighting, zsh-completions
 - 📝 **Development Aliases** - Git shortcuts, better file listing
 
 **Post-install steps:**
@@ -227,6 +232,7 @@ sanity init
 - 🪁 **Kiro** - AWS agentic IDE
 - 📝 **TextMate** - Lightweight option
 - 🔧 **Git Tools** - git-flow, GitHub CLI, GitHub Desktop
+- ⚙️ **Git configuration** - `git lg` graph alias, sensible defaults (`init.defaultBranch=main`, `push.autoSetupRemote=true`, `pull.ff=only`, `merge.conflictStyle=zdiff3`), and git-delta set as the pager
 
 **Key VS Code Extensions:**
 - **AI Assistants:** GitHub Copilot
@@ -379,6 +385,8 @@ postgresql://localhost:5432/myproject
 - 🛠️ **Command line utilities** - jq, fzf, eza, wget, tree
 - 📊 **JSON processing** - jq for API responses
 - 🔍 **Fuzzy finding** - fzf for terminal productivity
+- 🔬 **Modern CLI tools** - git-delta, ripgrep (`rg`), fd, bat, zoxide, lazygit, direnv, atuin, tldr (tealdeer), btop, dust, duf
+- ⌨️ **Shell integration** - fzf key bindings (Ctrl-T / Alt-C) plus zoxide, direnv, and atuin shell init wired into `~/.zshrc` (atuin owns Ctrl-R history search)
 
 **Usage examples:**  
 ```bash
@@ -400,6 +408,15 @@ terraform plan
 jq '.data[] | .name' api.json  # Process JSON
 fzf                          # Fuzzy find files
 eza -la                      # Better file listing
+
+# Modern CLI tools
+rg "TODO"                    # Fast recursive search (ripgrep)
+fd config                    # Fast file finder
+bat file.js                  # Syntax-highlighted cat
+z myproject                  # Jump to dir (zoxide)
+lazygit                      # Terminal Git UI
+btop                         # Resource monitor
+# atuin owns Ctrl-R for shell history search
 ```
 
 ---
@@ -463,6 +480,27 @@ eas update
 # UI testing
 maestro test flow.yaml
 ```
+
+---
+
+### 1️⃣3️⃣ macOS Defaults (`13-macos-defaults.sh`)
+
+**Sensible macOS system tweaks via `defaults write`**
+
+```bash
+./scripts/13-macos-defaults.sh
+```
+
+**Perfect for:** Anyone wanting a tuned macOS experience
+
+**What it configures:**
+- ⌨️ **Keyboard** - Faster key repeat, disable press-and-hold
+- 📁 **Finder** - Show extensions, path/status bar, default list view
+- 📸 **Screenshots** - Save to `~/Screenshots`
+- 🚀 **Dock** - Tweaked size, autohide, and behavior
+- 💬 **Dialogs** - Expanded save/print panels by default
+
+**Note:** Some changes require logging out, or restarting Finder/Dock, to take full effect.
 
 ---
 
@@ -632,7 +670,27 @@ vim scripts/12-custom.sh
 
 ## Maintenance
 
-### Updating All Tools
+### Update Everything (`update.sh`)
+
+```bash
+# Upgrade Homebrew, Volta, Oh My Zsh, and PowerLevel10k in one go
+./update.sh
+
+# Preview what would be upgraded
+./update.sh --dry-run        # alias: -n
+```
+
+### Uninstall / Rollback (`uninstall.sh`)
+
+```bash
+# Category-by-category rollback of what the setup installed
+./uninstall.sh
+
+# Preview what would be removed
+./uninstall.sh --dry-run     # alias: -n
+```
+
+### Updating All Tools (manual)
 
 ```bash
 # Update Homebrew packages

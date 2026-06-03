@@ -95,11 +95,15 @@ The setup checker (`check-setup.sh`) verifies your Mac development environment a
 - **Productivity**: Rectangle, Maccy, Mockoon, Expo Orbit, DevToys, Signal, WiFiman
 - **Database**: PostgreSQL, DBeaver Community Edition, pgAdmin 4, Supabase CLI
 - **DevOps**: ngrok, UpCloud CLI (upctl), kubectl, Tilt, Terraform, command line utilities (jq, fzf, eza, wget, tree)
+- **Modern CLI Tools**: ripgrep (rg), fd, bat, git-delta, zoxide, lazygit, direnv, atuin, btop, dust, duf, tldr
+- **macOS Defaults (13-macos-defaults.sh)**: optional system tweaks
 - **Developer Fonts**: Fira Code, JetBrains Mono
 
 ### 🔎 Notable Tools the Checker Verifies
 
 The checker now confirms these additions: **bun**, **Turbo**, **Vercel CLI**, **create-expo-app**, **Storyblok**, **Sanity**, **Supabase**, **pgAdmin 4**, **UpCloud upctl**, **kubectl**, **Tilt**, **Terraform**, **Maestro**, **Kiro**, **Mockoon**, **Expo Orbit**, **DevToys**, **Signal**, and **WiFiman**.
+
+It also verifies the modern CLI tooling installed by `10-devops.sh`: **ripgrep (rg)**, **fd**, **bat**, **git-delta**, **zoxide**, **lazygit**, **direnv**, **atuin**, **btop**, **dust**, **duf**, and **tldr**.
 
 It **no longer checks** for **Yarn**, **AWS CLI**, **Amazon Q**, **Raycast**, or **Zed** — these have been dropped from the setup.
 

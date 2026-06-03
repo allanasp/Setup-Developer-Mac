@@ -63,6 +63,9 @@ No guessing, no broken setups!
 - DevOps tools (ngrok, UpCloud CLI, kubectl, Tilt, Terraform, utilities)
 - Developer fonts (Fira Code, JetBrains Mono)
 - Expo + React Native local dev (Watchman, OpenJDK 17, Android Studio, iOS toolchain, Maestro)
+- macOS system tweaks (fast key repeat, Finder hidden files/extensions, screenshots to ~/Screenshots, Dock autohide)
+
+The DevOps tools also wire up modern CLI power-ups: git-delta, ripgrep (rg), fd, bat, zoxide, lazygit, direnv, atuin, tldr, btop, dust, duf, plus fzf shell integration (Ctrl-T, Alt-C).
 
 ## 🆘 Need Help?
 
@@ -81,6 +84,9 @@ No guessing, no broken setups!
 # Non-interactive mode (for automation)
 ./setup.sh --skip-prompts
 
+# Preview without changing anything
+./setup.sh --dry-run            # or -n
+
 # Check what's installed after setup
 ./check-setup.sh
 
@@ -88,7 +94,16 @@ No guessing, no broken setups!
 ./scripts/05-frontend.sh        # Just frontend tools
 ./scripts/06-dev-apps.sh        # Just VS Code & extensions
 ./scripts/12-expo-rn.sh         # Just Expo + React Native local dev
+./scripts/13-macos-defaults.sh  # Just macOS system tweaks
+
+# Maintain your setup later
+./update.sh                     # Upgrade brew, Volta/Node, Oh My Zsh, PowerLevel10k
+./uninstall.sh                  # Roll back installs (per-category confirmation)
 ```
+
+> setup.sh logs each run to `~/mac-setup-YYYY-MM-DD.log` and prints a Setup
+> Summary (installed / skipped / failed) at the end. `--dry-run` also works on
+> `update.sh` and `uninstall.sh`.
 
 ## 🔍 Verify Your Setup
 
