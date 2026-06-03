@@ -121,7 +121,7 @@ run_script() {
                 "07-mobile.sh")
                     prompt_configuration "Mobile Development" "• Review the TODO list above for setup steps
 • Complete Android Studio configuration
-• Install Xcode from App Store if doing iOS development"
+• For iOS + full Expo/React Native, run ./scripts/12-expo-rn.sh"
                     ;;
                 "08-productivity.sh")
                     prompt_configuration "Productivity Tools" "• Review the TODO list above for all app setups
@@ -189,7 +189,7 @@ optional_descriptions=(
     "Programming Languages (Java, Go, Ruby)"
     "Frontend Tools (TypeScript, Vue, React Native, Vite, Turbo, Vercel, Storyblok, Sanity CLI)"
     "Development Apps (VS Code, Cursor, Kiro, Extensions)"
-    "Mobile Development (Android Studio, iOS tools)"
+    "Mobile Development (Android Studio + Android env; iOS/RN → script 12)"
     "Productivity Tools (Rectangle, Browsers, Mockoon, Expo Orbit)"
     "Database Tools (PostgreSQL, DBeaver, Supabase CLI)"
     "DevOps Tools (ngrok, UpCloud, Kubernetes, Tilt, Terraform, Utilities)"
