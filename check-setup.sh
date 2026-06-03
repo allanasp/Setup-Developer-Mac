@@ -39,8 +39,9 @@ print_missing() {
 }
 
 print_warning() {
+    # Warnings are advisory (e.g. "not signed in") and must NOT count toward the
+    # installed/missing tally, otherwise the completion percentage is skewed.
     echo -e "${YELLOW}[!]${NC} $1"
-    ((TOTAL++))
 }
 
 print_section() {
@@ -210,27 +211,17 @@ else
     print_missing "Nuxt CLI"
 fi
 
-# React Native CLI (via @react-native-community/cli)
-if command -v npx >/dev/null 2>&1; then
-    # Test the correct React Native CLI command
-    rn_test=$(npx @react-native-community/cli --version 2>/dev/null)
-    if [[ -n "${rn_test}" ]]; then
-        rn_version=$(echo "${rn_test}" | head -n1 | awk '{print $1}')
-        print_installed "React Native CLI (${rn_version})"
-    else
-        print_missing "React Native CLI"
-    fi
+# React Native CLI (@react-native-community/cli via Volta — check the shim,
+# not `npx`, which would hit the network and could falsely report "installed").
+if command_exists react-native || volta list 2>/dev/null | grep -q "@react-native-community/cli"; then
+    print_installed "React Native CLI"
 else
-    print_missing "React Native CLI (npx not available)"
+    print_missing "React Native CLI"
 fi
 
-# Expo CLI (via npx)
-if command -v npx >/dev/null 2>&1 && npx expo --version >/dev/null 2>&1; then
-    expo_version=$(npx expo --version 2>/dev/null | head -n1 || echo "installed")
-    print_installed "Expo CLI (${expo_version} via npx)"
-elif command -v expo >/dev/null 2>&1; then
-    expo_version=$(expo --version 2>/dev/null | head -n1 || echo "installed")
-    print_installed "Expo CLI (${expo_version} global)"
+# Expo CLI (@expo/cli via Volta — check the shim, not `npx expo`)
+if command_exists expo || volta list 2>/dev/null | grep -q "@expo/cli"; then
+    print_installed "Expo CLI"
 else
     print_missing "Expo CLI"
 fi
@@ -251,10 +242,9 @@ else
     print_missing "Watchman (React Native file watching)"
 fi
 
-# Vite
+# Vite (create-vite is Volta-managed, so npm -g won't see it)
 if command_exists create-vite; then
-    vite_version=$(npm list -g create-vite --depth=0 2>/dev/null | grep create-vite | cut -d'@' -f2 || echo "installed")
-    print_installed "Vite (create-vite@${vite_version})"
+    print_installed "Vite (create-vite)"
 else
     print_missing "Vite (create-vite)"
 fi
@@ -413,7 +403,7 @@ if command_exists psql || [[ -f "${BREW_PREFIX}/opt/postgresql@15/bin/psql" ]]; 
     fi
     print_installed "PostgreSQL (${psql_version})"
     # Check if service is running
-    if brew services list 2>/dev/null | grep '^postgresql@15 ' | grep -q started; then
+    if brew services list 2>/dev/null | grep 'postgresql@15' | grep -q started; then
         print_installed "  PostgreSQL service (running)"
     else
         print_warning "  PostgreSQL service (not running - run: brew services start postgresql@15)"
@@ -548,11 +538,12 @@ else
     print_missing "Rectangle"
 fi
 
-# 1Password
+# 1Password desktop app (manual install — only the CLI `op` is installed by 08,
+# so report absence as advisory rather than a missing managed tool).
 if app_exists "/Applications/1Password.app" || app_exists "/Applications/1Password 7 - Password Manager.app"; then
     print_installed "1Password"
 else
-    print_missing "1Password"
+    print_warning "1Password app (install manually; the CLI needs it)"
 fi
 
 # 1Password CLI
