@@ -31,6 +31,13 @@ for arg in "$@"; do
     esac
 done
 
+# Log everything to a dated file and collect install results for the summary
+LOG_FILE="${HOME}/mac-setup-$(date +%Y-%m-%d).log"
+exec > >(tee -a "${LOG_FILE}") 2>&1
+SETUP_RESULTS_FILE="$(mktemp)"
+export SETUP_RESULTS_FILE
+print_status "Logging this run to ${LOG_FILE}"
+
 print_section "Mac Frontend Developer Environment Setup"
 echo "🎨 Optimized for JavaScript/TypeScript developers"
 echo "🚀 Starting modular setup process..."
@@ -370,5 +377,12 @@ echo "• Check versions, identify any issues, see completion percentage"
 echo ""
 echo "📁 Individual scripts available in ./scripts/ directory"
 echo "🔧 Re-run any category: ./scripts/XX-category.sh"
+echo ""
+
+# Aggregate install summary across all category scripts, then clean up
+print_setup_summary "${SETUP_RESULTS_FILE}"
+rm -f "${SETUP_RESULTS_FILE}"
+echo ""
+echo "📄 Full log saved to: ${LOG_FILE}"
 echo ""
 print_warning "Some tools may require system restart to work properly"

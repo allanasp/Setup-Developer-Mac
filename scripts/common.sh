@@ -25,6 +25,35 @@ is_dry_run() {
     [[ "${DRY_RUN}" == "true" ]]
 }
 
+# Record an install outcome for the aggregate end-of-run summary. setup.sh
+# sets SETUP_RESULTS_FILE and reads it at the end; standalone script runs
+# leave it unset, making this a no-op. Format: "<installed|skipped|failed>:<name>"
+_record_result() {
+    [[ -n "${SETUP_RESULTS_FILE:-}" ]] && echo "$1" >>"${SETUP_RESULTS_FILE}"
+    return 0
+}
+
+# Print an aggregate summary from a results file written by _record_result.
+print_setup_summary() {
+    local file="${1:-${SETUP_RESULTS_FILE:-}}"
+    [[ -n "${file}" && -f "${file}" ]] || return 0
+
+    local installed skipped failed
+    installed=$(grep -c '^installed:' "${file}" 2>/dev/null || echo 0)
+    skipped=$(grep -c '^skipped:' "${file}" 2>/dev/null || echo 0)
+    failed=$(grep -c '^failed:' "${file}" 2>/dev/null || echo 0)
+
+    print_section "Setup Summary"
+    print_success "Installed: ${installed}"
+    print_status "Skipped / already present: ${skipped}"
+    if [[ "${failed}" -gt 0 ]]; then
+        print_error "Failed: ${failed}"
+        grep '^failed:' "${file}" | sed 's/^failed:/  • /'
+    else
+        print_success "Failed: 0"
+    fi
+}
+
 print_status() {
     echo -e "${BLUE}[INFO]${NC} $1"
 }
@@ -56,18 +85,22 @@ install_cask_app() {
 
     if [[ -d "${app_path}" ]]; then
         print_success "${app_name} already installed"
+        _record_result "skipped:${app_name}"
         return 0
     fi
     if is_dry_run; then
         print_status "[dry-run] would install cask: ${cask_name} (${app_name})"
+        _record_result "skipped:${app_name}"
         return 0
     fi
     print_status "Installing/Updating ${app_name}..."
     if brew install --cask "${cask_name}"; then
         print_success "${app_name} installed successfully"
+        _record_result "installed:${app_name}"
     else
         print_error "${app_name} installation failed"
         print_warning "Continuing without ${app_name}..."
+        _record_result "failed:${app_name}"
     fi
     # Graceful: never abort the caller (which may run under `set -e`) just
     # because one optional app failed to install.
@@ -83,15 +116,18 @@ install_brew_formula() {
 
     if is_dry_run; then
         print_status "[dry-run] would install formula: ${formula} (${label})"
+        _record_result "skipped:${label}"
         return 0
     fi
     print_status "Installing ${label}..."
     if brew install "${formula}"; then
         print_success "${label} installed"
+        _record_result "installed:${label}"
         return 0
     else
         print_error "${label} installation failed"
         print_warning "Continuing without ${label}..."
+        _record_result "failed:${label}"
         return 0
     fi
 }
@@ -102,14 +138,17 @@ install_volta_package() {
 
     if is_dry_run; then
         print_status "[dry-run] would install via Volta: ${package_name}"
+        _record_result "skipped:${package_name}"
         return 0
     fi
     print_status "Installing ${package_name} via Volta..."
     if volta install "${package_name}"; then
         print_success "${package_name} installed successfully"
+        _record_result "installed:${package_name}"
     else
         print_error "${package_name} installation failed"
         print_warning "Continuing without ${package_name}..."
+        _record_result "failed:${package_name}"
     fi
     return 0
 }
