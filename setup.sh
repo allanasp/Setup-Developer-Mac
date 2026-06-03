@@ -7,18 +7,29 @@
 #   ./setup.sh                 # Interactive mode with configuration prompts
 #   ./setup.sh --skip-prompts  # Non-interactive mode (CI/automated)
 #   ./setup.sh -y              # Same as --skip-prompts
+#   ./setup.sh --dry-run       # Preview installs/config without making changes
+#   ./setup.sh -n              # Same as --dry-run
 
 set -e # Exit on any error
 
 # Source common functions
 source "$(dirname "$0")/scripts/common.sh"
 
-# Check for skip prompts flag
+# Parse flags (any order)
 SKIP_PROMPTS=${SKIP_PROMPTS:-false}
-if [[ "$1" == "--skip-prompts" || "$1" == "-y" ]]; then
-    SKIP_PROMPTS=true
-    print_status "Running in non-interactive mode (skipping configuration prompts)"
-fi
+for arg in "$@"; do
+    case "${arg}" in
+        --skip-prompts | -y)
+            SKIP_PROMPTS=true
+            print_status "Running in non-interactive mode (skipping configuration prompts)"
+            ;;
+        --dry-run | -n)
+            # Exported so the category scripts (run as child processes) inherit it.
+            export DRY_RUN=true
+            print_warning "DRY-RUN: no changes will be made (helper-managed installs and shell config only)"
+            ;;
+    esac
+done
 
 print_section "Mac Frontend Developer Environment Setup"
 echo "🎨 Optimized for JavaScript/TypeScript developers"

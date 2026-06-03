@@ -42,6 +42,8 @@ print_status "Checking OpenCode AI coding agent..."
 if command_exists opencode; then
     opencode_version=$(opencode --version 2>/dev/null || echo "unknown")
     print_success "OpenCode already installed (${opencode_version})"
+elif is_dry_run; then
+    print_status "[dry-run] would install OpenCode (brew sst/tap/opencode or install script)"
 else
     print_status "Installing OpenCode AI coding agent..."
     # Try Homebrew tap first

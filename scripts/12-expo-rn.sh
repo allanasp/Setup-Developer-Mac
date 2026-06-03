@@ -38,42 +38,26 @@ fi
 # ----------------------------------------------------------
 # Watchman (required by React Native / Metro)
 # ----------------------------------------------------------
-print_status "Installing Watchman..."
-if brew list watchman &>/dev/null; then
-    print_success "Watchman already installed"
-else
-    if brew install watchman; then
-        print_success "Watchman installed"
-    else
-        print_error "Watchman install failed"
-    fi
-fi
+install_brew_formula "watchman" "Watchman"
 
 # ----------------------------------------------------------
 # OpenJDK 17 (required for Android builds via Gradle)
 # ----------------------------------------------------------
-print_status "Installing OpenJDK 17 for Android builds..."
-if brew list openjdk@17 &>/dev/null; then
-    print_success "OpenJDK 17 already installed"
-else
-    if brew install openjdk@17; then
-        print_success "OpenJDK 17 installed"
-    else
-        print_error "OpenJDK 17 install failed"
-    fi
-fi
+install_brew_formula "openjdk@17" "OpenJDK 17"
 
 # System-wide JDK symlink (so /usr/libexec/java_home discovers it)
 JDK_SYMLINK="/Library/Java/JavaVirtualMachines/openjdk-17.jdk"
-if [[ ! -e "$JDK_SYMLINK" ]]; then
+if [[ -e "$JDK_SYMLINK" ]]; then
+    print_success "JDK symlink already present"
+elif is_dry_run; then
+    print_status "[dry-run] would create system JDK symlink at $JDK_SYMLINK"
+else
     print_status "Creating system JDK symlink (requires sudo)..."
     if sudo ln -sfn "${BREW_PREFIX}/opt/openjdk@17/libexec/openjdk.jdk" "$JDK_SYMLINK" 2>/dev/null; then
         print_success "JDK symlink created"
     else
         print_warning "JDK symlink failed — set JAVA_HOME manually if needed"
     fi
-else
-    print_success "JDK symlink already present"
 fi
 
 # JAVA_HOME → ~/.zshenv (shared marker with 04-languages.sh; written once)
@@ -100,15 +84,7 @@ print_success "ANDROID_HOME configured in ~/.zshenv"
 # ----------------------------------------------------------
 print_status "Installing iOS CLI tools..."
 for tool in ios-deploy cocoapods xcodes; do
-    if brew list "$tool" &>/dev/null; then
-        print_success "$tool already installed"
-    else
-        if brew install "$tool"; then
-            print_success "$tool installed"
-        else
-            print_warning "$tool install failed"
-        fi
-    fi
+    install_brew_formula "$tool"
 done
 
 # ----------------------------------------------------------
@@ -117,37 +93,35 @@ done
 if [[ -d "/Applications/Xcode.app" ]]; then
     print_status "Xcode detected — verifying license & toolchain..."
 
-    if ! xcodebuild -license check &>/dev/null; then
+    if xcodebuild -license check &>/dev/null; then
+        print_success "Xcode license already accepted"
+    elif is_dry_run; then
+        print_status "[dry-run] would accept the Xcode license (sudo)"
+    else
         print_warning "Xcode license not accepted — accepting (requires sudo)"
         if sudo xcodebuild -license accept 2>/dev/null; then
             print_success "Xcode license accepted"
         else
             print_warning "License accept failed — run manually: sudo xcodebuild -license accept"
         fi
-    else
-        print_success "Xcode license already accepted"
     fi
 
     # Point xcode-select at full Xcode (not just Command Line Tools)
     if [[ "$(xcode-select -p)" != "/Applications/Xcode.app/Contents/Developer" ]]; then
-        print_status "Switching xcode-select to full Xcode..."
-        if sudo xcode-select -s /Applications/Xcode.app/Contents/Developer 2>/dev/null; then
-            print_success "xcode-select now points to Xcode"
+        if is_dry_run; then
+            print_status "[dry-run] would point xcode-select at /Applications/Xcode.app (sudo)"
         else
-            print_warning "xcode-select switch failed"
+            print_status "Switching xcode-select to full Xcode..."
+            if sudo xcode-select -s /Applications/Xcode.app/Contents/Developer 2>/dev/null; then
+                print_success "xcode-select now points to Xcode"
+            else
+                print_warning "xcode-select switch failed"
+            fi
         fi
     fi
 
     # SwiftLint (requires Xcode to compile from source)
-    if brew list swiftlint &>/dev/null; then
-        print_success "SwiftLint already installed"
-    else
-        if brew install swiftlint; then
-            print_success "SwiftLint installed"
-        else
-            print_warning "SwiftLint install failed"
-        fi
-    fi
+    install_brew_formula "swiftlint" "SwiftLint"
 else
     print_warning "Xcode NOT installed — install from Mac App Store (~15 GB)"
     print_warning "SwiftLint skipped (requires full Xcode)"
@@ -173,6 +147,8 @@ fi
 print_status "Installing Maestro (mobile UI testing)..."
 if [[ -x "$HOME/.maestro/bin/maestro" ]]; then
     print_success "Maestro already installed"
+elif is_dry_run; then
+    print_status "[dry-run] would install Maestro via get.maestro.mobile.dev"
 else
     if curl -fsSL "https://get.maestro.mobile.dev" | bash; then
         print_success "Maestro installed to ~/.maestro"

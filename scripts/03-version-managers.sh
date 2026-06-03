@@ -42,7 +42,9 @@ else
 fi
 
 # Install Python versions if pyenv is available
-if command -v pyenv >/dev/null 2>&1; then
+if is_dry_run; then
+    print_status "[dry-run] would install Python 3.9.6 / 3.10.13 / 3.12.1 via pyenv"
+elif command -v pyenv >/dev/null 2>&1; then
     print_status "Installing Python versions via pyenv..."
     pyenv install --skip-existing 3.9.6 2>/dev/null || print_warning "Python 3.9.6 installation failed"
     pyenv install --skip-existing 3.10.13 2>/dev/null || print_warning "Python 3.10.13 installation failed"
@@ -57,13 +59,15 @@ fi
 
 # Node.js Version Manager - Volta
 print_status "Installing Volta (Node.js version manager)..."
-if ! command -v volta &>/dev/null; then
+if command -v volta &>/dev/null; then
+    print_success "Volta already installed"
+elif is_dry_run; then
+    print_status "[dry-run] would install Volta via get.volta.sh"
+else
     curl https://get.volta.sh | bash
     export VOLTA_HOME="${HOME}/.volta"
     export PATH="${VOLTA_HOME}/bin:${PATH}"
     print_success "Volta installed"
-else
-    print_success "Volta already installed"
 fi
 
 # Ensure Volta is on PATH in future shells. Env → ~/.zshenv so GUI and
@@ -75,7 +79,9 @@ add_to_zshenv "VOLTA_HOME" \
 
 # Install Node.js via Volta
 print_status "Installing Node.js via Volta..."
-if command -v volta &>/dev/null; then
+if is_dry_run; then
+    print_status "[dry-run] would install Node.js LTS via Volta"
+elif command -v volta &>/dev/null; then
     volta install node@lts
     print_success "Node.js LTS installed via Volta"
 else

@@ -24,6 +24,8 @@ print_status "Checking 1Password CLI..."
 if command_exists op; then
     op_version=$(op --version 2>/dev/null || echo "unknown")
     print_success "1Password CLI already installed (${op_version})"
+elif is_dry_run; then
+    print_status "[dry-run] would install 1Password CLI (brew 1password-cli)"
 else
     print_status "Installing 1Password CLI..."
     if brew install 1password-cli 2>/dev/null; then
@@ -65,7 +67,7 @@ if app_exists "/Applications/Comet.app"; then
     print_status "Setting Comet as default browser..."
 
     # Prefer duti; install it first if it's missing
-    if ! command_exists duti; then
+    if ! command_exists duti && ! is_dry_run; then
         print_status "Installing duti utility..."
         brew install duti 2>/dev/null || true
     fi
@@ -77,7 +79,7 @@ if app_exists "/Applications/Comet.app"; then
         rm -f "${duti_rules}"
     else
         # Fallback: defaultbrowser utility
-        if ! command_exists defaultbrowser; then
+        if ! command_exists defaultbrowser && ! is_dry_run; then
             print_status "Installing defaultbrowser utility..."
             brew install defaultbrowser 2>/dev/null || true
         fi

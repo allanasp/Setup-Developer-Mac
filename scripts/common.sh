@@ -17,6 +17,14 @@ else
     BREW_PREFIX="/usr/local"
 fi
 
+# Dry-run mode: when DRY_RUN=true the install helpers and shell-config writers
+# only report what they would do, without mutating the system. Enable with
+# `./setup.sh --dry-run` or `DRY_RUN=true ./scripts/XX.sh`.
+DRY_RUN="${DRY_RUN:-false}"
+is_dry_run() {
+    [[ "${DRY_RUN}" == "true" ]]
+}
+
 print_status() {
     echo -e "${BLUE}[INFO]${NC} $1"
 }
@@ -46,21 +54,24 @@ install_cask_app() {
     local cask_name="$2"
     local app_path="$3"
 
-    print_status "Installing/Updating ${app_name}..."
     if [[ -d "${app_path}" ]]; then
         print_success "${app_name} already installed"
         return 0
-    else
-        if brew install --cask "${cask_name}"; then
-            print_success "${app_name} installed successfully"
-        else
-            print_error "${app_name} installation failed"
-            print_warning "Continuing without ${app_name}..."
-        fi
-        # Graceful: never abort the caller (which may run under `set -e`) just
-        # because one optional app failed to install.
+    fi
+    if is_dry_run; then
+        print_status "[dry-run] would install cask: ${cask_name} (${app_name})"
         return 0
     fi
+    print_status "Installing/Updating ${app_name}..."
+    if brew install --cask "${cask_name}"; then
+        print_success "${app_name} installed successfully"
+    else
+        print_error "${app_name} installation failed"
+        print_warning "Continuing without ${app_name}..."
+    fi
+    # Graceful: never abort the caller (which may run under `set -e`) just
+    # because one optional app failed to install.
+    return 0
 }
 
 # Function to safely install a Homebrew formula (idempotent + graceful)
@@ -70,6 +81,10 @@ install_brew_formula() {
     local formula="$1"
     local label="${2:-$1}"
 
+    if is_dry_run; then
+        print_status "[dry-run] would install formula: ${formula} (${label})"
+        return 0
+    fi
     print_status "Installing ${label}..."
     if brew install "${formula}"; then
         print_success "${label} installed"
@@ -85,6 +100,10 @@ install_brew_formula() {
 install_volta_package() {
     local package_name="$1"
 
+    if is_dry_run; then
+        print_status "[dry-run] would install via Volta: ${package_name}"
+        return 0
+    fi
     print_status "Installing ${package_name} via Volta..."
     if volta install "${package_name}"; then
         print_success "${package_name} installed successfully"
@@ -112,10 +131,14 @@ add_to_zshenv() {
     shift
     local zshenv="${HOME}/.zshenv"
 
-    [[ -f "${zshenv}" ]] || touch "${zshenv}"
-    if grep -qF "${marker}" "${zshenv}" 2>/dev/null; then
+    if [[ -f "${zshenv}" ]] && grep -qF "${marker}" "${zshenv}" 2>/dev/null; then
         return 0
     fi
+    if is_dry_run; then
+        print_status "[dry-run] would add '${marker}' to ~/.zshenv"
+        return 0
+    fi
+    [[ -f "${zshenv}" ]] || touch "${zshenv}"
     {
         echo ""
         echo "# ${marker}"
@@ -137,10 +160,16 @@ add_to_zshrc() {
     shift
     local zshrc="${HOME}/.zshrc"
 
-    [[ -f "${zshrc}" ]] || touch "${zshrc}"
-    if grep -qF "${marker}" "${zshrc}" 2>/dev/null; then
+    if [[ -f "${zshrc}" ]] && grep -qF "${marker}" "${zshrc}" 2>/dev/null; then
         return 0
     fi
+    if is_dry_run; then
+        print_status "[dry-run] would add '${marker}' to ~/.zshrc"
+        # Drain stdin so a heredoc caller doesn't leak into the next command.
+        [[ $# -gt 0 ]] || cat >/dev/null
+        return 0
+    fi
+    [[ -f "${zshrc}" ]] || touch "${zshrc}"
     {
         echo ""
         echo "# ${marker}"
