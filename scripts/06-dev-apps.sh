@@ -211,10 +211,31 @@ else
     echo "  Email: ${git_email}"
 fi
 
-# Pretty graph log alias (used by the `gitl` shell alias in 02-terminal.sh)
-git config --global alias.lg \
-    "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --all"
-print_success "Configured 'git lg' alias"
+# Git aliases + sensible global defaults
+if is_dry_run; then
+    print_status "[dry-run] would set git aliases and sensible global defaults"
+else
+    # Pretty graph log alias (used by the `gitl` shell alias in 02-terminal.sh)
+    git config --global alias.lg \
+        "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --all"
+
+    # Sensible defaults
+    git config --global init.defaultBranch main
+    git config --global push.autoSetupRemote true
+    git config --global pull.ff only
+    git config --global merge.conflictStyle zdiff3
+
+    # Use git-delta as the pager/diff tool when available
+    if command_exists delta; then
+        git config --global core.pager delta
+        git config --global interactive.diffFilter "delta --color-only"
+        git config --global delta.navigate true
+        git config --global delta.line-numbers true
+        print_success "Configured git aliases, defaults and delta pager"
+    else
+        print_success "Configured git aliases and sensible defaults"
+    fi
+fi
 
 echo ""
 
