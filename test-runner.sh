@@ -101,8 +101,8 @@ test_structure() {
         "scripts/02-terminal.sh"
         "scripts/03-version-managers.sh"
         "README.md"
-        "POST-INSTALLATION-GUIDE.md"
-        "SCRIPT_GUIDE.md"
+        "docs/post-installation.md"
+        "docs/script-guide.md"
     )
 
     for file in "${required_files[@]}"; do
