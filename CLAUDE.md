@@ -112,11 +112,11 @@ bashprompt_configuration "Script Name" "
 User must confirm completion before continuing to next script.
 Documentation Files
 
-README.md - Main project overview and quick start
-START_HERE.md - Minimal quick start guide
-SCRIPT_GUIDE.md - Detailed documentation per script
-POST-INSTALLATION-GUIDE.md - Complete manual setup steps
-docs/ - GitHub Pages website with full documentation
+README.md - Main project overview and quick start (root)
+docs/start-here.md - Minimal quick start guide
+docs/script-guide.md - Detailed documentation per script
+docs/post-installation.md - Complete manual setup steps
+docs/ - GitHub Pages website with full documentation (all guides live here)
 
 Common Tasks
 Adding a New Tool

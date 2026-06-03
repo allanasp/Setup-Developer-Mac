@@ -1,6 +1,6 @@
 # 🚀 Mac Frontend Developer Setup
 
-> **👉 [START HERE](START_HERE.md) for quick setup** or continue reading for full details
+> **👉 [START HERE](docs/start-here.md) for quick setup** or continue reading for full details
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![macOS](https://img.shields.io/badge/macOS-Compatible-brightgreen.svg)](https://www.apple.com/macos/)
@@ -168,8 +168,8 @@ The setup now **guides you through each step** with configuration prompts:
 | 12 | `12-expo-rn.sh` | Expo + React Native Local Dev | Watchman, JDK 17, Maestro, iOS/Android toolchain |
 | 13 | `13-macos-defaults.sh` | macOS System Tweaks | Fast key repeat, Finder hidden files/extensions, screenshots to ~/Screenshots, Dock autohide, expanded save/print panels |
 
-> 📖 **[Complete Script Guide](SCRIPT_GUIDE.md)** - Detailed documentation for each script
-> 🛠️ **[Tools Guide](docs/tools-guide.md)** - Comprehensive info on all 100+ tools installed
+> 📖 **[Complete Script Guide](docs/script-guide.md)** - Detailed documentation for each script
+> 🛠️ **[Tools Guide](docs/tools-guide.md)** - Comprehensive info on all tools installed
 
 <details>
 <summary><strong>🔧 System Tools & Package Managers</strong></summary>
@@ -383,7 +383,7 @@ chmod +x scripts/*.sh
 13. **Accept Xcode license**: `sudo xcodebuild -license accept`
 14. **Create Android AVDs** in Android Studio
 
-> 📖 **[Complete Setup Guide](SCRIPT_GUIDE.md#-whats-next)** - Detailed post-installation instructions
+> 📖 **[Post-Installation Guide](docs/post-installation.md)** - Detailed post-installation instructions
 
 ## 🔧 Customization
 
@@ -498,4 +498,4 @@ If this project helped you set up your development environment, please give it a
 
 **Made with ❤️ for the developer community**
 
-> 📖 **[Complete Script Guide](SCRIPT_GUIDE.md)** | 🔧 **[Troubleshooting](SCRIPT_GUIDE.md#-troubleshooting)** | 🚀 **[What's Next](SCRIPT_GUIDE.md#-whats-next)**
+> 📖 **[Script Guide](docs/script-guide.md)** | 🧭 **[Start Here](docs/start-here.md)** | 🩺 **[Setup Checker](docs/setup-checker.md)** | 🚀 **[Post-Installation](docs/post-installation.md)**

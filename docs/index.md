@@ -212,7 +212,8 @@ cd Setup-Developer-Mac
 
 ## 📚 Documentation
 
-- **[🛠️ Complete Tools Guide](tools-guide.html)** - Detailed info on all 100+ tools installed
+- **[🧭 Start Here](start-here.html)** - Minimal quick-start guide
+- **[🛠️ Complete Tools Guide](tools-guide.html)** - Detailed info on all tools installed
 - **[📖 Script Documentation](script-guide.html)** - How each script works
 - **[🔍 Setup Checker](setup-checker.html)** - Verify your installation works
 - **[🔧 Troubleshooting](script-guide.html#troubleshooting)** - Common issues and solutions  
