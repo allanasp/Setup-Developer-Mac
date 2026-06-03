@@ -63,37 +63,40 @@ jobs:
           case "${{ matrix.task }}" in
             "format")
               echo "🎨 Checking shell script formatting..."
-              format_issues=0
-
-              find . -name "*.sh" -type f | while read -r script; do
+              # NB: read into a flag via process substitution, NOT a pipe — a
+              # `find | while` runs the loop in a subshell, so failures there
+              # cannot fail the step.
+              fail=0
+              while IFS= read -r script; do
                 echo "Checking format: $script"
                 if ! shfmt -d -i 4 -ci "$script"; then
                   echo "❌ Formatting issues found in: $script"
-                  format_issues=$((format_issues + 1))
+                  fail=1
                 fi
-              done
-
-              if [ $format_issues -gt 0 ]; then
-                exit 1
-              fi
+              done < <(find . -name "*.sh" -type f)
+              [ "$fail" -eq 0 ] || exit 1
               echo "✅ All shell scripts are properly formatted"
               ;;
 
             "lint")
               echo "🔍 Linting shell scripts with ShellCheck (error severity)..."
-              find . -name "*.sh" -type f | while read -r script; do
+              fail=0
+              while IFS= read -r script; do
                 echo "Checking: $script"
-                shellcheck -S error "$script" || exit 1
-              done
+                shellcheck -S error "$script" || fail=1
+              done < <(find . -name "*.sh" -type f)
+              [ "$fail" -eq 0 ] || exit 1
               echo "✅ All scripts pass linting"
               ;;
 
             "syntax")
               echo "🧪 Testing script syntax..."
-              find . -name "*.sh" -type f | while read -r script; do
+              fail=0
+              while IFS= read -r script; do
                 echo "Testing syntax: $script"
-                bash -n "$script" || exit 1
-              done
+                bash -n "$script" || fail=1
+              done < <(find . -name "*.sh" -type f)
+              [ "$fail" -eq 0 ] || exit 1
               echo "✅ All scripts have valid syntax"
               ;;
 
