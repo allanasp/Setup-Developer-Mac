@@ -216,6 +216,31 @@ jobs:
 
           echo "✅ System script test passed"
 
+      - name: Idempotence (run dry-run scripts twice)
+        run: |
+          echo "🔁 Verifying scripts are idempotent under --dry-run..."
+          for s in 01-system 04-languages 10-devops 11-fonts 13-macos-defaults; do
+            echo "== ${s} (run 1) =="
+            DRY_RUN=true bash "scripts/${s}.sh" >/dev/null
+            echo "== ${s} (run 2) =="
+            DRY_RUN=true bash "scripts/${s}.sh" >/dev/null
+          done
+          echo "✅ Scripts are idempotent under dry-run"
+
+  # Bats unit tests for common.sh
+  bats:
+    name: Bats Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install bats
+        run: sudo apt-get update && sudo apt-get install -y bats
+
+      - name: Run bats
+        run: bats tests/common.bats
+
   # Auto-labeling for Issues and PRs
   auto-label:
     name: Auto Label
