@@ -22,13 +22,9 @@ else
     print_warning "PostgreSQL service may already be running - continuing"
 fi
 
-# Add PostgreSQL to PATH (architecture-aware prefix from common.sh)
-if ! grep -q "postgresql@15" ~/.zshrc 2>/dev/null; then
-    echo '' >>~/.zshrc
-    echo '# PostgreSQL' >>~/.zshrc
-    echo "export PATH=\"${BREW_PREFIX}/opt/postgresql@15/bin:\${PATH}\"" >>~/.zshrc
-    print_success "PostgreSQL added to PATH in .zshrc"
-fi
+# Add PostgreSQL to PATH via ~/.zshenv (architecture-aware prefix from common.sh)
+add_to_zshenv "postgresql@15" \
+    "export PATH=\"${BREW_PREFIX}/opt/postgresql@15/bin:\${PATH}\""
 
 # Add to current session
 export PATH="${BREW_PREFIX}/opt/postgresql@15/bin:${PATH}"

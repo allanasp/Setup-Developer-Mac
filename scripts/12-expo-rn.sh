@@ -4,7 +4,7 @@
 # Includes Xcode + Android Studio configuration.
 # Installs: Watchman, OpenJDK 17, Android Studio, iOS toolchain (xcodes,
 # ios-deploy, cocoapods, swiftlint), Expo/RN CLIs (via Volta), Maestro.
-# Configures: JAVA_HOME, ANDROID_HOME, Maestro PATH in ~/.zshrc.
+# Configures: JAVA_HOME, ANDROID_HOME, Maestro PATH in ~/.zshenv.
 
 set -e
 
@@ -76,38 +76,24 @@ else
     print_success "JDK symlink already present"
 fi
 
-# JAVA_HOME in ~/.zshrc
-if ! grep -q 'JAVA_HOME' ~/.zshrc 2>/dev/null; then
-    {
-        echo ''
-        echo '# Java (for Android / React Native)'
-        echo 'export JAVA_HOME="$(/usr/libexec/java_home -v 17 2>/dev/null)"'
-        echo 'export PATH="$JAVA_HOME/bin:$PATH"'
-    } >>~/.zshrc
-    print_success "JAVA_HOME added to ~/.zshrc"
-else
-    print_success "JAVA_HOME already configured"
-fi
+# JAVA_HOME → ~/.zshenv (shared marker with 04-languages.sh; written once)
+add_to_zshenv "JAVA_HOME" \
+    'export JAVA_HOME="$(/usr/libexec/java_home -v 17 2>/dev/null)"' \
+    'export PATH="$JAVA_HOME/bin:$PATH"'
+print_success "JAVA_HOME configured in ~/.zshenv"
 
 # ----------------------------------------------------------
 # Android Studio
 # ----------------------------------------------------------
 install_cask_app "Android Studio" "android-studio" "/Applications/Android Studio.app"
 
-# Android SDK environment variables
-if ! grep -q 'ANDROID_HOME' ~/.zshrc 2>/dev/null; then
-    {
-        echo ''
-        echo '# Android SDK (populated after Android Studio SDK Manager runs)'
-        echo 'export ANDROID_HOME="$HOME/Library/Android/sdk"'
-        echo 'export PATH="$PATH:$ANDROID_HOME/emulator"'
-        echo 'export PATH="$PATH:$ANDROID_HOME/platform-tools"'
-        echo 'export PATH="$PATH:$ANDROID_HOME/cmdline-tools/latest/bin"'
-    } >>~/.zshrc
-    print_success "Android SDK environment added to ~/.zshrc"
-else
-    print_success "ANDROID_HOME already configured"
-fi
+# Android SDK environment → ~/.zshenv (shared marker with 07-mobile.sh)
+add_to_zshenv "ANDROID_HOME" \
+    'export ANDROID_HOME="$HOME/Library/Android/sdk"' \
+    'export PATH="$PATH:$ANDROID_HOME/emulator"' \
+    'export PATH="$PATH:$ANDROID_HOME/platform-tools"' \
+    'export PATH="$PATH:$ANDROID_HOME/cmdline-tools/latest/bin"'
+print_success "ANDROID_HOME configured in ~/.zshenv"
 
 # ----------------------------------------------------------
 # iOS toolchain (CLI helpers)
@@ -195,17 +181,10 @@ else
     fi
 fi
 
-# Maestro PATH
-if ! grep -q '.maestro/bin' ~/.zshrc 2>/dev/null; then
-    {
-        echo ''
-        echo '# Maestro'
-        echo 'export PATH="$PATH:$HOME/.maestro/bin"'
-    } >>~/.zshrc
-    print_success "Maestro added to PATH in ~/.zshrc"
-else
-    print_success "Maestro PATH already configured"
-fi
+# Maestro PATH → ~/.zshenv
+add_to_zshenv "Maestro" \
+    'export PATH="$PATH:$HOME/.maestro/bin"'
+print_success "Maestro PATH configured in ~/.zshenv"
 
 # ----------------------------------------------------------
 # Summary + manual TODOs

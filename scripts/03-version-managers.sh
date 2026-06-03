@@ -25,12 +25,14 @@ install_brew_formula "pyenv"
 export PYENV_ROOT="${HOME}/.pyenv"
 export PATH="${PYENV_ROOT}/bin:${PATH}"
 
-# Check if pyenv is already initialized in shell
+# Persist PYENV_ROOT + PATH to ~/.zshenv (visible to all shells); keep the
+# interactive `pyenv init` shell integration in ~/.zshrc.
+add_to_zshenv "PYENV_ROOT" \
+    'export PYENV_ROOT="${HOME}/.pyenv"' \
+    '[[ -d ${PYENV_ROOT}/bin ]] && export PATH="${PYENV_ROOT}/bin:${PATH}"'
 if ! grep -q 'pyenv init' ~/.zshrc 2>/dev/null; then
-    echo 'export PYENV_ROOT="${HOME}/.pyenv"' >>~/.zshrc
-    echo '[[ -d ${PYENV_ROOT}/bin ]] && export PATH="${PYENV_ROOT}/bin:${PATH}"' >>~/.zshrc
     echo 'eval "$(pyenv init -)"' >>~/.zshrc
-    print_success "Pyenv added to .zshrc"
+    print_success "pyenv shell integration added to .zshrc"
 fi
 
 # Initialize pyenv for current session
@@ -66,17 +68,12 @@ else
     print_success "Volta already installed"
 fi
 
-# Ensure Volta is on PATH in future shells (the installer usually does this,
-# but guard it so a restart never loses Volta)
-if ! grep -q 'VOLTA_HOME' ~/.zshrc 2>/dev/null; then
-    {
-        echo ''
-        echo '# Volta (Node.js version manager)'
-        echo 'export VOLTA_HOME="${HOME}/.volta"'
-        echo 'export PATH="${VOLTA_HOME}/bin:${PATH}"'
-    } >>~/.zshrc
-    print_success "Volta added to .zshrc"
-fi
+# Ensure Volta is on PATH in future shells. Env → ~/.zshenv so GUI and
+# non-interactive shells see it too. The installer usually does this; guard
+# so a restart never loses Volta.
+add_to_zshenv "VOLTA_HOME" \
+    'export VOLTA_HOME="${HOME}/.volta"' \
+    'export PATH="${VOLTA_HOME}/bin:${PATH}"'
 
 # Install Node.js via Volta
 print_status "Installing Node.js via Volta..."

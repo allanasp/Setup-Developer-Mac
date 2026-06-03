@@ -68,14 +68,13 @@ else
     fi
 fi
 
-# Add VS Code CLI to PATH if not already there
+# Add VS Code CLI to PATH (env → ~/.zshenv) if not already there
 if [[ -d "/Applications/Visual Studio Code.app" ]] && ! command -v code &>/dev/null; then
     print_status "Adding VS Code CLI to PATH..."
-    if ! grep -q 'Visual Studio Code' ~/.zshrc 2>/dev/null; then
-        echo 'export PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin:${PATH}"' >>~/.zshrc
-        export PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin:${PATH}"
-        print_success "VS Code CLI added to PATH"
-    fi
+    add_to_zshenv "Visual Studio Code CLI" \
+        'export PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin:${PATH}"'
+    export PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin:${PATH}"
+    print_success "VS Code CLI added to PATH"
 fi
 
 # Add CLI commands for all editors

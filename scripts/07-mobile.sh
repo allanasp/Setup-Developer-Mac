@@ -19,43 +19,25 @@ install_cask_app "Android Studio" "android-studio" "/Applications/Android Studio
 
 # Configure Android environment variables for React Native
 print_status "Configuring Android environment for React Native..."
-if [[ -d "/Applications/Android Studio.app" ]] || [[ -d "${HOME}/Library/Android" ]]; then
-    # Add Android environment variables to shell
-    if ! grep -q 'ANDROID_HOME' ~/.zshrc 2>/dev/null; then
-        {
-            echo ''
-            echo '# Android Development (React Native)'
-            # shellcheck disable=SC2016  # We want literal ${} in shell config
-            echo 'export ANDROID_HOME=${HOME}/Library/Android/sdk'
-            echo 'export PATH=${PATH}:${ANDROID_HOME}/emulator'
-            echo 'export PATH=${PATH}:${ANDROID_HOME}/platform-tools'
-            echo 'export PATH=${PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin'
-        } >>~/.zshrc
-        print_success "Android environment variables added to .zshrc"
-    else
-        print_success "Android environment variables already configured"
-    fi
 
+# Persist ANDROID_HOME + PATH to ~/.zshenv so GUI/non-interactive shells
+# (e.g. Gradle from Android Studio) see it. Idempotent, and shared with
+# 12-expo-rn.sh via the ANDROID_HOME marker so it's only written once.
+add_to_zshenv "ANDROID_HOME" \
+    'export ANDROID_HOME=${HOME}/Library/Android/sdk' \
+    'export PATH=${PATH}:${ANDROID_HOME}/emulator' \
+    'export PATH=${PATH}:${ANDROID_HOME}/platform-tools' \
+    'export PATH=${PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin'
+
+if [[ -d "/Applications/Android Studio.app" ]] || [[ -d "${HOME}/Library/Android" ]]; then
     # Set for current session
-    export ANDROID_HOME=${HOME}/Library/Android/sdk
-    export PATH=${PATH}:${ANDROID_HOME}/emulator
-    export PATH=${PATH}:${ANDROID_HOME}/platform-tools
-    export PATH=${PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin
+    export ANDROID_HOME="${HOME}/Library/Android/sdk"
+    export PATH="${PATH}:${ANDROID_HOME}/emulator"
+    export PATH="${PATH}:${ANDROID_HOME}/platform-tools"
+    export PATH="${PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin"
+    print_success "Android environment variables configured"
 else
-    print_warning "Android Studio not found - environment variables will be set for future use"
-    # Still add the environment variables for when Android Studio is installed
-    if ! grep -q 'ANDROID_HOME' ~/.zshrc 2>/dev/null; then
-        {
-            echo ''
-            echo '# Android Development (React Native)'
-            # shellcheck disable=SC2016  # We want literal ${} in shell config
-            echo 'export ANDROID_HOME=${HOME}/Library/Android/sdk'
-            echo 'export PATH=${PATH}:${ANDROID_HOME}/emulator'
-            echo 'export PATH=${PATH}:${ANDROID_HOME}/platform-tools'
-            echo 'export PATH=${PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin'
-        } >>~/.zshrc
-        print_success "Android environment variables added to .zshrc (for future use)"
-    fi
+    print_warning "Android Studio not found - ANDROID_HOME set in ~/.zshenv for future use"
 fi
 
 print_success "Android development environment configured"

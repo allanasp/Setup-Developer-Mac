@@ -98,6 +98,29 @@ app_exists() {
     [[ -d "$1" ]]
 }
 
+# Append a block of shell config to ~/.zshenv exactly once, keyed by a marker.
+# Environment/PATH exports belong in ~/.zshenv (not ~/.zshrc) so they are also
+# available to non-interactive and GUI-launched shells — e.g. Gradle/Xcode
+# builds spawned by Android Studio — and not just interactive terminals.
+# The marker doubles as the dedup guard, so two scripts exporting the same
+# variable (e.g. JAVA_HOME from 04 and 12) only write it once.
+# Usage: add_to_zshenv "MARKER" 'export FOO=bar' 'export PATH=...'
+add_to_zshenv() {
+    local marker="$1"
+    shift
+    local zshenv="${HOME}/.zshenv"
+
+    [[ -f "${zshenv}" ]] || touch "${zshenv}"
+    if grep -qF "${marker}" "${zshenv}" 2>/dev/null; then
+        return 0
+    fi
+    {
+        echo ""
+        echo "# ${marker}"
+        printf '%s\n' "$@"
+    } >>"${zshenv}"
+}
+
 # Check if running on macOS
 check_macos() {
     if [[ "${OSTYPE}" != "darwin"* ]]; then

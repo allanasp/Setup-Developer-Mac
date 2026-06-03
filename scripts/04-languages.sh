@@ -19,12 +19,11 @@ if ! command -v java &>/dev/null; then
     # Install JDK 17 (React Native requirement)
     install_brew_formula "openjdk@17" "OpenJDK 17"
 
-    # Add JDK to PATH and set JAVA_HOME
-    if ! grep -q 'JAVA_HOME' ~/.zshrc 2>/dev/null; then
-        echo 'export JAVA_HOME="$(brew --prefix)/opt/openjdk@17"' >>~/.zshrc
-        echo 'export PATH="${JAVA_HOME}/bin:${PATH}"' >>~/.zshrc
-        print_success "Java environment variables added to .zshrc"
-    fi
+    # Persist JAVA_HOME + PATH to ~/.zshenv (visible to GUI/non-interactive
+    # shells, e.g. Gradle builds launched from Android Studio).
+    add_to_zshenv "JAVA_HOME" \
+        'export JAVA_HOME="$(brew --prefix)/opt/openjdk@17"' \
+        'export PATH="${JAVA_HOME}/bin:${PATH}"'
 
     # Set for current session
     export JAVA_HOME="$(brew --prefix)/opt/openjdk@17"
