@@ -10,7 +10,7 @@ jobs:
     name: Lint commit messages
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           # Need full history so the action can lint the range of pushed commits.
           fetch-depth: 0
