@@ -598,25 +598,6 @@ else
     print_missing "Brave Browser"
 fi
 
-# Comet Browser (Perplexity AI)
-if app_exists "/Applications/Comet.app"; then
-    print_installed "Comet Browser (Perplexity AI)"
-
-    # Check if it's set as default browser (only if duti is available)
-    if command_exists duti; then
-        default_browser=$(duti -x http 2>/dev/null | grep -o 'com\.perplexity\.Comet' || echo "")
-        if [[ -n "${default_browser}" ]]; then
-            print_installed "  Comet (set as default browser)"
-        else
-            print_warning "  Comet (not default browser - set manually in System Settings)"
-        fi
-    else
-        print_warning "  Comet (install 'duti' to verify default-browser status)"
-    fi
-else
-    print_missing "Comet Browser (requires manual installation)"
-fi
-
 print_section "Developer Utilities"
 
 # OrbStack
