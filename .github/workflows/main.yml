@@ -48,9 +48,14 @@ jobs:
         if: matrix.task == 'format' || matrix.task == 'lint'
         run: |
           if [[ "${{ matrix.task }}" == "format" ]]; then
-            curl -L "https://github.com/mvdan/sh/releases/latest/download/shfmt_v3.7.0_linux_amd64" -o shfmt
+            # NB: use the versioned download path, not /releases/latest/ —
+            # `latest` no longer points at v3.7.0, so the old URL 404'd and
+            # installed an HTML error page as "shfmt".
+            SHFMT_VERSION="v3.13.1"
+            curl -fsSL "https://github.com/mvdan/sh/releases/download/${SHFMT_VERSION}/shfmt_${SHFMT_VERSION}_linux_amd64" -o shfmt
             chmod +x shfmt
             sudo mv shfmt /usr/local/bin/
+            shfmt --version
           fi
 
           if [[ "${{ matrix.task }}" == "lint" ]]; then
