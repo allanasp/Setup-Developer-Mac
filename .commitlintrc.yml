@@ -7,6 +7,11 @@ rules:
   # Allow a slightly longer subject than the 72-char default for descriptive
   # script/tooling changes.
   header-max-length: [2, always, 100]
+  # Don't enforce subject casing — Dependabot uses "Bump ..." (start-case).
+  subject-case: [0]
+  # Dependabot embeds release notes with long lines in the body/footer.
+  body-max-line-length: [0]
+  footer-max-line-length: [0]
   # Permit the commit types this project actually uses.
   type-enum:
     - 2
