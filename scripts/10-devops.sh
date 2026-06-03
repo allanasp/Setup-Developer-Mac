@@ -19,6 +19,12 @@ for util in ngrok eza wget jq tree fzf; do
     install_brew_formula "${util}"
 done
 
+# Wire fzf zsh integration (Ctrl-T fuzzy files, Alt-C fuzzy cd, ** completion).
+# Ctrl-R history search is left to atuin if it is installed later.
+add_to_zshrc "fzf shell integration" \
+    'command -v fzf >/dev/null && source <(fzf --zsh)'
+print_success "fzf shell integration ensured in .zshrc"
+
 # UpCloud CLI (upctl) - manage UpCloud infrastructure
 if command -v upctl &>/dev/null; then
     print_success "UpCloud CLI (upctl) already installed"
