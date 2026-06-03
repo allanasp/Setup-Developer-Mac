@@ -54,6 +54,7 @@ if app_exists "/Applications/Comet.app"; then
 else
     print_warning "Comet Browser not installed - requires manual installation"
     echo ""
+    # shellcheck disable=SC2154  # YELLOW/NC come from common.sh
     echo "${YELLOW}To install Comet Browser:${NC}"
     echo "1. Visit: https://comet.perplexity.ai"
     echo "2. Download the macOS installer"

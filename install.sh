@@ -33,9 +33,10 @@ else
     NC=''
 fi
 
-info() { printf "${BLUE}ℹ️  %s${NC}\n" "$1"; }
-success() { printf "${GREEN}✅ %s${NC}\n" "$1"; }
-error() { printf "${RED}❌ %s${NC}\n" "$1" >&2; }
+# Keep the message out of the printf format string (a stray % would break it).
+info() { printf '%bℹ️  %s%b\n' "$BLUE" "$1" "$NC"; }
+success() { printf '%b✅ %s%b\n' "$GREEN" "$1" "$NC"; }
+error() { printf '%b❌ %s%b\n' "$RED" "$1" "$NC" >&2; }
 
 # --- 1. macOS check ----------------------------------------------------------
 if [ "$(uname -s)" != "Darwin" ]; then
@@ -72,7 +73,8 @@ fi
 
 # --- 4. Hand off to setup.sh (runs under bash) -------------------------------
 cd "$INSTALL_DIR"
-chmod +x setup.sh scripts/*.sh
+chmod +x setup.sh
+find scripts -name '*.sh' -exec chmod +x {} +
 
 info "Launching setup.sh..."
 echo ""

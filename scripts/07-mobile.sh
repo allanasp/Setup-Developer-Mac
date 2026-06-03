@@ -25,10 +25,10 @@ print_status "Configuring Android environment for React Native..."
 # (e.g. Gradle from Android Studio) see it. Idempotent, and shared with
 # 12-expo-rn.sh via the ANDROID_HOME marker so it's only written once.
 add_to_zshenv "ANDROID_HOME" \
-    'export ANDROID_HOME=${HOME}/Library/Android/sdk' \
-    'export PATH=${PATH}:${ANDROID_HOME}/emulator' \
-    'export PATH=${PATH}:${ANDROID_HOME}/platform-tools' \
-    'export PATH=${PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin'
+    'export ANDROID_HOME="${HOME}/Library/Android/sdk"' \
+    'export PATH="${PATH}:${ANDROID_HOME}/emulator"' \
+    'export PATH="${PATH}:${ANDROID_HOME}/platform-tools"' \
+    'export PATH="${PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin"'
 
 if [[ -d "/Applications/Android Studio.app" ]] || [[ -d "${HOME}/Library/Android" ]]; then
     # Set for current session

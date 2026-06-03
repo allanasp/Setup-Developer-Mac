@@ -34,8 +34,10 @@ else
     java_version=$(java --version 2>/dev/null | head -n1 | cut -d' ' -f2 || echo "unknown")
     print_success "Java already installed (${java_version})"
 
-    # Verify Java version is 17+
-    java_major=$(java --version 2>/dev/null | head -n1 | cut -d' ' -f2 | cut -d'.' -f1 || echo "0")
+    # Verify Java version is 17+ (guard against non-numeric output so the
+    # arithmetic test can't error out under set -e)
+    java_major=$(java --version 2>/dev/null | head -n1 | cut -d' ' -f2 | cut -d'.' -f1)
+    [[ "${java_major}" =~ ^[0-9]+$ ]] || java_major=0
     if [[ "${java_major}" -lt 17 ]]; then
         print_warning "Java version may be too old for React Native (requires JDK 17+)"
         print_warning "Consider upgrading: brew install openjdk@17"

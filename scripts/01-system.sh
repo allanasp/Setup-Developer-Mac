@@ -42,19 +42,19 @@ if ! command -v brew &>/dev/null; then
     else
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-        # Add Homebrew to PATH for current session and future sessions
+        # Add Homebrew to PATH for current session and future sessions.
+        # brew shellenv belongs in ~/.zprofile (login shells); guard against
+        # appending it twice on re-run.
         if [[ $(uname -m) == "arm64" ]]; then
-            # Apple Silicon Mac
-            echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >>~/.zprofile
-            eval "$(/opt/homebrew/bin/brew shellenv)"
-            # Also add to current session
-            export PATH="/opt/homebrew/bin:${PATH}"
+            brew_bin="/opt/homebrew/bin"
         else
-            # Intel Mac
-            echo 'eval "$(/usr/local/bin/brew shellenv)"' >>~/.zprofile
-            eval "$(/usr/local/bin/brew shellenv)"
-            export PATH="/usr/local/bin:${PATH}"
+            brew_bin="/usr/local/bin"
         fi
+        if ! grep -q 'brew shellenv' ~/.zprofile 2>/dev/null; then
+            echo "eval \"\$(${brew_bin}/brew shellenv)\"" >>~/.zprofile
+        fi
+        eval "$(${brew_bin}/brew shellenv)"
+        export PATH="${brew_bin}:${PATH}"
 
         print_success "Homebrew installed and added to PATH"
     fi

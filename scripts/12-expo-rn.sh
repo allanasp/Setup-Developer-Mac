@@ -73,10 +73,10 @@ install_cask_app "Android Studio" "android-studio" "/Applications/Android Studio
 
 # Android SDK environment → ~/.zshenv (shared marker with 07-mobile.sh)
 add_to_zshenv "ANDROID_HOME" \
-    'export ANDROID_HOME="$HOME/Library/Android/sdk"' \
-    'export PATH="$PATH:$ANDROID_HOME/emulator"' \
-    'export PATH="$PATH:$ANDROID_HOME/platform-tools"' \
-    'export PATH="$PATH:$ANDROID_HOME/cmdline-tools/latest/bin"'
+    'export ANDROID_HOME="${HOME}/Library/Android/sdk"' \
+    'export PATH="${PATH}:${ANDROID_HOME}/emulator"' \
+    'export PATH="${PATH}:${ANDROID_HOME}/platform-tools"' \
+    'export PATH="${PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin"'
 print_success "ANDROID_HOME configured in ~/.zshenv"
 
 # ----------------------------------------------------------
