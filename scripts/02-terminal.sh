@@ -71,6 +71,15 @@ if [[ -d ~/.oh-my-zsh ]]; then
         print_success "zsh-syntax-highlighting plugin already installed"
     fi
 
+    # zsh-completions is enabled in plugins=() below, so it must exist as a
+    # custom plugin (it is not bundled with Oh My Zsh).
+    if [[ ! -d ~/.oh-my-zsh/custom/plugins/zsh-completions ]]; then
+        git clone https://github.com/zsh-users/zsh-completions.git ~/.oh-my-zsh/custom/plugins/zsh-completions
+        print_success "zsh-completions plugin installed"
+    else
+        print_success "zsh-completions plugin already installed"
+    fi
+
     # Create improved .zshrc configuration
     print_status "Setting up improved .zshrc configuration..."
 
