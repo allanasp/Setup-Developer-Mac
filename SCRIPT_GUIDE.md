@@ -51,7 +51,7 @@ These scripts provide the foundation for all development work:
 | 4 | `04-languages.sh` | Programming Languages | Backend development |
 | 5 | `05-frontend.sh` | Frontend Tools | Web/mobile development |
 | 6 | `06-dev-apps.sh` | Development Apps | Code editing |
-| 7 | `07-mobile.sh` | Mobile Development | iOS/Android apps |
+| 7 | `07-mobile.sh` | Mobile Development | Android Studio + env (iOS/RN → 12) |
 | 8 | `08-productivity.sh` | Productivity Tools | Workflow optimization |
 | 9 | `09-database.sh` | Database Tools | Data management |
 | 10 | `10-devops.sh` | DevOps Tools | Infrastructure |
@@ -145,7 +145,7 @@ pyenv local 3.11.5          # Set local Python version
 **Purpose:** Additional programming languages for backend development
 
 **What it installs:**
-- ☕ **Java JDK** (OpenJDK 21) with JAVA_HOME
+- ☕ **Java JDK** (OpenJDK 17) with JAVA_HOME
 - 🐹 **Go** (latest stable)
 - 💎 **Ruby** (latest stable)
 
@@ -254,22 +254,22 @@ git flow feature start myfeature
 
 ### 7️⃣ Mobile Development (`07-mobile.sh`)
 
-**Purpose:** Complete iOS and Android development environment
+**Purpose:** Android Studio + the Android environment only. The full iOS
+toolchain and the complete Expo/React Native setup live in script 12
+(`12-expo-rn.sh`) — run that for xcodes/ios-deploy/CocoaPods/SwiftLint,
+Watchman, JDK 17 and Maestro.
 
 **What it installs:**
 - 🤖 **Android Studio** - Android development IDE
-- 📱 **iOS development tools** - xcodes, SwiftLint, ios-deploy
-- 📦 **CocoaPods** - iOS dependency manager
-- ☕ **Java JDK** (if not already installed)
+- 🌱 **Android environment** - `ANDROID_HOME` + SDK paths in `~/.zshenv`
 
-**Dependencies:** 01-system.sh, 03-version-managers.sh
-**Runtime:** ~20-30 minutes (large downloads)
-**Best for:** Mobile app developers
+**Dependencies:** 01-system.sh
+**Runtime:** ~10-15 minutes (Android Studio download)
+**Best for:** Android developers (run script 12 for iOS/React Native)
 
 **Manual Steps Required:**
-- Install Xcode from App Store (~15GB)
-- Accept Xcode license: `sudo xcodebuild -license accept`
-- Create Android Virtual Devices in Android Studio
+- Open Android Studio, install the SDK (API 33+) and create an AVD
+- For iOS/React Native, run `./scripts/12-expo-rn.sh`
 
 **Usage:**
 ```bash

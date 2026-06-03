@@ -163,7 +163,7 @@ This guide provides detailed explanations of every tool included in the setup sc
 
 ## Programming Languages
 
-### ☕ Java (OpenJDK 21)
+### ☕ Java (OpenJDK 17)
 **What it is:** Popular object-oriented programming language  
 **Why included:** Android development, enterprise applications, Spring Boot  
 **Key tools:** javac (compiler), java (runtime), jar (archiver)  
@@ -417,7 +417,7 @@ This guide provides detailed explanations of every tool included in the setup sc
 
 ### ☕ Java JDK
 **Required for:** Android development  
-**Version:** OpenJDK 21  
+**Version:** OpenJDK 17  
 **JAVA_HOME:** Automatically configured  
 **Includes:** javac, java, javadoc, jar
 

@@ -77,9 +77,9 @@ The setup checker (`check-setup.sh`) verifies your Mac development environment a
 ### Frontend Development (Core Focus)
 - **JavaScript Ecosystem**: Node.js, npm, pnpm, bun
 - **TypeScript**: Compiler and language server
-- **Frontend Frameworks**: Vue CLI, React tools, Angular CLI
+- **Frontend Frameworks**: Vue CLI, Nuxt CLI
 - **Monorepo & Deploy**: Turbo (Turborepo), Vercel CLI
-- **Build Tools**: Vite, Webpack, create-react-app
+- **Build Tools**: Vite (create-vite), serve
 - **Mobile**: React Native CLI, Expo CLI (create-expo-app)
 - **Headless CMS**: Storyblok, Sanity
 
@@ -194,7 +194,7 @@ SKIP_INTERACTIVE=true ./check-setup.sh
 The checker prioritizes frontend development tools and shows specific metrics for:
 
 - **JavaScript/TypeScript ecosystem completeness**
-- **React/Vue/Angular framework readiness** 
+- **React/Vue framework readiness**
 - **Mobile development (React Native) status**
 - **Modern build tool availability**
 - **Developer experience tool coverage**

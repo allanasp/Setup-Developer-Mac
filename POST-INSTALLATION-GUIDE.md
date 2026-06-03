@@ -300,7 +300,7 @@ echo $ANDROID_HOME
 # Should output: /Users/[username]/Library/Android/sdk
 
 echo $JAVA_HOME
-# Should output: /Library/Java/JavaVirtualMachines/openjdk-21.jdk/Contents/Home
+# Should output: /Library/Java/JavaVirtualMachines/openjdk-17.jdk/Contents/Home
 
 # Add to PATH if missing
 echo 'export ANDROID_HOME=$HOME/Library/Android/sdk' >> ~/.zshrc

@@ -49,7 +49,7 @@ Run `./setup.sh --dry-run` (alias `-n`) to preview every change without mutating
 | 4 | `04-languages.sh` | ~8 min | Backend devs | Java, Go, Ruby |
 | 5 | `05-frontend.sh` | ~12 min | Web/mobile devs | Vue, React, Storyblok, Sanity |
 | 6 | `06-dev-apps.sh` | ~15 min | All developers | VS Code, Cursor, Kiro, Git tools |
-| 7 | `07-mobile.sh` | ~25 min | Mobile devs | Android Studio, iOS tools |
+| 7 | `07-mobile.sh` | ~12 min | Android devs | Android Studio + env (iOS/RN → 12) |
 | 8 | `08-productivity.sh` | ~8 min | Productivity focus | Rectangle, Maccy, Mockoon |
 | 9 | `09-database.sh` | ~10 min | Full-stack devs | PostgreSQL, DBeaver, pgAdmin, Supabase |
 | 10 | `10-devops.sh` | ~12 min | Frontend deployment | ngrok, kubectl, Terraform, utilities |
@@ -153,7 +153,7 @@ pyenv local 3.11.5
 **Perfect for:** Backend developers, full-stack developers
 
 **What it installs:**
-- ☕ **Java JDK 21** - With JAVA_HOME configuration
+- ☕ **Java JDK 17** - With JAVA_HOME configuration
 - 🐹 **Go** - Latest stable version
 - 💎 **Ruby** - Latest stable version
 
@@ -261,37 +261,31 @@ git flow feature start myfeature
 
 ### 7️⃣ Mobile Development (`07-mobile.sh`)
 
-**Complete iOS and Android development**
+**Android Studio + the Android environment (iOS/React Native → script 12)**
 
 ```bash
 ./scripts/07-mobile.sh
 ```
 
-**Perfect for:** Mobile app developers, React Native developers
+**Perfect for:** Android developers. For iOS + the full Expo/React Native
+toolchain (xcodes, ios-deploy, CocoaPods, SwiftLint, Watchman, JDK 17,
+Maestro), run script 12 (`./scripts/12-expo-rn.sh`).
 
 **What it installs:**
 - 🤖 **Android Studio** - Full Android IDE
-- 📱 **iOS Tools** - xcodes, SwiftLint, ios-deploy
-- 📦 **CocoaPods** - iOS dependency manager
-- ☕ **Java JDK** - Required for Android development
+- 🌱 **Android environment** - `ANDROID_HOME` + SDK paths in `~/.zshenv`
 
 **Manual steps required:**
-1. **Install Xcode** from App Store (~15GB download)  
-2. **Accept license:** `sudo xcodebuild -license accept`
-3. **Create Android AVDs** in Android Studio
+1. **Open Android Studio**, install the SDK (API 33+) and create an AVD
+2. **For iOS/React Native:** run `./scripts/12-expo-rn.sh`
 
 **Usage examples:**
 ```bash
-# React Native
-npx react-native run-android
-npx react-native run-ios
-
-# iOS development
-pod install
-xcodes install --latest
-
 # Android emulator
 $ANDROID_HOME/emulator/emulator -avd Pixel_API_35
+
+# Full Expo/React Native + iOS toolchain
+./scripts/12-expo-rn.sh
 ```
 
 ---

@@ -28,7 +28,7 @@
 
 ### 🛠️ **Frontend-First Development Stack**
 - **JavaScript/TypeScript Ecosystem**: Node.js (via Volta), npm, pnpm, bun
-- **Frontend Frameworks**: Vue CLI, Nuxt CLI, React, Angular, Svelte
+- **Frontend Frameworks**: Vue CLI, Nuxt CLI (plus React/Svelte project support via npx)
 - **Build & Monorepo Tools**: Vite, Turbo (Turborepo), Vercel CLI, serve
 - **Mobile Development**: React Native CLI, Expo CLI, EAS CLI, iOS/Android tools
 - **Headless CMS**: Storyblok CLI, Sanity CLI
@@ -160,7 +160,7 @@ The setup now **guides you through each step** with configuration prompts:
 | 4 | `04-languages.sh` | Programming Languages | Java, Go, Ruby |
 | 5 | `05-frontend.sh` | Frontend Tools | TypeScript, Vue, React Native, Vite, Turbo, Vercel, Storyblok, Sanity |
 | 6 | `06-dev-apps.sh` | Development Apps | VS Code + extensions, Cursor, Kiro, Git tools |
-| 7 | `07-mobile.sh` | Mobile Development | Android Studio, iOS tools, CocoaPods |
+| 7 | `07-mobile.sh` | Mobile Development | Android Studio + Android env (iOS/RN → script 12) |
 | 8 | `08-productivity.sh` | Productivity Tools | Rectangle, Obsidian, Maccy, Mockoon, Expo Orbit |
 | 9 | `09-database.sh` | Database Tools | PostgreSQL, DBeaver, pgAdmin 4, Supabase CLI |
 | 10 | `10-devops.sh` | DevOps Tools | ngrok, UpCloud, Kubernetes, Tilt, Terraform |
@@ -185,7 +185,7 @@ The setup now **guides you through each step** with configuration prompts:
 
 - **Node.js** (latest LTS via Volta version manager)
 - **Python** (3.9.6, 3.10.13, 3.12.1 via pyenv)
-- **Java JDK** (OpenJDK 21 with JAVA_HOME configuration)
+- **Java JDK** (OpenJDK 17 with JAVA_HOME configuration)
 - **Go** (latest stable version)
 - **Ruby** (latest stable version)
 - **TypeScript** (global compiler)
