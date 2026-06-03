@@ -96,21 +96,25 @@ remove_formula() {
         print_status "[dry-run] would remove formula: ${formula}"
         return 0
     fi
-    if brew uninstall --ignore-dependencies "${formula}" 2>/dev/null; then
+    # No --ignore-dependencies: if something still depends on this formula,
+    # brew refuses, which is the safe behaviour for a rollback.
+    if brew uninstall "${formula}" 2>/dev/null; then
         print_success "Removed formula: ${formula}"
     else
-        print_warning "Could not remove formula: ${formula}"
+        print_warning "Could not remove ${formula} (in use by another formula?)"
     fi
 }
 
 remove_volta_pkg() {
     local pkg="$1"
     command_exists volta || return 0
+    # Skip packages that aren't actually installed (mirrors the brew guards).
+    volta list 2>/dev/null | grep -q "${pkg}" || return 0
     if is_dry_run; then
         print_status "[dry-run] would remove Volta package: ${pkg}"
         return 0
     fi
-    volta uninstall "${pkg}" &>/dev/null && print_success "Removed Volta package: ${pkg}" || true
+    volta uninstall "${pkg}" &>/dev/null && print_success "Removed Volta package: ${pkg}" || print_warning "Could not remove Volta package: ${pkg}"
 }
 
 if confirm_category "applications (casks)"; then

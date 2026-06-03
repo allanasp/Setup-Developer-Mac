@@ -38,10 +38,13 @@ print_setup_summary() {
     local file="${1:-${SETUP_RESULTS_FILE:-}}"
     [[ -n "${file}" && -f "${file}" ]] || return 0
 
+    # grep -c prints "0" and exits 1 on no match; `|| echo 0` would then emit a
+    # second line. Capture the count and fall back to 0 so the value stays a
+    # single integer (the `-gt 0` test below would error on a multiline value).
     local installed skipped failed
-    installed=$(grep -c '^installed:' "${file}" 2>/dev/null || echo 0)
-    skipped=$(grep -c '^skipped:' "${file}" 2>/dev/null || echo 0)
-    failed=$(grep -c '^failed:' "${file}" 2>/dev/null || echo 0)
+    installed=$(grep -c '^installed:' "${file}" 2>/dev/null) || installed=0
+    skipped=$(grep -c '^skipped:' "${file}" 2>/dev/null) || skipped=0
+    failed=$(grep -c '^failed:' "${file}" 2>/dev/null) || failed=0
 
     print_section "Setup Summary"
     print_success "Installed: ${installed}"
