@@ -8,15 +8,22 @@ description: Complete configuration guide for all installed tools
 
 > **Your complete checklist for configuring every tool after installation**
 
+> **Need to (re)install?** Run the one-line installer:
+> ```bash
+> sh -c "$(curl -fsSL https://raw.githubusercontent.com/allanasp/Setup-Developer-Mac/main/install.sh)"
+> ```
+> Append `-- --skip-prompts` to run non-interactively, and set the `SETUP_OPTIONAL`
+> environment variable to choose which optional scripts run.
+
 ## 🚀 Quick Navigation
 
 - [Essential Setup](#essential-setup-everyone) - Required for all users
 - [Development Tools](#development-tools) - VS Code, Git, GitHub
 - [Frontend Development](#frontend-development) - Package managers, CMS tools
 - [Mobile Development](#mobile-development) - Android Studio, Xcode
-- [Productivity Apps](#productivity-apps) - Raycast, Rectangle, Maccy
+- [Productivity Apps](#productivity-apps) - Rectangle, Maccy
 - [Database Setup](#database-setup) - PostgreSQL, Supabase
-- [DevOps & Cloud](#devops--cloud) - AWS, ngrok, command line utilities
+- [DevOps & Cloud](#devops--cloud) - ngrok, UpCloud, Kubernetes, command line utilities
 - [Troubleshooting](#troubleshooting) - Common issues
 
 ---
@@ -116,7 +123,6 @@ source ~/.zshrc</code></pre>
 
 **Extension Setup:**
 - **GitHub Copilot:** Click icon → Sign in with GitHub
-- **AWS Toolkit:** Click AWS icon → Add Connection → Follow prompts
 
 ### 🐙 GitHub Configuration
 
@@ -148,12 +154,11 @@ git config --global init.defaultBranch main
 # npm login (if publishing packages)
 npm login
 
-# Configure Yarn Berry (optional)
-yarn set version berry
+# pnpm is installed via Volta and ready to use
+pnpm --version
 
-# Setup pnpm
-pnpm setup
-source ~/.zshrc
+# bun is installed via the oven-sh/bun Homebrew tap
+bun --version
 ```
 
 ### 📝 Headless CMS Tools
@@ -236,35 +241,29 @@ npx react-native doctor
 # Fix any ❌ issues shown
 ```
 
+### 🚀 Expo + React Native Local Dev (12-expo-rn.sh)
+
+The optional `12-expo-rn.sh` script sets up a full local Expo / React Native
+toolchain: **Watchman**, **OpenJDK 17**, **Android Studio**, the **iOS toolchain**,
+and **Maestro** for end-to-end mobile testing.
+
+```bash
+# Run the Expo / React Native setup script
+./scripts/12-expo-rn.sh
+
+# Verify the toolchain
+watchman --version
+java -version          # OpenJDK 17
+maestro --version
+
+# Create and run a new app
+npx create-expo-app my-app
+cd my-app && npx expo start
+```
+
 ---
 
 ## Productivity Apps
-
-### 🔍 Raycast Setup
-
-<div class="productivity-grid">
-<div class="prod-card">
-<h4>1. Initial Setup</h4>
-<ul>
-<li>Open Raycast</li>
-<li>Grant permissions</li>
-<li>Disable Spotlight: System Prefs → Keyboard → Shortcuts</li>
-<li>Set Raycast to ⌘Space</li>
-</ul>
-</div>
-
-<div class="prod-card">
-<h4>2. Essential Extensions</h4>
-<p>Open Store (⌘Space → "store")</p>
-<ul>
-<li>GitHub</li>
-<li>Homebrew</li>
-<li>Kill Process</li>
-<li>Clipboard History</li>
-<li>VSCode Projects</li>
-</ul>
-</div>
-</div>
 
 ### 🪟 Rectangle Shortcuts
 
@@ -341,21 +340,36 @@ supabase db pull</code></pre>
 
 ## DevOps & Cloud
 
-### ☁️ AWS Setup
+### ☁️ UpCloud Setup
 
-1. **Create AWS Account** at [aws.amazon.com](https://aws.amazon.com)
-2. **Create IAM User:**
-   - Console → IAM → Users → Add
-   - Enable programmatic access
-   - Save credentials
-
-3. **Configure CLI:**
+1. **Create an UpCloud account** at [upcloud.com](https://upcloud.com)
+2. **Enable API access** and create API credentials in the control panel
+3. **Configure upctl:**
 ```bash
-aws configure
-# Enter: Access Key, Secret Key, Region (us-east-1), Format (json)
+# Provide credentials (env vars or upctl config)
+export UPCLOUD_USERNAME="your-username"
+export UPCLOUD_PASSWORD="your-password"
 
 # Test
-aws sts get-caller-identity
+upctl account show
+upctl server list
+```
+
+### ☸️ Kubernetes & Infrastructure
+
+```bash
+# kubectl - point at a cluster, then verify
+kubectl version --client
+kubectl get nodes
+
+# Tilt - fast local dev on Kubernetes
+tilt version
+tilt up   # from a project with a Tiltfile
+
+# Terraform - infrastructure as code
+terraform version
+terraform init
+terraform plan
 ```
 
 ### 🌐 Command Line Utilities

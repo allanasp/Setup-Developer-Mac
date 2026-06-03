@@ -60,7 +60,7 @@ The setup checker (`check-setup.sh`) verifies your Mac development environment a
 [✓] Visual Studio Code (1.81.1)
 [✓] VS Code Extensions (20 installed)
 [✓] Cursor (0.8.0)
-[✗] Zed - not installed
+[✓] Kiro (installed)
 
 📊 Setup Status: 85% Complete (34/40 tools installed)
 🎯 Frontend Focus: 95% Complete (19/20 tools)
@@ -75,24 +75,33 @@ The setup checker (`check-setup.sh`) verifies your Mac development environment a
 - **Version Managers**: Volta (Node.js), pyenv (Python)
 
 ### Frontend Development (Core Focus)
-- **JavaScript Ecosystem**: Node.js, npm, yarn, pnpm
+- **JavaScript Ecosystem**: Node.js, npm, pnpm, bun
 - **TypeScript**: Compiler and language server
 - **Frontend Frameworks**: Vue CLI, React tools, Angular CLI
+- **Monorepo & Deploy**: Turbo (Turborepo), Vercel CLI
 - **Build Tools**: Vite, Webpack, create-react-app
-- **Mobile**: React Native CLI, Expo CLI
+- **Mobile**: React Native CLI, Expo CLI (create-expo-app)
+- **Headless CMS**: Storyblok, Sanity
 
 ### Development Tools
-- **Editors**: VS Code, Cursor, Zed
+- **Editors**: VS Code, Cursor, Kiro
 - **Extensions**: 20+ VS Code extensions
 - **Git Tools**: GitHub CLI, Git aliases
 - **Terminal Tools**: Advanced shell configuration
 
 ### Optional Components
 - **Mobile Development**: Android Studio, iOS tools, simulators
-- **Productivity**: Raycast, Rectangle, Maccy, Obsidian
-- **Database**: PostgreSQL, DBeaver Community Edition, Supabase CLI
-- **DevOps**: AWS CLI, ngrok, command line utilities (jq, fzf, eza)
+- **Expo / React Native (12-expo-rn.sh)**: Watchman, OpenJDK 17, Maestro
+- **Productivity**: Rectangle, Maccy, Mockoon, Expo Orbit, DevToys, Signal, WiFiman
+- **Database**: PostgreSQL, DBeaver Community Edition, pgAdmin 4, Supabase CLI
+- **DevOps**: ngrok, UpCloud CLI (upctl), kubectl, Tilt, Terraform, command line utilities (jq, fzf, eza, wget, tree)
 - **Developer Fonts**: Fira Code, JetBrains Mono
+
+### 🔎 Notable Tools the Checker Verifies
+
+The checker now confirms these additions: **bun**, **Turbo**, **Vercel CLI**, **create-expo-app**, **Storyblok**, **Sanity**, **Supabase**, **pgAdmin 4**, **UpCloud upctl**, **kubectl**, **Tilt**, **Terraform**, **Maestro**, **Kiro**, **Mockoon**, **Expo Orbit**, **DevToys**, **Signal**, and **WiFiman**.
+
+It **no longer checks** for **Yarn**, **AWS CLI**, **Amazon Q**, **Raycast**, or **Zed** — these have been dropped from the setup.
 
 ## 🔧 Common Issues & Fixes
 

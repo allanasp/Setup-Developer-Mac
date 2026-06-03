@@ -7,6 +7,15 @@ This guide provides detailed information about each script in the modular Mac de
 ## 🚀 Quick Start
 
 ```bash
+# One-line installer
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/allanasp/Setup-Developer-Mac/main/install.sh)"
+
+# For CI, skip the interactive prompts
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/allanasp/Setup-Developer-Mac/main/install.sh)" -- --skip-prompts
+
+# Pick optional scripts via env var
+SETUP_OPTIONAL="5 6 8" sh -c "$(curl -fsSL https://raw.githubusercontent.com/allanasp/Setup-Developer-Mac/main/install.sh)"
+
 # Run the main setup script
 ./setup.sh
 
@@ -42,6 +51,7 @@ These scripts provide the foundation for all development work:
 | 9 | `09-database.sh` | Database Tools | Data management |
 | 10 | `10-devops.sh` | DevOps Tools | Infrastructure |
 | 11 | `11-fonts.sh` | Developer Fonts | Better coding experience |
+| 12 | `12-expo-rn.sh` | Expo + React Native | Local mobile dev |
 
 ---
 
@@ -101,6 +111,8 @@ p10k configure
 - 🚀 **Volta** - Fast Node.js version manager
 - 🐍 **pyenv** - Python version manager  
 - 📦 **Node.js** (latest LTS via Volta)
+- 📦 **pnpm** - Fast, disk-efficient package manager (via Volta)
+- 🥟 **bun** - All-in-one JavaScript runtime & package manager (via Homebrew tap `oven-sh/bun`)
 - 🐍 **Python** (3.9.6, 3.10.13, 3.12.1 via pyenv)
 
 **Dependencies:** 01-system.sh
@@ -160,6 +172,8 @@ gem install bundler
 - ⚛️ **React Native CLI** - Mobile app development
 - 🚀 **Expo CLI & EAS CLI** - Expo development platform
 - ⚡ **Vite** - Fast build tool
+- 🏎️ **Turbo (Turborepo)** - Monorepo build system (via Volta)
+- ▲ **Vercel CLI** - Deployment & dev tooling (via Volta)
 - 📝 **Storyblok CLI** - Headless CMS
 - 🎨 **Sanity CLI** - Headless CMS
 - 👀 **Watchman** - File watching (React Native)
@@ -196,12 +210,12 @@ sanity init
 **What it installs:**
 - 💻 **Visual Studio Code** with 20+ extensions
 - 🤖 **Cursor** - AI-powered editor  
-- ⚡ **Zed** - High-performance editor
+- 🛠️ **Kiro** - AWS agentic IDE
 - 📝 **TextMate** - Lightweight editor
 - 🔧 **Git & GitHub tools** - git-flow, GitHub CLI, GitHub Desktop
 
 **Key VS Code Extensions:**
-- GitHub Copilot, AWS Toolkit (Amazon Q)
+- GitHub Copilot
 - Vue Language Features, Python, Go
 - GitLens, ESLint, Prettier
 - Auto Close Tag, Better Comments
@@ -269,29 +283,28 @@ $ANDROID_HOME/emulator/emulator -avd Pixel_API_35
 **Purpose:** Workflow optimization and productivity applications
 
 **What it installs:**
-- 🔍 **Raycast** - Advanced Spotlight replacement
 - 🪟 **Rectangle** - Window management
 - 📋 **Maccy** - Clipboard history manager
 - 📝 **Obsidian** - Note-taking application
 - 🌐 **Browsers** - Firefox, Brave (testing)
 - 🛠️ **Developer utilities** - OrbStack, Postman, Figma
+- 🧪 **Mockoon** - Mock API server
+- 🛰️ **Expo Orbit** - Launch builds & simulators
+- 🔧 **DevToys** - Swiss-army knife for developers
+- 💬 **Signal** - Private messaging
+- 📶 **WiFiman** - Network diagnostics
 
 **Dependencies:** 01-system.sh
 **Runtime:** ~5-8 minutes
 **Best for:** All users wanting better productivity
 
 **Setup Required:**
-- **Raycast**: Set CMD+Space shortcut, install extensions
 - **Rectangle**: Configure window shortcuts (⌘+⌥+arrows)
 - **Maccy**: Set clipboard shortcut (⌘+Shift+V)
 - **Obsidian**: Create vault, configure sync (optional)
 
 **Usage:**
 ```bash
-# Raycast shortcuts (after setup)
-CMD+Space                # Open Raycast
-# Search: "gh" for GitHub, "brew" for Homebrew
-
 # Rectangle shortcuts  
 CMD+OPT+Left            # Snap window left
 CMD+OPT+Right           # Snap window right
@@ -307,6 +320,7 @@ CMD+OPT+F               # Maximize window
 **What it installs:**
 - 🐘 **PostgreSQL 15** - Production database
 - 🖥️ **DBeaver Community Edition** - Universal database GUI client
+- 🐘 **pgAdmin 4** - PostgreSQL management GUI
 - ⚡ **Supabase CLI** - Backend-as-a-service
 - 🏗️ **Database configuration** - Auto-start, PATH setup
 
@@ -337,8 +351,11 @@ postgresql://localhost:5432/myproject
 **Purpose:** Frontend deployment and command line utilities
 
 **What it installs:**
-- ☁️ **AWS CLI** - For S3, CloudFront, Lambda deployment
 - 🌐 **ngrok** - Local tunneling for sharing dev servers
+- ☁️ **UpCloud CLI (upctl)** - Manage UpCloud infrastructure
+- ☸️ **kubectl** (kubernetes-cli) - Kubernetes command line
+- 🔧 **Tilt** - Local Kubernetes development
+- 🏗️ **Terraform** (via `hashicorp/tap`) - Infrastructure as code
 - 🛠️ **Command line utilities** - jq, fzf, eza, wget, tree
 - 📊 **JSON processing** - jq for API responses
 - 🔍 **Fuzzy finding** - fzf for terminal productivity
@@ -349,13 +366,19 @@ postgresql://localhost:5432/myproject
 
 **Usage:**
 ```bash
-# AWS CLI (for frontend deployment)
-aws configure                 # Setup credentials
-aws s3 sync ./dist s3://bucket  # Deploy static site
-aws cloudfront create-invalidation  # Refresh CDN
-
 # Local tunneling
 ngrok http 3000              # Expose local port 3000
+
+# UpCloud
+upctl server list            # List servers
+
+# Kubernetes
+kubectl get pods             # List pods
+tilt up                      # Start local dev environment
+
+# Terraform
+terraform init               # Initialize working directory
+terraform apply              # Apply infrastructure changes
 
 # Command line utilities
 jq '.data[] | .name' api.json  # Process JSON
@@ -383,6 +406,45 @@ After installation, update your editor/terminal font settings:
 - **VS Code**: Preferences → Settings → Font Family
 - **iTerm2**: Preferences → Profiles → Text → Font
 - **Terminal**: Preferences → Profiles → Font
+
+---
+
+### 1️⃣2️⃣ Expo + React Native (`12-expo-rn.sh`)
+
+**Purpose:** Complete local Expo + React Native development environment
+
+**What it installs:**
+- 👀 **Watchman** - File watching (React Native / Metro)
+- ☕ **OpenJDK 17** - Required for Android builds (Gradle), with JAVA_HOME
+- 🤖 **Android Studio** - Android SDK, emulator, tooling
+- 📱 **iOS toolchain** - xcodes, ios-deploy, CocoaPods, SwiftLint
+- 🚀 **Expo / React Native CLIs** (via Volta) - `@expo/cli`, `eas-cli`, `create-expo-app`, `@react-native-community/cli`
+- 🧪 **Maestro** - Mobile UI testing
+
+**Dependencies:** 01-system.sh, 03-version-managers.sh
+**Runtime:** ~20-30 minutes (large downloads)
+**Best for:** Expo / React Native developers
+
+**Manual Steps Required:**
+- Install Xcode from App Store (~15GB), then re-run to auto-accept license + install SwiftLint
+- Open Android Studio → SDK Manager to install SDK platforms & tools
+- Create a Pixel emulator in the Virtual Device Manager
+- Authenticate with EAS: `eas login`
+
+**Usage:**
+```bash
+# Create and run a fresh app
+npx create-expo-app@latest my-test-app
+cd my-test-app
+npx expo start --ios            # or --android
+
+# Diagnostics
+npx expo-doctor                 # for Expo projects
+npx react-native doctor         # for bare RN projects
+
+# Mobile UI testing
+maestro studio
+```
 
 ---
 
@@ -508,12 +570,14 @@ graph TD
     B --> E[05-frontend.sh]
     C --> E
     C --> K[07-mobile.sh]
+    C --> L[12-expo-rn.sh]
     
     style A fill:#ff6b6b
     style B fill:#4ecdc4  
     style C fill:#4ecdc4
     style E fill:#45b7d1
     style K fill:#96ceb4
+    style L fill:#96ceb4
 ```
 
 **Legend:**
@@ -533,10 +597,9 @@ After running your chosen scripts:
 2. **Configure PowerLevel10k**: `p10k configure`
 3. **Setup authentication**:
    - GitHub: `gh auth login`
-   - AWS: `aws configure`
    - Supabase: `supabase login`
 4. **Import iTerm2 theme** manually
-5. **Configure productivity apps** (Raycast, Rectangle shortcuts)
+5. **Configure productivity apps** (Rectangle shortcuts)
 6. **Start coding!** 🚀
 
 ---

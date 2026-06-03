@@ -17,13 +17,18 @@ Choose exactly what you need - from essential system requirements to frontend-sp
 ## ⚡ Quick Start
 
 ```bash
-# Clone the repository
+# One-line install
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/allanasp/Setup-Developer-Mac/main/install.sh)"
+
+# ...or clone and run manually
 git clone https://github.com/allanasp/Setup-Developer-Mac.git
 cd Setup-Developer-Mac
 
 # Interactive setup (recommended)
 ./setup.sh
 ```
+
+> Append `-- --skip-prompts` to the one-line installer for a non-interactive run. Set the `SETUP_OPTIONAL` env var to choose which optional scripts get installed.
 
 **🎯 Interactive Experience:**
 - ✅ Install → ⚙️ Configure → ✅ Verify → Continue
@@ -70,13 +75,13 @@ cd Setup-Developer-Mac
   
   <div class="script-card optional frontend-highlight">
     <h4>5. Frontend Tools ⭐ CORE</h4>
-    <p>TypeScript, Vue, React Native, Vite, Storyblok, Sanity - The heart of this setup!</p>
+    <p>TypeScript, Vue, React Native, Vite, pnpm, bun, Turbo, Vercel CLI, Storyblok, Sanity - The heart of this setup!</p>
     <code>./scripts/05-frontend.sh</code>
   </div>
   
   <div class="script-card optional">
     <h4>6. Development Apps</h4>
-    <p>VS Code + 20+ extensions, Cursor, Git tools</p>
+    <p>VS Code + 20+ extensions, Cursor, Kiro, Git tools</p>
     <code>./scripts/06-dev-apps.sh</code>
   </div>
   
@@ -88,19 +93,19 @@ cd Setup-Developer-Mac
   
   <div class="script-card optional">
     <h4>8. Productivity Tools</h4>
-    <p>Raycast, Rectangle, Maccy, Obsidian, browsers, utilities</p>
+    <p>Rectangle, Maccy, Obsidian, Mockoon, Expo Orbit, DevToys, Signal, WiFiman, browsers, utilities</p>
     <code>./scripts/08-productivity.sh</code>
   </div>
   
   <div class="script-card optional">
     <h4>9. Database Tools</h4>
-    <p>PostgreSQL, DBeaver Community Edition, Supabase CLI</p>
+    <p>PostgreSQL, DBeaver Community Edition, pgAdmin 4, Supabase CLI</p>
     <code>./scripts/09-database.sh</code>
   </div>
   
   <div class="script-card optional">
     <h4>10. DevOps Tools</h4>
-    <p>AWS CLI, ngrok, command line utilities (jq, fzf, eza)</p>
+    <p>ngrok, UpCloud CLI (upctl), kubectl, Tilt, Terraform, command line utilities (jq, fzf, eza, wget, tree)</p>
     <code>./scripts/10-devops.sh</code>
   </div>
   
@@ -108,6 +113,12 @@ cd Setup-Developer-Mac
     <h4>11. Developer Fonts</h4>
     <p>Fira Code, JetBrains Mono, programming fonts</p>
     <code>./scripts/11-fonts.sh</code>
+  </div>
+
+  <div class="script-card optional">
+    <h4>12. Expo + React Native</h4>
+    <p>Watchman, OpenJDK 17, Android Studio, iOS toolchain, Maestro for local Expo/RN dev</p>
+    <code>./scripts/12-expo-rn.sh</code>
   </div>
 </div>
 
@@ -172,8 +183,8 @@ cd Setup-Developer-Mac
 ### Tool Configuration
 - Set up Git identity and GitHub authentication
 - Configure VS Code settings and extensions
-- Initialize cloud accounts (AWS, Supabase)
-- Set up productivity apps (Raycast, Rectangle)
+- Initialize cloud accounts (Supabase, Vercel)
+- Set up productivity apps (Rectangle, Mockoon)
 
 **[📋 Complete Post-Installation Guide →](post-installation.html)**
 

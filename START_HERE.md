@@ -1,5 +1,15 @@
 # 🚀 Start Here - Mac Frontend Developer Setup
 
+## Quick Start (1 Line)
+
+```bash
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/allanasp/Setup-Developer-Mac/main/install.sh)"
+```
+
+Append `-- --skip-prompts` for a non-interactive run. Set the `SETUP_OPTIONAL` env var to pick which optional scripts to install.
+
+---
+
 ## Quick Start (2 Steps)
 
 ### 1. Clone this repository
@@ -21,9 +31,9 @@ cd Setup-Developer-Mac
 
 **Frontend-focused Mac development environment** with:
 - ✅ **React, Vue, Angular** development tools
-- ✅ **Node.js, TypeScript, npm/yarn** ecosystem  
-- ✅ **React Native** mobile development
-- ✅ **VS Code** with 20+ extensions
+- ✅ **Node.js, TypeScript, pnpm/bun** ecosystem  
+- ✅ **React Native & Expo** mobile development
+- ✅ **VS Code, Cursor, Kiro** editors
 - ✅ **Terminal** with beautiful themes
 - ✅ **Git, databases, DevOps** tools as needed
 
@@ -45,13 +55,14 @@ No guessing, no broken setups!
 - Version managers (Node.js, Python)
 
 **Optional (pick what you need):**
-- Frontend tools (TypeScript, Vue, React Native)
-- Development apps (VS Code, Cursor)
+- Frontend tools (TypeScript, Vue, React Native, Turbo, Vercel CLI)
+- Development apps (VS Code, Cursor, Kiro)
 - Mobile development (Android Studio, iOS tools)
-- Productivity tools (Raycast, Rectangle)
-- Database tools (PostgreSQL, Supabase)
-- DevOps tools (AWS CLI, ngrok, utilities)
+- Productivity tools (Rectangle, Mockoon, Expo Orbit, DevToys, Signal, WiFiman)
+- Database tools (PostgreSQL, Supabase, pgAdmin 4)
+- DevOps tools (ngrok, UpCloud CLI, kubectl, Tilt, Terraform, utilities)
 - Developer fonts (Fira Code, JetBrains Mono)
+- Expo + React Native local dev (Watchman, OpenJDK 17, Android Studio, iOS toolchain, Maestro)
 
 ## 🆘 Need Help?
 
@@ -76,6 +87,7 @@ No guessing, no broken setups!
 # Run individual scripts
 ./scripts/05-frontend.sh        # Just frontend tools
 ./scripts/06-dev-apps.sh        # Just VS Code & extensions
+./scripts/12-expo-rn.sh         # Just Expo + React Native local dev
 ```
 
 ## 🔍 Verify Your Setup

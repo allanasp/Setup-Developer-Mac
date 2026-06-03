@@ -8,6 +8,18 @@ description: Detailed documentation for all Mac development setup scripts
 
 > **Comprehensive documentation for all development setup scripts**
 
+## ⚡ One-Line Installer
+
+```bash
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/allanasp/Setup-Developer-Mac/main/install.sh)"
+```
+
+Append `-- --skip-prompts` to run non-interactively, and set the `SETUP_OPTIONAL` env variable to pick which optional scripts run:
+
+```bash
+SETUP_OPTIONAL="5 6 8 12" sh -c "$(curl -fsSL https://raw.githubusercontent.com/allanasp/Setup-Developer-Mac/main/install.sh)" -- --skip-prompts
+```
+
 ## 🚀 Quick Navigation
 
 - [Essential Scripts](#essential-scripts) - Always installed first
@@ -34,12 +46,13 @@ description: Detailed documentation for all Mac development setup scripts
 |---|--------|---------|----------|-----------|
 | 4 | `04-languages.sh` | ~8 min | Backend devs | Java, Go, Ruby |
 | 5 | `05-frontend.sh` | ~12 min | Web/mobile devs | Vue, React, Storyblok, Sanity |
-| 6 | `06-dev-apps.sh` | ~15 min | All developers | VS Code, Cursor, Git tools |
+| 6 | `06-dev-apps.sh` | ~15 min | All developers | VS Code, Cursor, Kiro, Git tools |
 | 7 | `07-mobile.sh` | ~25 min | Mobile devs | Android Studio, iOS tools |
-| 8 | `08-productivity.sh` | ~8 min | Productivity focus | Raycast, Rectangle, Maccy |
-| 9 | `09-database.sh` | ~10 min | Full-stack devs | PostgreSQL, DBeaver, Supabase |
-| 10 | `10-devops.sh` | ~12 min | Frontend deployment | AWS CLI, ngrok, utilities |
+| 8 | `08-productivity.sh` | ~8 min | Productivity focus | Rectangle, Maccy, Mockoon |
+| 9 | `09-database.sh` | ~10 min | Full-stack devs | PostgreSQL, DBeaver, pgAdmin, Supabase |
+| 10 | `10-devops.sh` | ~12 min | Frontend deployment | ngrok, kubectl, Terraform, utilities |
 | 11 | `11-fonts.sh` | ~3 min | Better coding | Fira Code, JetBrains Mono |
+| 12 | `12-expo-rn.sh` | ~30 min | Expo/RN devs | Watchman, Android Studio, iOS, EAS |
 
 ---
 
@@ -100,6 +113,8 @@ p10k configure
 - 🚀 **Volta** - Fast Node.js version manager
 - 🐍 **pyenv** - Python version manager
 - 📦 **Node.js** - Latest LTS automatically
+- 📦 **pnpm** - Fast, disk-efficient package manager (via Volta)
+- 🍞 **bun** - All-in-one JS runtime & package manager (via Homebrew tap `oven-sh/bun`)
 - 🐍 **Python** - Versions 3.9.6, 3.10.13, 3.12.1
 
 **Usage examples:**
@@ -107,6 +122,10 @@ p10k configure
 # Node.js management
 volta install node@20
 volta pin node@18
+
+# Package managers
+pnpm install
+bun install
 
 # Python management  
 pyenv install 3.11.5
@@ -166,6 +185,8 @@ gem install bundler
 - ⚛️ **React Native CLI** - Mobile development
 - 🚀 **Expo CLI & EAS CLI** - Expo platform
 - ⚡ **Vite** - Lightning-fast build tool
+- 🏎️ **Turbo (Turborepo)** - High-performance monorepo build system (via Volta)
+- ▲ **Vercel CLI** - Deploy and manage Vercel projects (via Volta)
 - 📝 **Storyblok CLI** - Headless CMS
 - 🎨 **Sanity CLI** - Content management
 - 👀 **Watchman** - File watching for React Native
@@ -203,12 +224,12 @@ sanity init
 **What it installs:**
 - 💻 **Visual Studio Code** - With 20+ carefully chosen extensions
 - 🤖 **Cursor** - AI-powered code editor
-- ⚡ **Zed** - Ultra-fast editor
+- 🪁 **Kiro** - AWS agentic IDE
 - 📝 **TextMate** - Lightweight option
 - 🔧 **Git Tools** - git-flow, GitHub CLI, GitHub Desktop
 
 **Key VS Code Extensions:**
-- **AI Assistants:** GitHub Copilot, AWS Toolkit (Amazon Q)
+- **AI Assistants:** GitHub Copilot
 - **Languages:** Vue Language Features, Python, Go
 - **Git:** GitLens, GitHub Pull Requests  
 - **Code Quality:** ESLint, Prettier, EditorConfig
@@ -280,22 +301,24 @@ $ANDROID_HOME/emulator/emulator -avd Pixel_API_35
 **Perfect for:** Anyone wanting better productivity
 
 **What it installs:**
-- 🔍 **Raycast** - Advanced Spotlight replacement
 - 🪟 **Rectangle** - Window management
 - 📋 **Maccy** - Clipboard history manager
 - 📝 **Obsidian** - Note-taking application
 - 🌐 **Browsers** - Firefox, Brave for testing
 - 🛠️ **Developer utilities** - OrbStack, Postman, Figma
+- 🧪 **Mockoon** - Mock API server
+- 🛰️ **Expo Orbit** - Manage Expo builds and simulators
+- 🧰 **DevToys** - Developer Swiss Army knife
+- 💬 **Signal** - Secure messaging
+- 📶 **WiFiman** - Network diagnostics
 
 **Setup required after installation:**
-- **Raycast:** Set CMD+Space shortcut, install extensions
 - **Rectangle:** Configure shortcuts (⌘+⌥+arrows)
 - **Maccy:** Set clipboard shortcut (⌘+Shift+V)
 - **Obsidian:** Create vault, configure sync (optional)
 
 **Productivity shortcuts:**
 ```bash
-CMD+Space           # Raycast (after setup)
 CMD+OPT+Left        # Snap window left
 CMD+OPT+Right       # Snap window right  
 CMD+Shift+V         # Clipboard history
@@ -316,6 +339,7 @@ CMD+Shift+V         # Clipboard history
 **What it installs:**
 - 🐘 **PostgreSQL 15** - Production database with auto-start
 - 🖥️ **DBeaver Community Edition** - Universal database GUI client  
+- 🐘 **pgAdmin 4** - PostgreSQL administration GUI
 - ⚡ **Supabase CLI** - Backend-as-a-service platform
 
 **Usage examples:**
@@ -347,21 +371,30 @@ postgresql://localhost:5432/myproject
 **Perfect for:** Frontend developers, deployment workflows
 
 **What it installs:**
-- ☁️ **AWS CLI** - For S3, CloudFront, Lambda deployment
 - 🌐 **ngrok** - Local tunneling for sharing dev servers
+- ☁️ **UpCloud CLI (upctl)** - Manage UpCloud infrastructure
+- ☸️ **kubectl** (kubernetes-cli) - Kubernetes command line
+- 🚀 **Tilt** - Local Kubernetes development
+- 🏗️ **Terraform** - Infrastructure as code (via `hashicorp/tap`)
 - 🛠️ **Command line utilities** - jq, fzf, eza, wget, tree
 - 📊 **JSON processing** - jq for API responses
 - 🔍 **Fuzzy finding** - fzf for terminal productivity
 
 **Usage examples:**  
 ```bash
-# AWS CLI (for frontend deployment)
-aws configure
-aws s3 sync ./dist s3://bucket  # Deploy static site
-aws cloudfront create-invalidation  # Refresh CDN
-
 # Local tunneling
 ngrok http 3000  # Share local dev server
+
+# UpCloud
+upctl server list
+
+# Kubernetes
+kubectl get pods
+tilt up
+
+# Infrastructure as code
+terraform init
+terraform plan
 
 # Command line utilities
 jq '.data[] | .name' api.json  # Process JSON
@@ -394,6 +427,45 @@ Update font settings in:
 
 ---
 
+### 1️⃣2️⃣ Expo & React Native (`12-expo-rn.sh`)
+
+**Complete local Expo and React Native development environment**
+
+```bash
+./scripts/12-expo-rn.sh
+```
+
+**Perfect for:** Expo developers, React Native developers
+
+**What it installs:**
+- 👀 **Watchman** - File watching for React Native
+- ☕ **OpenJDK 17** - Required for Android builds
+- 🤖 **Android Studio** - Full Android IDE and SDK
+- 📱 **iOS toolchain** - xcodes, ios-deploy, CocoaPods, SwiftLint
+- 🚀 **Expo, React Native & EAS CLIs** - via Volta
+- 🎭 **Maestro** - Mobile UI testing
+
+**Manual steps required:**
+1. **Install Xcode** from App Store (~15GB download)
+2. **Accept license:** `sudo xcodebuild -license accept`
+3. **Create Android AVDs** in Android Studio
+
+**Usage examples:**
+```bash
+# Expo
+npx create-expo-app@latest MyExpoApp
+npx expo start
+
+# EAS builds
+eas build --platform ios
+eas update
+
+# UI testing
+maestro test flow.yaml
+```
+
+---
+
 ## Usage Examples
 
 ### 🌐 Full Stack Web Developer
@@ -405,7 +477,7 @@ Update font settings in:
 # ✅ Languages (Java, Go, Ruby)
 # ✅ Frontend (Vue, React, TypeScript, Storyblok, Sanity)  
 # ✅ Dev Apps (VS Code, Cursor, Git tools)
-# ✅ Productivity (Raycast, Rectangle, Maccy)
+# ✅ Productivity (Rectangle, Maccy, Mockoon)
 # ✅ Database (PostgreSQL, Supabase, DBeaver)
 ```
 
@@ -430,9 +502,9 @@ Update font settings in:
 # Gets you:
 # ✅ Languages (Go, Java for tooling)
 # ✅ Dev Apps (VS Code, Git workflows)
-# ✅ Productivity (Raycast, window management)
+# ✅ Productivity (Rectangle, window management)
 # ✅ Database (PostgreSQL for local dev)
-# ✅ DevOps (Kubernetes, AWS, Docker alternative)
+# ✅ DevOps (Kubernetes, Terraform, Tilt)
 ```
 
 ### 🎯 Minimalist Developer
@@ -443,7 +515,7 @@ Update font settings in:
 # Gets you:
 # ✅ Essential foundation (auto-installed)
 # ✅ Dev Apps (VS Code, Git tools)  
-# ✅ Productivity (Raycast, Rectangle)
+# ✅ Productivity (Rectangle, Maccy)
 # ❌ No extra languages or specialized tools
 ```
 
@@ -622,9 +694,9 @@ After installation:
 3. **Import Dracula theme** in iTerm2
 4. **Authenticate services:**
    - `gh auth login` (GitHub)
-   - `aws configure` (AWS)
+   - `vercel login` (Vercel)
    - `supabase login` (Supabase)
-5. **Configure productivity apps** (Raycast shortcuts, Rectangle)
+5. **Configure productivity apps** (Rectangle shortcuts, Maccy)
 6. **Start coding!** 🚀
 
 ---

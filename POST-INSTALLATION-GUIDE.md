@@ -4,6 +4,13 @@
 
 This guide walks you through every configuration step needed to fully activate your development environment. Follow the sections based on which scripts you installed.
 
+> **One-line install:** Run everything from a fresh terminal with:
+> ```bash
+> sh -c "$(curl -fsSL https://raw.githubusercontent.com/allanasp/Setup-Developer-Mac/main/install.sh)"
+> ```
+> Append `-- --skip-prompts` to skip the interactive configuration prompts, and set the
+> `SETUP_OPTIONAL` environment variable to choose which optional scripts run.
+
 ## 🚀 Quick Start Checklist
 
 **Essential for Everyone:**
@@ -14,8 +21,8 @@ This guide walks you through every configuration step needed to fully activate y
 - [ ] Configure your primary code editor
 
 **Based on Your Installation:**
-- [ ] Set up cloud accounts (AWS, Supabase)
-- [ ] Configure productivity apps (Raycast, Rectangle)
+- [ ] Set up cloud accounts (UpCloud, Supabase)
+- [ ] Configure productivity apps (Rectangle, Mockoon)
 - [ ] Set up mobile development (Android Studio, Xcode)
 - [ ] Initialize database tools
 - [ ] Configure DevOps tools
@@ -112,12 +119,6 @@ Open VS Code settings (`⌘,`) and configure:
 2. Sign in with GitHub account
 3. Authorize GitHub Copilot
 
-**AWS Toolkit (Amazon Q):**
-1. Click AWS icon in sidebar
-2. Click "Add Connection"
-3. Choose authentication method
-4. Follow prompts to connect AWS account
-
 ### GitHub CLI Authentication
 ```bash
 # Authenticate with GitHub (required for many operations)
@@ -157,6 +158,12 @@ git config --global core.editor "code --wait"
 4. Import VS Code settings if desired
 5. Enable AI features in settings
 
+### Kiro Editor Setup
+1. Open **Kiro** app (AWS agentic IDE)
+2. Sign in or create an account when prompted
+3. Import VS Code settings if desired
+4. Enable agentic features in settings
+
 ---
 
 ## 🌐 Frontend Tools Configuration (Script 5)
@@ -173,13 +180,24 @@ npm login
 # Set npm registry (if using private registry)
 npm config set registry https://registry.npmjs.org/
 
-# Configure Yarn Berry (if you prefer Yarn)
-yarn set version berry
-yarn config set nodeLinker node-modules
-
-# Configure pnpm
+# Configure pnpm (installed via Volta)
 pnpm setup
 source ~/.zshrc
+
+# Verify bun (installed via Homebrew tap oven-sh/bun)
+bun --version
+```
+
+### Turbo (Turborepo) and Vercel CLI
+
+```bash
+# Verify Turborepo
+turbo --version
+
+# Verify Vercel CLI, then authenticate
+vercel --version
+vercel login
+# Opens browser for authentication
 ```
 
 ### Storyblok CMS Setup
@@ -307,45 +325,6 @@ npx react-native doctor
 
 ## 🎯 Productivity Tools Setup (Script 8)
 
-### Raycast Configuration
-
-#### 1. Initial Setup
-1. Open **Raycast** from Applications
-2. Grant permissions:
-   - Accessibility (required)
-   - Screen Recording (optional)
-   - Calendar access (optional)
-
-#### 2. Set Hotkey
-1. **System Preferences** → **Keyboard** → **Shortcuts** → **Spotlight**
-2. Uncheck "Show Spotlight search" 
-3. In Raycast: **Preferences** → **General**
-4. Click hotkey field and press `⌘ Space`
-
-#### 3. Essential Extensions
-Open Raycast Store (`⌘ Space`, then search "store"):
-
-**Must-Have Extensions:**
-- **GitHub** - Search repos, issues, PRs
-- **Homebrew** - Search and install packages
-- **Kill Process** - Quickly kill frozen apps
-- **System** - Empty trash, sleep, restart
-- **Clipboard History** - Enhanced clipboard
-
-**Developer Extensions:**
-- **VSCode Recent Projects** - Quick project switching
-- **npm Search** - Search npm packages
-- **Can I Use** - Browser compatibility check
-- **Lorem Ipsum** - Generate placeholder text
-- **Color Picker** - Pick and convert colors
-- **UUID Generator** - Generate UUIDs
-
-#### 4. Configure Extensions
-**GitHub Extension:**
-1. Open extension settings
-2. Generate Personal Access Token at GitHub
-3. Add repositories to quick access
-
 ### Rectangle Window Management
 
 #### 1. Launch and Permissions
@@ -384,6 +363,16 @@ Configure in Rectangle Preferences:
 - Set "Ignore" apps (like password managers)
 - Configure appearance (light/dark)
 - Pin frequently used items
+
+### Additional Productivity Apps
+
+- **Mockoon** - Open and create local mock API servers for testing
+- **Expo Orbit** - Launch builds and simulators for Expo / React Native development
+- **DevToys** - Offline developer toolbox (formatters, converters, encoders)
+- **Signal** - Private messaging
+- **WiFiman** - Network and Wi-Fi diagnostics
+
+Open each from Applications and grant any permissions requested on first launch.
 
 ---
 
@@ -443,6 +432,21 @@ code /opt/homebrew/var/postgresql@15/postgresql.conf
 - Data export/import tools
 - SSH tunneling for remote connections
 
+### pgAdmin 4 Setup
+
+#### 1. First Connection
+1. Open **pgAdmin 4**
+2. Set a master password when prompted (first launch only)
+3. Right-click **Servers** → **Register** → **Server**
+4. On the **General** tab, give it a name (e.g., "Local")
+5. On the **Connection** tab, enter:
+   - **Host**: localhost
+   - **Port**: 5432
+   - **Maintenance database**: postgres
+   - **Username**: Your Mac username
+   - **Password**: Leave blank (for local)
+6. Click **Save**
+
 ### Supabase CLI Setup
 
 #### 1. Create Supabase Account
@@ -494,43 +498,42 @@ supabase db push
 
 ## ☁️ DevOps Tools Configuration (Script 10)
 
-### AWS CLI Setup
+### UpCloud CLI (upctl) Setup
 
-#### 1. Create AWS Account
-1. Visit [aws.amazon.com](https://aws.amazon.com)
-2. Create account (requires credit card)
-3. Set up IAM user for CLI access:
-   - AWS Console → IAM → Users → Add User
-   - Enable "Programmatic access"
-   - Attach policies (e.g., AdministratorAccess for dev)
-   - Save Access Key ID and Secret
+#### 1. Create UpCloud Account
+1. Visit [upcloud.com](https://upcloud.com)
+2. Create an account
+3. Make sure your user has API access enabled in the control panel
 
-#### 2. Configure AWS CLI
+#### 2. Authenticate
 ```bash
-# Run configuration
-aws configure
+# Log in (prompts for username and password)
+upctl account login
 
-# Enter your credentials:
-AWS Access Key ID [None]: YOUR_ACCESS_KEY
-AWS Secret Access Key [None]: YOUR_SECRET_KEY
-Default region name [None]: us-east-1
-Default output format [None]: json
-
-# For multiple profiles:
-aws configure --profile dev
-aws configure --profile prod
+# Verify authentication
+upctl account show
 ```
 
-#### 3. Verify Configuration
+#### 3. Basic Usage
 ```bash
-# Test connection
-aws sts get-caller-identity
+# List servers
+upctl server list
 
-# List S3 buckets (if any)
-aws s3 ls
+# List zones
+upctl zone list
+```
 
-# Use specific profile
-aws s3 ls --profile dev
+### Kubernetes & Infrastructure Tools
+
+```bash
+# kubectl - Kubernetes CLI
+kubectl version --client
+
+# Tilt - local Kubernetes dev workflow
+tilt version
+
+# Terraform - infrastructure as code
+terraform version
 ```
 
 ### Command Line Utilities
@@ -643,6 +646,51 @@ ngrok http -auth="user:password" 3000
 
 ---
 
+## 📲 Expo + React Native Local Dev (Script 12 - Optional)
+
+This optional script (`12-expo-rn.sh`) sets up a complete local Expo / React Native
+development environment: Watchman, OpenJDK 17, Android Studio, the iOS toolchain, and
+Maestro for end-to-end testing.
+
+### 1. Install Xcode (iOS)
+1. Open **App Store**
+2. Search for **Xcode** and install it (15+ GB download)
+3. Open Xcode once and agree to the license
+4. Accept the license and install components:
+```bash
+sudo xcodebuild -license accept
+xcode-select --install
+```
+
+### 2. Configure the Android SDK
+1. Open **Android Studio** and complete the Setup Wizard
+2. Install SDK Platforms and Tools (see the Mobile Development section above)
+3. Confirm the environment variables are set:
+```bash
+echo $ANDROID_HOME
+# Should output: /Users/[username]/Library/Android/sdk
+
+# Add to PATH if missing
+echo 'export ANDROID_HOME=$HOME/Library/Android/sdk' >> ~/.zshrc
+echo 'export PATH=$PATH:$ANDROID_HOME/platform-tools' >> ~/.zshrc
+source ~/.zshrc
+```
+
+### 3. Authenticate with EAS / Expo
+```bash
+# Log in to your Expo account
+eas login
+# Create one first at https://expo.dev if needed
+```
+
+### 4. Run Expo Doctor
+```bash
+# Diagnose your environment and fix any reported issues
+npx expo-doctor
+```
+
+---
+
 ## 🔍 Verification Checklist
 
 Run these commands to verify everything is configured:
@@ -661,8 +709,7 @@ code --version
 docker --version
 
 # Cloud tools (if configured)
-aws sts get-caller-identity
-aws --version
+upctl account show
 
 # Database
 psql --version
@@ -745,7 +792,7 @@ brew services restart postgresql@15
 **Interactive Tutorials:**
 - `vimtutor` - Learn Vim basics
 - `tldr` - Simplified man pages (`npm install -g tldr`)
-- Raycast tutorials (in app)
+- DevToys (in-app tool reference)
 
 ### Recommended First Projects
 

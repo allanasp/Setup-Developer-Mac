@@ -131,7 +131,7 @@ This guide provides detailed explanations of every tool included in the setup sc
 - Automatic version switching
 - No shell modifications
 - Fast installation (Rust-based)
-**Manages:** Node.js, npm, Yarn, and any JavaScript CLI tools
+**Manages:** Node.js, npm, pnpm, and any JavaScript CLI tools
 
 ### 🐍 pyenv
 **What it is:** Python version management tool  
@@ -149,14 +149,15 @@ This guide provides detailed explanations of every tool included in the setup sc
 **Used for:** Installing JavaScript packages and tools  
 **Registry:** Access to 2+ million packages
 
-#### Yarn Berry
-**What it is:** Fast, reliable JavaScript package manager by Facebook  
-**Advantages:** Faster installs, better monorepo support, Plug'n'Play mode
-
-#### pnpm
+#### pnpm (via Volta)
 **What it is:** Fast, disk space efficient package manager  
 **Key feature:** Uses hard links to save disk space  
 **When to use:** Large projects with many dependencies
+
+#### bun (via Homebrew tap oven-sh/bun)
+**What it is:** All-in-one JavaScript runtime and package manager  
+**Advantages:** Extremely fast installs, built-in bundler, test runner, and runtime  
+**When to use:** Greenfield projects and fast local dev workflows
 
 ---
 
@@ -243,6 +244,19 @@ This guide provides detailed explanations of every tool included in the setup sc
 **Features:** HTTPS, CORS, clean URLs  
 **Command:** `serve ./dist`
 
+### 🏎️ Turbo (Turborepo)
+**What it is:** High-performance build system for JavaScript/TypeScript monorepos  
+**Why fast:** Incremental builds, content-aware hashing, remote caching  
+**Best for:** Monorepos with multiple apps and packages  
+**Installed via:** Volta  
+**Command:** `turbo run build`
+
+### ▲ Vercel CLI
+**What it is:** Command line for the Vercel deployment platform  
+**Features:** Deploy from terminal, manage env vars, pull project config  
+**Installed via:** Volta  
+**Command:** `vercel`, `vercel deploy`, `vercel env pull`
+
 ### 👀 Watchman
 **What it is:** File watching service by Facebook  
 **Why needed:** React Native uses it for hot reloading  
@@ -281,7 +295,6 @@ This guide provides detailed explanations of every tool included in the setup sc
 
 #### AI Assistants
 - **GitHub Copilot:** AI pair programmer, suggests code as you type
-- **AWS Toolkit:** Includes Amazon Q AI assistant for AWS development
 
 #### Language Support
 - **Vue - Official:** Vue 3 language support with TypeScript
@@ -316,11 +329,14 @@ This guide provides detailed explanations of every tool included in the setup sc
 - Context-aware suggestions
 **Best for:** Developers who want deep AI integration
 
-### ⚡ Zed
-**What it is:** High-performance, multiplayer code editor  
-**Built with:** Rust for maximum speed  
-**Unique features:** Real-time collaboration, minimal UI  
-**Best for:** Performance-critical editing, pair programming
+### 🤖 Kiro
+**What it is:** AWS agentic IDE for AI-assisted development  
+**Key features:**
+- Spec-driven, agentic workflows
+- AI code generation and refactoring
+- Context-aware assistance
+**Best for:** Building features with an AI agent in the loop  
+**Installed via:** Homebrew cask
 
 ### 📝 TextMate
 **What it is:** Lightweight macOS text editor  
@@ -408,17 +424,6 @@ This guide provides detailed explanations of every tool included in the setup sc
 
 ## Productivity Applications
 
-### 🔍 Raycast
-**What it is:** Supercharged Spotlight replacement  
-**Key features:**
-- Extensible with plugins
-- Window management
-- Clipboard history
-- Snippets
-- Quick calculations
-- System commands
-**Recommended extensions:** GitHub, Linear, Notion, Homebrew
-
 ### 🪟 Rectangle
 **What it is:** Window management app  
 **Why essential:** Quickly organize windows with keyboard shortcuts  
@@ -453,6 +458,30 @@ This guide provides detailed explanations of every tool included in the setup sc
 **Features:** Built-in ad blocking, Tor mode, crypto wallet  
 **For developers:** Test privacy features, PWA development
 
+### 🧪 Mockoon
+**What it is:** Local API mock server with a friendly UI  
+**Use cases:** Mock REST endpoints, prototype against fake data, test error states  
+**Benefit:** Develop the frontend before the backend is ready
+
+### 🛰️ Expo Orbit
+**What it is:** Menu bar app for managing Expo and EAS builds  
+**Features:** Install and launch builds on simulators/devices, manage updates  
+**Best for:** React Native / Expo developers
+
+### 🧰 DevToys
+**What it is:** Swiss-army knife of developer utilities  
+**Features:** JSON/XML formatters, encoders/decoders, hash generators, regex tester  
+**Benefit:** Offline, no need for sketchy web tools
+
+### 💬 Signal
+**What it is:** Privacy-focused encrypted messenger  
+**Why included:** Secure team communication
+
+### 📶 WiFiman
+**What it is:** Network diagnostics and scanning tool  
+**Features:** Speed tests, device discovery, signal analysis  
+**Use case:** Debug local network and connectivity issues
+
 ---
 
 ## Database Tools
@@ -477,6 +506,15 @@ This guide provides detailed explanations of every tool included in the setup sc
 - Multiple database support (PostgreSQL, MySQL, SQLite, etc.)
 **Benefits:** Free, cross-platform, extensive database support
 
+### 🐘 pgAdmin 4
+**What it is:** Feature-rich management and admin tool for PostgreSQL  
+**Features:**
+- Visual query tool with explain plans
+- Schema and object browser
+- Server and database administration
+- Backup/restore management
+**Benefit:** Purpose-built for PostgreSQL workflows
+
 ### ⚡ Supabase CLI
 **What it is:** Open source Firebase alternative  
 **Built on:** PostgreSQL + real-time subscriptions  
@@ -493,13 +531,28 @@ This guide provides detailed explanations of every tool included in the setup sc
 ## DevOps & Cloud Tools
 
 
-### ☁️ AWS CLI
-**What it is:** Amazon Web Services command line interface  
-**Primary use:** Frontend deployment to S3, CloudFront, Lambda  
-**Features:** Profiles, MFA support, output formats  
-**Common uses:** Static site deployment, CDN management, serverless functions  
-**Configuration:** `aws configure` sets up credentials
-**Amazon Q Integration:** Includes dummy config for Amazon Q Developer (VS Code AI assistant)
+### ☁️ UpCloud CLI (upctl)
+**What it is:** Command line interface for the UpCloud cloud platform  
+**Primary use:** Manage servers, storage, networks, and load balancers  
+**Features:** Scriptable provisioning, multiple output formats  
+**Command:** `upctl server list`, `upctl server create`
+
+### ☸️ kubectl (kubernetes-cli)
+**What it is:** Command line tool for controlling Kubernetes clusters  
+**Use cases:** Deploy apps, inspect resources, manage cluster state  
+**Command:** `kubectl get pods`, `kubectl apply -f`
+
+### 🔼 Tilt
+**What it is:** Toolkit for fast local development on Kubernetes  
+**Features:** Live updates, automatic rebuilds, a unified dev dashboard  
+**Best for:** Iterating on microservices locally  
+**Command:** `tilt up`
+
+### 🏗️ Terraform (hashicorp/tap)
+**What it is:** Infrastructure as Code tool by HashiCorp  
+**Use cases:** Provision and manage cloud infrastructure declaratively  
+**Features:** Plan/apply workflow, state management, huge provider ecosystem  
+**Command:** `terraform init`, `terraform plan`, `terraform apply`
 
 ### 🐳 OrbStack
 **What it is:** Fast, light Docker Desktop alternative  
@@ -590,9 +643,9 @@ This guide provides detailed explanations of every tool included in the setup sc
 
 ### Backend Developer Essentials
 - **Languages:** Go, Java, Python, Ruby
-- **Databases:** PostgreSQL, DBeaver
+- **Databases:** PostgreSQL, DBeaver, pgAdmin 4
 - **API tools:** Postman, curl, jq
-- **Cloud:** AWS CLI
+- **Cloud:** UpCloud CLI (upctl)
 - **Containers:** OrbStack/Docker
 
 ### Mobile Developer Essentials
@@ -603,12 +656,12 @@ This guide provides detailed explanations of every tool included in the setup sc
 - **Testing:** Device emulators/simulators
 
 ### DevOps Engineer Essentials
-- **Orchestration:** Kubernetes suite
-- **Cloud:** AWS CLI
+- **Orchestration:** kubectl, Tilt
+- **Cloud:** UpCloud CLI (upctl)
 - **Containers:** OrbStack
 - **Scripting:** Python, Go
 - **Monitoring:** Wireshark
-- **Infrastructure:** Terraform (add manually)
+- **Infrastructure:** Terraform
 
 ### Full Stack Developer Essentials
 - **Everything above** in moderation
@@ -619,11 +672,10 @@ This guide provides detailed explanations of every tool included in the setup sc
 ## 🔧 Making the Most of Your Tools
 
 ### Daily Workflow Optimization
-1. **Use Raycast** instead of Spotlight (⌘+Space)
-2. **Rectangle shortcuts** for window management
-3. **Maccy** for clipboard history (⌘+Shift+V)
-4. **Terminal aliases** for common commands
-5. **VS Code snippets** for boilerplate code
+1. **Rectangle shortcuts** for window management
+2. **Maccy** for clipboard history (⌘+Shift+V)
+3. **Terminal aliases** for common commands
+4. **VS Code snippets** for boilerplate code
 
 ### Performance Tips
 - **Volta** auto-switches Node versions
