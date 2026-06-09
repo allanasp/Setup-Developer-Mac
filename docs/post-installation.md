@@ -1,5 +1,4 @@
 ---
-layout: default
 title: Post-Installation Guide
 description: Complete configuration guide for all installed tools
 ---
@@ -41,13 +40,13 @@ description: Complete configuration guide for all installed tools
 
 ### 🔄 1. Activate Your Shell
 
-<div class="setup-box">
-<h4>Option A: Restart Terminal (Recommended)</h4>
-<p>Close all terminal windows and reopen iTerm2</p>
+#### Option A: Restart Terminal (Recommended)
+Close all terminal windows and reopen iTerm2
 
-<h4>Option B: Reload Configuration</h4>
-<pre><code>source ~/.zshrc</code></pre>
-</div>
+#### Option B: Reload Configuration
+```
+source ~/.zshrc
+```
 
 ### ⚡ 2. PowerLevel10k Configuration
 
@@ -127,30 +126,28 @@ z myproject
 
 ### 🆚 VS Code Setup
 
-<div class="config-grid">
-<div class="config-card">
-<h4>1. Command Line</h4>
-<pre><code># Test
+#### 1. Command Line
+```
+# Test
 code --version
 
 # If broken, fix:
 echo 'export PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin:$PATH"' >> ~/.zshrc
-source ~/.zshrc</code></pre>
-</div>
+source ~/.zshrc
+```
 
-<div class="config-card">
-<h4>2. Essential Settings</h4>
-<p>Open Settings (⌘,) and add:</p>
-<pre><code>{
+#### 2. Essential Settings
+Open Settings (⌘,) and add:
+```
+{
   "editor.fontSize": 14,
   "editor.fontFamily": "'Fira Code', 'JetBrains Mono'",
   "editor.fontLigatures": true,
   "editor.formatOnSave": true,
   "editor.minimap.enabled": false,
   "terminal.integrated.fontFamily": "'Fira Code'"
-}</code></pre>
-</div>
-</div>
+}
+```
 
 **Extension Setup:**
 - **GitHub Copilot:** Click icon → Sign in with GitHub
@@ -198,25 +195,19 @@ bun --version
 
 ### 📝 Headless CMS Tools
 
-<div class="setup-grid">
-<div class="setup-card">
-<h4>Storyblok</h4>
+#### Storyblok
 <ol>
-<li>Create account: <a href="https://app.storyblok.com/#!/signup">app.storyblok.com</a></li>
-<li>Login: <code>storyblok login</code></li>
-<li>Create project: <code>storyblok quickstart</code></li>
+- Create account: [app.storyblok.com](https://app.storyblok.com/#!/signup)
+- Login: `storyblok login`
+- Create project: `storyblok quickstart`
 </ol>
-</div>
 
-<div class="setup-card">
-<h4>Sanity</h4>
+#### Sanity
 <ol>
-<li>Create project: <code>sanity init</code></li>
-<li>Choose template</li>
-<li>Deploy: <code>sanity deploy</code></li>
+- Create project: `sanity init`
+- Choose template
+- Deploy: `sanity deploy`
 </ol>
-</div>
-</div>
 
 ---
 
@@ -224,39 +215,36 @@ bun --version
 
 ### 🤖 Android Studio
 
-<div class="mobile-setup">
-<h4>1. Setup Wizard</h4>
-<ul>
-<li>Open Android Studio</li>
-<li>Standard installation</li>
-<li>Accept all licenses</li>
-<li>Download system images</li>
-</ul>
+#### 1. Setup Wizard
 
-<h4>2. SDK Configuration</h4>
-<p>Preferences → System Settings → Android SDK</p>
-<ul>
-<li>Install: Android 14 (API 34), Android 13 (API 33)</li>
-<li>SDK Tools: Build-Tools, Platform-Tools, Command-line Tools</li>
-</ul>
+- Open Android Studio
+- Standard installation
+- Accept all licenses
+- Download system images
 
-<h4>3. Create AVD</h4>
-<ul>
-<li>Tools → AVD Manager → Create</li>
-<li>Choose Pixel 6</li>
-<li>Select API 34</li>
-</ul>
+#### 2. SDK Configuration
+Preferences → System Settings → Android SDK
 
-<h4>4. Environment Check</h4>
-<pre><code># Verify
+- Install: Android 14 (API 34), Android 13 (API 33)
+- SDK Tools: Build-Tools, Platform-Tools, Command-line Tools
+
+#### 3. Create AVD
+
+- Tools → AVD Manager → Create
+- Choose Pixel 6
+- Select API 34
+
+#### 4. Environment Check
+```
+# Verify
 echo $ANDROID_HOME
 echo $JAVA_HOME
 
 # Fix if needed
 echo 'export ANDROID_HOME=$HOME/Library/Android/sdk' >> ~/.zshrc
 echo 'export PATH=$PATH:$ANDROID_HOME/platform-tools' >> ~/.zshrc
-source ~/.zshrc</code></pre>
-</div>
+source ~/.zshrc
+```
 
 ### 🍎 iOS Development
 
@@ -308,7 +296,6 @@ Default shortcuts (customize in preferences):
 - `⌘⌥F` Maximize
 - `⌘⌥C` Center
 
-
 ### 📋 Maccy Clipboard
 
 1. Open Maccy → Grant permissions
@@ -349,12 +336,12 @@ createdb myapp_dev
 
 ### ⚡ Supabase
 
-<div class="supabase-setup">
-<h4>1. Create Account</h4>
-<p>Visit <a href="https://supabase.com">supabase.com</a> → Sign up</p>
+#### 1. Create Account
+Visit [supabase.com](https://supabase.com) → Sign up
 
-<h4>2. Local Development</h4>
-<pre><code># Login
+#### 2. Local Development
+```
+# Login
 supabase login
 
 # Initialize project
@@ -364,12 +351,14 @@ supabase init
 supabase start
 
 # Stop when done
-supabase stop</code></pre>
+supabase stop
+```
 
-<h4>3. Link Remote Project</h4>
-<pre><code>supabase link --project-ref your-project-id
-supabase db pull</code></pre>
-</div>
+#### 3. Link Remote Project
+```
+supabase link --project-ref your-project-id
+supabase db pull
+```
 
 ---
 
@@ -486,32 +475,30 @@ when it finishes.
 
 ### Common Issues
 
-<div class="troubleshooting-grid">
-<div class="issue-card">
-<h4>Command Not Found</h4>
-<pre><code>source ~/.zshrc
-# Or restart terminal</code></pre>
-</div>
+#### Command Not Found
+```
+source ~/.zshrc
+# Or restart terminal
+```
 
-<div class="issue-card">
-<h4>VS Code 'code' Command</h4>
-<pre><code>echo 'export PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin:$PATH"' >> ~/.zshrc
-source ~/.zshrc</code></pre>
-</div>
+#### VS Code 'code' Command
+```
+echo 'export PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
+```
 
-<div class="issue-card">
-<h4>ANDROID_HOME Missing</h4>
-<pre><code>echo 'export ANDROID_HOME=$HOME/Library/Android/sdk' >> ~/.zshrc
+#### ANDROID_HOME Missing
+```
+echo 'export ANDROID_HOME=$HOME/Library/Android/sdk' >> ~/.zshrc
 echo 'export PATH=$PATH:$ANDROID_HOME/platform-tools' >> ~/.zshrc
-source ~/.zshrc</code></pre>
-</div>
+source ~/.zshrc
+```
 
-<div class="issue-card">
-<h4>PostgreSQL Not Starting</h4>
-<pre><code>brew services restart postgresql@15
-tail -f /opt/homebrew/var/log/postgresql@15.log</code></pre>
-</div>
-</div>
+#### PostgreSQL Not Starting
+```
+brew services restart postgresql@15
+tail -f /opt/homebrew/var/log/postgresql@15.log
+```
 
 ### PowerLevel10k Icons Missing
 - Run `p10k configure` again
@@ -563,92 +550,15 @@ cd my-app && supabase init
 
 ---
 
-<div class="success-banner">
-<h2>🎉 You're All Set!</h2>
-<p>Your development environment is ready. Start building amazing things!</p>
-<ul>
-<li>Learn keyboard shortcuts</li>
-<li>Customize your tools</li>
-<li>Join tool communities</li>
-<li>Keep everything updated with <code>brew upgrade</code></li>
-</ul>
-</div>
+## 🎉 You're All Set!
+Your development environment is ready. Start building amazing things!
+
+- Learn keyboard shortcuts
+- Customize your tools
+- Join tool communities
+- Keep everything updated with `brew upgrade`
 
 ---
 
-**[← Back to Home](index.html)** | **[Tools Guide →](tools-guide.html)** | **[Script Guide →](script-guide.html)**
+**[← Back to Home](/)** | **[Tools Guide →](/tools-guide)** | **[Script Guide →](/script-guide)**
 
-<style>
-.setup-box {
-  background: #f6f8fa;
-  border: 1px solid #d1d5da;
-  border-radius: 6px;
-  padding: 1rem;
-  margin: 1rem 0;
-}
-
-.config-grid, .setup-grid, .productivity-grid, .troubleshooting-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1rem;
-  margin: 1rem 0;
-}
-
-.config-card, .setup-card, .prod-card, .issue-card {
-  background: #f6f8fa;
-  border: 1px solid #d1d5da;
-  border-radius: 6px;
-  padding: 1rem;
-}
-
-.mobile-setup, .supabase-setup {
-  background: #f1f8ff;
-  border: 1px solid #c8e1ff;
-  border-radius: 6px;
-  padding: 1rem;
-  margin: 1rem 0;
-}
-
-.success-banner {
-  background: #28a745;
-  color: white;
-  padding: 2rem;
-  border-radius: 8px;
-  text-align: center;
-  margin: 2rem 0;
-}
-
-.success-banner h2 {
-  color: white;
-  margin: 0 0 1rem 0;
-}
-
-.success-banner ul {
-  list-style: none;
-  padding: 0;
-}
-
-.success-banner li {
-  margin: 0.5rem 0;
-}
-
-pre {
-  background: #f6f8fa;
-  border: 1px solid #d1d5da;
-  border-radius: 4px;
-  padding: 0.5rem;
-  overflow-x: auto;
-}
-
-code {
-  background: #f6f8fa;
-  padding: 0.2rem 0.4rem;
-  border-radius: 3px;
-  font-size: 0.9em;
-}
-
-h4 {
-  color: #24292e;
-  margin-top: 0;
-}
-</style>

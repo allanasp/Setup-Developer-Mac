@@ -1,5 +1,4 @@
 ---
-layout: default
 title: Complete Tools Guide
 description: Comprehensive guide to every tool, language, and framework installed
 ---
@@ -783,7 +782,7 @@ These faster, friendlier replacements and shell enhancements are installed by `1
 
 ---
 
-**[← Back to Home](index.html)** | **[Script Guide →](script-guide.html)** | **[GitHub Repository →](https://github.com/allanasp/Setup-Developer-Mac)**
+**[← Back to Home](/)** | **[Script Guide →](/script-guide)** | **[GitHub Repository →](https://github.com/allanasp/Setup-Developer-Mac)**
 
 ---
 

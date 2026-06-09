@@ -1,5 +1,4 @@
 ---
-layout: default
 title: Complete Script Guide
 description: Detailed documentation for all Mac development setup scripts
 ---
@@ -763,4 +762,4 @@ After installation:
 
 ---
 
-**[← Back to Home](index.html)** | **[GitHub Repository →](https://github.com/allanasp/Setup-Developer-Mac)**
+**[← Back to Home](/)** | **[GitHub Repository →](https://github.com/allanasp/Setup-Developer-Mac)**

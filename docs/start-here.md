@@ -1,12 +1,11 @@
 ---
-layout: default
 title: Start Here
 description: Minimal quick-start guide for the Mac developer setup
 ---
 
 # 🚀 Start Here - Mac Frontend Developer Setup
 
-> 📖 See also: [Complete Script Guide](script-guide.html) · [Post-Installation](post-installation.html) · [Tools Guide](tools-guide.html) · [Setup Checker](setup-checker.html)
+> 📖 See also: [Script Guide](/script-guide) · [Post-Installation](/post-installation) · [Tools Guide](/tools-guide) · [Setup Checker](/setup-checker)
 
 ## Quick Start (1 Line)
 
