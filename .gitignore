@@ -18,3 +18,7 @@ ehthumbs.db
 docs/node_modules
 docs/.vitepress/dist
 docs/.vitepress/cache
+
+# Stray root lockfiles (docs/ has its own package.json + bun.lock)
+/package-lock.json
+/node_modules

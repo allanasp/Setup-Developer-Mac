@@ -176,7 +176,18 @@ One logical change per commit. Commit message body explains *why*, not *what*.
 
 ## Docs site
 
-Lives in `docs/` as a VitePress project. `docs/.vitepress/config.ts` controls
-nav + sidebar. New top-level guides need to be added to the sidebar config and
-linked from `docs/index.md`. The site deploys to GitHub Pages via
-`.github/workflows/deploy-docs.yml` on every push to `main`.
+Lives in `docs/` as a VitePress project. Package manager is **Bun** (lockfile is
+`docs/bun.lock`, do not regenerate it with npm). Local dev:
+
+```bash
+cd docs
+bun install      # first time
+bun run dev      # http://localhost:5173/Setup-Developer-Mac/
+bun run build    # static output → docs/.vitepress/dist
+```
+
+`docs/.vitepress/config.mts` controls nav + sidebar. New top-level guides need to
+be added to the sidebar config and linked from `docs/index.md`. The site deploys
+to GitHub Pages via the `build-docs` + `deploy-docs` jobs in
+`.github/workflows/main.yml` on every push to `main` — those steps run Node 24 +
+Bun and use `actions/upload-pages-artifact` + `actions/deploy-pages`.
