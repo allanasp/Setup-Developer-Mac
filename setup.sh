@@ -46,6 +46,16 @@ echo ""
 # Check if running on macOS
 check_macos
 
+# Snapshot whether Homebrew is already on PATH BEFORE running the essentials.
+# If brew is missing here, 01-system will install it — and the parent shell
+# (this setup.sh) will not pick up the new PATH until the user opens a fresh
+# shell. We use this snapshot to force a "restart your terminal + re-curl"
+# pause after 01+02 so the rest of the setup runs in a properly initialised shell.
+BREW_WAS_PREINSTALLED=false
+if command -v brew &>/dev/null; then
+    BREW_WAS_PREINSTALLED=true
+fi
+
 # Function to prompt user for configuration completion
 prompt_configuration() {
     local script_name="$1"
@@ -132,7 +142,8 @@ run_script() {
                     ;;
                 "06-dev-apps.sh")
                     prompt_configuration "Development Apps" "• Review the TODO list above for editor account setup
-• Sign in to VS Code, Cursor, and Kiro editors
+• Sign in to VS Code and Cursor
+• Authenticate Claude Code (run 'claude' → /login) and kiro-cli (run 'kiro auth login')
 • Enable settings sync in VS Code
 • Git and GitHub should already be configured from the prompts"
                     ;;
@@ -207,7 +218,7 @@ optional_scripts=(
 optional_descriptions=(
     "Programming Languages (Java, Go, Ruby)"
     "Frontend Tools (TypeScript, Vue, React Native, Vite, Turbo, Vercel, Storyblok, Sanity CLI)"
-    "Development Apps (VS Code, Cursor, Kiro, Extensions)"
+    "Development Apps (VS Code, Cursor, Claude Code, kiro-cli, Extensions)"
     "Mobile Development (Android Studio + Android env; iOS/RN → script 12)"
     "Productivity Tools (Rectangle, Browsers, Mockoon, Expo Orbit)"
     "Database Tools (PostgreSQL, DBeaver, Supabase CLI)"
@@ -228,7 +239,35 @@ echo ""
 print_status "Installing essential components..."
 echo ""
 
-for script in "${essential_scripts[@]}"; do
+# Stage A: System foundations (01-system + 02-terminal). These install Homebrew,
+# Oh My Zsh and friends; the new PATH / shell config only takes effect after the
+# user opens a fresh terminal. We run them here, then — if brew was just
+# installed this run — pause and ask the user to restart + re-curl before we
+# touch the version managers and the rest.
+for script in "${essential_scripts[@]:0:2}"; do
+    run_script "${script}"
+done
+
+if [[ "${BREW_WAS_PREINSTALLED}" != "true" && "${SKIP_PROMPTS}" != "true" && "${DRY_RUN}" != "true" ]]; then
+    print_section "🔄 Restart terminal & re-run the installer"
+    echo "Homebrew, the shell framework, and your PATH have just been set up."
+    echo "Your current terminal session can't see them yet — you need a fresh shell"
+    echo "before the rest of the setup (version managers, frontend tools, etc.) can run."
+    echo ""
+    echo "👉 Quit iTerm2 (⌘Q) and open a new window, then re-run the installer:"
+    echo ""
+    echo "   sh -c \"\$(curl -fsSL https://raw.githubusercontent.com/allanasp/Setup-Developer-Mac/main/install.sh)\""
+    echo ""
+    echo "Scripts that have already run will be skipped on the next pass."
+    echo ""
+    echo "📄 Log so far: ${LOG_FILE}"
+    print_setup_summary "${SETUP_RESULTS_FILE}"
+    rm -f "${SETUP_RESULTS_FILE}"
+    exit 0
+fi
+
+# Stage B: version managers + everything else (requires a working brew on PATH).
+for script in "${essential_scripts[@]:2}"; do
     run_script "${script}"
 done
 

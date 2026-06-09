@@ -41,7 +41,7 @@ cd Setup-Developer-Mac
 - ✅ **React, Vue, Angular** development tools
 - ✅ **Node.js, TypeScript, pnpm/bun** ecosystem  
 - ✅ **React Native & Expo** mobile development
-- ✅ **VS Code, Cursor, Kiro** editors
+- ✅ **VS Code, Cursor** editors + **Claude Code** & **kiro-cli** AI agents in the terminal
 - ✅ **Terminal** with beautiful themes
 - ✅ **Git, databases, DevOps** tools as needed
 
@@ -64,7 +64,7 @@ No guessing, no broken setups!
 
 **Optional (pick what you need):**
 - Frontend tools (TypeScript, Vue, React Native, Turbo, Vercel CLI)
-- Development apps (VS Code, Cursor, Kiro)
+- Development apps (VS Code, Cursor, Claude Code, kiro-cli)
 - Mobile development (Android Studio, iOS tools)
 - Productivity tools (Rectangle, Mockoon, Expo Orbit, DevToys, Signal, WiFiman)
 - Database tools (PostgreSQL, Supabase, pgAdmin 4)

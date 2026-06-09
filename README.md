@@ -38,7 +38,7 @@
 ### 🎨 **Code Editors & IDEs**
 - Visual Studio Code with 20+ essential extensions
 - Cursor AI-powered editor
-- Kiro (AWS agentic IDE), TextMate
+- TextMate, Claude Code (terminal coding agent), kiro-cli (AWS agentic CLI)
 - iTerm2 with Dracula theme configuration
 - Oh My Zsh with PowerLevel10k theme and productivity plugins
 
@@ -60,8 +60,8 @@
 
 ### 🤖 **AI Coding Assistants**
 - GitHub Copilot (via VS Code extension)
-- Kiro (AWS agentic IDE)
-- Claude Code terminal assistant
+- Claude Code (Anthropic's terminal coding agent, via Homebrew)
+- kiro-cli (AWS agentic CLI, installed via the official kiro install script)
 - OpenCode AI terminal coding agent
 
 ### 🎯 **Productivity & Utilities**
@@ -159,7 +159,7 @@ The setup now **guides you through each step** with configuration prompts:
 |---|--------|-------------|-----------|
 | 4 | `04-languages.sh` | Programming Languages | Java, Go, Ruby |
 | 5 | `05-frontend.sh` | Frontend Tools | TypeScript, Vue, React Native, Vite, Turbo, Vercel, Storyblok, Sanity |
-| 6 | `06-dev-apps.sh` | Development Apps | VS Code + extensions, Cursor, Kiro, Git tools |
+| 6 | `06-dev-apps.sh` | Development Apps | VS Code + extensions, Cursor, Claude Code, kiro-cli, Git tools |
 | 7 | `07-mobile.sh` | Mobile Development | Android Studio + Android env (iOS/RN → script 12) |
 | 8 | `08-productivity.sh` | Productivity Tools | Rectangle, Obsidian, Maccy, Mockoon, Expo Orbit |
 | 9 | `09-database.sh` | Database Tools | PostgreSQL, DBeaver, pgAdmin 4, Supabase CLI |
@@ -244,8 +244,8 @@ The setup now **guides you through each step** with configuration prompts:
 <summary><strong>🤖 AI Development Tools</strong></summary>
 
 - GitHub Copilot (VS Code extension)
-- Kiro (AWS agentic IDE)
-- Claude Code terminal assistant
+- Claude Code (Anthropic's terminal coding agent, via Homebrew)
+- kiro-cli (AWS agentic CLI, installed via official kiro install script)
 - OpenCode AI terminal coding agent
 </details>
 

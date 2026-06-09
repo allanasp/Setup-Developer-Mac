@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Development Applications Setup
-# Installs: VS Code, Cursor, Kiro, TextMate, VS Code extensions
+# Installs: VS Code, Cursor, TextMate, Claude Code, kiro-cli, OpenCode, VS Code extensions
 
 set -e # Exit on any error
 
@@ -35,7 +35,30 @@ fi
 # Additional code editors
 install_cask_app "Cursor" "cursor" "/Applications/Cursor.app"
 install_cask_app "TextMate" "textmate" "/Applications/TextMate.app"
-install_cask_app "Kiro" "kiro" "/Applications/Kiro.app" # AWS agentic IDE
+
+# Claude Code (Anthropic's terminal coding agent) - via Homebrew cask
+install_cask_app "Claude Code" "claude-code" "/Applications/Claude Code.app"
+
+# kiro-cli (AWS agentic CLI) - installed via official install script
+print_status "Checking kiro-cli..."
+if command_exists kiro; then
+    kiro_version=$(kiro --version 2>/dev/null || echo "unknown")
+    print_success "kiro-cli already installed (${kiro_version})"
+elif is_dry_run; then
+    print_status "[dry-run] would install kiro-cli via https://cli.kiro.dev/install"
+else
+    print_status "Installing kiro-cli..."
+    if curl -fsSL https://cli.kiro.dev/install | bash; then
+        if command_exists kiro; then
+            print_success "kiro-cli installed successfully"
+        else
+            print_warning "kiro-cli install ran but 'kiro' not on PATH yet — restart your shell"
+        fi
+    else
+        print_error "Failed to install kiro-cli"
+        print_status "Try manually: curl -fsSL https://cli.kiro.dev/install | bash"
+    fi
+fi
 
 # OpenCode AI coding agent
 print_status "Checking OpenCode AI coding agent..."
@@ -164,15 +187,18 @@ echo "Installed applications:"
 echo "• Visual Studio Code (with extensions)"
 echo "• Cursor (AI-powered editor)"
 echo "• TextMate (lightweight editor)"
-echo "• Kiro (AWS agentic IDE)"
+echo "• Claude Code (Anthropic AI coding agent)"
+echo "• kiro-cli (AWS agentic CLI)"
 echo "• OpenCode (AI coding agent for terminal)"
 echo "• GitHub Desktop"
 echo "• Git & Git Flow & GitHub CLI"
 echo ""
-echo "Editor CLI commands available:"
+echo "Editor / CLI commands available:"
 echo "• code .     - Open VS Code in current directory"
 echo "• cursor .   - Open Cursor in current directory"
 echo "• mate .     - Open TextMate in current directory"
+echo "• claude     - Start Claude Code in terminal"
+echo "• kiro       - Start kiro-cli in terminal"
 echo "• opencode   - Start OpenCode AI agent in terminal"
 echo ""
 
@@ -309,6 +335,14 @@ echo "□ Cursor AI Editor Setup"
 echo "  → Open Cursor: cursor ."
 echo "  → Sign in to enable AI features"
 echo "  → Configure API keys if needed"
+echo ""
+echo "□ Claude Code Setup"
+echo "  → Run: claude"
+echo "  → Sign in with /login (Anthropic account or API key)"
+echo ""
+echo "□ kiro-cli Setup"
+echo "  → Run: kiro auth login"
+echo "  → Follow the prompts to authenticate"
 echo ""
 echo "□ OpenCode AI Agent Setup"
 echo "  → Run: opencode auth login"

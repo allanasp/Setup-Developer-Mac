@@ -319,13 +319,6 @@ else
     print_missing "TextMate"
 fi
 
-# Kiro (AWS agentic IDE)
-if app_exists "/Applications/Kiro.app"; then
-    print_installed "Kiro"
-else
-    print_missing "Kiro"
-fi
-
 print_section "Terminals"
 
 # iTerm2
@@ -804,6 +797,14 @@ if command_exists claude; then
     print_installed "Claude Code (${claude_version})"
 else
     print_missing "Claude Code"
+fi
+
+# kiro-cli (AWS agentic CLI)
+if command_exists kiro; then
+    kiro_version=$(kiro --version 2>/dev/null | head -n1 || echo "installed")
+    print_installed "kiro-cli (${kiro_version})"
+else
+    print_missing "kiro-cli"
 fi
 
 # OpenCode

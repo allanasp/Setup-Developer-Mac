@@ -60,7 +60,8 @@ The setup checker (`check-setup.sh`) verifies your Mac development environment a
 [✓] Visual Studio Code (1.81.1)
 [✓] VS Code Extensions (20 installed)
 [✓] Cursor (0.8.0)
-[✓] Kiro (installed)
+[✓] Claude Code (1.0.0)
+[✓] kiro-cli (0.1.0)
 
 📊 Setup Status: 85% Complete (34/40 tools installed)
 🎯 Frontend Focus: 95% Complete (19/20 tools)
@@ -84,7 +85,7 @@ The setup checker (`check-setup.sh`) verifies your Mac development environment a
 - **Headless CMS**: Storyblok, Sanity
 
 ### Development Tools
-- **Editors**: VS Code, Cursor, Kiro
+- **Editors / AI agents**: VS Code, Cursor, Claude Code, kiro-cli
 - **Extensions**: 20+ VS Code extensions
 - **Git Tools**: GitHub CLI, Git aliases
 - **Terminal Tools**: Advanced shell configuration
@@ -101,7 +102,7 @@ The setup checker (`check-setup.sh`) verifies your Mac development environment a
 
 ### 🔎 Notable Tools the Checker Verifies
 
-The checker now confirms these additions: **bun**, **Turbo**, **Vercel CLI**, **create-expo-app**, **Storyblok**, **Sanity**, **Supabase**, **pgAdmin 4**, **UpCloud upctl**, **kubectl**, **Tilt**, **Terraform**, **Maestro**, **Kiro**, **Mockoon**, **Expo Orbit**, **DevToys**, **Signal**, and **WiFiman**.
+The checker now confirms these additions: **bun**, **Turbo**, **Vercel CLI**, **create-expo-app**, **Storyblok**, **Sanity**, **Supabase**, **pgAdmin 4**, **UpCloud upctl**, **kubectl**, **Tilt**, **Terraform**, **Maestro**, **Claude Code**, **kiro-cli**, **Mockoon**, **Expo Orbit**, **DevToys**, **Signal**, and **WiFiman**.
 
 It also verifies the modern CLI tooling installed by `10-devops.sh`: **ripgrep (rg)**, **fd**, **bat**, **git-delta**, **zoxide**, **lazygit**, **direnv**, **atuin**, **btop**, **dust**, **duf**, and **tldr**.
 

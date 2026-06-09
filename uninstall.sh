@@ -36,7 +36,7 @@ print_warning "Homebrew, Xcode CLT, git, Node and your shell config are kept."
 
 # Apps installed as Homebrew casks
 CASKS=(
-    iterm2 warp visual-studio-code cursor textmate kiro github
+    iterm2 warp visual-studio-code cursor textmate claude-code github
     rectangle maccy obsidian google-chrome firefox brave-browser
     orbstack postman mockoon expo-orbit figma imageoptim wireguard
     devtoys signal wifiman appcleaner jordanbaird-ice syncthing wireshark
@@ -131,5 +131,11 @@ fi
 
 print_success "Uninstall complete!"
 echo ""
+if command_exists kiro; then
+    kiro_path="$(command -v kiro)"
+    print_warning "kiro-cli is still installed at: ${kiro_path}"
+    echo "It was installed via the official kiro install script and isn't managed by brew."
+    echo "Remove it manually if you want, e.g.: rm -f ${kiro_path}"
+fi
 echo "📄 Full log saved to: ${LOG_FILE}"
 echo "Note: shell config (~/.zshrc, ~/.zshenv) and ~/.oh-my-zsh were left intact."

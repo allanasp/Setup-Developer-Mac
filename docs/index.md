@@ -90,7 +90,7 @@ cd Setup-Developer-Mac
   
   <div class="script-card optional">
     <h4>6. Development Apps</h4>
-    <p>VS Code + 20+ extensions, Cursor, Kiro, Git tools</p>
+    <p>VS Code + 20+ extensions, Cursor, Claude Code, kiro-cli, Git tools</p>
     <code>./scripts/06-dev-apps.sh</code>
   </div>
   

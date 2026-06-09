@@ -48,7 +48,7 @@ Run `./setup.sh --dry-run` (alias `-n`) to preview every change without mutating
 |---|--------|---------|----------|-----------|
 | 4 | `04-languages.sh` | ~8 min | Backend devs | Java, Go, Ruby |
 | 5 | `05-frontend.sh` | ~12 min | Web/mobile devs | Vue, React, Storyblok, Sanity |
-| 6 | `06-dev-apps.sh` | ~15 min | All developers | VS Code, Cursor, Kiro, Git tools |
+| 6 | `06-dev-apps.sh` | ~15 min | All developers | VS Code, Cursor, Claude Code, kiro-cli, Git tools |
 | 7 | `07-mobile.sh` | ~12 min | Android devs | Android Studio + env (iOS/RN → 12) |
 | 8 | `08-productivity.sh` | ~8 min | Productivity focus | Rectangle, Maccy, Mockoon |
 | 9 | `09-database.sh` | ~10 min | Full-stack devs | PostgreSQL, DBeaver, pgAdmin, Supabase |
@@ -229,8 +229,9 @@ sanity init
 **What it installs:**
 - 💻 **Visual Studio Code** - With 20+ carefully chosen extensions
 - 🤖 **Cursor** - AI-powered code editor
-- 🪁 **Kiro** - AWS agentic IDE
 - 📝 **TextMate** - Lightweight option
+- 🤖 **Claude Code** - Anthropic's terminal coding agent (installed via Homebrew)
+- 🪁 **kiro-cli** - AWS agentic CLI (installed via the official kiro install script)
 - 🔧 **Git Tools** - git-flow, GitHub CLI, GitHub Desktop
 - ⚙️ **Git configuration** - `git lg` graph alias, sensible defaults (`init.defaultBranch=main`, `push.autoSetupRemote=true`, `pull.ff=only`, `merge.conflictStyle=zdiff3`), and git-delta set as the pager
 

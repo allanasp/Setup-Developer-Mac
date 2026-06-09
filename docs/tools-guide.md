@@ -329,14 +329,25 @@ This guide provides detailed explanations of every tool included in the setup sc
 - Context-aware suggestions
 **Best for:** Developers who want deep AI integration
 
-### 🤖 Kiro
-**What it is:** AWS agentic IDE for AI-assisted development  
+### 🤖 Claude Code
+**What it is:** Anthropic's terminal-based coding agent  
 **Key features:**
-- Spec-driven, agentic workflows
+- Conversational coding in your terminal
+- Reads, edits and runs code in your repo
+- Multi-step task execution with tool use
+**Best for:** Iterative refactors, debugging and feature work driven from the CLI  
+**Installed via:** Homebrew cask (`brew install --cask claude-code`)  
+**Get started:** Run `claude` in a project directory, then `/login` to authenticate.
+
+### 🪁 kiro-cli
+**What it is:** AWS's agentic CLI for AI-assisted development  
+**Key features:**
+- Spec-driven, agentic workflows from the terminal
 - AI code generation and refactoring
 - Context-aware assistance
-**Best for:** Building features with an AI agent in the loop  
-**Installed via:** Homebrew cask
+**Best for:** Building features with an AWS-backed AI agent in the loop  
+**Installed via:** Official install script (`curl -fsSL https://cli.kiro.dev/install | bash`) — not brew-managed  
+**Get started:** Run `kiro auth login` to authenticate.
 
 ### 📝 TextMate
 **What it is:** Lightweight macOS text editor  
