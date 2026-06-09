@@ -130,11 +130,14 @@ alias gitl="git lg"
 alias gita="git add ."
 alias gitc="git commit"
 
-# Better ls with eza
-alias ls="eza"
-alias ll="eza -l"
-alias la="eza -la"
-alias tree="eza --tree"
+# Better ls with eza — guarded so the alias quietly disappears if eza
+# is ever uninstalled (otherwise plain `ls` errors with "command not found").
+if command -v eza >/dev/null 2>&1; then
+    alias ls="eza"
+    alias ll="eza -l"
+    alias la="eza -la"
+    alias tree="eza --tree"
+fi
 
 # Load completions
 autoload -U compinit && compinit
