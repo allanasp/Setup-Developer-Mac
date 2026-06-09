@@ -3,11 +3,11 @@ title: Complete Script Guide
 description: Detailed documentation for all Mac development setup scripts
 ---
 
-# 📚 Complete Script Guide
+# Complete Script Guide
 
 > **Comprehensive documentation for all development setup scripts**
 
-## ⚡ One-Line Installer
+## One-Line Installer
 
 ```bash
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/allanasp/Setup-Developer-Mac/main/install.sh)"
@@ -21,7 +21,7 @@ SETUP_OPTIONAL="5 6 8 12" sh -c "$(curl -fsSL https://raw.githubusercontent.com/
 
 Run `./setup.sh --dry-run` (alias `-n`) to preview every change without mutating your system. `setup.sh` also logs the full run to `~/mac-setup-YYYY-MM-DD.log` and prints an aggregate **Setup Summary** at the end.
 
-## 🚀 Quick Navigation
+## Quick Navigation
 
 - [Essential Scripts](#essential-scripts) - Always installed first
 - [Optional Scripts](#optional-scripts) - Choose what you need  
@@ -31,9 +31,9 @@ Run `./setup.sh --dry-run` (alias `-n`) to preview every change without mutating
 
 ---
 
-## 📋 Script Overview
+## Script Overview
 
-### 🔧 Essential Scripts (Auto-Installed)
+### Essential Scripts (Auto-Installed)
 
 | Script | Runtime | Dependencies | Purpose |
 |--------|---------|--------------|---------|
@@ -41,14 +41,14 @@ Run `./setup.sh --dry-run` (alias `-n`) to preview every change without mutating
 | `02-terminal.sh` | ~3 min | 01-system | Modern terminal |
 | `03-version-managers.sh` | ~10 min | 01-system | Language versions |
 
-### 📦 Optional Scripts (Your Choice)
+### Optional Scripts (Your Choice)
 
 | # | Script | Runtime | Best For | Key Tools |
 |---|--------|---------|----------|-----------|
 | 4 | `04-languages.sh` | ~8 min | Backend devs | Java, Go, Ruby |
 | 5 | `05-frontend.sh` | ~12 min | Web/mobile devs | Vue, React, Storyblok, Sanity |
 | 6 | `06-dev-apps.sh` | ~15 min | All developers | VS Code, Cursor, Claude Code, kiro-cli, Git tools |
-| 7 | `07-mobile.sh` | ~12 min | Android devs | Android Studio + env (iOS/RN → 12) |
+| 7 | `07-mobile.sh` | ~12 min | Android devs | Android Studio + env (iOS/RN 12) |
 | 8 | `08-productivity.sh` | ~8 min | Productivity focus | Rectangle, Maccy, Mockoon |
 | 9 | `09-database.sh` | ~10 min | Full-stack devs | PostgreSQL, DBeaver, pgAdmin, Supabase |
 | 10 | `10-devops.sh` | ~12 min | Frontend deployment | ngrok, kubectl, Terraform, utilities |
@@ -62,7 +62,7 @@ Run `./setup.sh --dry-run` (alias `-n`) to preview every change without mutating
 
 ## Essential Scripts
 
-### 1️⃣ System Requirements (`01-system.sh`)
+### 1⃣ System Requirements (`01-system.sh`)
 
 **Foundation for everything else**
 
@@ -71,15 +71,15 @@ Run `./setup.sh --dry-run` (alias `-n`) to preview every change without mutating
 ```
 
 **What it installs:**
-- ✅ **Xcode Command Line Tools** - Required for most development tools
-- ✅ **Homebrew** - Package manager for macOS
-- ✅ **System Configuration** - Show hidden files in Finder
+- **Xcode Command Line Tools** - Required for most development tools
+- **Homebrew** - Package manager for macOS
+- **System Configuration** - Show hidden files in Finder
 
 **Why it's essential:** Every other script depends on Homebrew and Xcode CLI tools.
 
 ---
 
-### 2️⃣ Terminal & Shell (`02-terminal.sh`)
+### 2⃣ Terminal & Shell (`02-terminal.sh`)
 
 **Beautiful, productive terminal environment**
 
@@ -88,11 +88,11 @@ Run `./setup.sh --dry-run` (alias `-n`) to preview every change without mutating
 ```
 
 **What it installs:**
-- 🖥️ **iTerm2** - Better terminal with Dracula theme
-- 🐚 **Oh My Zsh** - Powerful shell framework  
-- ⚡ **PowerLevel10k** - Beautiful prompt with git info
-- 🔌 **Zsh Plugins** - Autosuggestions, syntax highlighting, zsh-completions
-- 📝 **Development Aliases** - Git shortcuts, better file listing
+- **iTerm2** - Better terminal with Dracula theme
+- **Oh My Zsh** - Powerful shell framework  
+- **PowerLevel10k** - Beautiful prompt with git info
+- **Zsh Plugins** - Autosuggestions, syntax highlighting, zsh-completions
+- **Development Aliases** - Git shortcuts, better file listing
 
 **Post-install steps:**
 ```bash
@@ -105,7 +105,7 @@ p10k configure
 
 ---
 
-### 3️⃣ Version Managers (`03-version-managers.sh`)
+### 3⃣ Version Managers (`03-version-managers.sh`)
 
 **Manage multiple language versions**
 
@@ -114,12 +114,12 @@ p10k configure
 ```
 
 **What it installs:**
-- 🚀 **Volta** - Fast Node.js version manager
-- 🐍 **pyenv** - Python version manager
-- 📦 **Node.js** - Latest LTS automatically
-- 📦 **pnpm** - Fast, disk-efficient package manager (via Volta)
-- 🍞 **bun** - All-in-one JS runtime & package manager (via Homebrew tap `oven-sh/bun`)
-- 🐍 **Python** - Versions 3.9.6, 3.10.13, 3.12.1
+- **Volta** - Fast Node.js version manager
+- **pyenv** - Python version manager
+- **Node.js** - Latest LTS automatically
+- **pnpm** - Fast, disk-efficient package manager (via Volta)
+- **bun** - All-in-one JS runtime & package manager (via Homebrew tap `oven-sh/bun`)
+- **Python** - Versions 3.9.6, 3.10.13, 3.12.1
 
 **Usage examples:**
 ```bash
@@ -141,7 +141,7 @@ pyenv local 3.11.5
 
 ## Optional Scripts
 
-### 4️⃣ Programming Languages (`04-languages.sh`)
+### 4⃣ Programming Languages (`04-languages.sh`)
 
 **Backend development languages**
 
@@ -152,9 +152,9 @@ pyenv local 3.11.5
 **Perfect for:** Backend developers, full-stack developers
 
 **What it installs:**
-- ☕ **Java JDK 17** - With JAVA_HOME configuration
-- 🐹 **Go** - Latest stable version
-- 💎 **Ruby** - Latest stable version
+- **Java JDK 17** - With JAVA_HOME configuration
+- **Go** - Latest stable version
+- **Ruby** - Latest stable version
 
 **Usage examples:**
 ```bash
@@ -173,7 +173,7 @@ gem install bundler
 
 ---
 
-### 5️⃣ Frontend Tools (`05-frontend.sh`)
+### 5⃣ Frontend Tools (`05-frontend.sh`)
 
 **Complete web and mobile development toolkit**
 
@@ -184,16 +184,16 @@ gem install bundler
 **Perfect for:** Frontend developers, mobile developers, full-stack developers
 
 **What it installs:**
-- 🔷 **TypeScript** - Type-safe JavaScript
-- 🟢 **Vue CLI & Nuxt CLI** - Vue.js ecosystem
-- ⚛️ **React Native CLI** - Mobile development
-- 🚀 **Expo CLI & EAS CLI** - Expo platform
-- ⚡ **Vite** - Lightning-fast build tool
-- 🏎️ **Turbo (Turborepo)** - High-performance monorepo build system (via Volta)
+- **TypeScript** - Type-safe JavaScript
+- **Vue CLI & Nuxt CLI** - Vue.js ecosystem
+- **React Native CLI** - Mobile development
+- **Expo CLI & EAS CLI** - Expo platform
+- **Vite** - Lightning-fast build tool
+- **Turbo (Turborepo)** - High-performance monorepo build system (via Volta)
 - ▲ **Vercel CLI** - Deploy and manage Vercel projects (via Volta)
-- 📝 **Storyblok CLI** - Headless CMS
-- 🎨 **Sanity CLI** - Content management
-- 👀 **Watchman** - File watching for React Native
+- **Storyblok CLI** - Headless CMS
+- **Sanity CLI** - Content management
+- **Watchman** - File watching for React Native
 
 **Usage examples:**
 ```bash
@@ -215,7 +215,7 @@ sanity init
 
 ---
 
-### 6️⃣ Development Apps (`06-dev-apps.sh`)
+### 6⃣ Development Apps (`06-dev-apps.sh`)
 
 **Essential code editors and development tools**
 
@@ -226,13 +226,13 @@ sanity init
 **Perfect for:** All developers
 
 **What it installs:**
-- 💻 **Visual Studio Code** - With 20+ carefully chosen extensions
-- 🤖 **Cursor** - AI-powered code editor
-- 📝 **TextMate** - Lightweight option
-- 🤖 **Claude Code** - Anthropic's terminal coding agent (installed via Homebrew)
-- 🪁 **kiro-cli** - AWS agentic CLI (installed via the official kiro install script)
-- 🔧 **Git Tools** - git-flow, GitHub CLI, GitHub Desktop
-- ⚙️ **Git configuration** - `git lg` graph alias, sensible defaults (`init.defaultBranch=main`, `push.autoSetupRemote=true`, `pull.ff=only`, `merge.conflictStyle=zdiff3`), and git-delta set as the pager
+- **Visual Studio Code** - With 20+ carefully chosen extensions
+- **Cursor** - AI-powered code editor
+- **TextMate** - Lightweight option
+- **Claude Code** - Anthropic's terminal coding agent (installed via Homebrew)
+- **kiro-cli** - AWS agentic CLI (installed via the official kiro install script)
+- **Git Tools** - git-flow, GitHub CLI, GitHub Desktop
+- **Git configuration** - `git lg` graph alias, sensible defaults (`init.defaultBranch=main`, `push.autoSetupRemote=true`, `pull.ff=only`, `merge.conflictStyle=zdiff3`), and git-delta set as the pager
 
 **Key VS Code Extensions:**
 - **AI Assistants:** GitHub Copilot
@@ -259,9 +259,9 @@ git flow feature start myfeature
 
 ---
 
-### 7️⃣ Mobile Development (`07-mobile.sh`)
+### 7⃣ Mobile Development (`07-mobile.sh`)
 
-**Android Studio + the Android environment (iOS/React Native → script 12)**
+**Android Studio + the Android environment (iOS/React Native script 12)**
 
 ```bash
 ./scripts/07-mobile.sh
@@ -272,8 +272,8 @@ toolchain (xcodes, ios-deploy, CocoaPods, SwiftLint, Watchman, JDK 17,
 Maestro), run script 12 (`./scripts/12-expo-rn.sh`).
 
 **What it installs:**
-- 🤖 **Android Studio** - Full Android IDE
-- 🌱 **Android environment** - `ANDROID_HOME` + SDK paths in `~/.zshenv`
+- **Android Studio** - Full Android IDE
+- **Android environment** - `ANDROID_HOME` + SDK paths in `~/.zshenv`
 
 **Manual steps required:**
 1. **Open Android Studio**, install the SDK (API 33+) and create an AVD
@@ -290,7 +290,7 @@ $ANDROID_HOME/emulator/emulator -avd Pixel_API_35
 
 ---
 
-### 8️⃣ Productivity Tools (`08-productivity.sh`)
+### 8⃣ Productivity Tools (`08-productivity.sh`)
 
 **Workflow optimization applications**
 
@@ -301,20 +301,20 @@ $ANDROID_HOME/emulator/emulator -avd Pixel_API_35
 **Perfect for:** Anyone wanting better productivity
 
 **What it installs:**
-- 🪟 **Rectangle** - Window management
-- 📋 **Maccy** - Clipboard history manager
-- 📝 **Obsidian** - Note-taking application
-- 🌐 **Browsers** - Firefox, Brave for testing
-- 🛠️ **Developer utilities** - OrbStack, Postman, Figma
-- 🧪 **Mockoon** - Mock API server
-- 🛰️ **Expo Orbit** - Manage Expo builds and simulators
-- 🧰 **DevToys** - Developer Swiss Army knife
-- 💬 **Signal** - Secure messaging
-- 📶 **WiFiman** - Network diagnostics
+- **Rectangle** - Window management
+- **Maccy** - Clipboard history manager
+- **Obsidian** - Note-taking application
+- **Browsers** - Firefox, Brave for testing
+- **Developer utilities** - OrbStack, Postman, Figma
+- **Mockoon** - Mock API server
+- **Expo Orbit** - Manage Expo builds and simulators
+- **DevToys** - Developer Swiss Army knife
+- **Signal** - Secure messaging
+- **WiFiman** - Network diagnostics
 
 **Setup required after installation:**
-- **Rectangle:** Configure shortcuts (⌘+⌥+arrows)
-- **Maccy:** Set clipboard shortcut (⌘+Shift+V)
+- **Rectangle:** Configure shortcuts (++arrows)
+- **Maccy:** Set clipboard shortcut (+Shift+V)
 - **Obsidian:** Create vault, configure sync (optional)
 
 **Productivity shortcuts:**
@@ -326,7 +326,7 @@ CMD+Shift+V         # Clipboard history
 
 ---
 
-### 9️⃣ Database Tools (`09-database.sh`)
+### 9⃣ Database Tools (`09-database.sh`)
 
 **Database development and management**
 
@@ -337,10 +337,10 @@ CMD+Shift+V         # Clipboard history
 **Perfect for:** Full-stack developers, backend developers
 
 **What it installs:**
-- 🐘 **PostgreSQL 15** - Production database with auto-start
-- 🖥️ **DBeaver Community Edition** - Universal database GUI client  
-- 🐘 **pgAdmin 4** - PostgreSQL administration GUI
-- ⚡ **Supabase CLI** - Backend-as-a-service platform
+- **PostgreSQL 15** - Production database with auto-start
+- **DBeaver Community Edition** - Universal database GUI client  
+- **pgAdmin 4** - PostgreSQL administration GUI
+- **Supabase CLI** - Backend-as-a-service platform
 
 **Usage examples:**
 ```bash
@@ -360,7 +360,7 @@ postgresql://localhost:5432/myproject
 
 ---
 
-### 🔟 DevOps Tools (`10-devops.sh`)
+### DevOps Tools (`10-devops.sh`)
 
 **Frontend deployment and command line utilities**
 
@@ -371,16 +371,16 @@ postgresql://localhost:5432/myproject
 **Perfect for:** Frontend developers, deployment workflows
 
 **What it installs:**
-- 🌐 **ngrok** - Local tunneling for sharing dev servers
-- ☁️ **UpCloud CLI (upctl)** - Manage UpCloud infrastructure
-- ☸️ **kubectl** (kubernetes-cli) - Kubernetes command line
-- 🚀 **Tilt** - Local Kubernetes development
-- 🏗️ **Terraform** - Infrastructure as code (via `hashicorp/tap`)
-- 🛠️ **Command line utilities** - jq, fzf, eza, wget, tree
-- 📊 **JSON processing** - jq for API responses
-- 🔍 **Fuzzy finding** - fzf for terminal productivity
-- 🔬 **Modern CLI tools** - git-delta, ripgrep (`rg`), fd, bat, zoxide, lazygit, direnv, atuin, tldr (tealdeer), btop, dust, duf
-- ⌨️ **Shell integration** - fzf key bindings (Ctrl-T / Alt-C) plus zoxide, direnv, and atuin shell init wired into `~/.zshrc` (atuin owns Ctrl-R history search)
+- **ngrok** - Local tunneling for sharing dev servers
+- **UpCloud CLI (upctl)** - Manage UpCloud infrastructure
+- **kubectl** (kubernetes-cli) - Kubernetes command line
+- **Tilt** - Local Kubernetes development
+- **Terraform** - Infrastructure as code (via `hashicorp/tap`)
+- **Command line utilities** - jq, fzf, eza, wget, tree
+- **JSON processing** - jq for API responses
+- **Fuzzy finding** - fzf for terminal productivity
+- **Modern CLI tools** - git-delta, ripgrep (`rg`), fd, bat, zoxide, lazygit, direnv, atuin, tldr (tealdeer), btop, dust, duf
+- **Shell integration** - fzf key bindings (Ctrl-T / Alt-C) plus zoxide, direnv, and atuin shell init wired into `~/.zshrc` (atuin owns Ctrl-R history search)
 
 **Usage examples:**  
 ```bash
@@ -415,7 +415,7 @@ btop                         # Resource monitor
 
 ---
 
-### 1️⃣1️⃣ Developer Fonts (`11-fonts.sh`)
+### 1⃣1⃣ Developer Fonts (`11-fonts.sh`)
 
 **Beautiful coding fonts**
 
@@ -426,19 +426,19 @@ btop                         # Resource monitor
 **Perfect for:** All developers
 
 **What it installs:**
-- 🔤 **Fira Code** - Popular with ligatures
-- ⚡ **JetBrains Mono** - Excellent readability
-- 🎨 **Additional fonts** - Programming-optimized typefaces
+- **Fira Code** - Popular with ligatures
+- **JetBrains Mono** - Excellent readability
+- **Additional fonts** - Programming-optimized typefaces
 
 **After installation:**
 Update font settings in:
-- **VS Code:** Settings → Font Family → "Fira Code"
-- **iTerm2:** Preferences → Profiles → Text → Font
-- **Terminal:** Preferences → Profiles → Font
+- **VS Code:** Settings Font Family "Fira Code"
+- **iTerm2:** Preferences Profiles Text Font
+- **Terminal:** Preferences Profiles Font
 
 ---
 
-### 1️⃣2️⃣ Expo & React Native (`12-expo-rn.sh`)
+### 1⃣2⃣ Expo & React Native (`12-expo-rn.sh`)
 
 **Complete local Expo and React Native development environment**
 
@@ -449,12 +449,12 @@ Update font settings in:
 **Perfect for:** Expo developers, React Native developers
 
 **What it installs:**
-- 👀 **Watchman** - File watching for React Native
-- ☕ **OpenJDK 17** - Required for Android builds
-- 🤖 **Android Studio** - Full Android IDE and SDK
-- 📱 **iOS toolchain** - xcodes, ios-deploy, CocoaPods, SwiftLint
-- 🚀 **Expo, React Native & EAS CLIs** - via Volta
-- 🎭 **Maestro** - Mobile UI testing
+- **Watchman** - File watching for React Native
+- **OpenJDK 17** - Required for Android builds
+- **Android Studio** - Full Android IDE and SDK
+- **iOS toolchain** - xcodes, ios-deploy, CocoaPods, SwiftLint
+- **Expo, React Native & EAS CLIs** - via Volta
+- **Maestro** - Mobile UI testing
 
 **Manual steps required:**
 1. **Install Xcode** from App Store (~15GB download)
@@ -477,7 +477,7 @@ maestro test flow.yaml
 
 ---
 
-### 1️⃣3️⃣ macOS Defaults (`13-macos-defaults.sh`)
+### 1⃣3⃣ macOS Defaults (`13-macos-defaults.sh`)
 
 **Sensible macOS system tweaks via `defaults write`**
 
@@ -488,11 +488,11 @@ maestro test flow.yaml
 **Perfect for:** Anyone wanting a tuned macOS experience
 
 **What it configures:**
-- ⌨️ **Keyboard** - Faster key repeat, disable press-and-hold
-- 📁 **Finder** - Show extensions, path/status bar, default list view
-- 📸 **Screenshots** - Save to `~/Screenshots`
-- 🚀 **Dock** - Tweaked size, autohide, and behavior
-- 💬 **Dialogs** - Expanded save/print panels by default
+- **Keyboard** - Faster key repeat, disable press-and-hold
+- **Finder** - Show extensions, path/status bar, default list view
+- **Screenshots** - Save to `~/Screenshots`
+- **Dock** - Tweaked size, autohide, and behavior
+- **Dialogs** - Expanded save/print panels by default
 
 **Note:** Some changes require logging out, or restarting Finder/Dock, to take full effect.
 
@@ -500,7 +500,7 @@ maestro test flow.yaml
 
 ## Usage Examples
 
-### 🌐 Full Stack Web Developer
+### Full Stack Web Developer
 ```bash
 ./setup.sh
 # Choose: 4 5 6 8 9
@@ -513,7 +513,7 @@ maestro test flow.yaml
 # ✅ Database (PostgreSQL, Supabase, DBeaver)
 ```
 
-### 📱 Mobile App Developer
+### Mobile App Developer
 ```bash
 ./setup.sh  
 # Choose: 5 6 7 8 11
@@ -526,7 +526,7 @@ maestro test flow.yaml
 # ✅ Fonts (Better coding experience)
 ```
 
-### ☸️ DevOps Engineer
+### DevOps Engineer
 ```bash
 ./setup.sh
 # Choose: 4 6 8 9 10
@@ -539,7 +539,7 @@ maestro test flow.yaml
 # ✅ DevOps (Kubernetes, Terraform, Tilt)
 ```
 
-### 🎯 Minimalist Developer
+### Minimalist Developer
 ```bash
 ./setup.sh
 # Choose: 6 8
@@ -749,12 +749,12 @@ After installation:
    - `vercel login` (Vercel)
    - `supabase login` (Supabase)
 5. **Configure productivity apps** (Rectangle shortcuts, Maccy)
-6. **Start coding!** 🚀
+6. **Start coding!** 
 
 ---
 
 <div style="text-align: center; margin: 2rem 0; padding: 2rem; background: #f6f8fa; border-radius: 8px;">
-  <h3>🎉 Ready to Set Up Your Perfect Dev Environment?</h3>
+  <h3> Ready to Set Up Your Perfect Dev Environment?</h3>
   <p>
     <a href="https://github.com/allanasp/Setup-Developer-Mac" style="display: inline-block; background: #28a745; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold; margin: 8px;">Get Started Now</a>
   </p>
@@ -762,4 +762,4 @@ After installation:
 
 ---
 
-**[← Back to Home](/)** | **[GitHub Repository →](https://github.com/allanasp/Setup-Developer-Mac)**
+**[ Back to Home](/)** | **[GitHub Repository ](https://github.com/allanasp/Setup-Developer-Mac)**

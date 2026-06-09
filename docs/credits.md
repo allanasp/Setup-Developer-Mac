@@ -3,7 +3,7 @@ title: Credits
 description: People, projects and tools that make Mac Frontend Developer Setup possible.
 ---
 
-# 🙏 Credits
+# Credits
 
 This setup is glue around dozens of fantastic open-source projects. None of this works
 without the people behind them.

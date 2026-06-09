@@ -3,7 +3,7 @@ title: Post-Installation Guide
 description: Complete configuration guide for all installed tools
 ---
 
-# 📋 Post-Installation Setup Guide
+# Post-Installation Setup Guide
 
 > **Your complete checklist for configuring every tool after installation**
 
@@ -14,7 +14,7 @@ description: Complete configuration guide for all installed tools
 > Append `-- --skip-prompts` to run non-interactively, and set the `SETUP_OPTIONAL`
 > environment variable to choose which optional scripts run.
 
-## 🚀 Quick Navigation
+## Quick Navigation
 
 - [Essential Setup](#essential-setup-everyone) - Required for all users
 - [Development Tools](#development-tools) - VS Code, Git, GitHub
@@ -31,14 +31,14 @@ description: Complete configuration guide for all installed tools
 
 ## Essential Setup (Everyone)
 
-### ✅ Quick Checklist
+### Quick Checklist
 - [ ] Restart terminal or run `source ~/.zshrc`
 - [ ] PowerLevel10k (Dracula colors pre-configured, `p10k configure` optional)
 - [ ] Import iTerm2 Dracula theme
 - [ ] Set up Git identity
 - [ ] Configure primary editor
 
-### 🔄 1. Activate Your Shell
+### 1. Activate Your Shell
 
 #### Option A: Restart Terminal (Recommended)
 Close all terminal windows and reopen iTerm2
@@ -48,9 +48,9 @@ Close all terminal windows and reopen iTerm2
 source ~/.zshrc
 ```
 
-### ⚡ 2. PowerLevel10k Configuration
+### 2. PowerLevel10k Configuration
 
-**🎨 Dracula colors are pre-configured!** Your prompt already matches your terminal theme.
+** Dracula colors are pre-configured!** Your prompt already matches your terminal theme.
 
 If you want to customize further, run the configuration wizard:
 ```bash
@@ -64,19 +64,19 @@ p10k configure
 - **Instant Prompt:** Enable
 - **Transient Prompt:** Enable
 
-### 🎨 3. iTerm2 Dracula Theme
+### 3. iTerm2 Dracula Theme
 
-1. Open iTerm2 → **Preferences** (`⌘,`)
-2. **Profiles** → **Colors**
-3. **Color Presets...** → **Import...**
+1. Open iTerm2 **Preferences** (`,`)
+2. **Profiles** **Colors**
+3. **Color Presets...** **Import...**
 4. Select `Dracula.itermcolors` from setup folder
 5. Select **Dracula** from dropdown
 
 **Additional Settings:**
-- **General** → Working Directory → "Reuse previous"
-- **Keys** → Add shortcuts for word navigation
+- **General** Working Directory "Reuse previous"
+- **Keys** Add shortcuts for word navigation
 
-### ✓ 4. Verify Installation
+### 4. Verify Installation
 
 ```bash
 # Node.js via Volta
@@ -91,7 +91,7 @@ pyenv versions
 pyenv global 3.12.1
 ```
 
-### 🛠️ 5. Modern CLI Tools
+### 5. Modern CLI Tools
 
 The setup installs a set of modern command-line tools. Most work immediately, but a few have useful first-run steps:
 
@@ -137,7 +137,7 @@ source ~/.zshrc
 ```
 
 #### 2. Essential Settings
-Open Settings (⌘,) and add:
+Open Settings (,) and add:
 ```
 {
   "editor.fontSize": 14,
@@ -150,9 +150,9 @@ Open Settings (⌘,) and add:
 ```
 
 **Extension Setup:**
-- **GitHub Copilot:** Click icon → Sign in with GitHub
+- **GitHub Copilot:** Click icon Sign in with GitHub
 
-### 🐙 GitHub Configuration
+### GitHub Configuration
 
 ```bash
 # Authenticate CLI
@@ -169,7 +169,7 @@ git config --global init.defaultBranch main
 > the diff pager (no action needed). It also adds a `git lg` alias for a compact, graphical
 > commit log.
 
-### 🤖 Cursor AI Setup
+### Cursor AI Setup
 1. Open Cursor app
 2. Create account at [cursor.sh](https://cursor.sh)
 3. Choose plan (free available)
@@ -180,7 +180,7 @@ git config --global init.defaultBranch main
 
 ## Frontend Development
 
-### 📦 Package Manager Setup
+### Package Manager Setup
 
 ```bash
 # npm login (if publishing packages)
@@ -193,7 +193,7 @@ pnpm --version
 bun --version
 ```
 
-### 📝 Headless CMS Tools
+### Headless CMS Tools
 
 #### Storyblok
 <ol>
@@ -213,7 +213,7 @@ bun --version
 
 ## Mobile Development
 
-### 🤖 Android Studio
+### Android Studio
 
 #### 1. Setup Wizard
 
@@ -223,14 +223,14 @@ bun --version
 - Download system images
 
 #### 2. SDK Configuration
-Preferences → System Settings → Android SDK
+Preferences System Settings Android SDK
 
 - Install: Android 14 (API 34), Android 13 (API 33)
 - SDK Tools: Build-Tools, Platform-Tools, Command-line Tools
 
 #### 3. Create AVD
 
-- Tools → AVD Manager → Create
+- Tools AVD Manager Create
 - Choose Pixel 6
 - Select API 34
 
@@ -246,7 +246,7 @@ echo 'export PATH=$PATH:$ANDROID_HOME/platform-tools' >> ~/.zshrc
 source ~/.zshrc
 ```
 
-### 🍎 iOS Development
+### iOS Development
 
 1. **Install Xcode** from App Store (15GB+)
 2. Open Xcode, agree to license
@@ -255,16 +255,16 @@ source ~/.zshrc
 sudo xcodebuild -license accept
 xcode-select --install
 ```
-4. **Download simulators** in Xcode → Preferences → Components
+4. **Download simulators** in Xcode Preferences Components
 
-### ⚛️ React Native Verification
+### React Native Verification
 
 ```bash
 npx react-native doctor
 # Fix any ❌ issues shown
 ```
 
-### 🚀 Expo + React Native Local Dev (12-expo-rn.sh)
+### Expo + React Native Local Dev (12-expo-rn.sh)
 
 The optional `12-expo-rn.sh` script sets up a full local Expo / React Native
 toolchain: **Watchman**, **OpenJDK 17**, **Android Studio**, the **iOS toolchain**,
@@ -288,18 +288,18 @@ cd my-app && npx expo start
 
 ## Productivity Apps
 
-### 🪟 Rectangle Shortcuts
+### Rectangle Shortcuts
 
 Default shortcuts (customize in preferences):
-- `⌘⌥←` Left Half
-- `⌘⌥→` Right Half  
-- `⌘⌥F` Maximize
-- `⌘⌥C` Center
+- `` Left Half
+- `` Right Half  
+- `F` Maximize
+- `C` Center
 
-### 📋 Maccy Clipboard
+### Maccy Clipboard
 
-1. Open Maccy → Grant permissions
-2. Set hotkey: `⌘⇧V`
+1. Open Maccy Grant permissions
+2. Set hotkey: `V`
 3. Enable "Launch at login"
 4. Set history size: 200
 
@@ -307,7 +307,7 @@ Default shortcuts (customize in preferences):
 
 ## Database Setup
 
-### 🐘 PostgreSQL
+### PostgreSQL
 
 ```bash
 # Verify running
@@ -324,7 +324,7 @@ psql postgres
 createdb myapp_dev
 ```
 
-### 🖥️ DBeaver Community Edition
+### DBeaver Community Edition
 
 **First Connection:**
 - Database: PostgreSQL
@@ -334,10 +334,10 @@ createdb myapp_dev
 - Username: Your Mac username
 - Test connection before saving
 
-### ⚡ Supabase
+### Supabase
 
 #### 1. Create Account
-Visit [supabase.com](https://supabase.com) → Sign up
+Visit [supabase.com](https://supabase.com) Sign up
 
 #### 2. Local Development
 ```
@@ -364,7 +364,7 @@ supabase db pull
 
 ## DevOps & Cloud
 
-### ☁️ UpCloud Setup
+### UpCloud Setup
 
 1. **Create an UpCloud account** at [upcloud.com](https://upcloud.com)
 2. **Enable API access** and create API credentials in the control panel
@@ -379,7 +379,7 @@ upctl account show
 upctl server list
 ```
 
-### ☸️ Kubernetes & Infrastructure
+### Kubernetes & Infrastructure
 
 ```bash
 # kubectl - point at a cluster, then verify
@@ -396,7 +396,7 @@ terraform init
 terraform plan
 ```
 
-### 🌐 Command Line Utilities
+### Command Line Utilities
 
 ```bash
 # ngrok for local tunneling
@@ -413,16 +413,16 @@ tree -L 2        # Directory structure
 fzf              # Fuzzy file finder
 ```
 
-### 🐳 OrbStack (Docker)
+### OrbStack (Docker)
 
-1. Open OrbStack → Complete setup
+1. Open OrbStack Complete setup
 2. Test Docker:
 ```bash
 docker --version
 docker run hello-world
 ```
 
-### 🌐 ngrok
+### ngrok
 
 1. Create account at [ngrok.com](https://ngrok.com)
 2. Get auth token from dashboard
@@ -526,7 +526,7 @@ code --version && docker --version
 
 ---
 
-## 🎯 Next Steps
+## Next Steps
 
 ### Start Building!
 
@@ -550,7 +550,7 @@ cd my-app && supabase init
 
 ---
 
-## 🎉 You're All Set!
+## You're All Set!
 Your development environment is ready. Start building amazing things!
 
 - Learn keyboard shortcuts
@@ -560,5 +560,5 @@ Your development environment is ready. Start building amazing things!
 
 ---
 
-**[← Back to Home](/)** | **[Tools Guide →](/tools-guide)** | **[Script Guide →](/script-guide)**
+**[ Back to Home](/)** | **[Tools Guide ](/tools-guide)** | **[Script Guide ](/script-guide)**
 

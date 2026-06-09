@@ -3,9 +3,9 @@ title: Start Here
 description: Minimal quick-start guide for the Mac developer setup
 ---
 
-# 🚀 Start Here - Mac Frontend Developer Setup
+# Start Here - Mac Frontend Developer Setup
 
-> 📖 See also: [Script Guide](/script-guide) · [Post-Installation](/post-installation) · [Tools Guide](/tools-guide) · [Setup Checker](/setup-checker)
+> See also: [Script Guide](/script-guide) · [Post-Installation](/post-installation) · [Tools Guide](/tools-guide) · [Setup Checker](/setup-checker)
 
 ## Quick Start (1 Line)
 
@@ -34,27 +34,27 @@ cd Setup-Developer-Mac
 
 ---
 
-## 🎯 What This Does
+## What This Does
 
 **Frontend-focused Mac development environment** with:
-- ✅ **React, Vue, Angular** development tools
-- ✅ **Node.js, TypeScript, pnpm/bun** ecosystem  
-- ✅ **React Native & Expo** mobile development
-- ✅ **VS Code, Cursor** editors + **Claude Code** & **kiro-cli** AI agents in the terminal
-- ✅ **Terminal** with beautiful themes
-- ✅ **Git, databases, DevOps** tools as needed
+- **React, Vue, Angular** development tools
+- **Node.js, TypeScript, pnpm/bun** ecosystem  
+- **React Native & Expo** mobile development
+- **VS Code, Cursor** editors + **Claude Code** & **kiro-cli** AI agents in the terminal
+- **Terminal** with beautiful themes
+- **Git, databases, DevOps** tools as needed
 
-## 🔄 Interactive Experience
+## Interactive Experience
 
 The setup **guides you step-by-step**:
-1. **Install** → Tools get installed
-2. **Configure** → You set up each tool properly  
-3. **Verify** → Confirm everything works
-4. **Continue** → Move to next component
+1. **Install** Tools get installed
+2. **Configure** You set up each tool properly  
+3. **Verify** Confirm everything works
+4. **Continue** Move to next component
 
 No guessing, no broken setups!
 
-## 📋 What You'll Choose
+## What You'll Choose
 
 **Essential (auto-installed):**
 - System requirements (Xcode, Homebrew)
@@ -76,13 +76,13 @@ The DevOps tools also wire up modern CLI power-ups: git-delta, ripgrep (rg), fd,
 
 ## 🆘 Need Help?
 
-- 📖 **Full documentation**: [View website](https://allanasp.github.io/Setup-Developer-Mac)
-- 🐛 **Found a bug?**: [Report issue](https://github.com/allanasp/Setup-Developer-Mac/issues)
-- 💡 **Want a tool added?**: [Request tool](https://github.com/allanasp/Setup-Developer-Mac/issues/new/choose)
+- **Full documentation**: [View website](https://allanasp.github.io/Setup-Developer-Mac)
+- **Found a bug?**: [Report issue](https://github.com/allanasp/Setup-Developer-Mac/issues)
+- **Want a tool added?**: [Request tool](https://github.com/allanasp/Setup-Developer-Mac/issues/new/choose)
 
 ---
 
-## ⚡ Advanced Usage
+## Advanced Usage
 
 ```bash
 # Interactive mode (recommended)
@@ -112,7 +112,7 @@ The DevOps tools also wire up modern CLI power-ups: git-delta, ripgrep (rg), fd,
 > Summary (installed / skipped / failed) at the end. `--dry-run` also works on
 > `update.sh` and `uninstall.sh`.
 
-## 🔍 Verify Your Setup
+## Verify Your Setup
 
 After installation, run the checker to see what's working:
 ```bash
@@ -120,9 +120,9 @@ After installation, run the checker to see what's working:
 ```
 
 This will show you:
-- ✅ What's installed and working
-- ❌ What's missing or needs attention  
-- 📊 Overall setup completion percentage
-- 🔧 Specific version information for each tool
+- What's installed and working
+- What's missing or needs attention  
+- Overall setup completion percentage
+- Specific version information for each tool
 
-**Ready to get started?** Run `./setup.sh` now! 🚀
+**Ready to get started?** Run `./setup.sh` now! 

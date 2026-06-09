@@ -3,35 +3,35 @@ title: Setup Checker
 description: Verify your Mac development environment installation
 ---
 
-# 🔍 Setup Checker - Verify Your Installation
+# Setup Checker - Verify Your Installation
 
 The setup checker (`check-setup.sh`) verifies your Mac development environment and shows you exactly what's working and what needs attention.
 
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
 # After running the main setup
 ./check-setup.sh
 ```
 
-## 📊 What It Shows
+## What It Shows
 
-### ✅ Installed Tools
+### Installed Tools
 - Lists all installed development tools
 - Shows version information where available
 - Confirms tools are working properly
 
-### ❌ Missing or Issues
+### Missing or Issues
 - Identifies tools that failed to install
 - Highlights configuration issues
 - Suggests fixes for common problems
 
-### 📈 Completion Percentage
+### Completion Percentage
 - Overall setup completion rate
 - Breakdown by category (frontend, mobile, devops, etc.)
 - Progress tracking for partial installations
 
-## 🎯 Example Output
+## Example Output
 
 ```bash
 🔍 Checking Mac Development Setup (with versions)...
@@ -67,7 +67,7 @@ The setup checker (`check-setup.sh`) verifies your Mac development environment a
 📱 Mobile Development: 60% Complete (3/5 tools)
 ```
 
-## 🛠️ Categories Checked
+## Categories Checked
 
 ### Essential Components
 - **System Requirements**: Xcode CLI tools, Homebrew, Git
@@ -99,7 +99,7 @@ The setup checker (`check-setup.sh`) verifies your Mac development environment a
 - **macOS Defaults (13-macos-defaults.sh)**: optional system tweaks
 - **Developer Fonts**: Fira Code, JetBrains Mono
 
-### 🔎 Notable Tools the Checker Verifies
+### Notable Tools the Checker Verifies
 
 The checker now confirms these additions: **bun**, **Turbo**, **Vercel CLI**, **create-expo-app**, **Storyblok**, **Sanity**, **Supabase**, **pgAdmin 4**, **UpCloud upctl**, **kubectl**, **Tilt**, **Terraform**, **Maestro**, **Claude Code**, **kiro-cli**, **Mockoon**, **Expo Orbit**, **DevToys**, **Signal**, and **WiFiman**.
 
@@ -107,7 +107,7 @@ It also verifies the modern CLI tooling installed by `10-devops.sh`: **ripgrep (
 
 It **no longer checks** for **Yarn**, **AWS CLI**, **Amazon Q**, **Raycast**, or **Zed** — these have been dropped from the setup.
 
-## 🔧 Common Issues & Fixes
+## Common Issues & Fixes
 
 ### Node.js Not Found
 ```bash
@@ -143,24 +143,24 @@ brew update
 brew doctor
 ```
 
-## 📈 Using Results for Troubleshooting
+## Using Results for Troubleshooting
 
 ### High Completion Rate (90%+)
-- ✅ Setup was successful
+- Setup was successful
 - Focus on configuring installed tools
 - Run individual scripts for missing items
 
 ### Medium Completion Rate (70-89%)
-- 🔧 Some components failed to install
+- Some components failed to install
 - Check internet connection during setup
 - Re-run specific category scripts
 
 ### Low Completion Rate (<70%)
-- ❌ Major installation issues
+- Major installation issues
 - Check system requirements (macOS version, disk space)
 - Consider running setup again with `--skip-prompts`
 
-## ⚡ Advanced Usage
+## Advanced Usage
 
 ### Check Specific Categories
 ```bash
@@ -189,7 +189,7 @@ SKIP_INTERACTIVE=true ./check-setup.sh
 ./check-setup.sh && ./setup.sh --skip-prompts
 ```
 
-## 🎯 Frontend Developer Focus
+## Frontend Developer Focus
 
 The checker prioritizes frontend development tools and shows specific metrics for:
 
@@ -207,13 +207,13 @@ This helps frontend developers quickly see if their environment is ready for:
 
 ---
 
-## 🔄 What's Next?
+## What's Next?
 
 After running the checker:
 
-1. **100% Complete**: You're ready to develop! 🎉
+1. **100% Complete**: You're ready to develop! 
 2. **Missing Tools**: Re-run specific scripts or `./setup.sh`
 3. **Configuration Issues**: Check the [Post-Installation Guide](/post-installation)
 4. **Still Having Issues**: [Report a bug](https://github.com/allanasp/Setup-Developer-Mac/issues)
 
-The setup checker ensures your Mac development environment is not just installed, but actually working and ready for productive frontend development! 🚀
+The setup checker ensures your Mac development environment is not just installed, but actually working and ready for productive frontend development! 
