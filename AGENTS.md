@@ -15,6 +15,7 @@ Ruby in the project itself.
 ```
 setup.sh              Main orchestrator with interactive prompts
 check-setup.sh        Verifies what's installed and prints versions
+doctor.sh             Diagnoses environment drift (dead aliases, broken PATH, …); --auto-fix repairs known issues
 update.sh             Upgrades brew, Volta, Oh My Zsh, PowerLevel10k
 uninstall.sh          Rolls back casks, formulae and Volta packages
 install.sh            One-line bootstrapper (curl | sh entrypoint)
@@ -151,8 +152,15 @@ bash -n scripts/XX-category.sh
 # Verify installs
 ./check-setup.sh
 
+# Diagnose environment drift (and optionally apply fixes)
+./doctor.sh
+./doctor.sh --auto-fix --dry-run
+
 # Dry-run end-to-end
 ./setup.sh --dry-run
+
+# Unit tests (bats)
+bats tests/
 ```
 
 CI runs ShellCheck + the test runner via `.github/workflows/main.yml` — keep
