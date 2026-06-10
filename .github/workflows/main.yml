@@ -125,7 +125,8 @@ jobs:
                  grep -v "dracula/iterm" | \
                  grep -v "dracula/powerlevel10k" | \
                  grep -v "opencode.ai/install" | \
-                 grep -v "get.maestro.mobile.dev"; then
+                 grep -v "get.maestro.mobile.dev" | \
+                 grep -v "cli.kiro.dev/install"; then
                 echo "❌ Suspicious download commands found"
                 exit 1
               fi
