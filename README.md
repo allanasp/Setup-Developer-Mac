@@ -345,6 +345,9 @@ chmod +x scripts/*.sh
 # Upgrade everything at once (brew, Volta/Node, Oh My Zsh, PowerLevel10k)
 ./update.sh
 ./update.sh --dry-run       # preview without changing anything
+./update.sh --outdated      # list what's stale, change nothing (exits non-zero if any drift)
+./update.sh --outdated --no-fetch
+                            # offline mode: skip `git fetch` for plugin / repo drift
 
 # Or re-run specific scripts to update tools
 ./scripts/05-frontend.sh    # Update frontend tools
