@@ -169,10 +169,24 @@ warnings clean.
 - ❌ `ls` in scripts — `ls` is aliased to `eza` in the user's shell; use `/bin/ls`
   or a different approach if running inside the user's interactive shell
 
-## Commit style
+## Branching & commit style
 
-Conventional Commits: `feat:`, `fix:`, `docs:`, `chore:`, `ci:`, `refactor:`.
-One logical change per commit. Commit message body explains *why*, not *what*.
+**Always work on a feature branch and open a PR — do not push directly to
+`main`.** Branch names follow Conventional Commits prefixes:
+
+- `feat/<slug>` — new feature (e.g. `feat/doctor-command`)
+- `fix/<slug>` — bug fix (e.g. `fix/eza-alias-guard`)
+- `ci/<slug>` — CI / workflow changes
+- `docs/<slug>` — docs-only changes
+- `chore/<slug>` — refactors, deps, housekeeping
+
+One logical change per branch. Open the PR with `gh pr create` so CI runs
+before merge — the `validate` job has caught real bugs (security-scan
+allowlist misses, formatting issues) that would otherwise block the
+deploy pipeline silently.
+
+Commit message: Conventional Commits prefix on the subject (`feat:`, `fix:`,
+`docs:`, `chore:`, `ci:`, `refactor:`), body explains *why*, not *what*.
 
 ## Docs site
 
