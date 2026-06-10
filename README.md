@@ -146,6 +146,10 @@ The setup now **guides you through each step** with configuration prompts:
 ```bash
 # Check what's installed and get version information
 ./check-setup.sh
+
+# Diagnose environment drift (broken aliases, missing PATH, stale xcode-select…)
+./doctor.sh
+./doctor.sh --auto-fix         # apply safe repairs for known issues
 ```
 
 ## 📋 Available Scripts
