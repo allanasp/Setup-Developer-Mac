@@ -1,7 +1,10 @@
 # 🚀 Mac Frontend Developer Setup
 
-> **👉 [START HERE](docs/start-here.md) for quick setup** or continue reading for full details
+> **📖 Full documentation: [allanasp.github.io/Setup-Developer-Mac](https://allanasp.github.io/Setup-Developer-Mac/)**
+>
+> **👉 [START HERE](https://allanasp.github.io/Setup-Developer-Mac/start-here) for the quick-start guide**, or continue reading for the full overview.
 
+[![Docs](https://img.shields.io/badge/docs-allanasp.github.io-blue.svg)](https://allanasp.github.io/Setup-Developer-Mac/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![macOS](https://img.shields.io/badge/macOS-Compatible-brightgreen.svg)](https://www.apple.com/macos/)
 [![Shell Script](https://img.shields.io/badge/Shell-Bash-blue.svg)](https://www.gnu.org/software/bash/)
@@ -122,7 +125,7 @@ The setup now **guides you through each step** with configuration prompts:
 - No more guessing what to do after installation!
 ```
 
-> 🌐 **[View Documentation Website](https://allanasp.github.io/Setup-Developer-Mac)** - Beautiful, interactive documentation
+> 🌐 **[View Documentation Site](https://allanasp.github.io/Setup-Developer-Mac/)** — searchable VitePress docs with the full guide
 
 **Example selections:**
 - Type `5 6 9` → Install Frontend Tools, Dev Apps, Database Tools
