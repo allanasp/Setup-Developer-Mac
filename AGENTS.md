@@ -169,10 +169,27 @@ warnings clean.
 - ❌ `ls` in scripts — `ls` is aliased to `eza` in the user's shell; use `/bin/ls`
   or a different approach if running inside the user's interactive shell
 
-## Commit style
+## Branching & commit style
 
-Conventional Commits: `feat:`, `fix:`, `docs:`, `chore:`, `ci:`, `refactor:`.
-One logical change per commit. Commit message body explains *why*, not *what*.
+**Always work on a feature branch and open a PR — do not push directly to
+`main`.** Branch names use the same type prefixes as the
+[Conventional Commits](https://www.conventionalcommits.org/) spec for commit
+messages:
+
+- `feat/<slug>` — new feature (e.g. `feat/doctor-command`)
+- `fix/<slug>` — bug fix (e.g. `fix/eza-alias-guard`)
+- `refactor/<slug>` — code restructuring without behaviour change
+- `ci/<slug>` — CI / workflow changes
+- `docs/<slug>` — docs-only changes
+- `chore/<slug>` — deps bumps and housekeeping
+
+One logical change per branch. Every PR — whether opened via `gh pr create`
+or the GitHub UI — runs the full `validate` job before it can merge; that
+job has caught real bugs in earlier work (security-scan allowlist misses,
+formatting issues) that would otherwise have shipped to main.
+
+Commit message: Conventional Commits prefix on the subject (`feat:`, `fix:`,
+`docs:`, `chore:`, `ci:`, `refactor:`), body explains *why*, not *what*.
 
 ## Docs site
 
