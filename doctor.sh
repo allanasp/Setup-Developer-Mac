@@ -26,6 +26,11 @@ DOCTOR_AUTO_FIX=false
 DOCTOR_ISSUES=0
 DOCTOR_FIXED=0
 DOCTOR_OK=0
+# Dry-run-only counter: tracks fixes the script would apply if --dry-run
+# weren't set. Kept separate from DOCTOR_FIXED so the exit-code logic doesn't
+# treat hypothetical fixes as real ones — otherwise `--auto-fix --dry-run`
+# could exit 0 while issues remain unaddressed.
+DOCTOR_WOULD_FIX=0
 
 print_help() {
     cat <<'EOF'
@@ -88,14 +93,27 @@ sed_inplace() {
     fi
 }
 
-# Backup a file with a timestamp suffix so the user can `mv` it back if our fix
-# does the wrong thing. Returns the backup path on stdout.
+# Backup a file with a timestamp suffix so the user can `mv` it back if our
+# fix does the wrong thing. Echoes the backup path on stdout, or nothing if
+# the source file doesn't exist yet (in which case there's nothing to lose
+# and the caller can proceed to create it fresh).
 backup_file() {
     local file="$1"
+    [[ -f "${file}" ]] || return 0
     local backup
     backup="${file}.doctor-$(date +%Y%m%d-%H%M%S)"
     cp "${file}" "${backup}"
     echo "${backup}"
+}
+
+# Render a HOME-prefixed path as ~/foo without relying on parameter-substring
+# substitution. The substitution form ${path/${HOME}/~} fails surprisingly on
+# some bash builds when HOME contains certain characters (e.g. when CI sets it
+# to a path under /var/folders or a symlinked /tmp); strip-shortest-suffix
+# (`##*/`) is deterministic.
+home_relative() {
+    local path="$1"
+    echo "~/${path##*/}"
 }
 
 # Individual checks ------------------------------------------------------------
@@ -108,7 +126,11 @@ backup_file() {
 # alias is the culprit and edit ~/.zshrc by hand.
 check_eza_alias_consistency() {
     local zshrc="${HOME}/.zshrc"
-    if ! grep -qE 'alias ls=.?eza' "${zshrc}" 2>/dev/null; then
+    # Anchor at start of line with optional leading whitespace, so a
+    # commented-out `# alias ls="eza"` is ignored. The same anchor goes on
+    # the sed auto-fix below to keep detect/repair consistent.
+    local eza_detect_re='^[[:space:]]*alias ls=.{0,1}eza'
+    if ! grep -qE "${eza_detect_re}" "${zshrc}" 2>/dev/null; then
         doctor_pass "eza alias: no alias configured"
         return 0
     fi
@@ -122,16 +144,18 @@ check_eza_alias_consistency() {
     if [[ "${DOCTOR_AUTO_FIX}" == "true" ]]; then
         if is_dry_run; then
             print_status "[dry-run] would strip eza alias lines from ${zshrc}"
-            DOCTOR_FIXED=$((DOCTOR_FIXED + 1))
+            DOCTOR_WOULD_FIX=$((DOCTOR_WOULD_FIX + 1))
         else
             local backup
             backup=$(backup_file "${zshrc}")
             # Drop the "Better ls with eza" header comment and the four known
-            # alias lines. Conservative: nothing else in the block is touched,
-            # so a hand-edited alias for `tree` that doesn't reference eza
-            # survives.
-            sed_inplace '/^# Better ls with eza/d;/^alias (ls|ll|la|tree)=.?eza/d' "${zshrc}"
-            doctor_fix_applied "stripped eza alias lines from ~/.zshrc (backup: ${backup})"
+            # alias lines. Allow optional leading whitespace so an indented
+            # alias block (e.g. inside a function or conditional) is also
+            # repaired. Conservative: only the four known alias names are
+            # touched, so a hand-edited alias for `tree` that doesn't
+            # reference eza survives.
+            sed_inplace '/^[[:space:]]*# Better ls with eza/d;/^[[:space:]]*alias (ls|ll|la|tree)=.{0,1}eza/d' "${zshrc}"
+            doctor_fix_applied "stripped eza alias lines from ~/.zshrc (backup: ${backup:-none})"
         fi
     fi
     return 1
@@ -149,7 +173,9 @@ check_brew_shellenv_loaded() {
         return 0
     fi
     local zprofile="${HOME}/.zprofile"
-    if grep -q 'brew shellenv' "${zprofile}" 2>/dev/null; then
+    # Match a real eval line for shellenv — ignore lines that start with `#`
+    # so a commented note about brew shellenv doesn't falsely satisfy this.
+    if grep -qE '^[[:space:]]*eval[[:space:]]+["'\''(].*brew shellenv' "${zprofile}" 2>/dev/null; then
         doctor_pass "brew shellenv: loaded from ~/.zprofile"
         return 0
     fi
@@ -158,10 +184,12 @@ check_brew_shellenv_loaded() {
     if [[ "${DOCTOR_AUTO_FIX}" == "true" ]]; then
         if is_dry_run; then
             print_status "[dry-run] would append brew shellenv line to ${zprofile}"
-            DOCTOR_FIXED=$((DOCTOR_FIXED + 1))
+            DOCTOR_WOULD_FIX=$((DOCTOR_WOULD_FIX + 1))
         else
+            local backup
+            backup=$(backup_file "${zprofile}")
             echo "eval \"\$(${BREW_PREFIX}/bin/brew shellenv)\"" >>"${zprofile}"
-            doctor_fix_applied "appended brew shellenv to ~/.zprofile"
+            doctor_fix_applied "appended brew shellenv to ~/.zprofile (backup: ${backup:-none})"
         fi
     fi
     return 1
@@ -180,16 +208,18 @@ check_volta_env_configured() {
     fi
     # Volta env can legitimately live in either ~/.zshenv (the cleaner choice —
     # sourced by all shells including non-interactive) or ~/.zshrc (the default
-    # Volta installer target). Accept either.
+    # Volta installer target). Accept either. Match anchored, non-commented
+    # lines so a stray `# VOLTA_HOME` reference doesn't pass the check.
     local target=""
+    local volta_re='^[[:space:]]*(export[[:space:]]+)?(VOLTA_HOME|PATH)=.*(\$VOLTA_HOME|\.volta/bin)'
     for candidate in "${HOME}/.zshenv" "${HOME}/.zshrc"; do
-        if grep -q 'VOLTA_HOME\|.volta/bin' "${candidate}" 2>/dev/null; then
+        if grep -qE "${volta_re}" "${candidate}" 2>/dev/null; then
             target="${candidate}"
             break
         fi
     done
     if [[ -n "${target}" ]]; then
-        doctor_pass "Volta env: VOLTA_HOME wired up in ${target/${HOME}/~}"
+        doctor_pass "Volta env: VOLTA_HOME wired up in $(home_relative "${target}")"
         return 0
     fi
     doctor_fail "~/.volta exists but VOLTA_HOME is not exported from ~/.zshenv or ~/.zshrc (non-login shells will miss node)"
@@ -198,15 +228,17 @@ check_volta_env_configured() {
         local zshenv="${HOME}/.zshenv"
         if is_dry_run; then
             print_status "[dry-run] would append Volta env block to ${zshenv}"
-            DOCTOR_FIXED=$((DOCTOR_FIXED + 1))
+            DOCTOR_WOULD_FIX=$((DOCTOR_WOULD_FIX + 1))
         else
+            local backup
+            backup=$(backup_file "${zshenv}")
             {
                 echo ""
                 echo "# Volta — Node.js version manager (added by doctor.sh)"
                 echo 'export VOLTA_HOME="$HOME/.volta"'
                 echo 'export PATH="$VOLTA_HOME/bin:$PATH"'
             } >>"${zshenv}"
-            doctor_fix_applied "appended Volta env block to ~/.zshenv"
+            doctor_fix_applied "appended Volta env block to ~/.zshenv (backup: ${backup:-none})"
         fi
     fi
     return 1
@@ -303,9 +335,13 @@ fi
 if [[ "${DOCTOR_FIXED}" -gt 0 ]]; then
     print_success "Fixes applied: ${DOCTOR_FIXED}"
 fi
+if [[ "${DOCTOR_WOULD_FIX}" -gt 0 ]]; then
+    print_status "Would fix:     ${DOCTOR_WOULD_FIX} (dry-run; nothing was actually changed)"
+fi
 
-# Exit non-zero if any issue remains unresolved, so CI / wrapper scripts can
-# detect "still broken".
+# Exit non-zero if any real issue remains unresolved. --dry-run "would fix"
+# counts deliberately don't reduce the issue total — otherwise a preview run
+# would falsely report success.
 remaining=$((DOCTOR_ISSUES - DOCTOR_FIXED))
 if [[ "${remaining}" -gt 0 ]]; then
     exit 1

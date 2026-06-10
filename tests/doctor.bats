@@ -37,14 +37,19 @@ EOF
     [[ "${output}" == *"Issues found:"* ]]
 }
 
-@test "doctor --auto-fix --dry-run does not mutate .zshrc" {
+@test "doctor --auto-fix --dry-run does not mutate .zshrc and still exits non-zero" {
     cat >"${HOME}/.zshrc" <<'EOF'
 alias ls="eza"
 EOF
     local before
     before=$(cat "${HOME}/.zshrc")
     run "${REPO_ROOT}/doctor.sh" --auto-fix --dry-run
+    # Issue is still real until --auto-fix runs for real — dry-run must not
+    # claim success even though it counts hypothetical fixes.
+    [ "${status}" -eq 1 ]
     [[ "${output}" == *"[dry-run] would strip eza alias lines"* ]]
+    [[ "${output}" == *"Would fix:"* ]]
+    [[ "${output}" == *"dry-run; nothing was actually changed"* ]]
     [ "$(cat "${HOME}/.zshrc")" = "${before}" ]
 }
 
@@ -105,6 +110,10 @@ export PATH="$VOLTA_HOME/bin:$PATH"
 EOF
     run "${REPO_ROOT}/doctor.sh"
     [ "${status}" -eq 0 ]
+    # home_relative() renders the file path as ~/.zshenv regardless of the
+    # actual HOME prefix under bats. The previous ${path/${HOME}/~}
+    # substitution form failed on Linux CI for reasons that were never
+    # fully isolated; using basename-with-~prefix is deterministic.
     [[ "${output}" == *"Volta env: VOLTA_HOME wired up in ~/.zshenv"* ]]
 }
 
