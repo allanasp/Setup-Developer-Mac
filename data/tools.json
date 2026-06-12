@@ -1,0 +1,1003 @@
+{
+  "schema_version": 1,
+  "_comment": "Single source of truth for everything this repo installs. Edit here; README.md and docs/tools-guide.md are generated from this file via scripts/lib/generate-docs.sh. Icon slugs come from https://simpleicons.org — set null if no logo exists. kind = short category label shown in docs (CLI, GUI app, Shell plugin, Font, etc.).",
+  "scripts": [
+    {
+      "id": "01-system",
+      "number": 1,
+      "tier": "essential",
+      "title": "System Foundation",
+      "file": "scripts/01-system.sh",
+      "summary": "Bootstraps the toolchain everything else builds on."
+    },
+    {
+      "id": "02-terminal",
+      "number": 2,
+      "tier": "essential",
+      "title": "Terminal & Shell",
+      "file": "scripts/02-terminal.sh",
+      "summary": "Modern terminals plus a productive Zsh setup."
+    },
+    {
+      "id": "03-version-managers",
+      "number": 3,
+      "tier": "essential",
+      "title": "Version Managers & Runtimes",
+      "file": "scripts/03-version-managers.sh",
+      "summary": "Per-project Node and Python versions, plus Bun."
+    },
+    {
+      "id": "04-languages",
+      "number": 4,
+      "tier": "optional",
+      "title": "Programming Languages",
+      "file": "scripts/04-languages.sh",
+      "summary": "Standalone language runtimes for full-stack and mobile work."
+    },
+    {
+      "id": "05-frontend",
+      "number": 5,
+      "tier": "optional",
+      "title": "Frontend & Mobile CLIs",
+      "file": "scripts/05-frontend.sh",
+      "summary": "The heart of the setup — global CLIs for the modern JS ecosystem."
+    },
+    {
+      "id": "06-dev-apps",
+      "number": 6,
+      "tier": "optional",
+      "title": "Editors & Git Tools",
+      "file": "scripts/06-dev-apps.sh",
+      "summary": "Editors, AI coding agents, Git tooling."
+    },
+    {
+      "id": "07-mobile",
+      "number": 7,
+      "tier": "optional",
+      "title": "Mobile (Android)",
+      "file": "scripts/07-mobile.sh",
+      "summary": "Android Studio + environment. Full RN/iOS env lives in script 12."
+    },
+    {
+      "id": "08-productivity",
+      "number": 8,
+      "tier": "optional",
+      "title": "Productivity & Utilities",
+      "file": "scripts/08-productivity.sh",
+      "summary": "Window mgmt, browsers, API tools, and other day-to-day apps."
+    },
+    {
+      "id": "09-database",
+      "number": 9,
+      "tier": "optional",
+      "title": "Databases",
+      "file": "scripts/09-database.sh",
+      "summary": "PostgreSQL plus GUI clients and Supabase tooling."
+    },
+    {
+      "id": "10-devops",
+      "number": 10,
+      "tier": "optional",
+      "title": "DevOps & CLI Power-ups",
+      "file": "scripts/10-devops.sh",
+      "summary": "Modern CLI replacements + infrastructure tooling."
+    },
+    {
+      "id": "11-fonts",
+      "number": 11,
+      "tier": "optional",
+      "title": "Developer Fonts",
+      "file": "scripts/11-fonts.sh",
+      "summary": "Programming fonts with ligatures and Nerd Font glyphs."
+    },
+    {
+      "id": "12-expo-rn",
+      "number": 12,
+      "tier": "optional",
+      "title": "Expo + React Native (full env)",
+      "file": "scripts/12-expo-rn.sh",
+      "summary": "Complete local Expo / React Native env, including iOS toolchain. Superset of scripts 04 + 07 for mobile."
+    },
+    {
+      "id": "13-macos-defaults",
+      "number": 13,
+      "tier": "optional",
+      "title": "macOS System Defaults",
+      "file": "scripts/13-macos-defaults.sh",
+      "summary": "Reversible developer-friendly `defaults write` tweaks."
+    }
+  ],
+  "tools": [
+    {
+      "slug": "xcode-clt",
+      "name": "Xcode Command Line Tools",
+      "description": "Apple's compiler suite (clang, git, make, swift). Required by Homebrew and most other tools.",
+      "script_id": "01-system",
+      "kind": "Compiler toolchain",
+      "icon": "xcode",
+      "url": "https://developer.apple.com/xcode/"
+    },
+    {
+      "slug": "homebrew",
+      "name": "Homebrew",
+      "description": "The missing package manager for macOS. Every later script builds on `brew`.",
+      "script_id": "01-system",
+      "kind": "Package manager",
+      "icon": "homebrew",
+      "url": "https://brew.sh"
+    },
+    {
+      "slug": "iterm2",
+      "name": "iTerm2",
+      "description": "Advanced terminal emulator with split panes, search, paste history. Dracula theme is preconfigured.",
+      "script_id": "02-terminal",
+      "kind": "Terminal",
+      "icon": "iterm2",
+      "url": "https://iterm2.com"
+    },
+    {
+      "slug": "warp",
+      "name": "Warp",
+      "description": "Modern AI-powered terminal with block-based output and command palette.",
+      "script_id": "02-terminal",
+      "kind": "Terminal",
+      "icon": "warp",
+      "url": "https://warp.dev"
+    },
+    {
+      "slug": "oh-my-zsh",
+      "name": "Oh My Zsh",
+      "description": "Framework for managing Zsh config — plugins, themes, completions.",
+      "script_id": "02-terminal",
+      "kind": "Shell framework",
+      "icon": "ohmyzsh",
+      "url": "https://ohmyz.sh"
+    },
+    {
+      "slug": "powerlevel10k",
+      "name": "PowerLevel10k",
+      "description": "Extremely fast Zsh prompt theme. Shows git status, runtime info, language versions.",
+      "script_id": "02-terminal",
+      "kind": "Shell theme",
+      "icon": null,
+      "url": "https://github.com/romkatv/powerlevel10k"
+    },
+    {
+      "slug": "dracula-theme",
+      "name": "Dracula Theme",
+      "description": "Dark color scheme for iTerm2 + PowerLevel10k. High contrast, low eye strain.",
+      "script_id": "02-terminal",
+      "kind": "Color scheme",
+      "icon": null,
+      "url": "https://draculatheme.com"
+    },
+    {
+      "slug": "zsh-autosuggestions",
+      "name": "zsh-autosuggestions",
+      "description": "Suggests commands as you type, based on history. Right-arrow to accept.",
+      "script_id": "02-terminal",
+      "kind": "Shell plugin",
+      "icon": null,
+      "url": "https://github.com/zsh-users/zsh-autosuggestions"
+    },
+    {
+      "slug": "zsh-syntax-highlighting",
+      "name": "zsh-syntax-highlighting",
+      "description": "Colors commands as you type — green for valid, red for typos.",
+      "script_id": "02-terminal",
+      "kind": "Shell plugin",
+      "icon": null,
+      "url": "https://github.com/zsh-users/zsh-syntax-highlighting"
+    },
+    {
+      "slug": "volta",
+      "name": "Volta",
+      "description": "Fast Rust-based Node.js version manager. Pins versions per project automatically.",
+      "script_id": "03-version-managers",
+      "kind": "Version manager",
+      "icon": null,
+      "url": "https://volta.sh"
+    },
+    {
+      "slug": "pyenv",
+      "name": "pyenv",
+      "description": "Python version manager. Multiple versions side by side, per-project pinning.",
+      "script_id": "03-version-managers",
+      "kind": "Version manager",
+      "icon": "python",
+      "url": "https://github.com/pyenv/pyenv"
+    },
+    {
+      "slug": "nodejs",
+      "name": "Node.js (LTS)",
+      "description": "JavaScript runtime. Installed at the LTS version via Volta.",
+      "script_id": "03-version-managers",
+      "kind": "Runtime",
+      "icon": "nodedotjs",
+      "url": "https://nodejs.org"
+    },
+    {
+      "slug": "pnpm",
+      "name": "pnpm",
+      "description": "Fast, disk-efficient package manager. Default in this setup over npm/yarn.",
+      "script_id": "03-version-managers",
+      "kind": "Package manager",
+      "icon": "pnpm",
+      "url": "https://pnpm.io"
+    },
+    {
+      "slug": "bun",
+      "name": "Bun",
+      "description": "All-in-one JS runtime, bundler, test runner, package manager. Installed via its own Homebrew tap.",
+      "script_id": "03-version-managers",
+      "kind": "Runtime",
+      "icon": "bun",
+      "url": "https://bun.sh"
+    },
+    {
+      "slug": "openjdk-17",
+      "name": "OpenJDK 17",
+      "description": "Java 17 runtime. Required by Gradle for Android/React Native builds.",
+      "script_id": "04-languages",
+      "kind": "Language runtime",
+      "icon": "openjdk",
+      "url": "https://openjdk.org"
+    },
+    {
+      "slug": "go",
+      "name": "Go",
+      "description": "Statically-typed language by Google. Used by Docker, Kubernetes, Terraform internally.",
+      "script_id": "04-languages",
+      "kind": "Language",
+      "icon": "go",
+      "url": "https://go.dev"
+    },
+    {
+      "slug": "ruby",
+      "name": "Ruby",
+      "description": "Dynamic interpreted language. Required by CocoaPods and many DevOps tools.",
+      "script_id": "04-languages",
+      "kind": "Language",
+      "icon": "ruby",
+      "url": "https://www.ruby-lang.org"
+    },
+    {
+      "slug": "vue-cli",
+      "name": "Vue CLI",
+      "description": "Scaffolding and tooling for Vue.js projects.",
+      "script_id": "05-frontend",
+      "kind": "Frontend CLI",
+      "icon": "vuedotjs",
+      "url": "https://cli.vuejs.org"
+    },
+    {
+      "slug": "nuxt-cli",
+      "name": "Nuxt CLI",
+      "description": "Scaffolding and dev tools for Nuxt 3+ apps.",
+      "script_id": "05-frontend",
+      "kind": "Frontend CLI",
+      "icon": "nuxtdotjs",
+      "url": "https://nuxt.com"
+    },
+    {
+      "slug": "typescript",
+      "name": "TypeScript",
+      "description": "Typed superset of JavaScript. Installed globally.",
+      "script_id": "05-frontend",
+      "kind": "Language",
+      "icon": "typescript",
+      "url": "https://www.typescriptlang.org"
+    },
+    {
+      "slug": "create-vite",
+      "name": "create-vite",
+      "description": "Project scaffold for Vite — fast dev server and bundler.",
+      "script_id": "05-frontend",
+      "kind": "Scaffolder",
+      "icon": "vite",
+      "url": "https://vitejs.dev"
+    },
+    {
+      "slug": "serve",
+      "name": "serve",
+      "description": "Quick static-file server for testing built sites locally.",
+      "script_id": "05-frontend",
+      "kind": "CLI",
+      "icon": null,
+      "url": "https://github.com/vercel/serve"
+    },
+    {
+      "slug": "turbo",
+      "name": "Turborepo",
+      "description": "Incremental bundler/build system for JS monorepos.",
+      "script_id": "05-frontend",
+      "kind": "Monorepo tool",
+      "icon": "turborepo",
+      "url": "https://turbo.build"
+    },
+    {
+      "slug": "vercel-cli",
+      "name": "Vercel CLI",
+      "description": "Deploy Next.js / Nuxt / static sites to Vercel from the terminal.",
+      "script_id": "05-frontend",
+      "kind": "Deploy CLI",
+      "icon": "vercel",
+      "url": "https://vercel.com/cli"
+    },
+    {
+      "slug": "storyblok-cli",
+      "name": "Storyblok CLI",
+      "description": "Manage Storyblok headless-CMS spaces and components.",
+      "script_id": "05-frontend",
+      "kind": "CMS CLI",
+      "icon": "storyblok",
+      "url": "https://www.storyblok.com"
+    },
+    {
+      "slug": "sanity-cli",
+      "name": "Sanity CLI",
+      "description": "Scaffold and manage Sanity Studio projects.",
+      "script_id": "05-frontend",
+      "kind": "CMS CLI",
+      "icon": "sanity",
+      "url": "https://www.sanity.io"
+    },
+    {
+      "slug": "react-native-cli",
+      "name": "React Native CLI",
+      "description": "Bare React Native projects (without Expo).",
+      "script_id": "05-frontend",
+      "kind": "Mobile CLI",
+      "icon": "react",
+      "url": "https://reactnative.dev"
+    },
+    {
+      "slug": "expo-cli",
+      "name": "Expo CLI",
+      "description": "Run, build, and debug Expo React Native apps.",
+      "script_id": "05-frontend",
+      "kind": "Mobile CLI",
+      "icon": "expo",
+      "url": "https://expo.dev"
+    },
+    {
+      "slug": "eas-cli",
+      "name": "EAS CLI",
+      "description": "Expo Application Services — cloud builds, submits, OTA updates.",
+      "script_id": "05-frontend",
+      "kind": "Mobile CLI",
+      "icon": "expo",
+      "url": "https://expo.dev/eas"
+    },
+    {
+      "slug": "create-expo-app",
+      "name": "create-expo-app",
+      "description": "Scaffolder for new Expo projects.",
+      "script_id": "05-frontend",
+      "kind": "Scaffolder",
+      "icon": "expo",
+      "url": "https://docs.expo.dev"
+    },
+    {
+      "slug": "watchman",
+      "name": "Watchman",
+      "description": "File-watching daemon by Meta. Required by React Native/Metro for fast rebuilds.",
+      "script_id": "05-frontend",
+      "kind": "Dev daemon",
+      "icon": null,
+      "url": "https://facebook.github.io/watchman/"
+    },
+    {
+      "slug": "git",
+      "name": "Git",
+      "description": "Version control. Reinstalled via Homebrew with sane global defaults.",
+      "script_id": "06-dev-apps",
+      "kind": "VCS",
+      "icon": "git",
+      "url": "https://git-scm.com"
+    },
+    {
+      "slug": "git-flow-avh",
+      "name": "Git Flow (AVH)",
+      "description": "Git Flow branching model commands. AVH is the maintained fork.",
+      "script_id": "06-dev-apps",
+      "kind": "Git extension",
+      "icon": null,
+      "url": "https://github.com/petervanderdoes/gitflow-avh"
+    },
+    {
+      "slug": "github-cli",
+      "name": "GitHub CLI (gh)",
+      "description": "PRs, issues, and releases from the terminal.",
+      "script_id": "06-dev-apps",
+      "kind": "CLI",
+      "icon": "github",
+      "url": "https://cli.github.com"
+    },
+    {
+      "slug": "github-desktop",
+      "name": "GitHub Desktop",
+      "description": "GUI Git client tightly integrated with GitHub.",
+      "script_id": "06-dev-apps",
+      "kind": "GUI app",
+      "icon": "github",
+      "url": "https://desktop.github.com"
+    },
+    {
+      "slug": "vscode",
+      "name": "Visual Studio Code",
+      "description": "Microsoft's editor. Installed with a curated 20+ extension pack.",
+      "script_id": "06-dev-apps",
+      "kind": "Editor",
+      "icon": null,
+      "url": "https://code.visualstudio.com"
+    },
+    {
+      "slug": "cursor",
+      "name": "Cursor",
+      "description": "AI-first fork of VS Code with built-in chat and code edits.",
+      "script_id": "06-dev-apps",
+      "kind": "Editor",
+      "icon": "cursor",
+      "url": "https://cursor.sh"
+    },
+    {
+      "slug": "textmate",
+      "name": "TextMate",
+      "description": "Lightweight macOS editor — handy for quick edits outside the main editor.",
+      "script_id": "06-dev-apps",
+      "kind": "Editor",
+      "icon": null,
+      "url": "https://macromates.com"
+    },
+    {
+      "slug": "claude-code",
+      "name": "Claude Code",
+      "description": "Anthropic's terminal coding agent.",
+      "script_id": "06-dev-apps",
+      "kind": "AI agent",
+      "icon": "anthropic",
+      "url": "https://www.anthropic.com/claude-code"
+    },
+    {
+      "slug": "kiro-cli",
+      "name": "kiro-cli",
+      "description": "AWS agentic coding CLI. Installed via the official kiro install script.",
+      "script_id": "06-dev-apps",
+      "kind": "AI agent",
+      "icon": null,
+      "url": "https://kiro.dev"
+    },
+    {
+      "slug": "opencode",
+      "name": "OpenCode",
+      "description": "Open-source terminal coding agent (via sst/tap).",
+      "script_id": "06-dev-apps",
+      "kind": "AI agent",
+      "icon": null,
+      "url": "https://opencode.ai"
+    },
+    {
+      "slug": "android-studio",
+      "name": "Android Studio",
+      "description": "Official IDE for Android. Sets `ANDROID_HOME` + PATH for SDK tools.",
+      "script_id": "07-mobile",
+      "kind": "IDE",
+      "icon": "androidstudio",
+      "url": "https://developer.android.com/studio"
+    },
+    {
+      "slug": "rectangle",
+      "name": "Rectangle",
+      "description": "Keyboard-driven window snapping (halves, quarters, thirds).",
+      "script_id": "08-productivity",
+      "kind": "GUI app",
+      "icon": null,
+      "url": "https://rectangleapp.com"
+    },
+    {
+      "slug": "maccy",
+      "name": "Maccy",
+      "description": "Clipboard history manager. Trigger with a hotkey, fuzzy-search past copies.",
+      "script_id": "08-productivity",
+      "kind": "GUI app",
+      "icon": null,
+      "url": "https://maccy.app"
+    },
+    {
+      "slug": "obsidian",
+      "name": "Obsidian",
+      "description": "Markdown-based notes with linked references and a graph view.",
+      "script_id": "08-productivity",
+      "kind": "GUI app",
+      "icon": "obsidian",
+      "url": "https://obsidian.md"
+    },
+    {
+      "slug": "1password-cli",
+      "name": "1Password CLI",
+      "description": "Read secrets from 1Password in scripts and shells.",
+      "script_id": "08-productivity",
+      "kind": "CLI",
+      "icon": "1password",
+      "url": "https://developer.1password.com/docs/cli"
+    },
+    {
+      "slug": "google-chrome",
+      "name": "Google Chrome",
+      "description": "Reference browser for testing and DevTools work.",
+      "script_id": "08-productivity",
+      "kind": "Browser",
+      "icon": "googlechrome",
+      "url": "https://www.google.com/chrome/"
+    },
+    {
+      "slug": "firefox",
+      "name": "Firefox",
+      "description": "Second engine to test against — different rendering and DevTools.",
+      "script_id": "08-productivity",
+      "kind": "Browser",
+      "icon": "firefox",
+      "url": "https://www.mozilla.org/firefox/"
+    },
+    {
+      "slug": "brave",
+      "name": "Brave Browser",
+      "description": "Chromium-based browser with built-in tracker/ad blocking.",
+      "script_id": "08-productivity",
+      "kind": "Browser",
+      "icon": "brave",
+      "url": "https://brave.com"
+    },
+    {
+      "slug": "orbstack",
+      "name": "OrbStack",
+      "description": "Lightweight Docker / Linux VM alternative to Docker Desktop.",
+      "script_id": "08-productivity",
+      "kind": "Container runtime",
+      "icon": null,
+      "url": "https://orbstack.dev"
+    },
+    {
+      "slug": "postman",
+      "name": "Postman",
+      "description": "API client for designing, testing, and documenting HTTP requests.",
+      "script_id": "08-productivity",
+      "kind": "API tool",
+      "icon": "postman",
+      "url": "https://www.postman.com"
+    },
+    {
+      "slug": "mockoon",
+      "name": "Mockoon",
+      "description": "Local mock API server. Spin up fake REST endpoints in seconds.",
+      "script_id": "08-productivity",
+      "kind": "API tool",
+      "icon": null,
+      "url": "https://mockoon.com"
+    },
+    {
+      "slug": "expo-orbit",
+      "name": "Expo Orbit",
+      "description": "Menubar launcher for Expo dev builds and iOS/Android simulators.",
+      "script_id": "08-productivity",
+      "kind": "GUI app",
+      "icon": "expo",
+      "url": "https://expo.dev/orbit"
+    },
+    {
+      "slug": "figma",
+      "name": "Figma",
+      "description": "Design and prototyping tool. Desktop app gives Sign In + local fonts.",
+      "script_id": "08-productivity",
+      "kind": "Design tool",
+      "icon": "figma",
+      "url": "https://figma.com"
+    },
+    {
+      "slug": "imageoptim",
+      "name": "ImageOptim",
+      "description": "Drag-and-drop lossless image compression (PNG/JPEG/SVG).",
+      "script_id": "08-productivity",
+      "kind": "GUI app",
+      "icon": null,
+      "url": "https://imageoptim.com/mac"
+    },
+    {
+      "slug": "wireguard",
+      "name": "WireGuard",
+      "description": "Modern fast VPN client.",
+      "script_id": "08-productivity",
+      "kind": "Network tool",
+      "icon": "wireguard",
+      "url": "https://www.wireguard.com"
+    },
+    {
+      "slug": "devtoys",
+      "name": "DevToys",
+      "description": "Swiss-army knife of small dev utilities (JSON formatter, hash, regex, base64…).",
+      "script_id": "08-productivity",
+      "kind": "GUI app",
+      "icon": null,
+      "url": "https://devtoys.app"
+    },
+    {
+      "slug": "signal",
+      "name": "Signal",
+      "description": "End-to-end encrypted messenger.",
+      "script_id": "08-productivity",
+      "kind": "Messenger",
+      "icon": "signal",
+      "url": "https://signal.org"
+    },
+    {
+      "slug": "wifiman",
+      "name": "WiFiman",
+      "description": "Wi-Fi analyzer + speed test from Ubiquiti.",
+      "script_id": "08-productivity",
+      "kind": "Network tool",
+      "icon": null,
+      "url": "https://wifiman.com"
+    },
+    {
+      "slug": "appcleaner",
+      "name": "AppCleaner",
+      "description": "Properly uninstall macOS apps, including their support files.",
+      "script_id": "08-productivity",
+      "kind": "GUI app",
+      "icon": null,
+      "url": "https://freemacsoft.net/appcleaner/"
+    },
+    {
+      "slug": "ice",
+      "name": "Ice",
+      "description": "Menubar organizer — hide and group items in the macOS menubar.",
+      "script_id": "08-productivity",
+      "kind": "GUI app",
+      "icon": null,
+      "url": "https://github.com/jordanbaird/Ice"
+    },
+    {
+      "slug": "syncthing",
+      "name": "Syncthing",
+      "description": "Peer-to-peer file sync across your own devices.",
+      "script_id": "08-productivity",
+      "kind": "GUI app",
+      "icon": "syncthing",
+      "url": "https://syncthing.net"
+    },
+    {
+      "slug": "wireshark",
+      "name": "Wireshark",
+      "description": "Packet analyzer for deep network debugging.",
+      "script_id": "08-productivity",
+      "kind": "Network tool",
+      "icon": "wireshark",
+      "url": "https://www.wireshark.org"
+    },
+    {
+      "slug": "postgresql",
+      "name": "PostgreSQL 15",
+      "description": "Relational database server. PATH wired via `~/.zshenv`.",
+      "script_id": "09-database",
+      "kind": "Database",
+      "icon": "postgresql",
+      "url": "https://www.postgresql.org"
+    },
+    {
+      "slug": "dbeaver",
+      "name": "DBeaver Community Edition",
+      "description": "Cross-platform SQL GUI for Postgres, MySQL, SQLite, and many more.",
+      "script_id": "09-database",
+      "kind": "Database GUI",
+      "icon": "dbeaver",
+      "url": "https://dbeaver.io"
+    },
+    {
+      "slug": "pgadmin",
+      "name": "pgAdmin 4",
+      "description": "Official Postgres GUI — better for Postgres-specific features.",
+      "script_id": "09-database",
+      "kind": "Database GUI",
+      "icon": null,
+      "url": "https://www.pgadmin.org"
+    },
+    {
+      "slug": "supabase-cli",
+      "name": "Supabase CLI",
+      "description": "Run Supabase locally, push migrations, manage projects.",
+      "script_id": "09-database",
+      "kind": "DB CLI",
+      "icon": "supabase",
+      "url": "https://supabase.com/docs/guides/cli"
+    },
+    {
+      "slug": "ngrok",
+      "name": "ngrok",
+      "description": "Public HTTPS tunnel to a local port — share dev servers and webhooks.",
+      "script_id": "10-devops",
+      "kind": "Tunneling",
+      "icon": "ngrok",
+      "url": "https://ngrok.com"
+    },
+    {
+      "slug": "eza",
+      "name": "eza",
+      "description": "Modern `ls` replacement with colors, icons, and git status.",
+      "script_id": "10-devops",
+      "kind": "CLI",
+      "icon": null,
+      "url": "https://eza.rocks"
+    },
+    {
+      "slug": "wget",
+      "name": "wget",
+      "description": "Recursive HTTP/FTP downloader. Better than `curl` for whole-site mirrors.",
+      "script_id": "10-devops",
+      "kind": "CLI",
+      "icon": null,
+      "url": "https://www.gnu.org/software/wget/"
+    },
+    {
+      "slug": "jq",
+      "name": "jq",
+      "description": "Command-line JSON processor. Filter, transform, query JSON in pipelines.",
+      "script_id": "10-devops",
+      "kind": "CLI",
+      "icon": null,
+      "url": "https://jqlang.github.io/jq/"
+    },
+    {
+      "slug": "tree",
+      "name": "tree",
+      "description": "Visualize directory structures as a tree.",
+      "script_id": "10-devops",
+      "kind": "CLI",
+      "icon": null,
+      "url": "https://github.com/Old-Man-Programmer/tree"
+    },
+    {
+      "slug": "fzf",
+      "name": "fzf",
+      "description": "Fuzzy finder. Bound to Ctrl-T (files) and Alt-C (cd) in your shell.",
+      "script_id": "10-devops",
+      "kind": "CLI",
+      "icon": null,
+      "url": "https://github.com/junegunn/fzf"
+    },
+    {
+      "slug": "ripgrep",
+      "name": "ripgrep (rg)",
+      "description": "Extremely fast recursive grep. Respects `.gitignore` by default.",
+      "script_id": "10-devops",
+      "kind": "CLI",
+      "icon": null,
+      "url": "https://github.com/BurntSushi/ripgrep"
+    },
+    {
+      "slug": "fd",
+      "name": "fd",
+      "description": "Friendly, fast `find` replacement.",
+      "script_id": "10-devops",
+      "kind": "CLI",
+      "icon": null,
+      "url": "https://github.com/sharkdp/fd"
+    },
+    {
+      "slug": "bat",
+      "name": "bat",
+      "description": "`cat` clone with syntax highlighting and git integration.",
+      "script_id": "10-devops",
+      "kind": "CLI",
+      "icon": null,
+      "url": "https://github.com/sharkdp/bat"
+    },
+    {
+      "slug": "git-delta",
+      "name": "git-delta",
+      "description": "Syntax-highlighted diff viewer. Wired as Git's pager.",
+      "script_id": "10-devops",
+      "kind": "Git tool",
+      "icon": null,
+      "url": "https://github.com/dandavison/delta"
+    },
+    {
+      "slug": "zoxide",
+      "name": "zoxide",
+      "description": "Smarter `cd` — jumps to recent/frequent dirs by partial name.",
+      "script_id": "10-devops",
+      "kind": "CLI",
+      "icon": null,
+      "url": "https://github.com/ajeetdsouza/zoxide"
+    },
+    {
+      "slug": "lazygit",
+      "name": "lazygit",
+      "description": "Terminal UI for Git. Staging, branches, rebases without leaving the keyboard.",
+      "script_id": "10-devops",
+      "kind": "Git tool",
+      "icon": null,
+      "url": "https://github.com/jesseduffield/lazygit"
+    },
+    {
+      "slug": "direnv",
+      "name": "direnv",
+      "description": "Per-directory env vars. Drop a `.envrc`, allow it once, vars load automatically.",
+      "script_id": "10-devops",
+      "kind": "CLI",
+      "icon": null,
+      "url": "https://direnv.net"
+    },
+    {
+      "slug": "atuin",
+      "name": "atuin",
+      "description": "Searchable shell history with full context. Owns Ctrl-R after install.",
+      "script_id": "10-devops",
+      "kind": "CLI",
+      "icon": null,
+      "url": "https://atuin.sh"
+    },
+    {
+      "slug": "tealdeer",
+      "name": "tldr (tealdeer)",
+      "description": "Quick example-based man pages. Run `tldr tar` instead of reading the manual.",
+      "script_id": "10-devops",
+      "kind": "CLI",
+      "icon": null,
+      "url": "https://github.com/tealdeer-rs/tealdeer"
+    },
+    {
+      "slug": "btop",
+      "name": "btop",
+      "description": "Modern resource monitor with mouse support. Replaces `top`/`htop`.",
+      "script_id": "10-devops",
+      "kind": "CLI",
+      "icon": null,
+      "url": "https://github.com/aristocratos/btop"
+    },
+    {
+      "slug": "dust",
+      "name": "dust",
+      "description": "More intuitive `du` — bar charts of disk usage by directory.",
+      "script_id": "10-devops",
+      "kind": "CLI",
+      "icon": null,
+      "url": "https://github.com/bootandy/dust"
+    },
+    {
+      "slug": "duf",
+      "name": "duf",
+      "description": "Colorful `df` — clearer view of mounted disks and free space.",
+      "script_id": "10-devops",
+      "kind": "CLI",
+      "icon": null,
+      "url": "https://github.com/muesli/duf"
+    },
+    {
+      "slug": "upcloud-cli",
+      "name": "UpCloud CLI (upctl)",
+      "description": "Manage UpCloud infrastructure from the terminal.",
+      "script_id": "10-devops",
+      "kind": "Cloud CLI",
+      "icon": null,
+      "url": "https://github.com/UpCloudLtd/upcloud-cli"
+    },
+    {
+      "slug": "kubectl",
+      "name": "kubectl",
+      "description": "Kubernetes CLI. Inspect resources, apply manifests, exec into pods.",
+      "script_id": "10-devops",
+      "kind": "Cloud CLI",
+      "icon": "kubernetes",
+      "url": "https://kubernetes.io/docs/reference/kubectl/"
+    },
+    {
+      "slug": "tilt",
+      "name": "Tilt",
+      "description": "Local Kubernetes dev loop — watch, build, deploy on save.",
+      "script_id": "10-devops",
+      "kind": "Cloud tool",
+      "icon": null,
+      "url": "https://tilt.dev"
+    },
+    {
+      "slug": "terraform",
+      "name": "Terraform",
+      "description": "Infrastructure-as-code. Installed from HashiCorp's tap (BSL license).",
+      "script_id": "10-devops",
+      "kind": "Cloud tool",
+      "icon": "terraform",
+      "url": "https://www.terraform.io"
+    },
+    {
+      "slug": "fira-code",
+      "name": "Fira Code",
+      "description": "Programming font with ligatures (`!==` → `≠`, `=>` → `→`).",
+      "script_id": "11-fonts",
+      "kind": "Font",
+      "icon": null,
+      "url": "https://github.com/tonsky/FiraCode"
+    },
+    {
+      "slug": "jetbrains-mono",
+      "name": "JetBrains Mono",
+      "description": "Highly legible monospace font with ligatures, by JetBrains.",
+      "script_id": "11-fonts",
+      "kind": "Font",
+      "icon": "jetbrains",
+      "url": "https://www.jetbrains.com/lp/mono/"
+    },
+    {
+      "slug": "source-code-pro",
+      "name": "Source Code Pro",
+      "description": "Adobe's open-source monospace family for code.",
+      "script_id": "11-fonts",
+      "kind": "Font",
+      "icon": null,
+      "url": "https://github.com/adobe-fonts/source-code-pro"
+    },
+    {
+      "slug": "hack-nerd-font",
+      "name": "Hack Nerd Font",
+      "description": "Hack plus Nerd Font glyphs — required for PowerLevel10k icons.",
+      "script_id": "11-fonts",
+      "kind": "Font",
+      "icon": null,
+      "url": "https://www.nerdfonts.com"
+    },
+    {
+      "slug": "xcodes",
+      "name": "xcodes",
+      "description": "Manage multiple Xcode versions side by side.",
+      "script_id": "12-expo-rn",
+      "kind": "iOS toolchain",
+      "icon": null,
+      "url": "https://github.com/XcodesOrg/xcodes"
+    },
+    {
+      "slug": "ios-deploy",
+      "name": "ios-deploy",
+      "description": "Deploy and debug iOS apps on physical devices from the command line.",
+      "script_id": "12-expo-rn",
+      "kind": "iOS toolchain",
+      "icon": null,
+      "url": "https://github.com/ios-control/ios-deploy"
+    },
+    {
+      "slug": "cocoapods",
+      "name": "CocoaPods",
+      "description": "Dependency manager for iOS/macOS projects.",
+      "script_id": "12-expo-rn",
+      "kind": "Package manager",
+      "icon": null,
+      "url": "https://cocoapods.org"
+    },
+    {
+      "slug": "swiftlint",
+      "name": "SwiftLint",
+      "description": "Linter for Swift code, enforcing style and conventions.",
+      "script_id": "12-expo-rn",
+      "kind": "Linter",
+      "icon": "swift",
+      "url": "https://github.com/realm/SwiftLint"
+    },
+    {
+      "slug": "maestro",
+      "name": "Maestro",
+      "description": "Mobile UI testing framework. `maestro studio` records flows visually.",
+      "script_id": "12-expo-rn",
+      "kind": "Mobile QA",
+      "icon": null,
+      "url": "https://maestro.mobile.dev"
+    },
+    {
+      "slug": "macos-defaults",
+      "name": "macOS defaults tweaks",
+      "description": "Fast key repeat, no auto-correct, expanded save panels, show hidden files, Dock autohide, screenshots to ~/Screenshots, etc. Reversible.",
+      "script_id": "13-macos-defaults",
+      "kind": "System config",
+      "icon": "apple",
+      "url": null
+    }
+  ]
+}
