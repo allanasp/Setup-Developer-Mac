@@ -121,8 +121,11 @@ fi
 3. Add a `📋 TODO` line for any manual step the user has to do after install.
 4. Add a verification entry in `check-setup.sh` (`command_exists` or app-path check).
 5. Add a rollback entry in `uninstall.sh` (CASKS / FORMULAE / VOLTA_PKGS array).
-6. Update the docs: `README.md` features list, `docs/script-guide.md`,
-   `docs/tools-guide.md`, and `docs/setup-checker.md` if it's notable.
+6. Add an entry to `data/tools.json` (the single source of truth for the catalogue)
+   and run `make docs` — this regenerates the tool catalogue in `README.md` and
+   `docs/tools-guide.md`. CI fails on drift via `make docs-check`.
+7. Update `docs/script-guide.md` and `docs/setup-checker.md` separately if the
+   tool needs script-level or checker-level documentation.
 
 ## Adding a configuration prompt
 

@@ -5,705 +5,665 @@ description: Comprehensive guide to every tool, language, and framework installe
 
 # Complete Tools Guide
 
-> **Everything you need to know about the 100+ tools, languages, and frameworks we install**
+> **Everything you need to know about the 90+ tools, languages, and frameworks we install**
 
-This guide provides detailed explanations of every tool included in the setup scripts, helping you understand what each one does and why it's valuable for your development workflow.
+This guide is generated from [`data/tools.json`](https://github.com/allanasp/Setup-Developer-Mac/blob/main/data/tools.json),
+the single source of truth for what the setup installs. Each tool lists its **category**
+(which script installs it, and whether that script is essential or optional), the **kind**
+of tool it is, and a short description of what it does.
 
-## Quick Navigation
-
-- [System & Foundation Tools](#system--foundation-tools)
-- [Terminal & Shell Tools](#terminal--shell-tools)
-- [Version Managers](#version-managers)
-- [Programming Languages](#programming-languages)
-- [Frontend Development](#frontend-development)
-- [Development Editors & IDEs](#development-editors--ides)
-- [Mobile Development](#mobile-development)
-- [Productivity Applications](#productivity-applications)
-- [Database Tools](#database-tools)
-- [DevOps & Cloud Tools](#devops--cloud-tools)
-- [Developer Fonts](#developer-fonts)
+To update entries, edit `data/tools.json` and run `scripts/lib/generate-docs.sh` —
+both this page and the README catalogue are regenerated together.
 
 ---
 
-## System & Foundation Tools
+<!-- TOOLS:BEGIN:catalogue -->
+## System Foundation
 
-### Xcode Command Line Tools
-**What it is:** Essential compiler tools and headers for macOS development  
-**Why you need it:** Required for compiling code, installing other tools, and using git  
-**Key components:** clang, git, make, gcc, swift compiler  
-**Size:** ~1.2GB
+> **Category:** Essential — installed by `scripts/01-system.sh`. Bootstraps the toolchain everything else builds on.
 
-### Homebrew
-**What it is:** The missing package manager for macOS  
-**Why you need it:** Install, update, and manage thousands of development tools easily  
-**Key features:** Simple commands, dependency management, version control  
-**Common commands:** `brew install`, `brew upgrade`, `brew search`
+### <img src="https://cdn.simpleicons.org/xcode" width="14" alt="" align="center"/> Xcode Command Line Tools
 
-### System Configuration
-**Hidden Files:** Shows hidden files in Finder (like .git, .env files)  
-**Why important:** Developers need to see configuration files regularly
+**Kind:** Compiler toolchain  
+**What it is:** Apple's compiler suite (clang, git, make, swift). Required by Homebrew and most other tools.  
+**Homepage:** [https://developer.apple.com/xcode/](https://developer.apple.com/xcode/)
 
----
+### <img src="https://cdn.simpleicons.org/homebrew" width="14" alt="" align="center"/> Homebrew
 
-## Terminal & Shell Tools
+**Kind:** Package manager  
+**What it is:** The missing package manager for macOS. Every later script builds on `brew`.  
+**Homepage:** [https://brew.sh](https://brew.sh)
 
-### iTerm2
-**What it is:** Advanced terminal emulator for macOS  
-**Why better than Terminal.app:**
-- Split panes and tabs
-- Better search functionality
-- Customizable hotkeys
-- Rich color support
-- Built-in paste history
+## Terminal & Shell
 
-### Dracula Theme
-**What it is:** Beautiful dark theme with carefully selected colors  
-**Benefits:** Reduces eye strain, great contrast, consistent across tools  
-**Features:** Syntax highlighting optimized for readability
+> **Category:** Essential — installed by `scripts/02-terminal.sh`. Modern terminals plus a productive Zsh setup.
 
-### Oh My Zsh
-**What it is:** Framework for managing Zsh configuration  
-**Key benefits:**
-- 300+ plugins available
-- 140+ themes
-- Auto-completion
-- Git integration
-- Easy customization
+### <img src="https://cdn.simpleicons.org/iterm2" width="14" alt="" align="center"/> iTerm2
+
+**Kind:** Terminal  
+**What it is:** Advanced terminal emulator with split panes, search, paste history. Dracula theme is preconfigured.  
+**Homepage:** [https://iterm2.com](https://iterm2.com)
+
+### <img src="https://cdn.simpleicons.org/warp" width="14" alt="" align="center"/> Warp
+
+**Kind:** Terminal  
+**What it is:** Modern AI-powered terminal with block-based output and command palette.  
+**Homepage:** [https://warp.dev](https://warp.dev)
+
+### <img src="https://cdn.simpleicons.org/ohmyzsh" width="14" alt="" align="center"/> Oh My Zsh
+
+**Kind:** Shell framework  
+**What it is:** Framework for managing Zsh config — plugins, themes, completions.  
+**Homepage:** [https://ohmyz.sh](https://ohmyz.sh)
 
 ### PowerLevel10k
-**What it is:** Fast, flexible Zsh theme  
-**Why use it:**
-- Shows git status in prompt
-- Displays current Python/Node versions
-- Execution time for commands
-- Current directory shortening
-- Customizable segments
 
-### Zsh Plugins Installed
+**Kind:** Shell theme  
+**What it is:** Extremely fast Zsh prompt theme. Shows git status, runtime info, language versions.  
+**Homepage:** [https://github.com/romkatv/powerlevel10k](https://github.com/romkatv/powerlevel10k)
 
-#### zsh-autosuggestions
-**What it does:** Suggests commands as you type based on history  
-**How to use:** Type partial command, press to accept suggestion  
-**Benefit:** Massive time saver for repeated commands
+### Dracula Theme
 
-#### zsh-syntax-highlighting
-**What it does:** Colors commands as you type  
-**Visual cues:** 
-- Green = valid command
-- Red = command not found
-- Underline = valid file path
+**Kind:** Color scheme  
+**What it is:** Dark color scheme for iTerm2 + PowerLevel10k. High contrast, low eye strain.  
+**Homepage:** [https://draculatheme.com](https://draculatheme.com)
 
-### Custom Aliases
-**Git shortcuts:**
-- `gits` `git status`
-- `gitd` `git diff`
-- `gitl` `git log`
-- `gita` `git add .`
-- `gitc` `git commit`
+### zsh-autosuggestions
 
-**Better commands:**
-- `ll` Detailed file listing
-- `la` Show all files including hidden
-- `tree` Visual directory structure
+**Kind:** Shell plugin  
+**What it is:** Suggests commands as you type, based on history. Right-arrow to accept.  
+**Homepage:** [https://github.com/zsh-users/zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)
 
-### eza (better ls)
-**What it is:** Modern replacement for ls command  
-**Improvements:** Colors, git integration, tree view, file icons  
-**Why use it:** Much more readable file listings
+### zsh-syntax-highlighting
 
-### Warp (Alternative Terminal)
-**What it is:** AI-powered terminal with modern UX  
-**Key features:**
-- Command palette
-- AI command suggestions
-- Block-based output
-- Collaborative features
+**Kind:** Shell plugin  
+**What it is:** Colors commands as you type — green for valid, red for typos.  
+**Homepage:** [https://github.com/zsh-users/zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting)
 
----
+## Version Managers & Runtimes
 
-## Version Managers
+> **Category:** Essential — installed by `scripts/03-version-managers.sh`. Per-project Node and Python versions, plus Bun.
 
 ### Volta
-**What it is:** Fast, reliable JavaScript tool manager  
-**Why use it:**
-- Pin Node.js versions per project
-- Automatic version switching
-- No shell modifications
-- Fast installation (Rust-based)
-**Manages:** Node.js, npm, pnpm, and any JavaScript CLI tools
 
-### pyenv
-**What it is:** Python version management tool  
-**Why essential:**
-- Use multiple Python versions
-- Per-project Python versions
-- No sudo required
-- Virtual environment support
-**Pre-installed versions:** 3.9.6, 3.10.13, 3.12.1
+**Kind:** Version manager  
+**What it is:** Fast Rust-based Node.js version manager. Pins versions per project automatically.  
+**Homepage:** [https://volta.sh](https://volta.sh)
 
-### Package Managers
+### <img src="https://cdn.simpleicons.org/python" width="14" alt="" align="center"/> pyenv
 
-#### npm
-**What it is:** Node Package Manager (comes with Node.js)  
-**Used for:** Installing JavaScript packages and tools  
-**Registry:** Access to 2+ million packages
+**Kind:** Version manager  
+**What it is:** Python version manager. Multiple versions side by side, per-project pinning.  
+**Homepage:** [https://github.com/pyenv/pyenv](https://github.com/pyenv/pyenv)
 
-#### pnpm (via Volta)
-**What it is:** Fast, disk space efficient package manager  
-**Key feature:** Uses hard links to save disk space  
-**When to use:** Large projects with many dependencies
+### <img src="https://cdn.simpleicons.org/nodedotjs" width="14" alt="" align="center"/> Node.js (LTS)
 
-#### bun (via Homebrew tap oven-sh/bun)
-**What it is:** All-in-one JavaScript runtime and package manager  
-**Advantages:** Extremely fast installs, built-in bundler, test runner, and runtime  
-**When to use:** Greenfield projects and fast local dev workflows
+**Kind:** Runtime  
+**What it is:** JavaScript runtime. Installed at the LTS version via Volta.  
+**Homepage:** [https://nodejs.org](https://nodejs.org)
 
----
+### <img src="https://cdn.simpleicons.org/pnpm" width="14" alt="" align="center"/> pnpm
+
+**Kind:** Package manager  
+**What it is:** Fast, disk-efficient package manager. Default in this setup over npm/yarn.  
+**Homepage:** [https://pnpm.io](https://pnpm.io)
+
+### <img src="https://cdn.simpleicons.org/bun" width="14" alt="" align="center"/> Bun
+
+**Kind:** Runtime  
+**What it is:** All-in-one JS runtime, bundler, test runner, package manager. Installed via its own Homebrew tap.  
+**Homepage:** [https://bun.sh](https://bun.sh)
 
 ## Programming Languages
 
-### Java (OpenJDK 17)
-**What it is:** Popular object-oriented programming language  
-**Why included:** Android development, enterprise applications, Spring Boot  
-**Key tools:** javac (compiler), java (runtime), jar (archiver)  
-**JAVA_HOME:** Automatically configured
+> **Category:** Optional — installed by `scripts/04-languages.sh`. Standalone language runtimes for full-stack and mobile work.
 
-### Go
-**What it is:** Fast, statically typed language by Google  
-**Best for:** Microservices, CLI tools, cloud native applications  
-**Key features:** Built-in concurrency, fast compilation, simple syntax  
-**Popular uses:** Docker, Kubernetes, Terraform are written in Go
+### <img src="https://cdn.simpleicons.org/openjdk" width="14" alt="" align="center"/> OpenJDK 17
 
-### Ruby
-**What it is:** Dynamic, interpreted language  
-**Known for:** Ruby on Rails, scripting, DevOps tools  
-**Why included:** Many development tools are Ruby-based  
-**Package manager:** gem (RubyGems)
+**Kind:** Language runtime  
+**What it is:** Java 17 runtime. Required by Gradle for Android/React Native builds.  
+**Homepage:** [https://openjdk.org](https://openjdk.org)
 
-### TypeScript
-**What it is:** JavaScript with static types  
-**Why essential:** Type safety, better IDE support, modern JavaScript features  
-**Compiles to:** JavaScript  
-**Usage:** Frontend frameworks, Node.js backends
+### <img src="https://cdn.simpleicons.org/go" width="14" alt="" align="center"/> Go
 
-### Python (via pyenv)
-**Versions installed:** 3.9.6, 3.10.13, 3.12.1  
-**Why multiple versions:** Different projects require different Python versions  
-**Common uses:** Data science, web development, automation, AI/ML
+**Kind:** Language  
+**What it is:** Statically-typed language by Google. Used by Docker, Kubernetes, Terraform internally.  
+**Homepage:** [https://go.dev](https://go.dev)
 
-### Node.js (via Volta)
-**What it is:** JavaScript runtime for server-side development  
-**LTS version:** Automatically installed (currently 20.x)  
-**Includes:** npm, npx for running packages  
-**Uses:** Web servers, build tools, CLI applications
+### <img src="https://cdn.simpleicons.org/ruby" width="14" alt="" align="center"/> Ruby
 
----
+**Kind:** Language  
+**What it is:** Dynamic interpreted language. Required by CocoaPods and many DevOps tools.  
+**Homepage:** [https://www.ruby-lang.org](https://www.ruby-lang.org)
 
-## Frontend Development
+## Frontend & Mobile CLIs
 
-### Vue CLI
-**What it is:** Standard tooling for Vue.js development  
-**Features:** Project scaffolding, dev server, build optimization  
-**Creates:** Single Page Applications (SPAs) with Vue.js  
-**Command:** `vue create my-app`
+> **Category:** Optional — installed by `scripts/05-frontend.sh`. The heart of the setup — global CLIs for the modern JS ecosystem.
 
-### Nuxt CLI
-**What it is:** Full-stack framework for Vue.js  
-**Added features:** Server-side rendering, static site generation, API routes  
-**Best for:** SEO-friendly Vue applications  
-**Command:** `nuxt init my-app`
+### <img src="https://cdn.simpleicons.org/vuedotjs" width="14" alt="" align="center"/> Vue CLI
 
-### React Native CLI
-**What it is:** Build mobile apps using React  
-**Targets:** iOS and Android from single codebase  
-**Features:** Hot reloading, native module access  
-**Command:** `npx react-native init MyApp`
+**Kind:** Frontend CLI  
+**What it is:** Scaffolding and tooling for Vue.js projects.  
+**Homepage:** [https://cli.vuejs.org](https://cli.vuejs.org)
 
-### Expo CLI
-**What it is:** Framework and platform for React Native  
-**Benefits:** Easier setup, OTA updates, managed workflow  
-**Includes:** Expo Go app for testing  
-**Command:** `npx create-expo-app`
+### <img src="https://cdn.simpleicons.org/nuxtdotjs" width="14" alt="" align="center"/> Nuxt CLI
 
-### EAS CLI
-**What it is:** Expo Application Services command line  
-**Features:** Build and submit apps to app stores  
-**Capabilities:** iOS builds without Mac, automatic submissions  
-**Command:** `eas build`, `eas submit`
+**Kind:** Frontend CLI  
+**What it is:** Scaffolding and dev tools for Nuxt 3+ apps.  
+**Homepage:** [https://nuxt.com](https://nuxt.com)
 
-### Vite
-**What it is:** Next generation frontend build tool  
-**Why fast:** Native ES modules, no bundling in dev  
-**Supports:** React, Vue, Svelte, vanilla JS  
-**Command:** `npm create vite@latest`
+### <img src="https://cdn.simpleicons.org/typescript" width="14" alt="" align="center"/> TypeScript
+
+**Kind:** Language  
+**What it is:** Typed superset of JavaScript. Installed globally.  
+**Homepage:** [https://www.typescriptlang.org](https://www.typescriptlang.org)
+
+### <img src="https://cdn.simpleicons.org/vite" width="14" alt="" align="center"/> create-vite
+
+**Kind:** Scaffolder  
+**What it is:** Project scaffold for Vite — fast dev server and bundler.  
+**Homepage:** [https://vitejs.dev](https://vitejs.dev)
 
 ### serve
-**What it is:** Static file server  
-**Use case:** Test production builds locally  
-**Features:** HTTPS, CORS, clean URLs  
-**Command:** `serve ./dist`
 
-### Turbo (Turborepo)
-**What it is:** High-performance build system for JavaScript/TypeScript monorepos  
-**Why fast:** Incremental builds, content-aware hashing, remote caching  
-**Best for:** Monorepos with multiple apps and packages  
-**Installed via:** Volta  
-**Command:** `turbo run build`
+**Kind:** CLI  
+**What it is:** Quick static-file server for testing built sites locally.  
+**Homepage:** [https://github.com/vercel/serve](https://github.com/vercel/serve)
 
-### ▲ Vercel CLI
-**What it is:** Command line for the Vercel deployment platform  
-**Features:** Deploy from terminal, manage env vars, pull project config  
-**Installed via:** Volta  
-**Command:** `vercel`, `vercel deploy`, `vercel env pull`
+### <img src="https://cdn.simpleicons.org/turborepo" width="14" alt="" align="center"/> Turborepo
+
+**Kind:** Monorepo tool  
+**What it is:** Incremental bundler/build system for JS monorepos.  
+**Homepage:** [https://turbo.build](https://turbo.build)
+
+### <img src="https://cdn.simpleicons.org/vercel" width="14" alt="" align="center"/> Vercel CLI
+
+**Kind:** Deploy CLI  
+**What it is:** Deploy Next.js / Nuxt / static sites to Vercel from the terminal.  
+**Homepage:** [https://vercel.com/cli](https://vercel.com/cli)
+
+### <img src="https://cdn.simpleicons.org/storyblok" width="14" alt="" align="center"/> Storyblok CLI
+
+**Kind:** CMS CLI  
+**What it is:** Manage Storyblok headless-CMS spaces and components.  
+**Homepage:** [https://www.storyblok.com](https://www.storyblok.com)
+
+### <img src="https://cdn.simpleicons.org/sanity" width="14" alt="" align="center"/> Sanity CLI
+
+**Kind:** CMS CLI  
+**What it is:** Scaffold and manage Sanity Studio projects.  
+**Homepage:** [https://www.sanity.io](https://www.sanity.io)
+
+### <img src="https://cdn.simpleicons.org/react" width="14" alt="" align="center"/> React Native CLI
+
+**Kind:** Mobile CLI  
+**What it is:** Bare React Native projects (without Expo).  
+**Homepage:** [https://reactnative.dev](https://reactnative.dev)
+
+### <img src="https://cdn.simpleicons.org/expo" width="14" alt="" align="center"/> Expo CLI
+
+**Kind:** Mobile CLI  
+**What it is:** Run, build, and debug Expo React Native apps.  
+**Homepage:** [https://expo.dev](https://expo.dev)
+
+### <img src="https://cdn.simpleicons.org/expo" width="14" alt="" align="center"/> EAS CLI
+
+**Kind:** Mobile CLI  
+**What it is:** Expo Application Services — cloud builds, submits, OTA updates.  
+**Homepage:** [https://expo.dev/eas](https://expo.dev/eas)
+
+### <img src="https://cdn.simpleicons.org/expo" width="14" alt="" align="center"/> create-expo-app
+
+**Kind:** Scaffolder  
+**What it is:** Scaffolder for new Expo projects.  
+**Homepage:** [https://docs.expo.dev](https://docs.expo.dev)
 
 ### Watchman
-**What it is:** File watching service by Facebook  
-**Why needed:** React Native uses it for hot reloading  
-**Benefits:** Efficient file system monitoring  
-**Automatically managed:** Runs in background
 
-### Storyblok CLI
-**What it is:** Headless CMS command line interface  
-**Features:** Visual editor, component-based, API-first  
-**Use cases:** Marketing sites, content-heavy applications  
-**Best for:** Teams with content editors  
-**Command:** `storyblok init`
+**Kind:** Dev daemon  
+**What it is:** File-watching daemon by Meta. Required by React Native/Metro for fast rebuilds.  
+**Homepage:** [https://facebook.github.io/watchman/](https://facebook.github.io/watchman/)
 
-### Sanity CLI
-**What it is:** Platform for structured content  
-**Key features:** Real-time collaboration, powerful query language  
-**Studio:** Customizable content management interface  
-**Best for:** Complex content models  
-**Command:** `sanity init`
+## Editors & Git Tools
 
----
+> **Category:** Optional — installed by `scripts/06-dev-apps.sh`. Editors, AI coding agents, Git tooling.
 
-## Development Editors & IDEs
+### <img src="https://cdn.simpleicons.org/git" width="14" alt="" align="center"/> Git
+
+**Kind:** VCS  
+**What it is:** Version control. Reinstalled via Homebrew with sane global defaults.  
+**Homepage:** [https://git-scm.com](https://git-scm.com)
+
+### Git Flow (AVH)
+
+**Kind:** Git extension  
+**What it is:** Git Flow branching model commands. AVH is the maintained fork.  
+**Homepage:** [https://github.com/petervanderdoes/gitflow-avh](https://github.com/petervanderdoes/gitflow-avh)
+
+### <img src="https://cdn.simpleicons.org/github" width="14" alt="" align="center"/> GitHub CLI (gh)
+
+**Kind:** CLI  
+**What it is:** PRs, issues, and releases from the terminal.  
+**Homepage:** [https://cli.github.com](https://cli.github.com)
+
+### <img src="https://cdn.simpleicons.org/github" width="14" alt="" align="center"/> GitHub Desktop
+
+**Kind:** GUI app  
+**What it is:** GUI Git client tightly integrated with GitHub.  
+**Homepage:** [https://desktop.github.com](https://desktop.github.com)
 
 ### Visual Studio Code
-**What it is:** Lightweight but powerful source code editor by Microsoft  
-**Why popular:**
-- Huge extension marketplace
-- Integrated terminal
-- Git integration
-- IntelliSense
-- Debugging support
-- Remote development
 
-### VS Code Extensions Installed
+**Kind:** Editor  
+**What it is:** Microsoft's editor. Installed with a curated 20+ extension pack.  
+**Homepage:** [https://code.visualstudio.com](https://code.visualstudio.com)
 
-#### AI Assistants
-- **GitHub Copilot:** AI pair programmer, suggests code as you type
+### <img src="https://cdn.simpleicons.org/cursor" width="14" alt="" align="center"/> Cursor
 
-#### Language Support
-- **Vue - Official:** Vue 3 language support with TypeScript
-- **Python:** IntelliSense, linting, debugging for Python
-- **Go:** Rich Go language support by Google
-
-#### Git Tools
-- **GitLens:** Visualize code authorship, explore repositories
-- **GitHub Pull Requests:** Review PRs without leaving VS Code
-
-#### Code Quality
-- **ESLint:** JavaScript/TypeScript linting
-- **Prettier:** Opinionated code formatter
-- **EditorConfig:** Maintain consistent coding styles
-
-#### Productivity
-- **Auto Close Tag:** Automatically close HTML/JSX tags
-- **Auto Rename Tag:** Rename paired tags
-- **Better Comments:** Highlight TODOs, FIXMEs with colors
-- **Path Intellisense:** Autocomplete filenames
-- **TODO Highlight:** Highlight TODO, FIXME keywords
-
-#### Themes
-- **Material Icon Theme:** Beautiful file/folder icons
-
-### Cursor
-**What it is:** AI-first code editor (VS Code fork)  
-**Key features:**
-- AI chat in editor
-- Code generation
-- Refactoring assistance
-- Context-aware suggestions
-**Best for:** Developers who want deep AI integration
-
-### Claude Code
-**What it is:** Anthropic's terminal-based coding agent  
-**Key features:**
-- Conversational coding in your terminal
-- Reads, edits and runs code in your repo
-- Multi-step task execution with tool use
-**Best for:** Iterative refactors, debugging and feature work driven from the CLI  
-**Installed via:** Homebrew cask (`brew install --cask claude-code`)  
-**Get started:** Run `claude` in a project directory, then `/login` to authenticate.
-
-### kiro-cli
-**What it is:** AWS's agentic CLI for AI-assisted development  
-**Key features:**
-- Spec-driven, agentic workflows from the terminal
-- AI code generation and refactoring
-- Context-aware assistance
-**Best for:** Building features with an AWS-backed AI agent in the loop  
-**Installed via:** Official install script (`curl -fsSL https://cli.kiro.dev/install | bash`) — not brew-managed  
-**Get started:** Run `kiro auth login` to authenticate.
+**Kind:** Editor  
+**What it is:** AI-first fork of VS Code with built-in chat and code edits.  
+**Homepage:** [https://cursor.sh](https://cursor.sh)
 
 ### TextMate
-**What it is:** Lightweight macOS text editor  
-**Why included:** Quick edits, simple interface  
-**Best for:** Configuration files, quick notes
 
-### Git & GitHub Tools
+**Kind:** Editor  
+**What it is:** Lightweight macOS editor — handy for quick edits outside the main editor.  
+**Homepage:** [https://macromates.com](https://macromates.com)
 
-#### Git
-**Version control:** Track changes, collaborate on code  
-**Pre-configured:** Sensible global defaults plus the `git lg` alias for a compact, graphed log  
-**Better diffs:** [git-delta](#-git-delta) is wired up as Git's pager for syntax-highlighted diffs
+### <img src="https://cdn.simpleicons.org/anthropic" width="14" alt="" align="center"/> Claude Code
 
-#### git-flow
-**What it is:** Git branching model and workflow  
-**Branches:** master, develop, feature/*, release/*, hotfix/*  
-**Commands:** `git flow init`, `git flow feature start`
+**Kind:** AI agent  
+**What it is:** Anthropic's terminal coding agent.  
+**Homepage:** [https://www.anthropic.com/claude-code](https://www.anthropic.com/claude-code)
 
-#### GitHub CLI (gh)
-**What it is:** GitHub's official command line tool  
-**Features:**
-- Create repos: `gh repo create`
-- Manage PRs: `gh pr create`, `gh pr merge`
-- Browse issues: `gh issue list`
-- GitHub Actions: `gh run list`
+### kiro-cli
 
-#### GitHub Desktop
-**What it is:** Visual Git client  
-**Best for:** Beginners, visual diff viewing  
-**Features:** Branch visualization, conflict resolution
+**Kind:** AI agent  
+**What it is:** AWS agentic coding CLI. Installed via the official kiro install script.  
+**Homepage:** [https://kiro.dev](https://kiro.dev)
 
----
+### OpenCode
 
-## Mobile Development
+**Kind:** AI agent  
+**What it is:** Open-source terminal coding agent (via sst/tap).  
+**Homepage:** [https://opencode.ai](https://opencode.ai)
 
-### Android Studio
-**What it is:** Official IDE for Android development  
-**Based on:** IntelliJ IDEA  
-**Includes:**
-- Android SDK
-- Emulator
-- Layout editor
-- APK analyzer
-- Performance profilers
-**Size warning:** ~2-3GB download
+## Mobile (Android)
 
-### Android SDK Components
-- **Platform Tools:** adb, fastboot
-- **Build Tools:** AAPT, dex tools
-- **SDK Platforms:** API levels for different Android versions
-- **Emulator:** Test apps without physical devices
-- **Command Line Tools:** For CI/CD integration
+> **Category:** Optional — installed by `scripts/07-mobile.sh`. Android Studio + environment. Full RN/iOS env lives in script 12.
 
-### iOS Development Tools
+### <img src="https://cdn.simpleicons.org/androidstudio" width="14" alt="" align="center"/> Android Studio
 
-#### xcodes
-**What it is:** Manage multiple Xcode versions  
-**Why useful:** Different projects need different Xcode versions  
-**Features:** Download, install, switch versions easily  
-**Command:** `xcodes install 15.0`
+**Kind:** IDE  
+**What it is:** Official IDE for Android. Sets `ANDROID_HOME` + PATH for SDK tools.  
+**Homepage:** [https://developer.android.com/studio](https://developer.android.com/studio)
 
-#### SwiftLint
-**What it is:** Linter for Swift code  
-**Purpose:** Enforce Swift style and conventions  
-**Integration:** Xcode, command line, CI/CD  
-**Rules:** 200+ configurable rules
+## Productivity & Utilities
 
-#### ios-deploy
-**What it is:** Install and debug iOS apps from command line  
-**Use case:** Deploy to device without Xcode  
-**Required for:** React Native iOS development
-
-#### CocoaPods
-**What it is:** Dependency manager for iOS  
-**Similar to:** npm for JavaScript  
-**File:** Podfile defines dependencies  
-**Command:** `pod install`
-
-### Java JDK
-**Required for:** Android development  
-**Version:** OpenJDK 17  
-**JAVA_HOME:** Automatically configured  
-**Includes:** javac, java, javadoc, jar
-
----
-
-## Productivity Applications
+> **Category:** Optional — installed by `scripts/08-productivity.sh`. Window mgmt, browsers, API tools, and other day-to-day apps.
 
 ### Rectangle
-**What it is:** Window management app  
-**Why essential:** Quickly organize windows with keyboard shortcuts  
-**Key shortcuts:**
-- `++` : Left half
-- `++` : Right half
-- `++F` : Maximize
-- `++C` : Center
-**Pro tip:** Customize shortcuts to your preference
 
+**Kind:** GUI app  
+**What it is:** Keyboard-driven window snapping (halves, quarters, thirds).  
+**Homepage:** [https://rectangleapp.com](https://rectangleapp.com)
 
 ### Maccy
-**What it is:** Clipboard history manager  
-**Features:**
-- Search clipboard history
-- Pin frequent items
-- Ignore passwords
-- Customizable shortcuts
-**Default shortcut:** `+Shift+V`
 
-### Firefox Developer Edition
-**What it is:** Browser built for developers  
-**Special features:**
-- Advanced dev tools
-- CSS Grid inspector
-- Performance tools
-- Privacy focused
-**Use case:** Cross-browser testing
+**Kind:** GUI app  
+**What it is:** Clipboard history manager. Trigger with a hotkey, fuzzy-search past copies.  
+**Homepage:** [https://maccy.app](https://maccy.app)
 
-### Brave Browser
-**What it is:** Privacy-focused Chromium browser  
-**Features:** Built-in ad blocking, Tor mode, crypto wallet  
-**For developers:** Test privacy features, PWA development
+### <img src="https://cdn.simpleicons.org/obsidian" width="14" alt="" align="center"/> Obsidian
 
-### Mockoon
-**What it is:** Local API mock server with a friendly UI  
-**Use cases:** Mock REST endpoints, prototype against fake data, test error states  
-**Benefit:** Develop the frontend before the backend is ready
+**Kind:** GUI app  
+**What it is:** Markdown-based notes with linked references and a graph view.  
+**Homepage:** [https://obsidian.md](https://obsidian.md)
 
-### Expo Orbit
-**What it is:** Menu bar app for managing Expo and EAS builds  
-**Features:** Install and launch builds on simulators/devices, manage updates  
-**Best for:** React Native / Expo developers
+### <img src="https://cdn.simpleicons.org/1password" width="14" alt="" align="center"/> 1Password CLI
 
-### DevToys
-**What it is:** Swiss-army knife of developer utilities  
-**Features:** JSON/XML formatters, encoders/decoders, hash generators, regex tester  
-**Benefit:** Offline, no need for sketchy web tools
+**Kind:** CLI  
+**What it is:** Read secrets from 1Password in scripts and shells.  
+**Homepage:** [https://developer.1password.com/docs/cli](https://developer.1password.com/docs/cli)
 
-### Signal
-**What it is:** Privacy-focused encrypted messenger  
-**Why included:** Secure team communication
+### <img src="https://cdn.simpleicons.org/googlechrome" width="14" alt="" align="center"/> Google Chrome
 
-### WiFiman
-**What it is:** Network diagnostics and scanning tool  
-**Features:** Speed tests, device discovery, signal analysis  
-**Use case:** Debug local network and connectivity issues
+**Kind:** Browser  
+**What it is:** Reference browser for testing and DevTools work.  
+**Homepage:** [https://www.google.com/chrome/](https://www.google.com/chrome/)
 
----
+### <img src="https://cdn.simpleicons.org/firefox" width="14" alt="" align="center"/> Firefox
 
-## Database Tools
+**Kind:** Browser  
+**What it is:** Second engine to test against — different rendering and DevTools.  
+**Homepage:** [https://www.mozilla.org/firefox/](https://www.mozilla.org/firefox/)
 
-### PostgreSQL 15
-**What it is:** Advanced open-source relational database  
-**Why PostgreSQL:**
-- ACID compliant
-- JSON support
-- Full-text search
-- Extensions (PostGIS, etc.)
-- Great performance
-**Auto-configured:** Starts on boot, PATH updated
+### <img src="https://cdn.simpleicons.org/brave" width="14" alt="" align="center"/> Brave Browser
 
-### DBeaver Community Edition
-**What it is:** Universal database GUI client  
-**Features:**
-- Query editor with syntax highlighting
-- Visual query builder
-- Data export/import tools
-- SSH tunneling support
-- Multiple database support (PostgreSQL, MySQL, SQLite, etc.)
-**Benefits:** Free, cross-platform, extensive database support
-
-### pgAdmin 4
-**What it is:** Feature-rich management and admin tool for PostgreSQL  
-**Features:**
-- Visual query tool with explain plans
-- Schema and object browser
-- Server and database administration
-- Backup/restore management
-**Benefit:** Purpose-built for PostgreSQL workflows
-
-### Supabase CLI
-**What it is:** Open source Firebase alternative  
-**Built on:** PostgreSQL + real-time subscriptions  
-**Features:**
-- Authentication
-- Real-time database
-- Storage
-- Edge functions
-**Local development:** `supabase start` runs full stack locally  
-**Commands:** `supabase init`, `supabase db push`
-
----
-
-## DevOps & Cloud Tools
-
-
-### UpCloud CLI (upctl)
-**What it is:** Command line interface for the UpCloud cloud platform  
-**Primary use:** Manage servers, storage, networks, and load balancers  
-**Features:** Scriptable provisioning, multiple output formats  
-**Command:** `upctl server list`, `upctl server create`
-
-### kubectl (kubernetes-cli)
-**What it is:** Command line tool for controlling Kubernetes clusters  
-**Use cases:** Deploy apps, inspect resources, manage cluster state  
-**Command:** `kubectl get pods`, `kubectl apply -f`
-
-### Tilt
-**What it is:** Toolkit for fast local development on Kubernetes  
-**Features:** Live updates, automatic rebuilds, a unified dev dashboard  
-**Best for:** Iterating on microservices locally  
-**Command:** `tilt up`
-
-### Terraform (hashicorp/tap)
-**What it is:** Infrastructure as Code tool by HashiCorp  
-**Use cases:** Provision and manage cloud infrastructure declaratively  
-**Features:** Plan/apply workflow, state management, huge provider ecosystem  
-**Command:** `terraform init`, `terraform plan`, `terraform apply`
+**Kind:** Browser  
+**What it is:** Chromium-based browser with built-in tracker/ad blocking.  
+**Homepage:** [https://brave.com](https://brave.com)
 
 ### OrbStack
-**What it is:** Fast, light Docker Desktop alternative  
-**Advantages:**
-- 70% less CPU usage
-- 50% less memory
-- Native macOS integration
-- Instant startup
-**Compatibility:** Works with all Docker commands
 
-### Network & Utility Tools
+**Kind:** Container runtime  
+**What it is:** Lightweight Docker / Linux VM alternative to Docker Desktop.  
+**Homepage:** [https://orbstack.dev](https://orbstack.dev)
 
-#### ngrok
-**What it is:** Expose local servers to the internet  
-**Use cases:**
-- Webhook development
-- Demo local sites to clients
-- Mobile app testing with real devices
-- API testing with external services
-**Security:** HTTPS by default, authentication available  
-**Command:** `ngrok http 3000`
-**Perfect for:** Sharing local development servers
+### <img src="https://cdn.simpleicons.org/postman" width="14" alt="" align="center"/> Postman
 
-#### wget
-**What it is:** Non-interactive network downloader  
-**vs curl:** Better for recursive downloads, resuming  
-**Common uses:** Download files, mirror websites
+**Kind:** API tool  
+**What it is:** API client for designing, testing, and documenting HTTP requests.  
+**Homepage:** [https://www.postman.com](https://www.postman.com)
 
-#### jq
-**What it is:** Command-line JSON processor  
-**Why essential:** Parse API responses, filter JSON data, work with REST APIs  
-**Example:** `curl api.example.com | jq '.data[]'`
-**Perfect for:** Frontend developers working with APIs
+### Mockoon
 
-#### tree
-**What it is:** Display directory structure as tree  
-**Options:** Limit depth, show hidden files, sizes  
-**Usage:** `tree -L 2` shows 2 levels deep
+**Kind:** API tool  
+**What it is:** Local mock API server. Spin up fake REST endpoints in seconds.  
+**Homepage:** [https://mockoon.com](https://mockoon.com)
 
-#### fzf
-**What it is:** Fuzzy finder for command line  
-**Integration:** History search (Ctrl+R), file finding, interactive selection  
-**Power user tip:** Pipe any list to fzf for interactive selection
-**Productivity boost:** Find files and commands instantly
+### <img src="https://cdn.simpleicons.org/expo" width="14" alt="" align="center"/> Expo Orbit
 
-#### Wireshark
-**What it is:** Network protocol analyzer  
-**Use cases:** Debug API calls, analyze network issues  
-**Features:** Packet capture, protocol dissection, filters
+**Kind:** GUI app  
+**What it is:** Menubar launcher for Expo dev builds and iOS/Android simulators.  
+**Homepage:** [https://expo.dev/orbit](https://expo.dev/orbit)
 
-### Modern CLI Power-Ups
+### <img src="https://cdn.simpleicons.org/figma" width="14" alt="" align="center"/> Figma
 
-These faster, friendlier replacements and shell enhancements are installed by `10-devops.sh`. The fzf shell integration (Ctrl+R history search, Ctrl+T file finder) is wired up automatically.
+**Kind:** Design tool  
+**What it is:** Design and prototyping tool. Desktop app gives Sign In + local fonts.  
+**Homepage:** [https://figma.com](https://figma.com)
 
-#### git-delta
-**What it is:** A syntax-highlighting pager for git and diff output  
-**Why use it:** Side-by-side views, line numbers, and readable highlighting  
-**Configured as:** Git's default pager
+### ImageOptim
 
-#### ripgrep (rg)
-**What it is:** Extremely fast recursive search tool  
-**Why use it:** Faster than grep, respects `.gitignore` by default  
-**Command:** `rg "pattern"`
+**Kind:** GUI app  
+**What it is:** Drag-and-drop lossless image compression (PNG/JPEG/SVG).  
+**Homepage:** [https://imageoptim.com/mac](https://imageoptim.com/mac)
 
-#### fd
-**What it is:** Simple, fast alternative to `find`  
-**Why use it:** Intuitive syntax, smart defaults, respects `.gitignore`  
-**Command:** `fd pattern`
+### <img src="https://cdn.simpleicons.org/wireguard" width="14" alt="" align="center"/> WireGuard
 
-#### bat
-**What it is:** A `cat` clone with syntax highlighting and Git integration  
-**Why use it:** Readable file previews with line numbers  
-**Command:** `bat file.ts`
+**Kind:** Network tool  
+**What it is:** Modern fast VPN client.  
+**Homepage:** [https://www.wireguard.com](https://www.wireguard.com)
 
-#### zoxide
-**What it is:** Smarter `cd` that learns your most-used directories  
-**Why use it:** Jump to directories by partial name  
-**Command:** `z projectname`
+### DevToys
 
-#### lazygit
-**What it is:** Terminal UI for Git  
-**Why use it:** Stage, commit, branch, and rebase visually without leaving the terminal  
-**Command:** `lazygit`
+**Kind:** GUI app  
+**What it is:** Swiss-army knife of small dev utilities (JSON formatter, hash, regex, base64…).  
+**Homepage:** [https://devtoys.app](https://devtoys.app)
 
-#### direnv
-**What it is:** Loads and unloads environment variables per directory  
-**Why use it:** Automatic per-project env setup via `.envrc`  
-**Command:** `direnv allow`
+### <img src="https://cdn.simpleicons.org/signal" width="14" alt="" align="center"/> Signal
 
-#### atuin
-**What it is:** Magical, searchable shell history  
-**Why use it:** Synced, context-aware history with full-text search  
-**Command:** Replaces Ctrl+R history search
+**Kind:** Messenger  
+**What it is:** End-to-end encrypted messenger.  
+**Homepage:** [https://signal.org](https://signal.org)
 
-#### tldr (tealdeer)
-**What it is:** Community-driven simplified man pages with practical examples  
-**Why use it:** Quick, example-first command help  
-**Command:** `tldr tar`
+### WiFiman
 
-#### btop
-**What it is:** Resource monitor for CPU, memory, disk, network, and processes  
-**Why use it:** A beautiful, modern alternative to `top`/`htop`  
-**Command:** `btop`
+**Kind:** Network tool  
+**What it is:** Wi-Fi analyzer + speed test from Ubiquiti.  
+**Homepage:** [https://wifiman.com](https://wifiman.com)
 
-#### dust
-**What it is:** More intuitive `du` for disk usage  
-**Why use it:** Instantly see what's eating disk space, sorted and visualized  
-**Command:** `dust`
+### AppCleaner
 
-#### duf
-**What it is:** A better `df` for free/used disk space  
-**Why use it:** Clean, colorized overview of mounts and filesystems  
-**Command:** `duf`
+**Kind:** GUI app  
+**What it is:** Properly uninstall macOS apps, including their support files.  
+**Homepage:** [https://freemacsoft.net/appcleaner/](https://freemacsoft.net/appcleaner/)
 
----
+### Ice
+
+**Kind:** GUI app  
+**What it is:** Menubar organizer — hide and group items in the macOS menubar.  
+**Homepage:** [https://github.com/jordanbaird/Ice](https://github.com/jordanbaird/Ice)
+
+### <img src="https://cdn.simpleicons.org/syncthing" width="14" alt="" align="center"/> Syncthing
+
+**Kind:** GUI app  
+**What it is:** Peer-to-peer file sync across your own devices.  
+**Homepage:** [https://syncthing.net](https://syncthing.net)
+
+### <img src="https://cdn.simpleicons.org/wireshark" width="14" alt="" align="center"/> Wireshark
+
+**Kind:** Network tool  
+**What it is:** Packet analyzer for deep network debugging.  
+**Homepage:** [https://www.wireshark.org](https://www.wireshark.org)
+
+## Databases
+
+> **Category:** Optional — installed by `scripts/09-database.sh`. PostgreSQL plus GUI clients and Supabase tooling.
+
+### <img src="https://cdn.simpleicons.org/postgresql" width="14" alt="" align="center"/> PostgreSQL 15
+
+**Kind:** Database  
+**What it is:** Relational database server. PATH wired via `~/.zshenv`.  
+**Homepage:** [https://www.postgresql.org](https://www.postgresql.org)
+
+### <img src="https://cdn.simpleicons.org/dbeaver" width="14" alt="" align="center"/> DBeaver Community Edition
+
+**Kind:** Database GUI  
+**What it is:** Cross-platform SQL GUI for Postgres, MySQL, SQLite, and many more.  
+**Homepage:** [https://dbeaver.io](https://dbeaver.io)
+
+### pgAdmin 4
+
+**Kind:** Database GUI  
+**What it is:** Official Postgres GUI — better for Postgres-specific features.  
+**Homepage:** [https://www.pgadmin.org](https://www.pgadmin.org)
+
+### <img src="https://cdn.simpleicons.org/supabase" width="14" alt="" align="center"/> Supabase CLI
+
+**Kind:** DB CLI  
+**What it is:** Run Supabase locally, push migrations, manage projects.  
+**Homepage:** [https://supabase.com/docs/guides/cli](https://supabase.com/docs/guides/cli)
+
+## DevOps & CLI Power-ups
+
+> **Category:** Optional — installed by `scripts/10-devops.sh`. Modern CLI replacements + infrastructure tooling.
+
+### <img src="https://cdn.simpleicons.org/ngrok" width="14" alt="" align="center"/> ngrok
+
+**Kind:** Tunneling  
+**What it is:** Public HTTPS tunnel to a local port — share dev servers and webhooks.  
+**Homepage:** [https://ngrok.com](https://ngrok.com)
+
+### eza
+
+**Kind:** CLI  
+**What it is:** Modern `ls` replacement with colors, icons, and git status.  
+**Homepage:** [https://eza.rocks](https://eza.rocks)
+
+### wget
+
+**Kind:** CLI  
+**What it is:** Recursive HTTP/FTP downloader. Better than `curl` for whole-site mirrors.  
+**Homepage:** [https://www.gnu.org/software/wget/](https://www.gnu.org/software/wget/)
+
+### jq
+
+**Kind:** CLI  
+**What it is:** Command-line JSON processor. Filter, transform, query JSON in pipelines.  
+**Homepage:** [https://jqlang.github.io/jq/](https://jqlang.github.io/jq/)
+
+### tree
+
+**Kind:** CLI  
+**What it is:** Visualize directory structures as a tree.  
+**Homepage:** [https://github.com/Old-Man-Programmer/tree](https://github.com/Old-Man-Programmer/tree)
+
+### fzf
+
+**Kind:** CLI  
+**What it is:** Fuzzy finder. Bound to Ctrl-T (files) and Alt-C (cd) in your shell.  
+**Homepage:** [https://github.com/junegunn/fzf](https://github.com/junegunn/fzf)
+
+### ripgrep (rg)
+
+**Kind:** CLI  
+**What it is:** Extremely fast recursive grep. Respects `.gitignore` by default.  
+**Homepage:** [https://github.com/BurntSushi/ripgrep](https://github.com/BurntSushi/ripgrep)
+
+### fd
+
+**Kind:** CLI  
+**What it is:** Friendly, fast `find` replacement.  
+**Homepage:** [https://github.com/sharkdp/fd](https://github.com/sharkdp/fd)
+
+### bat
+
+**Kind:** CLI  
+**What it is:** `cat` clone with syntax highlighting and git integration.  
+**Homepage:** [https://github.com/sharkdp/bat](https://github.com/sharkdp/bat)
+
+### git-delta
+
+**Kind:** Git tool  
+**What it is:** Syntax-highlighted diff viewer. Wired as Git's pager.  
+**Homepage:** [https://github.com/dandavison/delta](https://github.com/dandavison/delta)
+
+### zoxide
+
+**Kind:** CLI  
+**What it is:** Smarter `cd` — jumps to recent/frequent dirs by partial name.  
+**Homepage:** [https://github.com/ajeetdsouza/zoxide](https://github.com/ajeetdsouza/zoxide)
+
+### lazygit
+
+**Kind:** Git tool  
+**What it is:** Terminal UI for Git. Staging, branches, rebases without leaving the keyboard.  
+**Homepage:** [https://github.com/jesseduffield/lazygit](https://github.com/jesseduffield/lazygit)
+
+### direnv
+
+**Kind:** CLI  
+**What it is:** Per-directory env vars. Drop a `.envrc`, allow it once, vars load automatically.  
+**Homepage:** [https://direnv.net](https://direnv.net)
+
+### atuin
+
+**Kind:** CLI  
+**What it is:** Searchable shell history with full context. Owns Ctrl-R after install.  
+**Homepage:** [https://atuin.sh](https://atuin.sh)
+
+### tldr (tealdeer)
+
+**Kind:** CLI  
+**What it is:** Quick example-based man pages. Run `tldr tar` instead of reading the manual.  
+**Homepage:** [https://github.com/tealdeer-rs/tealdeer](https://github.com/tealdeer-rs/tealdeer)
+
+### btop
+
+**Kind:** CLI  
+**What it is:** Modern resource monitor with mouse support. Replaces `top`/`htop`.  
+**Homepage:** [https://github.com/aristocratos/btop](https://github.com/aristocratos/btop)
+
+### dust
+
+**Kind:** CLI  
+**What it is:** More intuitive `du` — bar charts of disk usage by directory.  
+**Homepage:** [https://github.com/bootandy/dust](https://github.com/bootandy/dust)
+
+### duf
+
+**Kind:** CLI  
+**What it is:** Colorful `df` — clearer view of mounted disks and free space.  
+**Homepage:** [https://github.com/muesli/duf](https://github.com/muesli/duf)
+
+### UpCloud CLI (upctl)
+
+**Kind:** Cloud CLI  
+**What it is:** Manage UpCloud infrastructure from the terminal.  
+**Homepage:** [https://github.com/UpCloudLtd/upcloud-cli](https://github.com/UpCloudLtd/upcloud-cli)
+
+### <img src="https://cdn.simpleicons.org/kubernetes" width="14" alt="" align="center"/> kubectl
+
+**Kind:** Cloud CLI  
+**What it is:** Kubernetes CLI. Inspect resources, apply manifests, exec into pods.  
+**Homepage:** [https://kubernetes.io/docs/reference/kubectl/](https://kubernetes.io/docs/reference/kubectl/)
+
+### Tilt
+
+**Kind:** Cloud tool  
+**What it is:** Local Kubernetes dev loop — watch, build, deploy on save.  
+**Homepage:** [https://tilt.dev](https://tilt.dev)
+
+### <img src="https://cdn.simpleicons.org/terraform" width="14" alt="" align="center"/> Terraform
+
+**Kind:** Cloud tool  
+**What it is:** Infrastructure-as-code. Installed from HashiCorp's tap (BSL license).  
+**Homepage:** [https://www.terraform.io](https://www.terraform.io)
 
 ## Developer Fonts
 
+> **Category:** Optional — installed by `scripts/11-fonts.sh`. Programming fonts with ligatures and Nerd Font glyphs.
+
 ### Fira Code
-**What it is:** Monospaced font with programming ligatures  
-**Ligatures examples:**
-- `!=` becomes `≠`
-- `=>` becomes ``
-- `===` becomes single connected symbol
-**Why use:** Easier to scan code, beautiful appearance
 
-### JetBrains Mono
-**What it is:** Font designed for developers by JetBrains  
-**Features:**
-- Increased letter height
-- Better readability
-- 139 code-specific ligatures
-- Multiple weights
-**Optimized for:** Long coding sessions
+**Kind:** Font  
+**What it is:** Programming font with ligatures (`!==` → `≠`, `=>` → `→`).  
+**Homepage:** [https://github.com/tonsky/FiraCode](https://github.com/tonsky/FiraCode)
 
-### Why Developer Fonts Matter
-- **Reduced eye strain:** Optimized letter spacing
-- **Better readability:** Distinct characters (0 vs O, 1 vs l)
-- **Ligatures:** Multi-character symbols look cleaner
-- **Consistency:** Same width for all characters
+### <img src="https://cdn.simpleicons.org/jetbrains" width="14" alt="" align="center"/> JetBrains Mono
+
+**Kind:** Font  
+**What it is:** Highly legible monospace font with ligatures, by JetBrains.  
+**Homepage:** [https://www.jetbrains.com/lp/mono/](https://www.jetbrains.com/lp/mono/)
+
+### Source Code Pro
+
+**Kind:** Font  
+**What it is:** Adobe's open-source monospace family for code.  
+**Homepage:** [https://github.com/adobe-fonts/source-code-pro](https://github.com/adobe-fonts/source-code-pro)
+
+### Hack Nerd Font
+
+**Kind:** Font  
+**What it is:** Hack plus Nerd Font glyphs — required for PowerLevel10k icons.  
+**Homepage:** [https://www.nerdfonts.com](https://www.nerdfonts.com)
+
+## Expo + React Native (full env)
+
+> **Category:** Optional — installed by `scripts/12-expo-rn.sh`. Complete local Expo / React Native env, including iOS toolchain. Superset of scripts 04 + 07 for mobile.
+
+### xcodes
+
+**Kind:** iOS toolchain  
+**What it is:** Manage multiple Xcode versions side by side.  
+**Homepage:** [https://github.com/XcodesOrg/xcodes](https://github.com/XcodesOrg/xcodes)
+
+### ios-deploy
+
+**Kind:** iOS toolchain  
+**What it is:** Deploy and debug iOS apps on physical devices from the command line.  
+**Homepage:** [https://github.com/ios-control/ios-deploy](https://github.com/ios-control/ios-deploy)
+
+### CocoaPods
+
+**Kind:** Package manager  
+**What it is:** Dependency manager for iOS/macOS projects.  
+**Homepage:** [https://cocoapods.org](https://cocoapods.org)
+
+### <img src="https://cdn.simpleicons.org/swift" width="14" alt="" align="center"/> SwiftLint
+
+**Kind:** Linter  
+**What it is:** Linter for Swift code, enforcing style and conventions.  
+**Homepage:** [https://github.com/realm/SwiftLint](https://github.com/realm/SwiftLint)
+
+### Maestro
+
+**Kind:** Mobile QA  
+**What it is:** Mobile UI testing framework. `maestro studio` records flows visually.  
+**Homepage:** [https://maestro.mobile.dev](https://maestro.mobile.dev)
+
+## macOS System Defaults
+
+> **Category:** Optional — installed by `scripts/13-macos-defaults.sh`. Reversible developer-friendly `defaults write` tweaks.
+
+### <img src="https://cdn.simpleicons.org/apple" width="14" alt="" align="center"/> macOS defaults tweaks
+
+**Kind:** System config  
+**What it is:** Fast key repeat, no auto-correct, expanded save panels, show hidden files, Dock autohide, screenshots to ~/Screenshots, etc. Reversible.
+
+<!-- TOOLS:END:catalogue -->
 
 ---
 
@@ -748,7 +708,7 @@ These faster, friendlier replacements and shell enhancements are installed by `1
 
 ### Daily Workflow Optimization
 1. **Rectangle shortcuts** for window management
-2. **Maccy** for clipboard history (+Shift+V)
+2. **Maccy** for clipboard history (⌘+Shift+V)
 3. **Terminal aliases** for common commands
 4. **VS Code snippets** for boilerplate code
 
@@ -760,7 +720,7 @@ These faster, friendlier replacements and shell enhancements are installed by `1
 - **fzf** speeds up file/history searching
 
 ### Learning Resources
-- Run `tldr <command>` for quick examples (install: `npm install -g tldr`)
+- Run `tldr <command>` for quick examples (already installed via `10-devops.sh`)
 - Use `man <command>` for detailed documentation
 - VS Code: Cmd+Shift+P opens command palette
 - Most tools have `--help` flag
@@ -769,7 +729,7 @@ These faster, friendlier replacements and shell enhancements are installed by `1
 
 ## Storage Requirements
 
-**Minimum required:** ~10GB free space  
+**Minimum required:** ~10GB free space
 **Recommended:** 20GB+ free space
 
 **Largest components:**
@@ -782,12 +742,12 @@ These faster, friendlier replacements and shell enhancements are installed by `1
 
 ---
 
-**[ Back to Home](/)** | **[Script Guide ](/script-guide)** | **[GitHub Repository ](https://github.com/allanasp/Setup-Developer-Mac)**
+**[Back to Home](/)** | **[Script Guide](/script-guide)** | **[GitHub Repository](https://github.com/allanasp/Setup-Developer-Mac)**
 
 ---
 
 <div style="text-align: center; margin: 2rem 0; padding: 2rem; background: #f6f8fa; border-radius: 8px;">
-  <h3> Ready to Install These Amazing Tools?</h3>
+  <h3>Ready to Install These Amazing Tools?</h3>
   <p style="color: #586069; margin: 1rem 0;">Choose exactly what you need with our modular setup</p>
   <p>
     <a href="https://github.com/allanasp/Setup-Developer-Mac" style="display: inline-block; background: #28a745; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold;">Get Started Now</a>
