@@ -50,6 +50,7 @@ FORMULAE=(
     ngrok eza wget jq tree fzf ripgrep fd bat git-delta
     zoxide lazygit direnv atuin tealdeer btop dust duf
     kubernetes-cli tilt 1password-cli ios-deploy cocoapods xcodes swiftlint
+    sentry-cli
     hashicorp/tap/terraform UpCloudLtd/tap/upcloud-cli oven-sh/bun/bun
     supabase/tap/supabase
 )
