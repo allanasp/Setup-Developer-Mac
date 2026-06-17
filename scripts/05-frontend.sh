@@ -37,6 +37,9 @@ install_volta_package "vercel" # Vercel CLI
 install_volta_package "storyblok"   # Storyblok CLI
 install_volta_package "@sanity/cli" # Sanity CLI
 
+# Observability / source-map upload
+install_brew_formula "sentry-cli" "Sentry CLI"
+
 # React Native Development Tools
 print_status "Installing React Native development tools..."
 install_volta_package "@react-native-community/cli" # React Native CLI
@@ -56,6 +59,7 @@ echo "• React Native CLI & Expo CLI & EAS CLI"
 echo "• Vite (create-vite) & Serve"
 echo "• Turbo (Turborepo) & Vercel CLI"
 echo "• Storyblok CLI & Sanity CLI (headless CMS)"
+echo "• Sentry CLI (source-map uploads / release management)"
 echo "• Watchman (file watching)"
 echo ""
 echo "📋 TODO: Account Creation & Authentication Required"

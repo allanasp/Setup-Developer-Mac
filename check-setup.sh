@@ -270,6 +270,13 @@ else
     print_missing "Vercel CLI"
 fi
 
+# Sentry CLI
+if command_exists sentry-cli; then
+    print_installed "Sentry CLI ($(sentry-cli --version 2>/dev/null | awk '{print $2}' || echo installed))"
+else
+    print_missing "Sentry CLI"
+fi
+
 # create-expo-app
 if command_exists create-expo-app; then
     print_installed "create-expo-app"

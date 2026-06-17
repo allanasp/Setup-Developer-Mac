@@ -173,6 +173,11 @@ run_script() {
 • Configure your editor to use Fira Code or JetBrains Mono
 • Enable font ligatures in VS Code/editor"
                     ;;
+                "14-claude-mcps.sh")
+                    prompt_configuration "Claude Code MCPs" "• Open Claude Code: 'claude'
+• Run /mcp and walk through the OAuth flow for each new server
+• Verify with: 'claude mcp list'"
+                    ;;
                 *)
                     # No specific configuration needed for this script
                     ;;
@@ -213,11 +218,12 @@ optional_scripts=(
     "11-fonts.sh"
     "12-expo-rn.sh"
     "13-macos-defaults.sh"
+    "14-claude-mcps.sh"
 )
 
 optional_descriptions=(
     "Programming Languages (Java, Go, Ruby)"
-    "Frontend Tools (TypeScript, Vue, React Native, Vite, Turbo, Vercel, Storyblok, Sanity CLI)"
+    "Frontend Tools (TypeScript, Vue, React Native, Vite, Turbo, Vercel, Storyblok, Sanity, Sentry CLI)"
     "Development Apps (VS Code, Cursor, Claude Code, kiro-cli, Extensions)"
     "Mobile Development (Android Studio + Android env; iOS/RN → script 12)"
     "Productivity Tools (Rectangle, Browsers, Mockoon, Expo Orbit)"
@@ -226,6 +232,7 @@ optional_descriptions=(
     "Developer Fonts (Fira Code, JetBrains Mono)"
     "Expo + React Native Local Dev (Watchman, JDK 17, Maestro, full iOS/Android toolchain)"
     "macOS System Defaults (keyboard, Finder, Dock, screenshots, dialogs)"
+    "Claude Code MCPs (Sentry, PostHog, Vercel, Sanity, Postman, Expo, Mermaid, Nuxt)"
 )
 
 # First, always install essential components
@@ -323,12 +330,12 @@ case ${selection} in
         # Parse numbers
         if [[ -n "${selection}" ]]; then
             for num in ${selection}; do
-                if [[ "${num}" =~ ^[0-9]+$ ]] && [[ "${num}" -ge 4 ]] && [[ "${num}" -le 13 ]]; then
+                if [[ "${num}" =~ ^[0-9]+$ ]] && [[ "${num}" -ge 4 ]] && [[ "${num}" -le 14 ]]; then
                     idx=$((num - 4)) # Convert to optional_scripts index (4->0, 5->1, etc.)
                     selected_scripts+=("${optional_scripts[${idx}]}")
                     echo "✓ Selected: ${optional_descriptions[${idx}]}"
                 else
-                    echo "❌ Invalid script number: ${num} (valid range: 4-13)"
+                    echo "❌ Invalid script number: ${num} (valid range: 4-14)"
                 fi
             done
         fi

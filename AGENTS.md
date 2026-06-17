@@ -25,6 +25,7 @@ scripts/
   02-terminal.sh      iTerm2, Oh My Zsh, PowerLevel10k           (essential)
   03-version-managers.sh  Volta, pyenv                           (essential)
   04..13-*.sh         Optional categories
+  14-claude-mcps.sh   Register hosted MCP servers (Sentry, PostHog, Vercel, …) with Claude Code
 docs/                 VitePress documentation site (GitHub Pages)
 ```
 

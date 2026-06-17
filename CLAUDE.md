@@ -24,7 +24,9 @@ Modular Bash script system for automated macOS development environment setup, op
 │   ├── 09-database.sh      # PostgreSQL, DBeaver, Supabase (optional)
 │   ├── 10-devops.sh        # ngrok, UpCloud, Kubernetes, Tilt, Terraform (optional)
 │   ├── 11-fonts.sh         # Developer fonts (optional)
-│   └── 12-expo-rn.sh       # Expo + React Native local dev env (optional)
+│   ├── 12-expo-rn.sh       # Expo + React Native local dev env (optional)
+│   ├── 13-macos-defaults.sh # macOS system defaults (optional)
+│   └── 14-claude-mcps.sh   # Register hosted MCP servers with Claude Code (optional)
 └── docs/                   # GitHub Pages documentation
 
 ## Code Conventions

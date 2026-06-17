@@ -38,6 +38,9 @@ install_cask_app "TextMate" "textmate" "/Applications/TextMate.app"
 
 # Claude Code (Anthropic's terminal coding agent) - via Homebrew cask
 install_cask_app "Claude Code" "claude-code" "/Applications/Claude Code.app"
+# MCP servers (PostHog, Sentry, Vercel, Sanity, Postman, Expo, Mermaid, Nuxt) are
+# registered by the dedicated ./scripts/14-claude-mcps.sh script — keep them out
+# of this file so they don't run unless the user selects that category.
 
 # kiro-cli (AWS agentic CLI) - installed via official install script
 print_status "Checking kiro-cli..."
@@ -339,6 +342,8 @@ echo ""
 echo "□ Claude Code Setup"
 echo "  → Run: claude"
 echo "  → Sign in with /login (Anthropic account or API key)"
+echo "  → To wire up MCP servers (PostHog, Sentry, Vercel, Sanity, …) run:"
+echo "    ./scripts/14-claude-mcps.sh"
 echo ""
 echo "□ kiro-cli Setup"
 echo "  → Run: kiro auth login"
