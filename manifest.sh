@@ -84,9 +84,10 @@ cmd_export() {
         volta_node=$(node --version 2>/dev/null | string_to_json)
         # `volta list --format=plain` emits lines like
         #   package <name>@<ver> / <bin> / node@<x>
-        # We want just <name>. Strip everything after "@" on field 2.
+        # We want just <name>. Strip the trailing @version — not the first
+        # @, since scoped packages like @vue/cli start with one.
         volta_packages=$(volta list --format=plain 2>/dev/null \
-            | awk '/^package/ {sub(/@.*/, "", $2); print $2}' \
+            | awk '/^package/ {sub(/@[^@]*$/, "", $2); print $2}' \
             | lines_to_json_array)
     fi
 
@@ -190,9 +191,9 @@ cmd_export() {
             curl_installs: {
                 oh_my_zsh: $omz_present,
                 powerlevel10k: $p10k_present,
-                kiro_cli: ($kiro_version | select(. != "")),
-                opencode: ($opencode_version | select(. != "")),
-                maestro: ($maestro_version | select(. != ""))
+                kiro_cli: (if $kiro_version == "" then null else $kiro_version end),
+                opencode: (if $opencode_version == "" then null else $opencode_version end),
+                maestro: (if $maestro_version == "" then null else $maestro_version end)
             }
         }'
 }

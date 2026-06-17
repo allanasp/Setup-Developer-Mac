@@ -17,6 +17,7 @@ setup.sh              Main orchestrator with interactive prompts
 check-setup.sh        Verifies what's installed and prints versions
 doctor.sh             Diagnoses environment drift (dead aliases, broken PATH, …); --auto-fix repairs known issues
 update.sh             Upgrades brew, Volta, Oh My Zsh, PowerLevel10k; --outdated reports drift without mutating
+manifest.sh           Exports the full installed surface as portable JSON (`export` subcommand)
 uninstall.sh          Rolls back casks, formulae and Volta packages
 install.sh            One-line bootstrapper (curl | sh entrypoint)
 scripts/
