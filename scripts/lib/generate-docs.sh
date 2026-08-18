@@ -24,8 +24,14 @@ TOOLS_GUIDE="${ROOT}/docs/tools-guide.md"
 CHECK_MODE=0
 [[ "${1:-}" == "--check" ]] && CHECK_MODE=1
 
-command -v jq >/dev/null || { echo "jq is required" >&2; exit 1; }
-[[ -f "$DATA" ]] || { echo "missing $DATA" >&2; exit 1; }
+command -v jq >/dev/null || {
+    echo "jq is required" >&2
+    exit 1
+}
+[[ -f "$DATA" ]] || {
+    echo "missing $DATA" >&2
+    exit 1
+}
 
 # ----------------------------------------------------------
 # Renderers (write to stdout). Each takes no args; reads $DATA.
@@ -41,7 +47,7 @@ ICON_FILTER='
 '
 
 render_readme_overview() {
-  jq -r "${ICON_FILTER}"'
+    jq -r "${ICON_FILTER}"'
     .scripts as $scripts
     | .tools as $tools
     | $scripts[]
@@ -54,7 +60,7 @@ render_readme_overview() {
 }
 
 render_tools_guide_sections() {
-  jq -r "${ICON_FILTER}"'
+    jq -r "${ICON_FILTER}"'
     .scripts as $scripts
     | .tools as $tools
     | $scripts[]
@@ -73,27 +79,30 @@ render_tools_guide_sections() {
 # replace_block <file> <region-name> <content-cmd>
 # ----------------------------------------------------------
 replace_block() {
-  local file="$1" region="$2" content_cmd="$3"
-  local begin="<!-- TOOLS:BEGIN:${region} -->"
-  local end="<!-- TOOLS:END:${region} -->"
-  local tmp body_tmp
+    local file="$1" region="$2" content_cmd="$3"
+    local begin="<!-- TOOLS:BEGIN:${region} -->"
+    local end="<!-- TOOLS:END:${region} -->"
+    local tmp body_tmp
 
-  [[ -f "$file" ]] || { echo "missing $file" >&2; return 1; }
+    [[ -f "$file" ]] || {
+        echo "missing $file" >&2
+        return 1
+    }
 
-  if ! grep -qF "$begin" "$file" || ! grep -qF "$end" "$file"; then
-    echo "warn: markers for region '$region' not found in $file — skipping" >&2
-    return 0
-  fi
+    if ! grep -qF "$begin" "$file" || ! grep -qF "$end" "$file"; then
+        echo "warn: markers for region '$region' not found in $file — skipping" >&2
+        return 0
+    fi
 
-  # Write generated content to a tempfile, then have awk splice it in via
-  # getline. Passing multi-line content through -v is unreliable.
-  body_tmp="$(mktemp)"
-  tmp="$(mktemp)"
-  trap 'rm -f "$body_tmp" "$tmp"' RETURN
+    # Write generated content to a tempfile, then have awk splice it in via
+    # getline. Passing multi-line content through -v is unreliable.
+    body_tmp="$(mktemp)"
+    tmp="$(mktemp)"
+    trap 'rm -f "$body_tmp" "$tmp"' RETURN
 
-  "$content_cmd" > "$body_tmp"
+    "$content_cmd" >"$body_tmp"
 
-  awk -v begin="$begin" -v end="$end" -v body_file="$body_tmp" '
+    awk -v begin="$begin" -v end="$end" -v body_file="$body_tmp" '
     function emit_body(   line) {
       while ((getline line < body_file) > 0) print line
       close(body_file)
@@ -113,37 +122,37 @@ replace_block() {
         skip = 1
       }
     }
-  ' "$file" > "$tmp"
+  ' "$file" >"$tmp"
 
-  # Sanity: never replace a non-empty file with an empty one.
-  if [[ ! -s "$tmp" && -s "$file" ]]; then
-    echo "error: generated output for $file is empty — aborting" >&2
-    return 1
-  fi
+    # Sanity: never replace a non-empty file with an empty one.
+    if [[ ! -s "$tmp" && -s "$file" ]]; then
+        echo "error: generated output for $file is empty — aborting" >&2
+        return 1
+    fi
 
-  if cmp -s "$file" "$tmp"; then
-    return 0
-  fi
+    if cmp -s "$file" "$tmp"; then
+        return 0
+    fi
 
-  if [[ "$CHECK_MODE" == "1" ]]; then
-    echo "would update: $file [region: $region]" >&2
-    return 2
-  fi
+    if [[ "$CHECK_MODE" == "1" ]]; then
+        echo "would update: $file [region: $region]" >&2
+        return 2
+    fi
 
-  cp "$tmp" "$file"
-  echo "updated: $file [region: $region]"
+    cp "$tmp" "$file"
+    echo "updated: $file [region: $region]"
 }
 
 # ----------------------------------------------------------
 # Main
 # ----------------------------------------------------------
 rc=0
-replace_block "$README"     "overview"     render_readme_overview     || rc=$?
-replace_block "$TOOLS_GUIDE" "catalogue"    render_tools_guide_sections || rc=$?
+replace_block "$README" "overview" render_readme_overview || rc=$?
+replace_block "$TOOLS_GUIDE" "catalogue" render_tools_guide_sections || rc=$?
 
 if [[ "$CHECK_MODE" == "1" && "$rc" != "0" ]]; then
-  echo "docs are out of date — run scripts/lib/generate-docs.sh" >&2
-  exit 1
+    echo "docs are out of date — run scripts/lib/generate-docs.sh" >&2
+    exit 1
 fi
 
 exit 0
