@@ -1,7 +1,7 @@
 # Mac Developer Setup - Development Makefile
 # Provides convenient commands for testing, linting, and formatting
 
-.PHONY: help test lint format check install-deps clean
+.PHONY: help test lint format check install-deps clean docs docs-check
 
 # Default target
 help: ## Show this help message
@@ -122,5 +122,13 @@ test-interactive: ## Test the interactive prompt system
 	@DRY_RUN=true ./setup.sh --skip-prompts
 
 # Pre-commit checks
-pre-commit: check test ## Pre-commit checks (use in git hooks)
+pre-commit: check test docs-check ## Pre-commit checks (use in git hooks)
 	@echo "✅ Pre-commit checks passed"
+
+# Regenerate README + tools-guide from data/tools.json
+docs: ## Regenerate tool catalogue sections in README + docs/tools-guide.md
+	@./scripts/lib/generate-docs.sh
+
+# CI-friendly check that generated docs are in sync with data/tools.json
+docs-check: ## Fail if README/tools-guide drift from data/tools.json
+	@./scripts/lib/generate-docs.sh --check
