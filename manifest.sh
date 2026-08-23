@@ -86,9 +86,9 @@ cmd_export() {
         #   package <name>@<ver> / <bin> / node@<x>
         # We want just <name>. Strip the trailing @version — not the first
         # @, since scoped packages like @vue/cli start with one.
-        volta_packages=$(volta list --format=plain 2>/dev/null \
-            | awk '/^package/ {sub(/@[^@]*$/, "", $2); print $2}' \
-            | lines_to_json_array)
+        volta_packages=$(volta list --format=plain 2>/dev/null |
+            awk '/^package/ {sub(/@[^@]*$/, "", $2); print $2}' |
+            lines_to_json_array)
     fi
 
     # --- pyenv -------------------------------------------------------------
