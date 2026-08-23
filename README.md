@@ -101,6 +101,10 @@ The setup now **guides you through each step** with configuration prompts:
 # Diagnose environment drift (broken aliases, missing PATH, stale xcode-select…)
 ./doctor.sh
 ./doctor.sh --auto-fix         # apply safe repairs for known issues
+
+# Snapshot every installed tool as portable JSON (great for cloning to a new Mac)
+./manifest.sh export > my-mac.json
+./manifest.sh export --compact # one-line JSON, scriptable
 ```
 
 ## 📚 Detailed Tool Catalogue
